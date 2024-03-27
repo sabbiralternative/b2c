@@ -18235,7 +18235,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
   display: flex;
 }
 .menu-toggle::after {
-  /* content: "";
+  content: "";
   position: absolute;
   top: 50%;
   display: block;
@@ -18244,7 +18244,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
   border: 1.5px solid;
   border-bottom: 0;
   border-left: 0;
-  transform: translateY(-50%) rotate(45deg); */
+  transform: translateY(-50%) rotate(45deg);
 }
 [dir="rtl"] .menu-toggle::after {
   border-left: 1.5px solid;

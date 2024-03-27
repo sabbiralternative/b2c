@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp,
-} from "react-icons/md";
+// import {
+//   MdOutlineKeyboardArrowDown,
+//   MdOutlineKeyboardArrowUp,
+// } from "react-icons/md";
 const NavListItem = () => {
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   return (
     <aside
       id="layout-menu"
-      className="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0"
+      className="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0 "
       style={{ touchAction: "none", userSelect: "none" }}
       //   "
       //   touch-action: none;
@@ -38,7 +38,7 @@ const NavListItem = () => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onClick={() => {
+                onMouseEnter={() => {
                   setShowBranch((prev) => !prev);
                   setShowSettings(false);
                 }}
@@ -46,7 +46,7 @@ const NavListItem = () => {
               >
                 <i className="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Branch">Branch</div>
-                {showBranch ? (
+                {/* {showBranch ? (
                   <MdOutlineKeyboardArrowUp
                     style={{ marginTop: "3px" }}
                     size={20}
@@ -56,7 +56,7 @@ const NavListItem = () => {
                     style={{ marginTop: "3px" }}
                     size={20}
                   />
-                )}
+                )} */}
               </a>
 
               <ul className="menu-sub">
@@ -86,7 +86,7 @@ const NavListItem = () => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onClick={() => {
+                onMouseEnter={() => {
                   setShowSettings((prev) => !prev);
                   setShowBranch(false);
                 }}
@@ -94,7 +94,7 @@ const NavListItem = () => {
               >
                 <i className="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Settings">Settings</div>
-                {showSettings ? (
+                {/* {showSettings ? (
                   <MdOutlineKeyboardArrowUp
                     style={{ marginTop: "3px" }}
                     size={20}
@@ -104,7 +104,7 @@ const NavListItem = () => {
                     style={{ marginTop: "3px" }}
                     size={20}
                   />
-                )}
+                )} */}
               </a>
 
               <ul className="menu-sub">

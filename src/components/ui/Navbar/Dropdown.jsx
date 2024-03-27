@@ -20,7 +20,7 @@ const Dropdown = ({
         <div className="d-flex">
           <div className="flex-shrink-0 me-3">
             <div className="avatar avatar-online">
-              <img src="assets/img/avatars/1.png" className="rounded-circle" />
+              <img src="/src/assets/img/avatars/1.png" className="rounded-circle" />
             </div>
           </div>
           <div className="flex-grow-1">

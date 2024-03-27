@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import useContextState from "../../../hooks/useContextState";
 import Dropdown from "./Dropdown";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const {
@@ -25,7 +26,9 @@ const Navbar = () => {
     >
       <div className="container-xxl">
         <div className="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
-          <a className="app-brand-link gap-2">
+          <Link 
+          to='/'
+          className="app-brand-link gap-2">
             <span className="app-brand-logo demo">
               <svg
                 width="26px"
@@ -97,7 +100,7 @@ const Navbar = () => {
               </svg>
             </span>
             <span className="app-brand-text demo menu-text fw-bold">B2C</span>
-          </a>
+          </Link>
 
           <a className="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
             <i className="bx bx-x bx-sm align-middle"></i>
@@ -515,7 +518,7 @@ const Navbar = () => {
               >
                 <div className="avatar avatar-online">
                   <img
-                    src="/src/assets/img/avatars/9.png"
+                    src="/src/assets/img/avatars/1.png"
                     className="rounded-circle"
                   />
                 </div>
