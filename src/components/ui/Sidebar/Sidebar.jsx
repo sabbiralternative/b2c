@@ -24,8 +24,8 @@ const Sidebar = () => {
         touchAction: "none",
         userSelect: "none",
         transform: `translate(${showSidebar ? "0" : "-100%"}, 0)`,
-        boxShadow: `${showSidebar ? "" : "none"}`,
         transition: "0.5s",
+        transitionDuration:'.3s'
       }}
       //   "
       //   touch-action: none;
@@ -131,7 +131,6 @@ const Sidebar = () => {
             className={`menu-item ${showBranch ? "open" : ""}`}
             style={{
               display: "flex",
-          
             }}
           >
             <a
