@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 // import {
 //   MdOutlineKeyboardArrowDown,
 //   MdOutlineKeyboardArrowUp,
@@ -7,14 +8,17 @@ import { Link } from "react-router-dom";
 const NavListItem = () => {
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+
+  const dropdownRef = useRef();
+  useCloseModalClickOutside(dropdownRef, () => {
+    setShowSettings(false);
+    setShowBranch(false);
+  });
   return (
     <aside
       id="layout-menu"
       className="layout-menu-horizontal menu-horizontal menu bg-menu-theme flex-grow-0 "
       style={{ touchAction: "none", userSelect: "none" }}
-      //   "
-      //   touch-action: none;
-      //   user-select: none;
       //   -webkit-user-drag: none;
       //   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       // "
@@ -30,8 +34,10 @@ const NavListItem = () => {
                 <div data-i18n="Dashboards">Dashboards</div>
               </Link>
             </li>
-
-            <li className={`menu-item ${showBranch ? "open" : ""}`}>
+            <li
+              ref={dropdownRef}
+              className={`menu-item ${showBranch ? "open" : ""}`}
+            >
               <a
                 style={{
                   display: "flex",
@@ -79,7 +85,10 @@ const NavListItem = () => {
                 </li>
               </ul>
             </li>
-            <li className={`menu-item ${showSettings ? "open" : ""}`}>
+            <li
+              ref={dropdownRef}
+              className={`menu-item ${showSettings ? "open" : ""}`}
+            >
               <a
                 style={{
                   display: "flex",
