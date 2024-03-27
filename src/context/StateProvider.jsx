@@ -12,6 +12,7 @@ const StateProvider = ({ children }) => {
   const [logo, setLogo] = useState("");
   const [icon, setIcon] = useState("");
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showSidebar,setShowSidebar] = useState(false)
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
@@ -63,7 +64,8 @@ const StateProvider = ({ children }) => {
     setAdminName,
     adminRole,
     setAdminRole,
-    showChangePassword, setShowChangePassword
+    showChangePassword, setShowChangePassword,
+    showSidebar,setShowSidebar
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

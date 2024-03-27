@@ -5,8 +5,8 @@
   },
   "result": {
     "settings": {
-      "siteTitle": "bc2",
-      "siteUrl": "bc2.com",
+      "siteTitle": "b2c",
+      "siteUrl": "b2c.com",
       "interval": 600,
       "casino": "aura",
       "registration": true,
@@ -77,7 +77,8 @@
       "assets": "https://api7.live/sitethemes",
       "qrCode": "https://admin.api7.live/api/qrCode",
       "qrValidate": "https://admin.api7.live/api/qrValidate",
-      "adminExposure": "https://admin.api7.live/api/exposure"
+      "adminExposure": "https://admin.api7.live/api/exposure",
+      "viewBranches":"https://admin.api7.live/api/b2c/viewBranch"
     }
   },
   "success": true

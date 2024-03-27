@@ -1,4 +1,23 @@
+import { useRef, useState } from "react";
+import useContextState from "../../../hooks/useContextState";
+import Dropdown from "./Dropdown";
+import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+
 const Navbar = () => {
+  const {
+    adminName,
+    adminRole,
+    showChangePassword,
+    setShowChangePassword,
+    setShowSidebar,
+  } = useContextState();
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const dropdownRef = useRef();
+  useCloseModalClickOutside(dropdownRef, () => {
+    setShowDropdown(false);
+  });
+  console.log(showChangePassword);
   return (
     <nav
       className="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme"
@@ -85,12 +104,16 @@ const Navbar = () => {
           </a>
         </div>
 
-        <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        {/* Open sidebar  */}
+        <div
+          onClick={() => setShowSidebar((prev) => !prev)}
+          className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none"
+        >
           <a className="nav-item nav-link px-0 me-xl-4">
             <i className="bx bx-menu bx-sm"></i>
           </a>
         </div>
-
+        {/* Open sidebar  */}
         <div
           className="navbar-nav-right d-flex align-items-center"
           id="navbar-collapse"
@@ -481,54 +504,29 @@ const Navbar = () => {
                 </li>
               </ul>
             </li>
-            <li className="nav-item navbar-dropdown dropdown-user dropdown">
+            <li
+              ref={dropdownRef}
+              className="nav-item navbar-dropdown dropdown-user dropdown"
+            >
               <a
-                className="nav-link dropdown-toggle hide-arrow"
+                onClick={() => setShowDropdown((prev) => !prev)}
+                className="nav-link dropdown-toggle hide-arrow show"
                 data-bs-toggle="dropdown"
               >
                 <div className="avatar avatar-online">
                   <img
-                    src="assets/img/avatars/1.png"
+                    src="/src/assets/img/avatars/9.png"
                     className="rounded-circle"
                   />
                 </div>
               </a>
-              <ul className="dropdown-menu dropdown-menu-end">
-                <li>
-                  <div className="d-flex">
-                    <div className="flex-shrink-0 me-3">
-                      <div className="avatar avatar-online">
-                        <img
-                          src="assets/img/avatars/1.png"
-                          className="rounded-circle"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-grow-1">
-                      <span className="fw-semibold d-block lh-1">
-                        a23moneyadmin
-                      </span>
-                      <small>hyper_master</small>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="dropdown-divider"></div>
-                </li>
-                <li>
-                  <a className="dropdown-item">
-                    <i className="bx bx-user me-2"></i>
-                    <span className="align-middle">Change Password</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a className="dropdown-item">
-                    <i className="bx bx-power-off me-2"></i>
-                    <span className="align-middle">Log Out</span>
-                  </a>
-                </li>
-              </ul>
+              <Dropdown
+                showDropdown={showDropdown}
+                setShowDropdown={setShowDropdown}
+                adminName={adminName}
+                adminRole={adminRole}
+                setShowChangePassword={setShowChangePassword}
+              />
             </li>
           </ul>
         </div>

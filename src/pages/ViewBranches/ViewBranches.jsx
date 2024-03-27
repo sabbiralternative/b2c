@@ -1,0 +1,115 @@
+import useGetAllBranch from "../../hooks/Branch/useGetAllBranch";
+
+const ViewBranches = () => {
+  const { branches } = useGetAllBranch();
+  console.log(branches);
+  return (
+    <div className="container-xxl flex-grow-1 container-p-y">
+      <div className="card">
+        <h5 className="card-header">Branches</h5>
+        <div className="table-responsive text-nowrap">
+          <table className="table table-hover table-sm">
+            <thead className="table-dark">
+              <tr>
+                <th>Username</th>
+                <th>Balance</th>
+                <th>P/L</th>
+
+                <th>Status</th>
+                <th>Type</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody className="table-border-bottom-0">
+              <tr>
+                <td>
+                  <strong>a23branch1</strong>
+                </td>
+                <td>5084843.50</td>
+                <td>84843.53</td>
+
+                <td>
+                  <span className="badge bg-label-primary me-1">Active</span>
+                </td>
+                <td>Branch</td>
+                <td>
+                  <a className="btn btn-icon btn-sm btn-success">D</a>
+                  &nbsp;
+                  <a className="btn btn-icon btn-sm btn-danger">W</a>
+                  &nbsp;
+                  <a className="btn btn-icon btn-sm btn-info">P</a>
+                  &nbsp;
+                  <a className="btn btn-icon btn-sm btn-dark">S</a>
+                  &nbsp;
+                  <button
+                    type="button"
+                    className="btn btn-icon btn-sm btn-primary"
+                  >
+                    {" "}
+                    T
+                  </button>{" "}
+                  &nbsp;
+                  <button
+                    type="button"
+                    className="btn btn-icon btn-sm btn-warning"
+                  >
+                    {" "}
+                    E
+                  </button>{" "}
+                  &nbsp;
+                  <button
+                    type="button"
+                    className="btn btn-icon btn-sm btn-info"
+                  >
+                    {" "}
+                    P
+                  </button>{" "}
+                  &nbsp;
+                  <button
+                    type="button"
+                    className="btn btn-icon btn-sm btn-dark"
+                  >
+                    {" "}
+                    S
+                  </button>{" "}
+                  &nbsp;
+                  <div className="dropdown">
+                    <button
+                      type="button"
+                      className="btn p-0 dropdown-toggle hide-arrow"
+                      data-bs-toggle="dropdown"
+                    >
+                      <i className="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div className="dropdown-menu">
+                      <a className="dropdown-item">
+                        <i className="bx bxs-plus-circle"></i> Deposit
+                      </a>
+                      <a className="dropdown-item">
+                        <i className="bx bxs-minus-circle"></i> Withdraw
+                      </a>
+                      <a className="dropdown-item">
+                        <i className="bx bxs-bank"></i> Transfer
+                      </a>
+                      <a className="dropdown-item">
+                        <i className="bx bxs-lock-alt"></i> Change Password
+                      </a>
+                      <a className="dropdown-item">
+                        <i className="bx bxs-edit-alt"></i> Edit
+                      </a>
+                      <a className="dropdown-item">
+                        <i className="bx bxs-report"></i> D/W Statement
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ViewBranches;

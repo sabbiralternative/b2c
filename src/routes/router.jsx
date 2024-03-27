@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
+import ViewBranches from "../pages/ViewBranches/ViewBranches";
 
 export const router = createBrowserRouter(
   [
@@ -12,6 +13,10 @@ export const router = createBrowserRouter(
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: '/view-branches',
+          element: <ViewBranches />,
         },
       ],
     },
