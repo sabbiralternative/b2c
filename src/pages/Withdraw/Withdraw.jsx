@@ -4,12 +4,13 @@ import toast from "react-hot-toast";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
 import useContextState from "../../hooks/useContextState";
+import { useNavigate } from "react-router-dom";
 
 const Withdraw = () => {
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
   const downlineId = localStorage.getItem("downLineId");
-
+  const navigate = useNavigate();
   const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -33,6 +34,7 @@ const Withdraw = () => {
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
+      navigate("/view-branches");
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -49,10 +51,6 @@ const Withdraw = () => {
       <div className="row">
         <div className="col-xxl">
           <div className="card mb-4">
-            <div className="card-header d-flex align-items-center justify-content-between">
-              <h5 className="mb-0">Basic Layout</h5>{" "}
-              <small className="text-muted float-end">Default label</small>
-            </div>
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-3" id="bank_account_name_div">
@@ -64,11 +62,10 @@ const Withdraw = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
-                       {...register("amount", {
+                      {...register("amount", {
                         required: true,
                       })}
                       type="number"
-                 
                       className="form-control"
                       id="basic-default-name"
                       placeholder="Amount"
@@ -89,7 +86,6 @@ const Withdraw = () => {
                         required: true,
                       })}
                       type="text"
-                   
                       className="form-control"
                       id="basic-default-name"
                       placeholder="Remark"

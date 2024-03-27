@@ -44,10 +44,7 @@ const AddBranch = () => {
       <div className="row">
         <div className="col-xxl">
           <div className="card mb-4">
-            <div className="card-header d-flex align-items-center justify-content-between">
-              <h5 className="mb-0">Basic Layout</h5>{" "}
-              <small className="text-muted float-end">Default label</small>
-            </div>
+      
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-3" id="bank_account_name_div">

@@ -54,7 +54,7 @@ const NavListItem = () => {
                   justifyContent: "center",
                 }}
                 onMouseEnter={() => {
-                  setShowBranch((prev) => !prev);
+                  setShowBranch(true);
                   setShowSettings(false);
                 }}
                 className="menu-link menu-toggle"
@@ -107,7 +107,7 @@ const NavListItem = () => {
                   justifyContent: "center",
                 }}
                 onMouseEnter={() => {
-                  setShowSettings((prev) => !prev);
+                  setShowSettings(true);
                   setShowBranch(false);
                 }}
                 className="menu-link menu-toggle"
