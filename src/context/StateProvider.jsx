@@ -11,7 +11,6 @@ const StateProvider = ({ children }) => {
   const [tokenLoading, setTokenLoading] = useState(true);
   const [logo, setLogo] = useState("");
   const [icon, setIcon] = useState("");
-  const [showChangePassword, setShowChangePassword] = useState(false);
   const [showSidebar,setShowSidebar] = useState(false)
   /* Get token from locale storage */
   useEffect(() => {
@@ -64,7 +63,6 @@ const StateProvider = ({ children }) => {
     setAdminName,
     adminRole,
     setAdminRole,
-    showChangePassword, setShowChangePassword,
     showSidebar,setShowSidebar
   };
   return (

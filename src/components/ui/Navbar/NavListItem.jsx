@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 // import {
 //   MdOutlineKeyboardArrowDown,
@@ -8,12 +8,21 @@ import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside"
 const NavListItem = () => {
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-
-  const dropdownRef = useRef();
-  useCloseModalClickOutside(dropdownRef, () => {
+  const navigate = useNavigate();
+  const settingsRef = useRef();
+  useCloseModalClickOutside(settingsRef, () => {
     setShowSettings(false);
+  });
+  const branchRef = useRef();
+  useCloseModalClickOutside(branchRef, () => {
     setShowBranch(false);
   });
+
+  const handleNavigate = (link) => {
+    navigate(`/${link}`);
+    setShowBranch(false);
+    setShowSettings(false);
+  };
   return (
     <aside
       id="layout-menu"
@@ -35,7 +44,7 @@ const NavListItem = () => {
               </Link>
             </li>
             <li
-              ref={dropdownRef}
+              ref={branchRef}
               className={`menu-item ${showBranch ? "open" : ""}`}
             >
               <a
@@ -67,18 +76,20 @@ const NavListItem = () => {
 
               <ul className="menu-sub">
                 <li className="menu-item ">
-                  <Link
-                    onClick={() => setShowBranch(false)}
-                    to="/view-branches"
+                  <a
+                    onClick={() => handleNavigate("view-branches")}
                     className="menu-link"
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="View Branches">View Branches</div>
-                  </Link>
+                  </a>
                 </li>
 
                 <li className="menu-item">
-                  <a className="menu-link">
+                  <a
+                    onClick={() => handleNavigate("add-branch")}
+                    className="menu-link"
+                  >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="Add Branch">Add Branch</div>
                   </a>
@@ -86,7 +97,7 @@ const NavListItem = () => {
               </ul>
             </li>
             <li
-              ref={dropdownRef}
+              ref={settingsRef}
               className={`menu-item ${showSettings ? "open" : ""}`}
             >
               <a

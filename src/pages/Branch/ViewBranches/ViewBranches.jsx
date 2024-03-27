@@ -1,7 +1,12 @@
-import useGetAllBranch from "../../hooks/Branch/useGetAllBranch";
+import { Link } from "react-router-dom";
+import useGetAllBranch from "../../../hooks/Branch/useGetAllBranch";
 
 const ViewBranches = () => {
   const { branches } = useGetAllBranch();
+  const handleDownLineId = (branch) => {
+    localStorage.removeItem('downLineId')
+    localStorage.setItem('downLineId',branch?.username)
+  }
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
@@ -36,15 +41,21 @@ const ViewBranches = () => {
                       </span>
                     </td>
                     <td>{branch?.accountType}</td>
-                    <td style={{display:'flex'}}>
-                      <a className="btn btn-icon btn-sm btn-success">D</a>
+                    <td style={{ display: "flex",color:'white' }}>
+                      <Link
+                      onClick={()=> handleDownLineId(branch)}
+                      to='/deposit'
+                      className="btn btn-icon btn-sm btn-success">D</Link>
                       &nbsp;
-                      <a className="btn btn-icon btn-sm btn-danger">W</a>
+                      <Link
+                       onClick={()=> handleDownLineId(branch)}
+                      to='/withdraw'
+                       className="btn btn-icon btn-sm btn-danger">W</Link>
                       &nbsp;
-                      <a className="btn btn-icon btn-sm btn-info">P</a>
+                      <Link className="btn btn-icon btn-sm btn-info">P</Link>
                       &nbsp;
-                      <a className="btn btn-icon btn-sm btn-dark">S</a>
-                      &nbsp;
+                      <Link className="btn btn-icon btn-sm btn-dark">S</Link>
+                      {/* &nbsp;
                       <button
                         type="button"
                         className="btn btn-icon btn-sm btn-primary"
@@ -75,8 +86,8 @@ const ViewBranches = () => {
                       >
                         {" "}
                         S
-                      </button>{" "}
-                      &nbsp;
+                      </button>{" "} */}
+                      {/* &nbsp;
                       <div className="dropdown">
                         <button
                           type="button"
@@ -105,7 +116,7 @@ const ViewBranches = () => {
                             <i className="bx bxs-report"></i> D/W Statement
                           </a>
                         </div>
-                      </div>
+                      </div> */}
                     </td>
                   </tr>
                 );

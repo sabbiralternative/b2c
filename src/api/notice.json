@@ -42,7 +42,7 @@
       "reportTransfer": "https://api7.live/api/account/reports/transfer",
       "pastEvents": "https://cache.api7.live/api/exchange/diamond/pastevents",
       "history": "https://cache.api7.live/api/exchange/diamond/history/event",
-      "changePassword": "https://admin.api7.live/api/changePassword",
+      "changePassword": "https://admin.api7.live/api/b2c/changePassword",
       "buttonValue": "https://api7.live/api/exchange/diamond/buttonValue.php",
       "serverTime": "https://cache.api7.live/api/exchnage/diamond/serverTime",
       "approveRules": "https://api7.live/api/approved-rules",
@@ -62,7 +62,7 @@
       "liveCasino": " https://cache.api7.live/api/exchange/diamond/liveCasino",
       "downline": "https://admin.api7.live/api/downline",
       "downLineEditForm": "https://admin.api7.live/api/downlineEditForm",
-      "downLineEdit": "https://admin.api7.live/api/downlineEdit",
+      "downLineEdit": "https://admin.api7.live/api/b2c/downlineEdit",
       "createDownLine": "https://admin.api7.live/api/createDownline",
       "checkUsername": "https://admin.api7.live/api/checkUsername",
       "accountStatement": "https://admin.api7.live/api/accountStatement",
@@ -78,7 +78,8 @@
       "qrCode": "https://admin.api7.live/api/qrCode",
       "qrValidate": "https://admin.api7.live/api/qrValidate",
       "adminExposure": "https://admin.api7.live/api/exposure",
-      "viewBranches":"https://admin.api7.live/api/b2c/viewBranch"
+      "viewBranches":"https://admin.api7.live/api/b2c/viewBranch",
+      "addBranch":"https://admin.api7.live/api/b2c/addBranch"
     }
   },
   "success": true

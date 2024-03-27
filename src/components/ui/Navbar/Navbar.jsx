@@ -9,7 +9,6 @@ const Navbar = () => {
     adminName,
     adminRole,
     showChangePassword,
-    setShowChangePassword,
     setShowSidebar,
   } = useContextState();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -150,7 +149,7 @@ const Navbar = () => {
                 setShowDropdown={setShowDropdown}
                 adminName={adminName}
                 adminRole={adminRole}
-                setShowChangePassword={setShowChangePassword}
+                
               />
             </li>
           </ul>

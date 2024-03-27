@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleLogOut } from "../../../utils/handleLogOut";
 
 const Dropdown = ({
   showDropdown,
   adminName,
-  setShowChangePassword,
   setShowDropdown,
   adminRole,
 }) => {
@@ -20,7 +19,10 @@ const Dropdown = ({
         <div className="d-flex">
           <div className="flex-shrink-0 me-3">
             <div className="avatar avatar-online">
-              <img src="/src/assets/img/avatars/1.png" className="rounded-circle" />
+              <img
+                src="/src/assets/img/avatars/1.png"
+                className="rounded-circle"
+              />
             </div>
           </div>
           <div className="flex-grow-1">
@@ -33,16 +35,16 @@ const Dropdown = ({
         <div className="dropdown-divider"></div>
       </li>
       <li>
-        <a
+        <Link
+          to="/change-password"
           onClick={() => {
-            setShowChangePassword((prev) => !prev);
             setShowDropdown(false);
           }}
           className="dropdown-item"
         >
           <i className="bx bx-user me-2"></i>
           <span className="align-middle">Change Password</span>
-        </a>
+        </Link>
       </li>
 
       <li>
