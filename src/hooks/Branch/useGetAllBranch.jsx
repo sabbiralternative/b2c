@@ -5,7 +5,7 @@ import useContextState from "../useContextState";
 
 const useGetAllBranch = () => {
   const { token, tokenLoading } = useContextState();
-  const { data: branches = []} = useQuery({
+  const { data: branches = [],refetch:refetchAllBranch} = useQuery({
     queryKey: ["branch"],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -25,7 +25,7 @@ const useGetAllBranch = () => {
       }
     },
   });
-  return { branches };
+  return { branches,refetchAllBranch };
 };
 
 export default useGetAllBranch;

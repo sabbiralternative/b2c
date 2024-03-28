@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+import AddBranch from "../../modal/Branch/AddBranch";
+import SocialLink from "../../modal/Settings/SocialLink";
 // import {
 //   MdOutlineKeyboardArrowDown,
 //   MdOutlineKeyboardArrowUp,
@@ -8,6 +10,10 @@ import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside"
 const NavListItem = () => {
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showAddBranch, setShowAddBranch] = useState(false);
+  const [showSocialLink, setShowSocialLink] = useState(false);
+ 
+
   const navigate = useNavigate();
   const settingsRef = useRef();
   useCloseModalClickOutside(settingsRef, () => {
@@ -87,7 +93,10 @@ const NavListItem = () => {
 
                 <li className="menu-item">
                   <a
-                    onClick={() => handleNavigate("add-branch")}
+                    onClick={() => {
+                      setShowAddBranch(true);
+                      setShowBranch(false);
+                    }}
                     className="menu-link"
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
@@ -129,7 +138,10 @@ const NavListItem = () => {
 
               <ul className="menu-sub">
                 <li className="menu-item">
-                  <a className="menu-link">
+                  <a
+                    onClick={() => handleNavigate("view-banner")}
+                    className="menu-link"
+                  >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="View Banners">View Banners</div>
                   </a>
@@ -143,7 +155,13 @@ const NavListItem = () => {
                 </li>
 
                 <li className="menu-item">
-                  <a className="menu-link">
+                  <a
+                    onClick={() => {
+                      setShowSocialLink(true);
+                      setShowSettings(false);
+                    }}
+                    className="menu-link"
+                  >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="Social Links">Social Links</div>
                   </a>
@@ -154,6 +172,8 @@ const NavListItem = () => {
         </div>
         <a className="menu-horizontal-next d-none"></a>
       </div>
+      {showAddBranch && <AddBranch setShowAddBranch={setShowAddBranch} />}
+      {showSocialLink && <SocialLink setShowSocialLink={setShowSocialLink} />}
     </aside>
   );
 };

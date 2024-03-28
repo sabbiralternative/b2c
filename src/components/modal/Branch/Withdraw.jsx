@@ -1,16 +1,20 @@
 import axios from "axios";
-import { API } from "../../api";
+import { API } from "../../../api";
 import toast from "react-hot-toast";
-import handleRandomToken from "../../utils/handleRandomToken";
+import handleRandomToken from "../../../utils/handleRandomToken";
+import useContextState from "../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
-import useContextState from "../../hooks/useContextState";
-import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
+import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
-const Withdraw = () => {
+const Withdraw = ({ downlineId, setShowWithdraw }) => {
+  const withdrawRef = useRef();
+  useCloseModalClickOutside(withdrawRef, () => {
+    setShowWithdraw(false);
+  });
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
-  const downlineId = localStorage.getItem("downLineId");
-  const navigate = useNavigate();
+
   const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -34,78 +38,90 @@ const Withdraw = () => {
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
-      navigate("/view-branches");
+      setShowWithdraw(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
   return (
-    <div className="container-xxl flex-grow-1 container-p-y">
-      <h4 className="py-3 breadcrumb-wrapper mb-4">
-        <span className="text-muted fw-light">
-          <a href="index.php">Home</a> /
-        </span>
-        Withdraw
-      </h4>
-
-      <div className="row">
-        <div className="col-xxl">
-          <div className="card mb-4">
-            <div className="card-body">
-              <form onSubmit={handleSubmit(onSubmit)}>
+    <div
+      className="modal fade show"
+      id="modalCenter"
+      aria-modal="true"
+      role="dialog"
+      style={{ display: "block" }}
+    >
+      <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content" ref={withdrawRef}>
+          <div className="modal-header">
+            <h5 className="modal-title" id="modalCenterTitle">
+              Withdraw
+            </h5>
+            <button
+              onClick={() => setShowWithdraw(false)}
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="modal-body">
+              <div className="row">
                 <div className="row mb-3" id="bank_account_name_div">
                   <label
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-name"
                   >
-                    Amount *
+                    Amount
                   </label>
                   <div className="col-sm-10">
                     <input
+                      type="number"
                       {...register("amount", {
                         required: true,
                       })}
-                      type="number"
                       className="form-control"
                       id="basic-default-name"
-                      placeholder="Amount"
+                      placeholder=""
                     />
                   </div>
                 </div>
-
-                <div className="row mb-3" id="bank_account_name_div">
+                <div className="row mb-3" id="bank_account_number_div">
                   <label
                     className="col-sm-2 col-form-label"
-                    htmlFor="basic-default-name"
+                    htmlFor="basic-default-company"
                   >
                     Remark
                   </label>
                   <div className="col-sm-10">
                     <input
+                      type="text"
                       {...register("remark", {
                         required: true,
                       })}
-                      type="text"
                       className="form-control"
-                      id="basic-default-name"
-                      placeholder="Remark"
+                      id="basic-default-company"
+                      placeholder=""
                     />
                   </div>
                 </div>
-
-                <div className="row justify-content-end">
-                  <div className="col-sm-10">
-                    <input
-                      type="submit"
-                      name="submit"
-                      value="Submit"
-                      className="btn btn-primary"
-                    />
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
-          </div>
+            <div className="modal-footer">
+              <button
+                onClick={() => setShowWithdraw(false)}
+                type="button"
+                className="btn btn-label-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Withdraw
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

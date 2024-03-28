@@ -79,7 +79,9 @@
       "qrValidate": "https://admin.api7.live/api/qrValidate",
       "adminExposure": "https://admin.api7.live/api/exposure",
       "viewBranches":"https://admin.api7.live/api/b2c/viewBranch",
-      "addBranch":"https://admin.api7.live/api/b2c/addBranch"
+      "addBranch":"https://admin.api7.live/api/b2c/addBranch",
+      "banner":"https://admin.api7.live/api/b2c/banners",
+      "socialLink":"https://admin.api7.live/api/b2c/social"
     }
   },
   "success": true

@@ -1,23 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import handleRandomToken from "../../utils/handleRandomToken";
-import handleEncryptData from "../../utils/handleEncryptData";
 import { API } from "../../api";
-import useContextState from "../useContextState";
+import useContextState from "../../hooks/useContextState";
+import handleRandomToken from "../../utils/handleRandomToken";
+import axios from "axios";
 
-const useGetDefaultValues = (type,downLineId) => {
+const useGetStatus = (type, downLineId) => {
   const { token, tokenLoading } = useContextState();
-  const { data, refetch } = useQuery({
+  const { data:status, refetchStatus } = useQuery({
     queryKey: ["creditRef"],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
-      const encryptedData = handleEncryptData({
+      const payload = {
         downlineId: downLineId,
         type,
         token: generatedToken,
-      });
-      const res = await axios.post(API.downLineEditForm, encryptedData, {
+      };
+      const res = await axios.post(API.downLineEdit, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -28,7 +27,7 @@ const useGetDefaultValues = (type,downLineId) => {
       }
     },
   });
-  return { data, refetch };
+  return { status,refetchStatus };
 };
 
-export default useGetDefaultValues;
+export default useGetStatus;

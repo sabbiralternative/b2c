@@ -1,14 +1,39 @@
-import { Link } from "react-router-dom";
-import useGetAllBranch from "../../../hooks/Branch/useGetAllBranch";
+import useGetAllBranch from "../../hooks/Branch/useGetAllBranch";
+import { useState } from "react";
+import { handleDownLineId } from "../../utils/handleDownLineId";
+import Withdraw from "../../components/modal/Branch/Withdraw";
+import Deposit from "../../components/modal/Branch/Deposit";
+import ChangeStatus from "../../components/modal/Branch/ChangeStatus";
+import ChangePassword from "../../components/modal/Branch/ChangePassword";
 
 const ViewBranches = () => {
   const { branches } = useGetAllBranch();
-  const handleDownLineId = (branch) => {
-    localStorage.removeItem('downLineId')
-    localStorage.setItem('downLineId',branch?.username)
-  }
+  const [showDeposit, setShowDeposit] = useState(false);
+  const [showWithdraw, setShowWithdraw] = useState(false);
+  const [downLineId, setDownLineId] = useState("");
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showChangeStatus, setShowChangeStatus] = useState(false);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
+      {showDeposit && (
+        <Deposit downlineId={downLineId} setShowDeposit={setShowDeposit} />
+      )}
+      {showWithdraw && (
+        <Withdraw downlineId={downLineId} setShowWithdraw={setShowWithdraw} />
+      )}
+      {showChangeStatus && (
+        <ChangeStatus
+          setShowChangeStatus={setShowChangeStatus}
+          downlineId={downLineId}
+        />
+      )}
+
+      {showChangePassword && (
+        <ChangePassword
+          setShowChangePassword={setShowChangePassword}
+          downlineId={downLineId}
+        />
+      )}
       <div className="card">
         <h5 className="card-header">Branches</h5>
         <div className="table-responsive text-nowrap">
@@ -36,25 +61,69 @@ const ViewBranches = () => {
                     <td>{branch?.pnl}</td>
 
                     <td>
-                      <span className="badge bg-label-primary me-1">
-                        {branch?.userStatus === 1 ? "Active" : "DeActive"}
+                      <span
+                        className={`badge  me-1 ${
+                          branch?.userStatus === 1
+                            ? "bg-label-primary"
+                            : "bg-label-danger"
+                        }`}
+                      >
+                        {branch?.userStatus === 1 ? "active" : "inactive"}
                       </span>
                     </td>
                     <td>{branch?.accountType}</td>
-                    <td style={{ display: "flex",color:'white' }}>
-                      <Link
-                      onClick={()=> handleDownLineId(branch)}
-                      to='/deposit'
-                      className="btn btn-icon btn-sm btn-success">D</Link>
+                    <td style={{ display: "flex", color: "white" }}>
+                      <a
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowDeposit,
+                            downLineId,
+                            setDownLineId
+                          )
+                        }
+                        className="btn btn-icon btn-sm btn-success"
+                      >
+                        D
+                      </a>
                       &nbsp;
-                      <Link
-                       onClick={()=> handleDownLineId(branch)}
-                      to='/withdraw'
-                       className="btn btn-icon btn-sm btn-danger">W</Link>
+                      <a
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowWithdraw,
+                            downLineId,
+                            setDownLineId
+                          )
+                        }
+                        className="btn btn-icon btn-sm btn-danger"
+                      >
+                        W
+                      </a>
                       &nbsp;
-                      <Link className="btn btn-icon btn-sm btn-info">P</Link>
+                      <a
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowChangePassword,
+                            downLineId,
+                            setDownLineId
+                          )
+                        }
+                        className="btn btn-icon btn-sm btn-info"
+                      >
+                        P
+                      </a>
                       &nbsp;
-                      <Link className="btn btn-icon btn-sm btn-dark">S</Link>
+                      <a
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowChangeStatus,
+                            downLineId,
+                            setDownLineId
+                          )
+                        }
+                        className="btn btn-icon btn-sm btn-dark"
+                      >
+                        S
+                      </a>
                       {/* &nbsp;
                       <button
                         type="button"

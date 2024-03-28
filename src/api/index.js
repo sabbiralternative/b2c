@@ -54,7 +54,8 @@ export const API = {
   marketAnalysis: config?.result?.endpoint?.marketAnalysis,
   adminExposure: config?.result?.endpoint?.adminExposure,
   viewBranches:config?.result?.endpoint?.viewBranches,
-  addBranch:config?.result?.endpoint?.addBranch
+  addBranch:config?.result?.endpoint?.addBranch,
+  socialLinks:config?.result?.endpoint?.socialLink
 };
 
 export const Settings = {

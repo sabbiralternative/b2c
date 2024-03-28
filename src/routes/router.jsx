@@ -2,11 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
-import ViewBranches from "../pages/Branch/ViewBranches/ViewBranches";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
-import AddBranch from "../pages/Branch/AddBranch/AddBranch";
-import Deposit from "../pages/Deposit/Deposit";
-import Withdraw from "../pages/Withdraw/Withdraw";
+import ViewBanner from "../pages/Settings/ViewBanner/ViewBanner";
+import ViewBranches from "../pages/Branch/ViewBranches";
+
 
 export const router = createBrowserRouter([
   {
@@ -26,16 +25,8 @@ export const router = createBrowserRouter([
         element: <ViewBranches />,
       },
       {
-        path: "/add-branch",
-        element: <AddBranch />,
-      },
-      {
-        path: "/deposit",
-        element: <Deposit />,
-      },
-      {
-        path: "/withdraw",
-        element: <Withdraw />,
+        path: "/view-banner",
+        element: <ViewBanner />,
       },
     ],
   },
