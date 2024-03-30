@@ -1,39 +1,15 @@
 import useGetAllBranch from "../../hooks/Branch/useGetAllBranch";
-import { useState } from "react";
 import { handleDownLineId } from "../../utils/handleDownLineId";
-import Withdraw from "../../components/modal/Branch/Withdraw";
-import Deposit from "../../components/modal/Branch/Deposit";
-import ChangeStatus from "../../components/modal/Branch/ChangeStatus";
-import ChangePassword from "../../components/modal/Branch/ChangePassword";
+import useContextState from "../../hooks/useContextState";
 
 const ViewBranches = () => {
   const { branches } = useGetAllBranch();
-  const [showDeposit, setShowDeposit] = useState(false);
-  const [showWithdraw, setShowWithdraw] = useState(false);
-  const [downLineId, setDownLineId] = useState("");
-  const [showChangePassword, setShowChangePassword] = useState(false);
-  const [showChangeStatus, setShowChangeStatus] = useState(false);
+ const {setShowChangePassword,setShowChangeStatus,setShowDeposit,setShowWithdraw,setDownLineId,downLineId} = useContextState()
+
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      {showDeposit && (
-        <Deposit downlineId={downLineId} setShowDeposit={setShowDeposit} />
-      )}
-      {showWithdraw && (
-        <Withdraw downlineId={downLineId} setShowWithdraw={setShowWithdraw} />
-      )}
-      {showChangeStatus && (
-        <ChangeStatus
-          setShowChangeStatus={setShowChangeStatus}
-          downlineId={downLineId}
-        />
-      )}
-
-      {showChangePassword && (
-        <ChangePassword
-          setShowChangePassword={setShowChangePassword}
-          downlineId={downLineId}
-        />
-      )}
+  
       <div className="card">
         <h5 className="card-header">Branches</h5>
         <div className="table-responsive text-nowrap">

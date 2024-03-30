@@ -11,9 +11,31 @@ import disableDevtool from "disable-devtool";
 import Sidebar from "../ui/Sidebar/Sidebar";
 import NavListItem from "../ui/Navbar/NavListItem";
 import Footer from "../ui/Footer/Footer";
+import AddBranch from "../modal/Branch/AddBranch";
+import SocialLink from "../modal/Settings/SocialLink";
+import Deposit from "../modal/Branch/Deposit";
+import Withdraw from "../modal/Branch/Withdraw";
+import ChangeStatus from "../modal/Branch/ChangeStatus";
+import ChangePassword from "../modal/Branch/ChangePassword";
 
 const MainLayout = () => {
-  const { tokenLoading, showSidebar } = useContextState();
+  const {
+    tokenLoading,
+    showSidebar,
+    showAddBranch,
+    setShowAddBranch,
+    showSocialLink,
+    setShowSocialLink,
+    showChangePassword,
+    setShowChangePassword,
+    setShowDeposit,
+    showDeposit,
+    setShowWithdraw,
+    showWithdraw,
+    setShowChangeStatus,
+    showChangeStatus,
+    downLineId,
+  } = useContextState();
   const navigate = useNavigate();
 
   /* TODO */
@@ -63,6 +85,37 @@ const MainLayout = () => {
             {showSidebar ? <Sidebar /> : <NavListItem />}
 
             <Outlet />
+            {/* Modals start*/}
+            {showAddBranch && <AddBranch setShowAddBranch={setShowAddBranch} />}
+            {showSocialLink && (
+              <SocialLink setShowSocialLink={setShowSocialLink} />
+            )}
+            {showDeposit && (
+              <Deposit
+                downlineId={downLineId}
+                setShowDeposit={setShowDeposit}
+              />
+            )}
+            {showWithdraw && (
+              <Withdraw
+                downlineId={downLineId}
+                setShowWithdraw={setShowWithdraw}
+              />
+            )}
+            {showChangeStatus && (
+              <ChangeStatus
+                setShowChangeStatus={setShowChangeStatus}
+                downlineId={downLineId}
+              />
+            )}
+
+            {showChangePassword && (
+              <ChangePassword
+                setShowChangePassword={setShowChangePassword}
+                downlineId={downLineId}
+              />
+            )}
+            {/* Modals end*/}
             <Footer />
           </div>
 

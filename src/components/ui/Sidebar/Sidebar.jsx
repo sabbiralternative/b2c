@@ -2,15 +2,12 @@ import { useRef, useState } from "react";
 import useContextState from "../../../hooks/useContextState";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import { Link } from "react-router-dom";
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp,
-} from "react-icons/md";
 
 const Sidebar = () => {
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const { setShowSidebar, showSidebar } = useContextState();
+  const { setShowSidebar, showSidebar, setShowAddBranch, setShowSocialLink } =
+    useContextState();
   const sidebarRef = useRef();
   useCloseModalClickOutside(sidebarRef, () => {
     setShowSidebar(false);
@@ -25,7 +22,7 @@ const Sidebar = () => {
         userSelect: "none",
         transform: `translate(${showSidebar ? "0" : "-100%"}, 0)`,
         transition: "0.5s",
-        transitionDuration:'.3s'
+        transitionDuration: ".3s",
       }}
       //   "
       //   touch-action: none;
@@ -121,18 +118,17 @@ const Sidebar = () => {
         </div>
         <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
           <li className="menu-item">
-            <Link to="/" className="menu-link">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/"
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bx-home-circle"></i>
               <div data-i18n="Dashboards">Dashboards</div>
             </Link>
           </li>
 
-          <li
-            className={`menu-item ${showBranch ? "open" : ""}`}
-            style={{
-              display: "flex",
-            }}
-          >
+          <li className={`menu-item ${showBranch ? "open" : ""}`}>
             <a
               onClick={() => {
                 setShowBranch((prev) => !prev);
@@ -142,23 +138,12 @@ const Sidebar = () => {
             >
               <i className="menu-icon tf-icons bx bx-layout"></i>
               <div data-i18n="Branch">Branch</div>
-              {showBranch ? (
-                <MdOutlineKeyboardArrowUp
-                  style={{ marginTop: "3px" }}
-                  size={20}
-                />
-              ) : (
-                <MdOutlineKeyboardArrowDown
-                  style={{ marginTop: "3px" }}
-                  size={20}
-                />
-              )}
             </a>
 
             <ul className="menu-sub">
               <li className="menu-item">
                 <Link
-                  onClick={() => setShowBranch(false)}
+                  onClick={() => setShowSidebar(false)}
                   to="/view-branches"
                   className="menu-link"
                 >
@@ -168,7 +153,13 @@ const Sidebar = () => {
               </li>
 
               <li className="menu-item">
-                <a className="menu-link">
+                <a
+                  onClick={() => {
+                    setShowAddBranch(true);
+                    setShowSidebar(false);
+                  }}
+                  className="menu-link"
+                >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
                   <div data-i18n="Add Branch">Add Branch</div>
                 </a>
@@ -177,10 +168,7 @@ const Sidebar = () => {
           </li>
           <li className={`menu-item ${showSettings ? "open" : ""}`}>
             <a
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
+              style={{}}
               onClick={() => {
                 setShowSettings((prev) => !prev);
                 setShowBranch(false);
@@ -189,25 +177,18 @@ const Sidebar = () => {
             >
               <i className="menu-icon tf-icons bx bx-layout"></i>
               <div data-i18n="Settings">Settings</div>
-              {showSettings ? (
-                <MdOutlineKeyboardArrowUp
-                  style={{ marginTop: "3px" }}
-                  size={20}
-                />
-              ) : (
-                <MdOutlineKeyboardArrowDown
-                  style={{ marginTop: "3px" }}
-                  size={20}
-                />
-              )}
             </a>
 
             <ul className="menu-sub">
               <li className="menu-item">
-                <a className="menu-link">
+                <Link
+                  to="/view-banner"
+                  onClick={() => setShowSidebar(false)}
+                  className="menu-link"
+                >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
                   <div data-i18n="View Banners">View Banners</div>
-                </a>
+                </Link>
               </li>
 
               <li className="menu-item">
@@ -218,7 +199,13 @@ const Sidebar = () => {
               </li>
 
               <li className="menu-item">
-                <a className="menu-link">
+                <a
+                  onClick={() => {
+                    setShowSocialLink(true);
+                    setShowSidebar(false);
+                  }}
+                  className="menu-link"
+                >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
                   <div data-i18n="Social Links">Social Links</div>
                 </a>

@@ -12,6 +12,13 @@ const StateProvider = ({ children }) => {
   const [logo, setLogo] = useState("");
   const [icon, setIcon] = useState("");
   const [showSidebar,setShowSidebar] = useState(false)
+  const [showAddBranch, setShowAddBranch] = useState(false);
+  const [showSocialLink, setShowSocialLink] = useState(false);
+  const [showDeposit, setShowDeposit] = useState(false);
+  const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showChangeStatus, setShowChangeStatus] = useState(false);
+  const [downLineId, setDownLineId] = useState("");
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
@@ -63,7 +70,14 @@ const StateProvider = ({ children }) => {
     setAdminName,
     adminRole,
     setAdminRole,
-    showSidebar,setShowSidebar
+    showSidebar,setShowSidebar,
+    showAddBranch, setShowAddBranch,
+    showSocialLink, setShowSocialLink,
+    showDeposit, setShowDeposit,
+    showWithdraw, setShowWithdraw,
+    showChangePassword, setShowChangePassword,
+    showChangeStatus, setShowChangeStatus,
+    downLineId, setDownLineId
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

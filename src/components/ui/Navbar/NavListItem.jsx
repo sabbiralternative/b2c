@@ -1,18 +1,15 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
-import AddBranch from "../../modal/Branch/AddBranch";
-import SocialLink from "../../modal/Settings/SocialLink";
+import useContextState from "../../../hooks/useContextState";
 // import {
 //   MdOutlineKeyboardArrowDown,
 //   MdOutlineKeyboardArrowUp,
 // } from "react-icons/md";
 const NavListItem = () => {
+  const { setShowAddBranch, setShowSocialLink } = useContextState();
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showAddBranch, setShowAddBranch] = useState(false);
-  const [showSocialLink, setShowSocialLink] = useState(false);
- 
 
   const navigate = useNavigate();
   const settingsRef = useRef();
@@ -172,8 +169,6 @@ const NavListItem = () => {
         </div>
         <a className="menu-horizontal-next d-none"></a>
       </div>
-      {showAddBranch && <AddBranch setShowAddBranch={setShowAddBranch} />}
-      {showSocialLink && <SocialLink setShowSocialLink={setShowSocialLink} />}
     </aside>
   );
 };
