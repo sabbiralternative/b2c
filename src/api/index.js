@@ -53,9 +53,10 @@ export const API = {
   userAuthentication: config?.result?.endpoint?.userAuthentication,
   marketAnalysis: config?.result?.endpoint?.marketAnalysis,
   adminExposure: config?.result?.endpoint?.adminExposure,
-  viewBranches:config?.result?.endpoint?.viewBranches,
-  addBranch:config?.result?.endpoint?.addBranch,
-  socialLinks:config?.result?.endpoint?.socialLink
+  viewBranches: config?.result?.endpoint?.viewBranches,
+  addBranch: config?.result?.endpoint?.addBranch,
+  socialLinks: config?.result?.endpoint?.socialLink,
+  viewClients: config?.result?.endpoint?.viewClients,
 };
 
 export const Settings = {

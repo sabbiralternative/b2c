@@ -1,33 +1,34 @@
 import { useQuery } from "@tanstack/react-query";
-import { API } from "../../api";
-import useContextState from "../../hooks/useContextState";
-import handleRandomToken from "../../utils/handleRandomToken";
 import axios from "axios";
+import useContextState from "../../useContextState";
+import { API } from "../../../api";
+import handleRandomToken from "../../../utils/handleRandomToken";
 
-const useGetStatus = (type, downLineId) => {
+
+const useGetViewAllBanner = () => {
   const { token, tokenLoading } = useContextState();
-  const { data:status, refetchStatus } = useQuery({
-    queryKey: ["creditRef"],
+  const { data: banners = [], refetch: refetchAllBanners } = useQuery({
+    queryKey: ["banner"],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
       const payload = {
-        downlineId: downLineId,
-        type,
         token: generatedToken,
+        type: "getBanners",
       };
-      const res = await axios.post(API.downLineEdit, payload, {
+      const res = await axios.post(API.banner, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
       const data = res.data;
       if (data?.success) {
         return data?.result;
       }
     },
   });
-  return { status,refetchStatus };
+  return { banners, refetchAllBanners };
 };
 
-export default useGetStatus;
+export default useGetViewAllBanner;

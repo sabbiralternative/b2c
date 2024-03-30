@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import useContextState from "../useContextState";
 import axios from "axios";
-import { API } from "../../api";
-import handleRandomToken from "../../utils/handleRandomToken";
+import useContextState from "../../useContextState";
+import { API } from "../../../api";
+import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetAllSocialLink = () => {
   const { token, tokenLoading } = useContextState();

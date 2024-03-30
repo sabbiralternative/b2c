@@ -1,22 +1,20 @@
-import toast from "react-hot-toast";
-import useGetAllSocialLink from "../../../hooks/Settings/useGetAllSocialLink";
-import { useRef } from "react";
-import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import useContextState from "../../../hooks/useContextState";
+import useContextState from "../../../../hooks/useContextState";
+import handleRandomToken from "../../../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../../api";
+import { API } from "../../../../api";
+import toast from "react-hot-toast";
+import { useRef } from "react";
+import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 
-const SocialLink = ({ setShowSocialLink }) => {
-  const { socialLinks } = useGetAllSocialLink();
-  const socialLinkRef = useRef();
-  useCloseModalClickOutside(socialLinkRef, () => {
-    setShowSocialLink(false);
+const Deposit = ({ setShowDeposit, downlineId }) => {
+  const depositRef = useRef();
+  useCloseModalClickOutside(depositRef, () => {
+    setShowDeposit(false);
   });
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
-  const onSubmit = async ({ whatsapp, instagram, telegram }) => {
+  const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -26,20 +24,20 @@ const SocialLink = ({ setShowSocialLink }) => {
     //     token: generatedToken,
     //   });
     const payload = {
-      type: "updateSocial",
-      whatsapp,
-      instagram,
-      telegram,
+      downlineId,
+      type: "deposit",
+      amount,
+      remark,
       token: generatedToken,
     };
-    const res = await axios.post(API.socialLinks, payload, {
+    const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
-      setShowSocialLink(false);
+      setShowDeposit(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -53,13 +51,13 @@ const SocialLink = ({ setShowSocialLink }) => {
       style={{ display: "block" }}
     >
       <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content" ref={socialLinkRef}>
+        <div className="modal-content" ref={depositRef}>
           <div className="modal-header">
             <h5 className="modal-title" id="modalCenterTitle">
-              Social Links
+              Deposit
             </h5>
             <button
-              onClick={() => setShowSocialLink(false)}
+              onClick={() => setShowDeposit(false)}
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
@@ -74,17 +72,14 @@ const SocialLink = ({ setShowSocialLink }) => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-name"
                   >
-                    Whatsapp
+                    Amount
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("whatsapp", {
+                      type="number"
+                      {...register("amount", {
                         required: true,
                       })}
-                      type="text"
-                      name="username"
-                      defaultValue={socialLinks?.[0]?.whatsapp}
-                      required
                       className="form-control"
                       id="basic-default-name"
                       placeholder=""
@@ -96,39 +91,15 @@ const SocialLink = ({ setShowSocialLink }) => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-company"
                   >
-                    Instagram
+                    Remark
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("instagram", {
+                      type="text"
+                      {...register("remark", {
                         required: true,
                       })}
-                      type="text"
-                      name="password"
-                      required
                       className="form-control"
-                      defaultValue={socialLinks?.[0]?.instagram}
-                      id="basic-default-company"
-                      placeholder=""
-                    />
-                  </div>
-                </div>
-                <div className="row mb-3" id="ifsc_div">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    htmlFor="basic-default-company"
-                  >
-                    Telegram
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      {...register("telegram", {
-                        required: true,
-                      })}
-                      type="text"
-                      name="name"
-                      className="form-control"
-                      defaultValue={socialLinks?.[0]?.telegram}
                       id="basic-default-company"
                       placeholder=""
                     />
@@ -138,7 +109,7 @@ const SocialLink = ({ setShowSocialLink }) => {
             </div>
             <div className="modal-footer">
               <button
-                onClick={() => setShowSocialLink(false)}
+                onClick={() => setShowDeposit(false)}
                 type="button"
                 className="btn btn-label-secondary"
                 data-bs-dismiss="modal"
@@ -146,7 +117,7 @@ const SocialLink = ({ setShowSocialLink }) => {
                 Close
               </button>
               <button type="submit" className="btn btn-primary">
-                Add
+                Deposit
               </button>
             </div>
           </form>
@@ -156,4 +127,4 @@ const SocialLink = ({ setShowSocialLink }) => {
   );
 };
 
-export default SocialLink;
+export default Deposit;

@@ -1,21 +1,23 @@
-import axios from "axios";
-import { API } from "../../../api";
 import toast from "react-hot-toast";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import useContextState from "../../../hooks/useContextState";
-import { useForm } from "react-hook-form";
-import { useRef } from "react";
-import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
-const Withdraw = ({ downlineId, setShowWithdraw }) => {
-  const withdrawRef = useRef();
-  useCloseModalClickOutside(withdrawRef, () => {
-    setShowWithdraw(false);
+import { useRef } from "react";
+import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import { useForm } from "react-hook-form";
+import handleRandomToken from "../../../../utils/handleRandomToken";
+import useContextState from "../../../../hooks/useContextState";
+import axios from "axios";
+import { API } from "../../../../api";
+import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
+
+const SocialLink = ({ setShowSocialLink }) => {
+  const { socialLinks } = useGetAllSocialLink();
+  const socialLinkRef = useRef();
+  useCloseModalClickOutside(socialLinkRef, () => {
+    setShowSocialLink(false);
   });
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
-
-  const onSubmit = async ({ amount, remark }) => {
+  const onSubmit = async ({ whatsapp, instagram, telegram }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -25,20 +27,20 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
     //     token: generatedToken,
     //   });
     const payload = {
-      downlineId,
-      type: "withdraw",
-      amount,
-      remark,
+      type: "updateSocial",
+      whatsapp,
+      instagram,
+      telegram,
       token: generatedToken,
     };
-    const res = await axios.post(API.downLineEdit, payload, {
+    const res = await axios.post(API.socialLinks, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
-      setShowWithdraw(false);
+      setShowSocialLink(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -52,13 +54,13 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
       style={{ display: "block" }}
     >
       <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content" ref={withdrawRef}>
+        <div className="modal-content" ref={socialLinkRef}>
           <div className="modal-header">
             <h5 className="modal-title" id="modalCenterTitle">
-              Withdraw
+              Social Links
             </h5>
             <button
-              onClick={() => setShowWithdraw(false)}
+              onClick={() => setShowSocialLink(false)}
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
@@ -73,14 +75,17 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-name"
                   >
-                    Amount
+                    Whatsapp
                   </label>
                   <div className="col-sm-10">
                     <input
-                      type="number"
-                      {...register("amount", {
+                      {...register("whatsapp", {
                         required: true,
                       })}
+                      type="text"
+                      name="username"
+                      defaultValue={socialLinks?.[0]?.whatsapp}
+                      required
                       className="form-control"
                       id="basic-default-name"
                       placeholder=""
@@ -92,15 +97,39 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-company"
                   >
-                    Remark
+                    Instagram
                   </label>
                   <div className="col-sm-10">
                     <input
-                      type="text"
-                      {...register("remark", {
+                      {...register("instagram", {
                         required: true,
                       })}
+                      type="text"
+                      name="password"
+                      required
                       className="form-control"
+                      defaultValue={socialLinks?.[0]?.instagram}
+                      id="basic-default-company"
+                      placeholder=""
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3" id="ifsc_div">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    Telegram
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      {...register("telegram", {
+                        required: true,
+                      })}
+                      type="text"
+                      name="name"
+                      className="form-control"
+                      defaultValue={socialLinks?.[0]?.telegram}
                       id="basic-default-company"
                       placeholder=""
                     />
@@ -110,7 +139,7 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
             </div>
             <div className="modal-footer">
               <button
-                onClick={() => setShowWithdraw(false)}
+                onClick={() => setShowSocialLink(false)}
                 type="button"
                 className="btn btn-label-secondary"
                 data-bs-dismiss="modal"
@@ -118,7 +147,7 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
                 Close
               </button>
               <button type="submit" className="btn btn-primary">
-                Withdraw
+                Add
               </button>
             </div>
           </form>
@@ -128,4 +157,4 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
   );
 };
 
-export default Withdraw;
+export default SocialLink;

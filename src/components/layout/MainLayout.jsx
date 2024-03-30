@@ -1,7 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../ui/Navbar/Navbar";
-// import Sidebar from "../ui/Sidebar/Sidebar";
-// import Footer from "../ui/Footer/Footer";
 import { handleLogOut } from "../../utils/handleLogOut";
 import { Settings } from "../../api";
 import { jwtDecode } from "jwt-decode";
@@ -11,12 +9,12 @@ import disableDevtool from "disable-devtool";
 import Sidebar from "../ui/Sidebar/Sidebar";
 import NavListItem from "../ui/Navbar/NavListItem";
 import Footer from "../ui/Footer/Footer";
-import AddBranch from "../modal/Branch/AddBranch";
-import SocialLink from "../modal/Settings/SocialLink";
-import Deposit from "../modal/Branch/Deposit";
-import Withdraw from "../modal/Branch/Withdraw";
-import ChangeStatus from "../modal/Branch/ChangeStatus";
-import ChangePassword from "../modal/Branch/ChangePassword";
+import AddBranch from "../modal/HyperMaster/Branch/AddBranch";
+import SocialLink from "../modal/HyperMaster/Settings/SocialLink";
+import Deposit from "../modal/HyperMaster/Branch/Deposit";
+import Withdraw from "../modal/HyperMaster/Branch/Withdraw";
+import ChangeStatus from "../modal/HyperMaster/Branch/ChangeStatus";
+import ChangePassword from "../modal/HyperMaster/Branch/ChangePassword";
 
 const MainLayout = () => {
   const {
@@ -85,7 +83,7 @@ const MainLayout = () => {
             {showSidebar ? <Sidebar /> : <NavListItem />}
 
             <Outlet />
-            {/* Modals start*/}
+            {/* Modals start for Hyper_master*/}
             {showAddBranch && <AddBranch setShowAddBranch={setShowAddBranch} />}
             {showSocialLink && (
               <SocialLink setShowSocialLink={setShowSocialLink} />
@@ -115,7 +113,7 @@ const MainLayout = () => {
                 downlineId={downLineId}
               />
             )}
-            {/* Modals end*/}
+            {/* Modals end for Hyper_master*/}
             <Footer />
           </div>
 

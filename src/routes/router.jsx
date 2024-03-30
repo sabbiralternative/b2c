@@ -3,9 +3,8 @@ import App from "../App";
 import Login from "../pages/Login/Login";
 import Home from "../pages/Home/Home";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
-import ViewBanner from "../pages/Settings/ViewBanner/ViewBanner";
-import ViewBranches from "../pages/Branch/ViewBranches";
-
+import { HyperMasterRoutes } from "./HyperMasterRoutes";
+import { MasterRoutes } from "./MasterRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -20,14 +19,10 @@ export const router = createBrowserRouter([
         path: "/change-password",
         element: <ChangePassword />,
       },
-      {
-        path: "/view-branches",
-        element: <ViewBranches />,
-      },
-      {
-        path: "/view-banner",
-        element: <ViewBanner />,
-      },
+      /*Hyper Master Routes */
+      ...HyperMasterRoutes,
+      /* Master Routes */
+      ...MasterRoutes,
     ],
   },
   {

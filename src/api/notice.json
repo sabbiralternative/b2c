@@ -81,7 +81,8 @@
       "viewBranches":"https://admin.api7.live/api/b2c/viewBranch",
       "addBranch":"https://admin.api7.live/api/b2c/addBranch",
       "banner":"https://admin.api7.live/api/b2c/banners",
-      "socialLink":"https://admin.api7.live/api/b2c/social"
+      "socialLink":"https://admin.api7.live/api/b2c/social",
+      "viewClients":"https://admin.api7.live/api/b2c/viewClient"
     }
   },
   "success": true

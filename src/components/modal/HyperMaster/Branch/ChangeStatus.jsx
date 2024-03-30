@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
-import useGetStatus from "../../../pages/Branch/useGetStatus";
-import handleRandomToken from "../../../utils/handleRandomToken";
+import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import useGetStatus from "../../../../hooks/HyperMaster/Branch/useGetStatus";
+import handleRandomToken from "../../../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../../api";
-import useContextState from "../../../hooks/useContextState";
+import { API } from "../../../../api";
+import useContextState from "../../../../hooks/useContextState";
 import toast from "react-hot-toast";
 
 const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
@@ -16,7 +16,6 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
   const [betStatus, setBetStatus] = useState(false);
   const [userStatus, setUserStatus] = useState(false);
   const { status, refetchStatus } = useGetStatus("getStatus", downlineId);
-
 
   useEffect(() => {
     if (status?.bettingStatus === 0) {

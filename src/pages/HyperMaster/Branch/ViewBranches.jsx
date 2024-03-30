@@ -1,15 +1,20 @@
-import useGetAllBranch from "../../hooks/Branch/useGetAllBranch";
-import { handleDownLineId } from "../../utils/handleDownLineId";
-import useContextState from "../../hooks/useContextState";
+import { handleDownLineId } from "../../../utils/handleDownLineId";
+import useContextState from "../../../hooks/useContextState";
+import useGetAllBranch from "../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const ViewBranches = () => {
   const { branches } = useGetAllBranch();
- const {setShowChangePassword,setShowChangeStatus,setShowDeposit,setShowWithdraw,setDownLineId,downLineId} = useContextState()
-
+  const {
+    setShowChangePassword,
+    setShowChangeStatus,
+    setShowDeposit,
+    setShowWithdraw,
+    setDownLineId,
+    downLineId,
+  } = useContextState();
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-  
       <div className="card">
         <h5 className="card-header">Branches</h5>
         <div className="table-responsive text-nowrap">

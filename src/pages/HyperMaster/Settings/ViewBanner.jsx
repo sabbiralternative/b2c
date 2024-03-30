@@ -1,4 +1,5 @@
-import useGetViewAllBanner from "../../../hooks/Settings/useGetViewAllBanner";
+import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewAllBanner";
+
 
 const ViewBanner = () => {
   const { banners } = useGetViewAllBanner();

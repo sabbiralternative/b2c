@@ -1,19 +1,20 @@
-import { useForm } from "react-hook-form";
-import useContextState from "../../../hooks/useContextState";
-import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../../api";
+import { API } from "../../../../api";
 import toast from "react-hot-toast";
+import handleRandomToken from "../../../../utils/handleRandomToken";
+import useContextState from "../../../../hooks/useContextState";
+import { useForm } from "react-hook-form";
 import { useRef } from "react";
-import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 
-const Deposit = ({ setShowDeposit, downlineId }) => {
-  const depositRef = useRef();
-  useCloseModalClickOutside(depositRef, () => {
-    setShowDeposit(false);
+const Withdraw = ({ downlineId, setShowWithdraw }) => {
+  const withdrawRef = useRef();
+  useCloseModalClickOutside(withdrawRef, () => {
+    setShowWithdraw(false);
   });
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
+
   const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -25,7 +26,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
     //   });
     const payload = {
       downlineId,
-      type: "deposit",
+      type: "withdraw",
       amount,
       remark,
       token: generatedToken,
@@ -37,7 +38,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
-      setShowDeposit(false);
+      setShowWithdraw(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -51,13 +52,13 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
       style={{ display: "block" }}
     >
       <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content" ref={depositRef}>
+        <div className="modal-content" ref={withdrawRef}>
           <div className="modal-header">
             <h5 className="modal-title" id="modalCenterTitle">
-              Deposit
+              Withdraw
             </h5>
             <button
-              onClick={() => setShowDeposit(false)}
+              onClick={() => setShowWithdraw(false)}
               type="button"
               className="btn-close"
               data-bs-dismiss="modal"
@@ -109,7 +110,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
             </div>
             <div className="modal-footer">
               <button
-                onClick={() => setShowDeposit(false)}
+                onClick={() => setShowWithdraw(false)}
                 type="button"
                 className="btn btn-label-secondary"
                 data-bs-dismiss="modal"
@@ -117,7 +118,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
                 Close
               </button>
               <button type="submit" className="btn btn-primary">
-                Deposit
+                Withdraw
               </button>
             </div>
           </form>
@@ -127,4 +128,4 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
   );
 };
 
-export default Deposit;
+export default Withdraw;
