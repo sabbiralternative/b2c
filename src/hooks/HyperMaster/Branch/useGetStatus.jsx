@@ -6,7 +6,7 @@ import axios from "axios";
 
 const useGetStatus = (type, downLineId) => {
   const { token, tokenLoading } = useContextState();
-  const { data: status, refetchStatus } = useQuery({
+  const { data: status, refetch:refetchStatus } = useQuery({
     queryKey: ["creditRef"],
     enabled: !tokenLoading,
     queryFn: async () => {

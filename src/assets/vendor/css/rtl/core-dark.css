@@ -20789,7 +20789,7 @@ html:not([dir="rtl"]) .switches-stacked .switch {
 .was-validated .switch-input:valid ~ .switch-toggle-slider,
 .switch-input.invalid ~ .switch-toggle-slider,
 .switch-input.is-valid ~ .switch-toggle-slider {
-  border: 1px solid #39da8a !important;
+  /* border: 1px solid #39da8a !important; */
 }
 .was-validated .switch-input:valid:checked ~ .switch-toggle-slider,
 .switch-input.invalid:checked ~ .switch-toggle-slider,

@@ -48,12 +48,11 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
       },
     });
     const data = res.data;
-
     if (data?.success) {
+      refetchAllBranch();
       toast.success(data?.result?.message);
       setShowChangeStatus(false);
       refetchStatus();
-      refetchAllBranch()
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -61,83 +60,83 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
 
   return (
     <>
-    <div className="content-backdrop fade show"></div>
-    <div
-      className="modal fade show blurEffect"
-      id="modalCenter"
-      aria-modal="true"
-      role="dialog"
-      style={{ display: "block" }}
-    >
-      <div className="modal-dialog modal-dialog-centered" role="document">
-        <div className="modal-content" ref={statusRef}>
-          <div className="modal-header">
-            <h5 className="modal-title" id="modalCenterTitle">
-              Change Status
-            </h5>
-            <button
-              onClick={() => setShowChangeStatus(false)}
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <form onSubmit={handleChangeUserLock}>
-            <div className="modal-body">
-              <div className="row">
-                <div className="col mb-3">
-                  <label className="switch">
-                    <input
-                      onChange={() => setUserStatus((prev) => !prev)}
-                      type="checkbox"
-                      className="switch-input is-valid"
-                      checked={userStatus}
-                    />
-                    <span className="switch-toggle-slider">
-                      <span className="switch-on"></span>
-                      <span className="switch-off"></span>
-                    </span>
-                    <span className="switch-label">User Status</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col mb-3">
-                  <label className="switch">
-                    <input
-                      onChange={() => setBetStatus((prev) => !prev)}
-                      type="checkbox"
-                      className="switch-input"
-                      checked={betStatus}
-                    />
-                    <span className="switch-toggle-slider">
-                      <span className="switch-on"></span>
-                      <span className="switch-off"></span>
-                    </span>
-                    <span className="switch-label">Betting Status</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer">
+      <div className="content-backdrop fade show"></div>
+      <div
+        className="modal fade show blurEffect"
+        id="modalCenter"
+        aria-modal="true"
+        role="dialog"
+        style={{ display: "block" }}
+      >
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content" ref={statusRef}>
+            <div className="modal-header">
+              <h5 className="modal-title" id="modalCenterTitle">
+                Change Status
+              </h5>
               <button
                 onClick={() => setShowChangeStatus(false)}
                 type="button"
-                className="btn btn-label-secondary"
+                className="btn-close"
                 data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" className="btn btn-primary">
-                Save changes
-              </button>
+                aria-label="Close"
+              ></button>
             </div>
-          </form>
+            <form onSubmit={handleChangeUserLock}>
+              <div className="modal-body">
+                <div className="row">
+                  <div className="col mb-3">
+                    <label className="switch">
+                      <input
+                        onChange={() => setUserStatus((prev) => !prev)}
+                        type="checkbox"
+                        className="switch-input is-valid"
+                        checked={userStatus}
+                      />
+                      <span className="switch-toggle-slider">
+                        <span className="switch-on"></span>
+                        <span className="switch-off"></span>
+                      </span>
+                      <span className="switch-label">User Status</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col mb-3">
+                    <label className="switch">
+                      <input
+                        onChange={() => setBetStatus((prev) => !prev)}
+                        type="checkbox"
+                        className="switch-input"
+                        checked={betStatus}
+                      />
+                      <span className="switch-toggle-slider">
+                        <span className="switch-on"></span>
+                        <span className="switch-off"></span>
+                      </span>
+                      <span className="switch-label">Betting Status</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  onClick={() => setShowChangeStatus(false)}
+                  type="button"
+                  className="btn btn-label-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
