@@ -2,7 +2,12 @@ a {
   cursor: pointer;
 }
 
-.blurEffect {
-  /* background-color: rgba(255, 255, 255, 0.142); */
- 
+div:where(.swal2-container) div:where(.swal2-popup) {
+  background: #283144 !important;
+}
+div:where(.swal2-container) h2:where(.swal2-title){
+  color: white !important;
+}
+div:where(.swal2-container) .swal2-html-container{
+  color: white !important;
 }

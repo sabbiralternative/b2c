@@ -6,7 +6,7 @@
   "result": {
     "settings": {
       "siteTitle": "b2c",
-      "siteUrl": "b2c.com",
+      "siteUrl": "a23money.com",
       "interval": 600,
       "casino": "aura",
       "registration": true,
@@ -82,7 +82,8 @@
       "addBranch":"https://admin.api7.live/api/b2c/addBranch",
       "banner":"https://admin.api7.live/api/b2c/banners",
       "socialLink":"https://admin.api7.live/api/b2c/social",
-      "viewClients":"https://admin.api7.live/api/b2c/viewClient"
+      "viewClients":"https://admin.api7.live/api/b2c/viewClient",
+      "uploadScreenshot": "https://b2c.bet/deposit/up.php"
     }
   },
   "success": true

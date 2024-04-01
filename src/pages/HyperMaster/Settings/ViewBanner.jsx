@@ -1,8 +1,53 @@
+import { useNavigate } from "react-router-dom";
 import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewAllBanner";
-
+import Swal from "sweetalert2";
+import axios from "axios";
+import { API, Settings } from "../../../api";
+import handleRandomToken from "../../../utils/handleRandomToken";
+import useContextState from "../../../hooks/useContextState";
+import toast from "react-hot-toast";
 
 const ViewBanner = () => {
-  const { banners } = useGetViewAllBanner();
+  const { token } = useContextState();
+  const { banners, refetchAllBanners } = useGetViewAllBanner();
+  const navigate = useNavigate();
+  const handleNavigate = (banner, link) => {
+    localStorage.removeItem("bannerId");
+    localStorage.setItem("bannerId", banner?.banner_id);
+    navigate(link);
+  };
+
+  const handleDeleteBanner = async (banner) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const generatedToken = handleRandomToken();
+        const payload = {
+          type: "deleteBanner",
+          bannerId: banner?.banner_id,
+          site: Settings?.siteUrl,
+          token: generatedToken,
+        };
+        const res = await axios.post(API.banner, payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = res.data;
+        if (data?.success) {
+          refetchAllBanners();
+          toast.success(data?.result?.message);
+        } else {
+          toast.error(data?.error?.status?.[0]?.description);
+        }
+      }
+    });
+  };
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -34,21 +79,22 @@ const ViewBanner = () => {
 
                     <td>
                       <span className="badge bg-label-primary me-1">
-                        {banner?.status == 1 ? 'Active':'DeActive'}
-                
+                        {banner?.status == 1 ? "active" : "inactive"}
                       </span>
                     </td>
 
                     <td>
                       <a
-                        href="edit_banner.php?banner_id=14"
+                        style={{ color: "white" }}
+                        onClick={() => handleNavigate(banner, "/edit-banner")}
                         className="btn btn-icon btn-sm btn-success"
                       >
                         E
                       </a>
                       &nbsp;
                       <a
-                        href="delete_banner.php?banner_id=14"
+                        onClick={() => handleDeleteBanner(banner)}
+                        style={{ color: "white" }}
                         className="btn btn-icon btn-sm btn-danger"
                       >
                         D

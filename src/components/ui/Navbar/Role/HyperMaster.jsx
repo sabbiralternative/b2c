@@ -127,7 +127,7 @@ const HyperMaster = () => {
           </li>
 
           <li className="menu-item">
-            <a className="menu-link">
+            <a   onClick={() => handleNavigate("add-banner")} className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Banner">Add Banner</div>
             </a>
