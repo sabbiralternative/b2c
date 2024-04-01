@@ -10,7 +10,6 @@ const ViewBranches = () => {
     setShowDeposit,
     setShowWithdraw,
     setDownLineId,
-    downLineId,
   } = useContextState();
 
   return (
@@ -32,7 +31,7 @@ const ViewBranches = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {branches?.map((branch, i) => {
-    
+                console.log(branch);
                 return (
                   <tr key={i}>
                     <td>
@@ -58,7 +57,7 @@ const ViewBranches = () => {
                         onClick={() =>
                           handleDownLineId(
                             setShowDeposit,
-                            downLineId,
+                            branch?.username,
                             setDownLineId
                           )
                         }
@@ -71,7 +70,7 @@ const ViewBranches = () => {
                         onClick={() =>
                           handleDownLineId(
                             setShowWithdraw,
-                            downLineId,
+                            branch?.username,
                             setDownLineId
                           )
                         }
@@ -84,7 +83,7 @@ const ViewBranches = () => {
                         onClick={() =>
                           handleDownLineId(
                             setShowChangePassword,
-                            downLineId,
+                            branch?.username,
                             setDownLineId
                           )
                         }
@@ -97,7 +96,7 @@ const ViewBranches = () => {
                         onClick={() =>
                           handleDownLineId(
                             setShowChangeStatus,
-                            downLineId,
+                            branch?.username,
                             setDownLineId
                           )
                         }
@@ -105,68 +104,6 @@ const ViewBranches = () => {
                       >
                         S
                       </a>
-                      {/* &nbsp;
-                      <button
-                        type="button"
-                        className="btn btn-icon btn-sm btn-primary"
-                      >
-                        {" "}
-                        T
-                      </button>{" "}
-                      &nbsp;
-                      <button
-                        type="button"
-                        className="btn btn-icon btn-sm btn-warning"
-                      >
-                        {" "}
-                        E
-                      </button>{" "}
-                      &nbsp;
-                      <button
-                        type="button"
-                        className="btn btn-icon btn-sm btn-info"
-                      >
-                        {" "}
-                        P
-                      </button>{" "}
-                      &nbsp;
-                      <button
-                        type="button"
-                        className="btn btn-icon btn-sm btn-dark"
-                      >
-                        {" "}
-                        S
-                      </button>{" "} */}
-                      {/* &nbsp;
-                      <div className="dropdown">
-                        <button
-                          type="button"
-                          className="btn p-0 dropdown-toggle hide-arrow"
-                          data-bs-toggle="dropdown"
-                        >
-                          <i className="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div className="dropdown-menu">
-                          <a className="dropdown-item">
-                            <i className="bx bxs-plus-circle"></i> Deposit
-                          </a>
-                          <a className="dropdown-item">
-                            <i className="bx bxs-minus-circle"></i> Withdraw
-                          </a>
-                          <a className="dropdown-item">
-                            <i className="bx bxs-bank"></i> Transfer
-                          </a>
-                          <a className="dropdown-item">
-                            <i className="bx bxs-lock-alt"></i> Change Password
-                          </a>
-                          <a className="dropdown-item">
-                            <i className="bx bxs-edit-alt"></i> Edit
-                          </a>
-                          <a className="dropdown-item">
-                            <i className="bx bxs-report"></i> D/W Statement
-                          </a>
-                        </div>
-                      </div> */}
                     </td>
                   </tr>
                 );
