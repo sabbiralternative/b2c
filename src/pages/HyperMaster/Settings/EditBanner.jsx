@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import useGetSingleBanner from "../../../hooks/HyperMaster/Settings/useGetSingleBanner";
 import handleRandomToken from "../../../utils/handleRandomToken";
-import { API } from "../../../api";
+import { API, Settings } from "../../../api";
 import axios from "axios";
 import useContextState from "../../../hooks/useContextState";
 import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewAllBanner";
@@ -16,6 +16,8 @@ const EditBanner = () => {
   const { singleBanner, isLoading, isFetching } = useGetSingleBanner(bannerId);
   const { refetchAllBanners } = useGetViewAllBanner();
   const onSubmit = async ({ status, priority }) => {
+
+    console.log(status);
     const generatedToken = handleRandomToken();
     const payload = {
       type: "updateBanner",
@@ -23,6 +25,7 @@ const EditBanner = () => {
       status,
       priority,
       token: generatedToken,
+      site: Settings.siteUrl,
     };
     const res = await axios.post(API.banner, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -41,7 +44,7 @@ const EditBanner = () => {
   if (isLoading || isFetching || singleBanner?.length === 0) {
     return;
   }
-  
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 breadcrumb-wrapper mb-4">

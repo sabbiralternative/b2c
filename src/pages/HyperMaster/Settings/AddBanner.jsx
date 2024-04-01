@@ -38,6 +38,7 @@ const AddBanner = () => {
   }, [image, token]);
 
   const onSubmit = async ({ status, priority }) => {
+ 
     const generatedToken = handleRandomToken();
     const payload = {
       type: "addBanner",
@@ -122,7 +123,7 @@ const AddBanner = () => {
                         })}
                         className="select2 form-select select2-hidden-accessible"
                       >
-                        <option selected disabled>
+                        <option selected value="" disabled>
                           Select
                         </option>
                         <option value="1">Active</option>

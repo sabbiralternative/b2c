@@ -78,7 +78,13 @@ const ViewBanner = () => {
                     <td>{banner?.priority}</td>
 
                     <td>
-                      <span className="badge bg-label-primary me-1">
+                      <span
+                        className={`badge me-1 ${
+                          banner?.status == 1
+                            ? "bg-label-primary"
+                            : "bg-label-danger"
+                        }`}
+                      >
                         {banner?.status == 1 ? "active" : "inactive"}
                       </span>
                     </td>
