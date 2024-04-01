@@ -20776,7 +20776,7 @@ html:not([dir="rtl"]) .switches-stacked .switch {
 .was-validated .switch-input:valid ~ .switch-label,
 .switch-input.invalid ~ .switch-label,
 .switch-input.is-valid ~ .switch-label {
-  color: #39da8a;
+  /* color: #39da8a; */
 }
 .was-validated .switch-input:valid ~ .valid-feedback,
 .was-validated .switch-input:valid ~ .valid-tooltip,

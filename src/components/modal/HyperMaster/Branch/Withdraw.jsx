@@ -6,8 +6,11 @@ import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const Withdraw = ({ downlineId, setShowWithdraw }) => {
+  const { refetchAllBranch } = useGetAllBranch();
+
   const withdrawRef = useRef();
   useCloseModalClickOutside(withdrawRef, () => {
     setShowWithdraw(false);
@@ -38,6 +41,7 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
+      refetchAllBranch()
       setShowWithdraw(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);

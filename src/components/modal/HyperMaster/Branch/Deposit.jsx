@@ -6,8 +6,10 @@ import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const Deposit = ({ setShowDeposit, downlineId }) => {
+  const { refetchAllBranch } = useGetAllBranch();
   const depositRef = useRef();
   useCloseModalClickOutside(depositRef, () => {
     setShowDeposit(false);
@@ -37,6 +39,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
+      refetchAllBranch()
       setShowDeposit(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);

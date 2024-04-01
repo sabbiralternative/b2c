@@ -26,6 +26,7 @@ const useGetStatus = (type, downLineId) => {
         return data?.result;
       }
     },
+    gcTime:0
   });
   return { status, refetchStatus };
 };

@@ -6,8 +6,10 @@ import axios from "axios";
 import { API } from "../../../../api";
 import useContextState from "../../../../hooks/useContextState";
 import toast from "react-hot-toast";
+import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
+  const { refetchAllBranch } = useGetAllBranch();
   const statusRef = useRef();
   useCloseModalClickOutside(statusRef, () => {
     setShowChangeStatus(false);
@@ -51,6 +53,7 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
       toast.success(data?.result?.message);
       setShowChangeStatus(false);
       refetchStatus();
+      refetchAllBranch()
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
