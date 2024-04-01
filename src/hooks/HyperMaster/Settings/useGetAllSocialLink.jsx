@@ -6,7 +6,11 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetAllSocialLink = () => {
   const { token, tokenLoading } = useContextState();
-  const { data: socialLinks = [], refetch: refetchAllSocialLinks } = useQuery({
+  const {
+    data: socialLinks = [],
+    refetch: refetchAllSocialLinks,
+    isLoading,
+  } = useQuery({
     queryKey: ["socialLink"],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -26,9 +30,8 @@ const useGetAllSocialLink = () => {
         return data?.result;
       }
     },
-    gcTime:0
   });
-  return { socialLinks, refetchAllSocialLinks };
+  return { socialLinks, refetchAllSocialLinks, isLoading };
 };
 
 export default useGetAllSocialLink;

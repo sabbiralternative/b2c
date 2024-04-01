@@ -1,5 +1,4 @@
 import toast from "react-hot-toast";
-
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
@@ -10,14 +9,18 @@ import { API } from "../../../../api";
 import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
 
 const SocialLink = ({ setShowSocialLink }) => {
-  const { socialLinks, refetchAllSocialLinks } = useGetAllSocialLink();
+  const { socialLinks, refetchAllSocialLinks, isLoading } =
+    useGetAllSocialLink();
   const socialLinkRef = useRef();
   useCloseModalClickOutside(socialLinkRef, () => {
     setShowSocialLink(false);
   });
-  const { register, handleSubmit, reset } = useForm();
+
+  const { register, handleSubmit, reset } = useForm({});
   const { token } = useContextState();
+
   const onSubmit = async ({ whatsapp, instagram, telegram }) => {
+    console.log({ whatsapp }, { instagram }, { telegram });
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -46,8 +49,9 @@ const SocialLink = ({ setShowSocialLink }) => {
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
-
-  // console.log(socialLinks);
+  if (isLoading) {
+    return;
+  }
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -84,10 +88,10 @@ const SocialLink = ({ setShowSocialLink }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("whatsapp")}
+                        {...register("whatsapp", {
+                          value: socialLinks?.[0]?.whatsapp,
+                        })}
                         type="text"
-                        defaultValue={socialLinks?.[0]?.whatsapp}
-                    
                         className="form-control"
                         id="basic-default-name"
                         placeholder=""
@@ -103,11 +107,11 @@ const SocialLink = ({ setShowSocialLink }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("instagram")}
+                        {...register("instagram", {
+                          value: socialLinks?.[0]?.instagram,
+                        })}
                         type="text"
-                 
                         className="form-control"
-                        defaultValue={socialLinks?.[0]?.instagram}
                         id="basic-default-company"
                         placeholder=""
                       />
@@ -122,10 +126,11 @@ const SocialLink = ({ setShowSocialLink }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("telegram")}
+                        {...register("telegram", {
+                          value: socialLinks?.[0]?.telegram,
+                        })}
                         type="text"
                         className="form-control"
-                        defaultValue={socialLinks?.[0]?.telegram}
                         id="basic-default-company"
                         placeholder=""
                       />
