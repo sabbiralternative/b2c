@@ -46,6 +46,8 @@ const SocialLink = ({ setShowSocialLink }) => {
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
+
+  // console.log(socialLinks);
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -82,12 +84,10 @@ const SocialLink = ({ setShowSocialLink }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("whatsapp", {
-                          required: true,
-                        })}
+                        {...register("whatsapp")}
                         type="text"
                         defaultValue={socialLinks?.[0]?.whatsapp}
-                        required
+                    
                         className="form-control"
                         id="basic-default-name"
                         placeholder=""
@@ -103,11 +103,9 @@ const SocialLink = ({ setShowSocialLink }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("instagram", {
-                          required: true,
-                        })}
+                        {...register("instagram")}
                         type="text"
-                        required
+                 
                         className="form-control"
                         defaultValue={socialLinks?.[0]?.instagram}
                         id="basic-default-company"
@@ -124,9 +122,7 @@ const SocialLink = ({ setShowSocialLink }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("telegram", {
-                          required: true,
-                        })}
+                        {...register("telegram")}
                         type="text"
                         className="form-control"
                         defaultValue={socialLinks?.[0]?.telegram}

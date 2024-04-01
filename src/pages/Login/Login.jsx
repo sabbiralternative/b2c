@@ -39,7 +39,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+  
         setGetToken((prev) => !prev);
         if (data?.success) {
           localStorage.setItem("adminToken", data?.result?.token);

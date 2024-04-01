@@ -8,7 +8,6 @@ const Navbar = () => {
   const {
     adminName,
     adminRole,
-    showChangePassword,
     setShowSidebar,
   } = useContextState();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -17,7 +16,7 @@ const Navbar = () => {
   useCloseModalClickOutside(dropdownRef, () => {
     setShowDropdown(false);
   });
-  console.log(showChangePassword);
+
   return (
     <nav
       className="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme"

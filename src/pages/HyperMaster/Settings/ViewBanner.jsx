@@ -3,7 +3,7 @@ import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewA
 
 const ViewBanner = () => {
   const { banners } = useGetViewAllBanner();
-  console.log(banners);
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
