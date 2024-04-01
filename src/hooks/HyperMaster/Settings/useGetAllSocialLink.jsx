@@ -26,6 +26,7 @@ const useGetAllSocialLink = () => {
         return data?.result;
       }
     },
+    gcTime:0
   });
   return { socialLinks, refetchAllSocialLinks };
 };

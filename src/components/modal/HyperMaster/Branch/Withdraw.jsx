@@ -44,8 +44,10 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
     }
   };
   return (
+    <>
+    <div className="content-backdrop fade show"></div>
     <div
-      className="modal fade show"
+      className="modal fade show blurEffect"
       id="modalCenter"
       aria-modal="true"
       role="dialog"
@@ -125,6 +127,7 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -57,8 +57,10 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
   };
 
   return (
+    <>
+    <div className="content-backdrop fade show"></div>
     <div
-      className="modal fade show"
+      className="modal fade show blurEffect"
       id="modalCenter"
       aria-modal="true"
       role="dialog"
@@ -133,6 +135,7 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

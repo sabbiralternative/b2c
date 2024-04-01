@@ -117,7 +117,7 @@ const MainLayout = () => {
             <Footer />
           </div>
 
-          <div className="content-backdrop fade"></div>
+          <div className="content-backdrop fade "></div>
         </div>
       </div>
     </div>

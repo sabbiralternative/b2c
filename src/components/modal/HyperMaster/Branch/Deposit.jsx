@@ -43,8 +43,10 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
     }
   };
   return (
+    <>
+    <div className="content-backdrop fade show"></div>
     <div
-      className="modal fade show"
+      className="modal fade show blurEffect"
       id="modalCenter"
       aria-modal="true"
       role="dialog"
@@ -124,6 +126,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

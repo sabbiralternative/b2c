@@ -47,13 +47,17 @@ const AddBranch = ({ setShowAddBranch }) => {
     }
   };
   return (
+    <>
+     <div className="content-backdrop fade show"></div>
     <div
-      className="modal fade show"
+      className="modal fade show blurEffect"
       id="modalCenter"
       aria-modal="true"
       role="dialog"
-      style={{ display: "block" }}
+      style={{ display: "block", }}
+      
     >
+   
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content" ref={addBranchRef}>
           <div className="modal-header">
@@ -147,6 +151,7 @@ const AddBranch = ({ setShowAddBranch }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
