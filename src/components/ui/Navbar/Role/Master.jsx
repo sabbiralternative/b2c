@@ -76,7 +76,7 @@ const Master = () => {
           </li>
 
           <li className="menu-item">
-            <a href="add_client.php" className="menu-link">
+            <a onClick={()=> handleNavigate('add-client')} className="menu-link">
               <i className="menu-icon tf-icons bx bxs-user"></i>
               <div data-i18n="Add Client">Add Client</div>
             </a>
