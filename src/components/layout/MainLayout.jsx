@@ -18,6 +18,7 @@ import ClientDeposit from "../modal/Master/Client/Deposit";
 import ChangeStatus from "../modal/ChangeStatus";
 import ChangePassword from "../modal/ChangePassword";
 import EditPendingDeposit from "../modal/Master/Deposit/EditPendingDeposit";
+import EditPendingWithdraw from "../modal/Master/Withdraw/EditPendingWithdraw";
 
 const MainLayout = () => {
   const {
@@ -40,6 +41,8 @@ const MainLayout = () => {
     setClientDeposit,
     editPendingDeposit,
     setEditPendingDeposit,
+    editPendingWithdraw,
+    setEditPendingWithdraw,
   } = useContextState();
   const navigate = useNavigate();
 
@@ -133,6 +136,12 @@ const MainLayout = () => {
               <EditPendingDeposit
                 editPendingDeposit={editPendingDeposit}
                 setEditPendingDeposit={setEditPendingDeposit}
+              />
+            )}
+            {editPendingWithdraw && (
+              <EditPendingWithdraw
+                editPendingWithdraw={editPendingWithdraw}
+                setEditPendingWithdraw={setEditPendingWithdraw}
               />
             )}
             <Footer />

@@ -230,20 +230,29 @@ const Master = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a href="view_withdraw.php?status=0" className="menu-link">
+            <a
+              onClick={() => handleNavigate("pending-withdraw")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Pending Withdraw">Pending Withdraw</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="view_withdraw.php?status=1" className="menu-link">
+            <a
+              onClick={() => handleNavigate("completed-withdraw")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Completed Withdraw">Completed Withdraw</div>
             </a>
           </li>
           <li className="menu-item">
-            <a href="view_withdraw.php?status=2" className="menu-link">
+            <a
+              onClick={() => handleNavigate("rejected-withdraw")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
             </a>

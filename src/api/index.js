@@ -15,7 +15,6 @@ export const API = {
   buttonValue: config?.result?.endpoint?.buttonValue,
   register: config?.result?.endpoint?.register,
   deposit: config?.result?.endpoint?.depositIframe,
-  withdraw: config?.result?.endpoint?.withdrawIframe,
   ourCasino: config?.result?.endpoint?.auraCasino,
   diamondCasino: config?.result?.endpoint?.diamondCasino,
   auraCasino: config?.result?.endpoint?.auraCasino,
@@ -60,7 +59,8 @@ export const API = {
   registerPanel:config?.result?.endpoint?.registerPanel,
   payments:config?.result?.endpoint?.payments,
   depositClient:config?.result?.endpoint?.depositClient,
-  utr:config?.result?.endpoint?.utr
+  utr:config?.result?.endpoint?.utr,
+  withdraw:config?.result?.endpoint?.withdraw
   
 };
 

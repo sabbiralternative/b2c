@@ -20,13 +20,18 @@ const EditPendingDeposit = ({ setEditPendingDeposit }) => {
     type: "viewSingleUTR",
     depositId: downLineId,
   };
-  
-  const {refetchAllUTRs} = useGetALLDeposit()
+
+  const pendingPayload = {
+    type: "viewUTR",
+    status: "PENDING",
+  };
+
+  const { refetchAllUTRs } = useGetALLDeposit(pendingPayload);
   const { singleDeposit } = useGetSingleDeposit(payload);
   const onSubmit = async ({ remark, status }) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      downLineId,
+      depositId: downLineId,
       remark,
       status,
       type: "editUTR",
@@ -38,6 +43,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit }) => {
     const data = res.data;
     console.log(data);
     if (data?.success) {
+      refetchAllUTRs();
       toast.success(data?.result?.message);
       reset();
       setEditPendingDeposit(false);
@@ -46,7 +52,9 @@ const EditPendingDeposit = ({ setEditPendingDeposit }) => {
     }
   };
   return (
-    <div
+<>
+<div className="content-backdrop fade show"></div>
+<div
       className="modal fade show"
       id="modalCenter"
       aria-modal="true"
@@ -169,6 +177,8 @@ const EditPendingDeposit = ({ setEditPendingDeposit }) => {
         </div>
       </div>
     </div>
+
+</>
   );
 };
 
