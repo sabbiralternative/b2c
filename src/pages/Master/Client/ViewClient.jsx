@@ -3,13 +3,19 @@ import useContextState from "../../../hooks/useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../api";
-import { useState } from "react";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 
 const ViewClient = () => {
-  const [clientData, setClientData] = useState([]);
+
   const { register, handleSubmit, reset } = useForm();
-  const { token, setClientDeposit, setDownLineId } = useContextState();
+  const {
+    token,
+    setClientDeposit,
+    setDownLineId,
+    setShowChangePassword,
+    setShowChangeStatus,
+    clientData, setClientData
+  } = useContextState();
   const onSubmit = async ({ searchId }) => {
     const generatedToken = handleRandomToken();
     const payload = {
@@ -81,6 +87,7 @@ const ViewClient = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {clientData?.map((client, i) => {
+                console.log(client);
                 return (
                   <tr key={i}>
                     <td>
@@ -130,14 +137,28 @@ const ViewClient = () => {
                       </a>
                       &nbsp;
                       <a
-                        href="change_password.php?downline_id=user0077"
+                        style={{ color: "white" }}
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowChangePassword,
+                            client?.username,
+                            setDownLineId
+                          )
+                        }
                         className="btn btn-icon btn-sm btn-info"
                       >
                         P
                       </a>
                       &nbsp;
                       <a
-                        href="change_status.php?downline_id=user0077"
+                        style={{ color: "white" }}
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowChangeStatus,
+                            client?.username,
+                            setDownLineId
+                          )
+                        }
                         className="btn btn-icon btn-sm btn-dark"
                       >
                         S

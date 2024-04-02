@@ -1,20 +1,22 @@
 import { useEffect, useRef, useState } from "react";
-import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
-import useGetStatus from "../../../../hooks/HyperMaster/Branch/useGetStatus";
-import handleRandomToken from "../../../../utils/handleRandomToken";
+import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
+import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
+import handleRandomToken from "../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../../../api";
-import useContextState from "../../../../hooks/useContextState";
+import { API } from "../../api";
+import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
-import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
+import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
+import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 
 const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
   const { refetchAllBranch } = useGetAllBranch();
+  const {refetchClient} = useRefetchClient(downlineId)
   const statusRef = useRef();
   useCloseModalClickOutside(statusRef, () => {
     setShowChangeStatus(false);
   });
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
   const [betStatus, setBetStatus] = useState(false);
   const [userStatus, setUserStatus] = useState(false);
   const { status, refetchStatus } = useGetStatus("getStatus", downlineId);
@@ -49,7 +51,12 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
     });
     const data = res.data;
     if (data?.success) {
-      refetchAllBranch();
+      if (adminRole === "hyper_master") {
+        refetchAllBranch();
+      }else{
+        refetchClient()
+      }
+
       toast.success(data?.result?.message);
       setShowChangeStatus(false);
       refetchStatus();

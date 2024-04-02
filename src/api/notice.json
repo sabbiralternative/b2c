@@ -85,8 +85,9 @@
       "viewClients": "https://admin.api7.live/api/b2c/viewClient",
       "uploadScreenshot": "https://b2c.bet/deposit/up.php",
       "registerPanel": "https://api7.live/api/exchange/diamond/registerPanel",
-      "payments":"https://admin.api7.live/api/b2c/payments",
-      "depositClient":"https://admin.api7.live/api/b2c/depositClient"
+      "payments": "https://admin.api7.live/api/b2c/payments",
+      "depositClient": "https://admin.api7.live/api/b2c/depositClient",
+      "utr": "https://admin.api7.live/api/b2c/utr"
     }
   },
   "success": true

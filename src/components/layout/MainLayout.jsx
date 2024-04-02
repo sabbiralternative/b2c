@@ -13,9 +13,11 @@ import AddBranch from "../modal/HyperMaster/Branch/AddBranch";
 import SocialLink from "../modal/HyperMaster/Settings/SocialLink";
 import Deposit from "../modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../modal/HyperMaster/Branch/Withdraw";
-import ChangeStatus from "../modal/HyperMaster/Branch/ChangeStatus";
-import ChangePassword from "../modal/HyperMaster/Branch/ChangePassword";
+
 import ClientDeposit from "../modal/Master/Client/Deposit";
+import ChangeStatus from "../modal/ChangeStatus";
+import ChangePassword from "../modal/ChangePassword";
+import EditPendingDeposit from "../modal/Master/Deposit/EditPendingDeposit";
 
 const MainLayout = () => {
   const {
@@ -35,7 +37,9 @@ const MainLayout = () => {
     showChangeStatus,
     downLineId,
     clientDeposit,
-    setClientDeposit
+    setClientDeposit,
+    editPendingDeposit,
+    setEditPendingDeposit,
   } = useContextState();
   const navigate = useNavigate();
 
@@ -103,13 +107,14 @@ const MainLayout = () => {
                 setShowWithdraw={setShowWithdraw}
               />
             )}
+            {/* Modals end for Hyper_master and master*/}
             {showChangeStatus && (
               <ChangeStatus
                 setShowChangeStatus={setShowChangeStatus}
                 downlineId={downLineId}
               />
             )}
-
+            {/* Modals end for Hyper_master and master*/}
             {showChangePassword && (
               <ChangePassword
                 setShowChangePassword={setShowChangePassword}
@@ -118,10 +123,18 @@ const MainLayout = () => {
             )}
             {/* Modals end for Hyper_master*/}
             {/* Modals end for master*/}
-            {clientDeposit && <ClientDeposit 
-            setClientDeposit={setClientDeposit}
-            downlineId={downLineId}
-            />}
+            {clientDeposit && (
+              <ClientDeposit
+                setClientDeposit={setClientDeposit}
+                downlineId={downLineId}
+              />
+            )}
+            {editPendingDeposit && (
+              <EditPendingDeposit
+                editPendingDeposit={editPendingDeposit}
+                setEditPendingDeposit={setEditPendingDeposit}
+              />
+            )}
             <Footer />
           </div>
 

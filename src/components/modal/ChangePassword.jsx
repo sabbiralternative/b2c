@@ -1,22 +1,23 @@
 import axios from "axios";
-import { API } from "../../../../api";
+import { API } from "../../api";
 import { useRef } from "react";
-import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
-import useContextState from "../../../../hooks/useContextState";
-import handleRandomToken from "../../../../utils/handleRandomToken";
+import useContextState from "../../hooks/useContextState";
+import handleRandomToken from "../../utils/handleRandomToken";
 import toast from "react-hot-toast";
-import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
+import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
+import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 
 const ChangePassword = ({ setShowChangePassword, downlineId }) => {
   const { refetchAllBranch } = useGetAllBranch();
-
+  const { refetchClient } = useRefetchClient(downlineId);
   const changePasswordRef = useRef();
   useCloseModalClickOutside(changePasswordRef, () => {
     setShowChangePassword(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
   const onSubmit = async ({ password, confirmPassword }) => {
     const generatedToken = handleRandomToken();
     if (password !== confirmPassword) {
@@ -43,7 +44,11 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
-      refetchAllBranch();
+      if (adminRole === "hyper_master") {
+        refetchAllBranch();
+      } else {
+        refetchClient();
+      }
       setShowChangePassword(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);

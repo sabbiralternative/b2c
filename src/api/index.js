@@ -59,7 +59,9 @@ export const API = {
   viewClients: config?.result?.endpoint?.viewClients,
   registerPanel:config?.result?.endpoint?.registerPanel,
   payments:config?.result?.endpoint?.payments,
-  depositClient:config?.result?.endpoint?.depositClient
+  depositClient:config?.result?.endpoint?.depositClient,
+  utr:config?.result?.endpoint?.utr
+  
 };
 
 export const Settings = {

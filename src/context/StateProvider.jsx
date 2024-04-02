@@ -21,6 +21,8 @@ const StateProvider = ({ children }) => {
   const [downLineId, setDownLineId] = useState("");
   /* Master state */
   const [clientDeposit, setClientDeposit] = useState(false);
+  const [clientData, setClientData] = useState([]);
+  const [editPendingDeposit,setEditPendingDeposit] = useState(false)
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
@@ -88,7 +90,10 @@ const StateProvider = ({ children }) => {
     setShowChangeStatus,
     downLineId,
     setDownLineId,
-    clientDeposit, setClientDeposit
+    clientDeposit,
+    setClientDeposit,
+    clientData, setClientData,
+    editPendingDeposit,setEditPendingDeposit
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

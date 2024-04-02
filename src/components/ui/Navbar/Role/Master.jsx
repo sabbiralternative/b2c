@@ -76,7 +76,10 @@ const Master = () => {
           </li>
 
           <li className="menu-item">
-            <a onClick={()=> handleNavigate('add-client')} className="menu-link">
+            <a
+              onClick={() => handleNavigate("add-client")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-user"></i>
               <div data-i18n="Add Client">Add Client</div>
             </a>
@@ -177,21 +180,30 @@ const Master = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a href="utr.php?status=0" className="menu-link">
+            <a
+              onClick={() => handleNavigate("pending-deposit")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Pending Deposit">Pending Deposit</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="utr.php?status=1" className="menu-link">
+            <a
+              onClick={() => handleNavigate("completed-deposit")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Completed Deposit">Completed Deposit</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="utr.php?status=2" className="menu-link">
+            <a
+              onClick={() => handleNavigate("rejected-deposit")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Deposit">Rejected Deposit</div>
             </a>
