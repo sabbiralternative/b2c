@@ -11,7 +11,7 @@ const StateProvider = ({ children }) => {
   const [tokenLoading, setTokenLoading] = useState(true);
   const [logo, setLogo] = useState("");
   const [icon, setIcon] = useState("");
-  const [showSidebar,setShowSidebar] = useState(false)
+  const [showSidebar, setShowSidebar] = useState(false);
   const [showAddBranch, setShowAddBranch] = useState(false);
   const [showSocialLink, setShowSocialLink] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
@@ -19,6 +19,8 @@ const StateProvider = ({ children }) => {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showChangeStatus, setShowChangeStatus] = useState(false);
   const [downLineId, setDownLineId] = useState("");
+  /* Master state */
+  const [clientDeposit, setClientDeposit] = useState(false);
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
@@ -70,14 +72,23 @@ const StateProvider = ({ children }) => {
     setAdminName,
     adminRole,
     setAdminRole,
-    showSidebar,setShowSidebar,
-    showAddBranch, setShowAddBranch,
-    showSocialLink, setShowSocialLink,
-    showDeposit, setShowDeposit,
-    showWithdraw, setShowWithdraw,
-    showChangePassword, setShowChangePassword,
-    showChangeStatus, setShowChangeStatus,
-    downLineId, setDownLineId
+    showSidebar,
+    setShowSidebar,
+    showAddBranch,
+    setShowAddBranch,
+    showSocialLink,
+    setShowSocialLink,
+    showDeposit,
+    setShowDeposit,
+    showWithdraw,
+    setShowWithdraw,
+    showChangePassword,
+    setShowChangePassword,
+    showChangeStatus,
+    setShowChangeStatus,
+    downLineId,
+    setDownLineId,
+    clientDeposit, setClientDeposit
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

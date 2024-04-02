@@ -84,7 +84,9 @@
       "socialLink": "https://admin.api7.live/api/b2c/social",
       "viewClients": "https://admin.api7.live/api/b2c/viewClient",
       "uploadScreenshot": "https://b2c.bet/deposit/up.php",
-      "registerPanel": "https://api7.live/api/exchange/diamond/registerPanel"
+      "registerPanel": "https://api7.live/api/exchange/diamond/registerPanel",
+      "payments":"https://admin.api7.live/api/b2c/payments",
+      "depositClient":"https://admin.api7.live/api/b2c/depositClient"
     }
   },
   "success": true

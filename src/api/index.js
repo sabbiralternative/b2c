@@ -57,7 +57,9 @@ export const API = {
   addBranch: config?.result?.endpoint?.addBranch,
   socialLinks: config?.result?.endpoint?.socialLink,
   viewClients: config?.result?.endpoint?.viewClients,
-  registerPanel:config?.result?.endpoint?.registerPanel
+  registerPanel:config?.result?.endpoint?.registerPanel,
+  payments:config?.result?.endpoint?.payments,
+  depositClient:config?.result?.endpoint?.depositClient
 };
 
 export const Settings = {

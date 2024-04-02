@@ -4,11 +4,12 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../api";
 import { useState } from "react";
+import { handleDownLineId } from "../../../utils/handleDownLineId";
 
 const ViewClient = () => {
   const [clientData, setClientData] = useState([]);
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, setClientDeposit, setDownLineId } = useContextState();
   const onSubmit = async ({ searchId }) => {
     const generatedToken = handleRandomToken();
     const payload = {
@@ -108,7 +109,14 @@ const ViewClient = () => {
                     <td>{client?.accountType}</td>
                     <td>
                       <a
-                        href="deposit_client.php?branch_id=user0077&amp;type=d"
+                        style={{ color: "white" }}
+                        onClick={() =>
+                          handleDownLineId(
+                            setClientDeposit,
+                            client?.username,
+                            setDownLineId
+                          )
+                        }
                         className="btn btn-icon btn-sm btn-success"
                       >
                         D

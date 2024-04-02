@@ -15,6 +15,7 @@ import Deposit from "../modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../modal/HyperMaster/Branch/Withdraw";
 import ChangeStatus from "../modal/HyperMaster/Branch/ChangeStatus";
 import ChangePassword from "../modal/HyperMaster/Branch/ChangePassword";
+import ClientDeposit from "../modal/Master/Client/Deposit";
 
 const MainLayout = () => {
   const {
@@ -33,6 +34,8 @@ const MainLayout = () => {
     setShowChangeStatus,
     showChangeStatus,
     downLineId,
+    clientDeposit,
+    setClientDeposit
   } = useContextState();
   const navigate = useNavigate();
 
@@ -114,6 +117,11 @@ const MainLayout = () => {
               />
             )}
             {/* Modals end for Hyper_master*/}
+            {/* Modals end for master*/}
+            {clientDeposit && <ClientDeposit 
+            setClientDeposit={setClientDeposit}
+            downlineId={downLineId}
+            />}
             <Footer />
           </div>
 
