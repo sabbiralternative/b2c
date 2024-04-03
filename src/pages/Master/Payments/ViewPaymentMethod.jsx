@@ -1,10 +1,50 @@
+import Swal from "sweetalert2";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
+import handleRandomToken from "../../../utils/handleRandomToken";
+import axios from "axios";
+import { API } from "../../../api";
+import useContextState from "../../../hooks/useContextState";
+import toast from "react-hot-toast";
 
 const ViewPaymentMethod = () => {
+  const { token } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
   };
-  const { paymentsMethods } = useGetPaymentMethod(payload);
+  const { paymentsMethods, refetchPaymentMethods } =
+    useGetPaymentMethod(payload);
+
+  const handleDeletePaymentMethod = async (paymentId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this account!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const generatedToken = handleRandomToken();
+        const payload = {
+          type: "deletePayment",
+          paymentId,
+          token: generatedToken,
+        };
+        const res = await axios.post(API.payments, payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = res.data;
+        if (data?.success) {
+          refetchPaymentMethods();
+          toast.success(data?.result?.message);
+        } else {
+          toast.error(data?.error?.status?.[0]?.description);
+        }
+      }
+    });
+  };
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
@@ -23,6 +63,7 @@ const ViewPaymentMethod = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {paymentsMethods?.map((method, i) => {
+                console.log(method);
                 return (
                   <tr key={i}>
                     <td>{method?.type}</td>
@@ -53,7 +94,8 @@ const ViewPaymentMethod = () => {
                       </a>
                       &nbsp;
                       <a
-                        href="delete_bank.php?id=21"
+                        onClick={() => handleDeletePaymentMethod(method?.id)}
+                        style={{color:'white'}}
                         className="btn btn-icon btn-sm btn-danger"
                       >
                         <i className="bx bxs-checkbox-minus"></i>
