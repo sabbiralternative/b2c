@@ -1,4 +1,5 @@
 import AddClient from "../pages/Master/Client/AddClient";
+import PNL from "../pages/Master/Client/PNL";
 import ViewClient from "../pages/Master/Client/ViewClient";
 import CompletedDeposit from "../pages/Master/Deposit/CompletedDeposit";
 import PendingDeposit from "../pages/Master/Deposit/PendingDeposit";
@@ -59,5 +60,9 @@ export const MasterRoutes = [
   {
     path: "/add-UPI",
     element: <AddUPI />,
+  },
+  {
+    path: "/pnl",
+    element: <PNL />,
   },
 ];

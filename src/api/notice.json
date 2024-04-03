@@ -88,7 +88,8 @@
       "depositClient": "https://admin.api7.live/api/b2c/depositClient",
       "utr": "https://admin.api7.live/api/b2c/utr",
       "withdraw": "https://admin.api7.live/api/b2c/withdraw",
-      "marketAnalysis": "https://admin.api7.live/api/b2c/marketAnalysis"
+      "marketAnalysis": "https://admin.api7.live/api/b2c/marketAnalysis",
+      "statement":"https://admin.api7.live/api/b2c/statement"
     }
   },
   "success": true

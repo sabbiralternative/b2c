@@ -60,7 +60,8 @@ export const API = {
   payments:config?.result?.endpoint?.payments,
   depositClient:config?.result?.endpoint?.depositClient,
   utr:config?.result?.endpoint?.utr,
-  withdraw:config?.result?.endpoint?.withdraw
+  withdraw:config?.result?.endpoint?.withdraw,
+  statement:config?.result?.endpoint?.statement
   
 };
 

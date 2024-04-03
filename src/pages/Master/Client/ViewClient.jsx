@@ -4,9 +4,10 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../api";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
+import { useNavigate } from "react-router-dom";
 
 const ViewClient = () => {
-
+  const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const {
     token,
@@ -14,7 +15,8 @@ const ViewClient = () => {
     setDownLineId,
     setShowChangePassword,
     setShowChangeStatus,
-    clientData, setClientData
+    clientData,
+    setClientData,
   } = useContextState();
   const onSubmit = async ({ searchId }) => {
     const generatedToken = handleRandomToken();
@@ -30,6 +32,10 @@ const ViewClient = () => {
       setClientData(data?.result);
       reset();
     }
+  };
+  const handleNavigate = (username, link) => {
+    localStorage.setItem("downLineId", username);
+    navigate(`/${link}`);
   };
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -87,7 +93,6 @@ const ViewClient = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {clientData?.map((client, i) => {
-           
                 return (
                   <tr key={i}>
                     <td>
@@ -130,7 +135,10 @@ const ViewClient = () => {
                       </a>
                       &nbsp;
                       <a
-                 
+                        style={{ color: "white" }}
+                        onClick={() => {
+                          handleNavigate(client?.username, "pnl");
+                        }}
                         className="btn btn-icon btn-sm btn-warning"
                       >
                         PL
