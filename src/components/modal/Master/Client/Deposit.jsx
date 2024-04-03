@@ -9,12 +9,20 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMethod";
 
 const Deposit = ({ setClientDeposit, downlineId }) => {
-  const { paymentsMethods } = useGetPaymentMethod();
+  const payload = {
+    type: "getActivePayments",
+  };
+  const { paymentsMethods } = useGetPaymentMethod(payload);
   const depositRef = useRef();
   useCloseModalClickOutside(depositRef, () => {
     setClientDeposit(false);
   });
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const { token } = useContextState();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
@@ -189,11 +197,11 @@ const Deposit = ({ setClientDeposit, downlineId }) => {
                   Close
                 </button>
                 <button
-                  disabled={!filePath}
+                  disabled={!filePath && errors?.utr?.type === "required"}
                   type="submit"
                   className="btn btn-primary"
                 >
-                  Add
+                  Deposit
                 </button>
               </div>
             </form>

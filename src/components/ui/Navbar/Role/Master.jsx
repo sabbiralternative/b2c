@@ -148,16 +148,28 @@ const Master = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a href="view_banks.php" className="menu-link">
+            <a onClick={()=> handleNavigate('view-payment-method')} className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="View Payment Method">View Payment Method</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="add_bank.php" className="menu-link">
+            <a onClick={()=> handleNavigate('add-bank-account')} className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Payment Method">Add Payment Method</div>
+              <div data-i18n="Add Payment Method">Add Bank Account</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a onClick={()=> handleNavigate('add-QR')} className="menu-link">
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Payment Method">Add QR</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a onClick={()=> handleNavigate('add-UPI')} className="menu-link">
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Payment Method">Add UPI</div>
             </a>
           </li>
         </ul>

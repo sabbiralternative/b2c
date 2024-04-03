@@ -89,6 +89,7 @@
       "depositClient": "https://admin.api7.live/api/b2c/depositClient",
       "utr": "https://admin.api7.live/api/b2c/utr",
       "withdraw": "https://admin.api7.live/api/b2c/withdraw"
+      
     }
   },
   "success": true

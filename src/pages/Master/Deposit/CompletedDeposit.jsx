@@ -4,7 +4,7 @@ import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 const CompletedDeposit = () => {
   const payload = {
     type: "viewUTR",
-    status: "APPROVED,",
+    status: "APPROVED",
   };
   const { allUTRs } = useGetALLDeposit(payload);
   return (

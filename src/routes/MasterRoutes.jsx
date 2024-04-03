@@ -3,6 +3,10 @@ import ViewClient from "../pages/Master/Client/ViewClient";
 import CompletedDeposit from "../pages/Master/Deposit/CompletedDeposit";
 import PendingDeposit from "../pages/Master/Deposit/PendingDeposit";
 import RejectedDeposit from "../pages/Master/Deposit/RejectedDeposit";
+import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
+import AddQR from "../pages/Master/Payments/AddQR";
+import AddUPI from "../pages/Master/Payments/AddUPI";
+import ViewPaymentMethod from "../pages/Master/Payments/ViewPaymentMethod";
 import CompletedWithdraw from "../pages/Master/Withdraw/CompletedWithdraw";
 import PendingWithdraw from "../pages/Master/Withdraw/PendingWithdraw";
 import RejectedWithdraw from "../pages/Master/Withdraw/RejectedWithdraw";
@@ -39,5 +43,21 @@ export const MasterRoutes = [
   {
     path: "/completed-withdraw",
     element: <CompletedWithdraw />,
+  },
+  {
+    path: "/view-payment-method",
+    element: <ViewPaymentMethod />,
+  },
+  {
+    path: "/add-bank-account",
+    element: <AddBankAccount />,
+  },
+  {
+    path: "/add-QR",
+    element: <AddQR />,
+  },
+  {
+    path: "/add-UPI",
+    element: <AddUPI />,
   },
 ];

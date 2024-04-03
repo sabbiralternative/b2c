@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
-const useGetPaymentMethod = () => {
+const useGetPaymentMethod = (type) => {
   const { token, tokenLoading } = useContextState();
   const { data: paymentsMethods = [] } = useQuery({
     queryKey: ["paymentsMethod"],
@@ -12,7 +12,7 @@ const useGetPaymentMethod = () => {
     queryFn: async () => {
       const generatedToken = handleRandomToken();
       const payload = {
-        type: "getActivePayments",
+        ...type,
         token: generatedToken,
       };
       const res = await axios.post(API.payments, payload, {
@@ -26,6 +26,7 @@ const useGetPaymentMethod = () => {
         return data?.result;
       }
     },
+    gcTime:0
   });
   return { paymentsMethods };
 };
