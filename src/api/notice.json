@@ -72,7 +72,6 @@
       "userAuthentication": "https://admin.api7.live/api/userAuthentication",
       "searchUser": "https://admin.api7.live/api/searchUser",
       "Bank": "https://admin.api7.live/api/bank",
-      "marketAnalysis": "https://admin.api7.live/api/marketAnalysis",
       "settledBets": "https://admin.api7.live/api/settledBets",
       "assets": "https://api7.live/sitethemes",
       "qrCode": "https://admin.api7.live/api/qrCode",
@@ -88,8 +87,8 @@
       "payments": "https://admin.api7.live/api/b2c/payments",
       "depositClient": "https://admin.api7.live/api/b2c/depositClient",
       "utr": "https://admin.api7.live/api/b2c/utr",
-      "withdraw": "https://admin.api7.live/api/b2c/withdraw"
-      
+      "withdraw": "https://admin.api7.live/api/b2c/withdraw",
+      "marketAnalysis": "https://admin.api7.live/api/b2c/marketAnalysis"
     }
   },
   "success": true

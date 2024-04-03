@@ -130,7 +130,7 @@ const ViewClient = () => {
                       </a>
                       &nbsp;
                       <a
-                        href="pnl.php?username=user0077&amp;type=w"
+                 
                         className="btn btn-icon btn-sm btn-warning"
                       >
                         PL

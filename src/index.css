@@ -5,9 +5,21 @@ a {
 div:where(.swal2-container) div:where(.swal2-popup) {
   background: #283144 !important;
 }
-div:where(.swal2-container) h2:where(.swal2-title){
+div:where(.swal2-container) h2:where(.swal2-title) {
   color: white !important;
 }
-div:where(.swal2-container) .swal2-html-container{
+div:where(.swal2-container) .swal2-html-container {
   color: white !important;
+}
+.user-lock-book {
+  border: 1px solid white;
+  padding: 3px 2px;
+  border-radius: 3px;
+}
+
+.BACK {
+  background-color: #a7d0eb;
+}
+.LAY {
+  background-color: #f4bacf;
 }

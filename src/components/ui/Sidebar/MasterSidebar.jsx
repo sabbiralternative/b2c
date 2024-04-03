@@ -114,20 +114,20 @@ const MasterSidebar = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a href="statement.php?type=all" className="menu-link">
+            <a className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="All Statement">All Statement</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="add_bank.php" className="menu-link">
+            <a  className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Deposit Statement">Deposit Statement</div>
             </a>
           </li>
           <li className="menu-item">
-            <a href="add_bank.php" className="menu-link">
+            <a  className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Withdraw Statement">Withdraw Statement</div>
             </a>

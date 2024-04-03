@@ -7,6 +7,7 @@ const HyperMaster = () => {
   const { setShowAddBranch, setShowSocialLink } = useContextState();
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showExposure, setShowExposure] = useState(false);
 
   const navigate = useNavigate();
   const settingsRef = useRef();
@@ -17,11 +18,16 @@ const HyperMaster = () => {
   useCloseModalClickOutside(branchRef, () => {
     setShowBranch(false);
   });
+  const exposureRef = useRef();
+  useCloseModalClickOutside(exposureRef, () => {
+    setShowExposure(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
     setShowBranch(false);
     setShowSettings(false);
+    setShowExposure(false)
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -40,6 +46,7 @@ const HyperMaster = () => {
           }}
           onMouseEnter={() => {
             setShowBranch(true);
+            setShowExposure(false);
             setShowSettings(false);
           }}
           className="menu-link menu-toggle"
@@ -96,6 +103,7 @@ const HyperMaster = () => {
           }}
           onMouseEnter={() => {
             setShowSettings(true);
+            setShowExposure(false);
             setShowBranch(false);
           }}
           className="menu-link menu-toggle"
@@ -127,7 +135,10 @@ const HyperMaster = () => {
           </li>
 
           <li className="menu-item">
-            <a   onClick={() => handleNavigate("add-banner")} className="menu-link">
+            <a
+              onClick={() => handleNavigate("add-banner")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Banner">Add Banner</div>
             </a>
@@ -143,6 +154,49 @@ const HyperMaster = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Social Links">Social Links</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        ref={exposureRef}
+        className={`menu-item ${showExposure ? "open" : ""}`}
+      >
+        <a
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onMouseEnter={() => {
+            setShowExposure(true);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Exposure</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("market-analysis")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Market Analysis</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("current-bets")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Current Bets</div>
             </a>
           </li>
         </ul>
