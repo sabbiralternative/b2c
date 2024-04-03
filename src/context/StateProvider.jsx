@@ -24,6 +24,7 @@ const StateProvider = ({ children }) => {
   const [clientData, setClientData] = useState([]);
   const [editPendingDeposit,setEditPendingDeposit] = useState(false)
   const [editPendingWithdraw,setEditPendingWithdraw] = useState(false)
+  const [showEditPayment,setShowEditPayment] = useState(false)
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
@@ -95,7 +96,8 @@ const StateProvider = ({ children }) => {
     setClientDeposit,
     clientData, setClientData,
     editPendingDeposit,setEditPendingDeposit,
-    editPendingWithdraw,setEditPendingWithdraw
+    editPendingWithdraw,setEditPendingWithdraw,
+    showEditPayment,setShowEditPayment
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

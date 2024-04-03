@@ -7,7 +7,7 @@ import useContextState from "../../../hooks/useContextState";
 import toast from "react-hot-toast";
 
 const ViewPaymentMethod = () => {
-  const { token } = useContextState();
+  const { token, setShowEditPayment, setDownLineId } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
   };
@@ -87,7 +87,11 @@ const ViewPaymentMethod = () => {
 
                     <td>
                       <a
-                        href="add_bank.php?id=21"
+                        style={{ color: "white" }}
+                        onClick={() => {
+                          setDownLineId(method?.id);
+                          setShowEditPayment(true);
+                        }}
                         className="btn btn-icon btn-sm btn-success"
                       >
                         <i className="bx bxs-edit"></i>
@@ -95,7 +99,7 @@ const ViewPaymentMethod = () => {
                       &nbsp;
                       <a
                         onClick={() => handleDeletePaymentMethod(method?.id)}
-                        style={{color:'white'}}
+                        style={{ color: "white" }}
                         className="btn btn-icon btn-sm btn-danger"
                       >
                         <i className="bx bxs-checkbox-minus"></i>

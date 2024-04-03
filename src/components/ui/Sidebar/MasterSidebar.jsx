@@ -10,8 +10,7 @@ const MasterSidebar = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const navigate = useNavigate();
-  const { setShowSidebar } =
-  useContextState();
+  const { setShowSidebar } = useContextState();
 
   const clientsRef = useRef();
   useCloseModalClickOutside(clientsRef, () => {
@@ -42,14 +41,16 @@ const MasterSidebar = () => {
     setShowPayments(false);
     setShowStatement(false);
     setShowWithdraw(false);
-    setShowSidebar(false)
+    setShowSidebar(false);
   };
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
       <li className="menu-item">
         <Link
-        onClick={()=> setShowSidebar(false)}
-        to="/" className="menu-link">
+          onClick={() => setShowSidebar(false)}
+          to="/"
+          className="menu-link"
+        >
           <i className="menu-icon tf-icons bx bx-home-circle"></i>
           <div data-i18n="Dashboards">Dashboards</div>
         </Link>
@@ -58,7 +59,7 @@ const MasterSidebar = () => {
       <li ref={clientsRef} className={`menu-item ${showClients ? "open" : ""}`}>
         <a
           onClick={() => {
-            setShowClients((prev)=> !prev);
+            setShowClients((prev) => !prev);
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
@@ -82,7 +83,10 @@ const MasterSidebar = () => {
           </li>
 
           <li className="menu-item">
-            <a href="add_client.php" className="menu-link">
+            <a
+              onClick={() => handleNavigate("add-client")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-user"></i>
               <div data-i18n="Add Client">Add Client</div>
             </a>
@@ -96,7 +100,7 @@ const MasterSidebar = () => {
       >
         <a
           onClick={() => {
-            setShowStatement((prev)=> !prev);
+            setShowStatement((prev) => !prev);
             setShowClients(false);
             setShowDeposit(false);
             setShowPayments(false);
@@ -137,7 +141,7 @@ const MasterSidebar = () => {
       >
         <a
           onClick={() => {
-            setShowPayments((prev)=> !prev);
+            setShowPayments((prev) => !prev);
             setShowClients(false);
             setShowDeposit(false);
             setShowStatement(false);
@@ -151,16 +155,34 @@ const MasterSidebar = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a href="view_banks.php" className="menu-link">
+            <a
+              onClick={() => handleNavigate("view-payment-method")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="View Payment Method">View Payment Method</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="add_bank.php" className="menu-link">
+            <a
+              onClick={() => handleNavigate("add-bank-account")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Payment Method">Add Payment Method</div>
+              <div data-i18n="Add Payment Method">Add Bank Account</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a onClick={() => handleNavigate("add-QR")} className="menu-link">
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Payment Method">Add QR</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a onClick={() => handleNavigate("add-UPI")} className="menu-link">
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Payment Method">Add UPI</div>
             </a>
           </li>
         </ul>
@@ -169,7 +191,7 @@ const MasterSidebar = () => {
       <li ref={depositRef} className={`menu-item ${showDeposit ? "open" : ""}`}>
         <a
           onClick={() => {
-            setShowDeposit((prev)=> !prev);
+            setShowDeposit((prev) => !prev);
             setShowClients(false);
             setShowPayments(false);
             setShowStatement(false);
@@ -183,21 +205,30 @@ const MasterSidebar = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a href="utr.php?status=0" className="menu-link">
+            <a
+              onClick={() => handleNavigate("pending-deposit")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Pending Deposit">Pending Deposit</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="utr.php?status=1" className="menu-link">
+            <a
+              onClick={() => handleNavigate("completed-deposit")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Completed Deposit">Completed Deposit</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="utr.php?status=2" className="menu-link">
+            <a
+              onClick={() => handleNavigate("rejected-deposit")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Deposit">Rejected Deposit</div>
             </a>
@@ -210,7 +241,7 @@ const MasterSidebar = () => {
       >
         <a
           onClick={() => {
-            setShowWithdraw((prev)=> !prev);
+            setShowWithdraw((prev) => !prev);
             setShowClients(false);
             setShowDeposit(false);
             setShowPayments(false);
@@ -224,20 +255,29 @@ const MasterSidebar = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a href="view_withdraw.php?status=0" className="menu-link">
+            <a
+              onClick={() => handleNavigate("pending-withdraw")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Pending Withdraw">Pending Withdraw</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a href="view_withdraw.php?status=1" className="menu-link">
+            <a
+              onClick={() => handleNavigate("completed-withdraw")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Completed Withdraw">Completed Withdraw</div>
             </a>
           </li>
           <li className="menu-item">
-            <a href="view_withdraw.php?status=2" className="menu-link">
+            <a
+              onClick={() => handleNavigate("rejected-withdraw")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
             </a>
