@@ -39,7 +39,7 @@ const Deposit = ({ setClientDeposit, downlineId }) => {
           },
         });
         const data = res.data;
-        console.log(data);
+       
         if (data?.success) {
           setFilePath(data?.filePath);
         }

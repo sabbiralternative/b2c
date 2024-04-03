@@ -12,7 +12,7 @@ const useGetCurrentPaymentStatus = (paymentId) => {
     queryFn: async () => {
       const generatedToken = handleRandomToken();
       const payload = {
-        ...paymentId,
+        paymentId: paymentId,
         type: "ViewPaymentStatus",
         token: generatedToken,
       };
@@ -23,7 +23,7 @@ const useGetCurrentPaymentStatus = (paymentId) => {
       });
 
       const data = res.data;
-      console.log(data);
+   
       if (data?.success) {
         return data?.result;
       }

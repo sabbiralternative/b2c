@@ -87,7 +87,7 @@ const ViewClient = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {clientData?.map((client, i) => {
-                console.log(client);
+           
                 return (
                   <tr key={i}>
                     <td>

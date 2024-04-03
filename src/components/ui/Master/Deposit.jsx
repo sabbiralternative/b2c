@@ -23,7 +23,7 @@ const Deposit = ({ data,title }) => {
           </thead>
           <tbody className="table-border-bottom-0">
             {data?.map((item, i) => {
-              // console.log(item);
+    
               return (
                 <tr key={i}>
                   <td>{item?.loginname}</td>

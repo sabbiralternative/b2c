@@ -41,7 +41,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit }) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
-    console.log(data);
+
     if (data?.success) {
       refetchAllUTRs();
       toast.success(data?.result?.message);

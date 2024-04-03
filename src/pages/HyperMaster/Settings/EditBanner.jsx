@@ -17,7 +17,6 @@ const EditBanner = () => {
   const { refetchAllBanners } = useGetViewAllBanner();
   const onSubmit = async ({ status, priority }) => {
 
-    console.log(status);
     const generatedToken = handleRandomToken();
     const payload = {
       type: "updateBanner",

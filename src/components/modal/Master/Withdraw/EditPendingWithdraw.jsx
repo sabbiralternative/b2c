@@ -21,14 +21,13 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
     type: "viewSingleWithdraw",
     withdrawId: downLineId,
   };
-  console.log(downLineId);
+
   const payload = {
     type: "viewWithdraw",
     status: "PENDING",
   };
   const { refetchAllWithdraw } = useGetALLWithdraw(payload);
   const { singleWithdraw } = useGetSingleWithdraw(SingleWithdrawPayload);
-  console.log(singleWithdraw);
 
   const onSubmit = async ({ remark, status }) => {
     const generatedToken = handleRandomToken();

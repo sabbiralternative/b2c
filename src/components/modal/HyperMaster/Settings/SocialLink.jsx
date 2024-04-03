@@ -20,7 +20,7 @@ const SocialLink = ({ setShowSocialLink }) => {
   const { token } = useContextState();
 
   const onSubmit = async ({ whatsapp, instagram, telegram }) => {
-    console.log({ whatsapp }, { instagram }, { telegram });
+
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,

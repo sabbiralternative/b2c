@@ -63,7 +63,7 @@ const ViewPaymentMethod = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {paymentsMethods?.map((method, i) => {
-                console.log(method);
+             
                 return (
                   <tr key={i}>
                     <td>{method?.type}</td>
