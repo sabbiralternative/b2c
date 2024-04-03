@@ -13,7 +13,6 @@ import AddBranch from "../modal/HyperMaster/Branch/AddBranch";
 import SocialLink from "../modal/HyperMaster/Settings/SocialLink";
 import Deposit from "../modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../modal/HyperMaster/Branch/Withdraw";
-
 import ClientDeposit from "../modal/Master/Client/Deposit";
 import ChangeStatus from "../modal/ChangeStatus";
 import ChangePassword from "../modal/ChangePassword";

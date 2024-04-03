@@ -1,4 +1,42 @@
+import { useForm } from "react-hook-form";
+import useContextState from "../../../hooks/useContextState";
+import handleRandomToken from "../../../utils/handleRandomToken";
+import axios from "axios";
+import { API } from "../../../api";
+import toast from "react-hot-toast";
+import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
+import { useNavigate } from "react-router-dom";
+
 const AddBankAccount = () => {
+  const payload = {
+    type: "viewPaymentMethods",
+  };
+  const navigate = useNavigate();
+  const { refetchPaymentMethods } = useGetPaymentMethod(payload);
+  const { register, handleSubmit, reset } = useForm();
+  const { token } = useContextState();
+  const onSubmit = async (values) => {
+    const generatedToken = handleRandomToken();
+    const payload = {
+      type: "addPayment",
+      ...values,
+      method: "bank",
+      token: generatedToken,
+    };
+    const res = await axios.post(API.payments, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = res.data;
+    if (data?.success) {
+      refetchPaymentMethods();
+      toast.success(data?.result?.message);
+      reset();
+      navigate("/view-payment-method");
+    } else {
+      toast.error(data?.error?.status?.[0]?.description);
+    }
+  };
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 breadcrumb-wrapper mb-4">
@@ -9,7 +47,7 @@ const AddBankAccount = () => {
         <div className="col-xxl">
           <div className="card mb-4">
             <div className="card-body">
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-3" id="bank_account_name_div">
                   <label
                     className="col-sm-2 col-form-label"
@@ -19,9 +57,10 @@ const AddBankAccount = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
+                      {...register("bank_account_name", {
+                        required: true,
+                      })}
                       type="text"
-                      name="bank_account_name"
-                      value=""
                       className="form-control"
                       id="basic-default-name"
                     />
@@ -36,10 +75,11 @@ const AddBankAccount = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
+                      {...register("account_number", {
+                        required: true,
+                      })}
                       type="text"
-                      name="account_number"
                       className="form-control"
-                      value=""
                       id="basic-default-company"
                     />
                   </div>
@@ -53,10 +93,11 @@ const AddBankAccount = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
+                      {...register("ifsc", {
+                        required: true,
+                      })}
                       type="text"
-                      name="ifsc"
                       className="form-control"
-                      value=""
                       id="basic-default-company"
                     />
                   </div>
@@ -71,10 +112,11 @@ const AddBankAccount = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
+                      {...register("bank_name", {
+                        required: true,
+                      })}
                       type="text"
-                      name="bank_name"
                       className="form-control"
-                      value=""
                       id="basic-default-company"
                     />
                   </div>
@@ -89,11 +131,10 @@ const AddBankAccount = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
+                      {...register("min_amount", {
+                        required: true,
+                      })}
                       type="number"
-                      name="min_amount"
-                      required=""
-                      min="100"
-                      value=""
                       className="form-control"
                       id="basic-default-company"
                     />
@@ -109,11 +150,10 @@ const AddBankAccount = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
+                      {...register("max_amount", {
+                        required: true,
+                      })}
                       type="number"
-                      min="200"
-                      required=""
-                      name="max_amount"
-                      value=""
                       className="form-control"
                       id="basic-default-company"
                     />

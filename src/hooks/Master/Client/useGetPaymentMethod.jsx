@@ -6,7 +6,7 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetPaymentMethod = (type) => {
   const { token, tokenLoading } = useContextState();
-  const { data: paymentsMethods = [] } = useQuery({
+  const { data: paymentsMethods = [],refetch:refetchPaymentMethods } = useQuery({
     queryKey: ["paymentsMethod"],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -28,7 +28,7 @@ const useGetPaymentMethod = (type) => {
     },
     gcTime:0
   });
-  return { paymentsMethods };
+  return { paymentsMethods,refetchPaymentMethods };
 };
 
 export default useGetPaymentMethod;
