@@ -1,10 +1,10 @@
 import useContextState from "../../../hooks/useContextState";
 
-const Withdraw = ({ data }) => {
+const Withdraw = ({ data,title }) => {
   const { setEditPendingWithdraw, setDownLineId } = useContextState();
   return (
     <div className="card">
-      <h5 className="card-header">Payment Methods</h5>
+      <h5 className="card-header">{title}</h5>
       <div className="table-responsive text-nowrap">
         <table className="table table-hover table-sm">
           <thead className="table-dark">
@@ -24,6 +24,7 @@ const Withdraw = ({ data }) => {
           </thead>
           <tbody className="table-border-bottom-0">
             {data?.map((item, i) => {
+              console.log(item);
               return (
                 <tr key={i}>
                   <td>{item?.loginname}</td>
@@ -52,7 +53,7 @@ const Withdraw = ({ data }) => {
                       <a
                         style={{ color: "white" }}
                         onClick={() => {
-                          setDownLineId(item?.id);
+                          setDownLineId(item?.withdraw_id);
                           setEditPendingWithdraw(true);
                         }}
                         className="btn btn-icon btn-sm btn-success"

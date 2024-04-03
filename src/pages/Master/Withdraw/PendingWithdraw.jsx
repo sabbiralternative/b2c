@@ -9,7 +9,7 @@ const PendingWithdraw = () => {
   const { allWithdraw } = useGetALLWithdraw(payload);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Withdraw data={allWithdraw} />
+      <Withdraw data={allWithdraw} title='Pending Withdraw' />
     </div>
   );
 };

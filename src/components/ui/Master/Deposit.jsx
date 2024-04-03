@@ -1,10 +1,10 @@
 import useContextState from "../../../hooks/useContextState";
 
-const Deposit = ({ data }) => {
+const Deposit = ({ data,title }) => {
   const { setEditPendingDeposit,setDownLineId } = useContextState();
   return (
     <div className="card">
-      <h5 className="card-header">Deposits</h5>
+      <h5 className="card-header">{title}</h5>
       <div className="table-responsive text-nowrap">
         <table className="table table-hover table-sm">
           <thead className="table-dark">

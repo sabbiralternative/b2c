@@ -4,12 +4,12 @@ import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 const CompletedDeposit = () => {
   const payload = {
     type: "viewUTR",
-    status: "COMPLETED",
+    status: "APPROVED,",
   };
   const { allUTRs } = useGetALLDeposit(payload);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Deposit data={allUTRs} />
+      <Deposit data={allUTRs}  title='Completed Deposit'/>
     </div>
   );
 };
