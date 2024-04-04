@@ -6,10 +6,10 @@ const PendingDeposit = () => {
     type: "viewUTR",
     status: "PENDING",
   };
-  const { allUTRs } = useGetALLDeposit(payload);
+  const { allUTRs } = useGetALLDeposit(payload, 30000);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Deposit data={allUTRs} title='Pending Deposit' />
+      <Deposit data={allUTRs} title="Pending Deposit" />
     </div>
   );
 };

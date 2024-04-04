@@ -4,7 +4,7 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../api";
 
-const useGetALLDeposit = (args) => {
+const useGetALLDeposit = (args, time) => {
   const { token, tokenLoading } = useContextState();
 
   const { data: allUTRs = [], refetch: refetchAllUTRs } = useQuery({
@@ -28,6 +28,7 @@ const useGetALLDeposit = (args) => {
       }
     },
     gcTime: 0,
+    refetchInterval: time ? time : null,
   });
   return { allUTRs, refetchAllUTRs };
 };

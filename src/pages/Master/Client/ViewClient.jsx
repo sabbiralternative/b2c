@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 const ViewClient = () => {
   const navigate = useNavigate();
+
   const { handleSubmit } = useForm();
   const {
     clientId,
@@ -97,8 +98,7 @@ const ViewClient = () => {
                       <strong>{client?.mobile}</strong>
                     </td>
                     <td>
-                      <strong>{client?.creditReferance
-}</strong>
+                      <strong>{client?.creditReferance}</strong>
                     </td>
                     <td>
                       <strong>{client?.balance}</strong>
@@ -117,8 +117,7 @@ const ViewClient = () => {
                         {client?.userStatus === 1 ? "Active" : "InActive"}
                       </span>
                     </td>
-                    <td>{client?.registrationDate
-}</td>
+                    <td>{client?.registrationDate}</td>
                     <td>
                       <a
                         style={{ color: "white" }}

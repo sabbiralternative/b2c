@@ -37,7 +37,6 @@ const Master = () => {
     setShowExposure(false);
   });
 
-
   const handleNavigate = (link) => {
     navigate(`/${link}`);
     setShowClients(false);
@@ -45,7 +44,7 @@ const Master = () => {
     setShowPayments(false);
     setShowStatement(false);
     setShowWithdraw(false);
-    setShowExposure(false)
+    setShowExposure(false);
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -64,7 +63,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
-            setShowExposure(false)
+            setShowExposure(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -106,7 +105,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowWithdraw(false);
-            setShowExposure(false)
+            setShowExposure(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -116,20 +115,19 @@ const Master = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a  className="menu-link">
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="All Statement">All Statement</div>
-            </a>
-          </li>
-
-          <li className="menu-item">
-            <a  className="menu-link">
+            <a
+              onClick={() => handleNavigate("deposit-statement")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Deposit Statement">Deposit Statement</div>
             </a>
           </li>
           <li className="menu-item">
-            <a  className="menu-link">
+            <a
+              onClick={() => handleNavigate("withdraw-statement")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Withdraw Statement">Withdraw Statement</div>
             </a>
@@ -148,7 +146,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowStatement(false);
             setShowWithdraw(false);
-            setShowExposure(false)
+            setShowExposure(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -158,26 +156,32 @@ const Master = () => {
 
         <ul className="menu-sub">
           <li className="menu-item">
-            <a onClick={()=> handleNavigate('view-payment-method')} className="menu-link">
+            <a
+              onClick={() => handleNavigate("view-payment-method")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="View Payment Method">View Payment Method</div>
             </a>
           </li>
 
           <li className="menu-item">
-            <a onClick={()=> handleNavigate('add-bank-account')} className="menu-link">
+            <a
+              onClick={() => handleNavigate("add-bank-account")}
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Payment Method">Add Bank Account</div>
             </a>
           </li>
           <li className="menu-item">
-            <a onClick={()=> handleNavigate('add-QR')} className="menu-link">
+            <a onClick={() => handleNavigate("add-QR")} className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Payment Method">Add QR</div>
             </a>
           </li>
           <li className="menu-item">
-            <a onClick={()=> handleNavigate('add-UPI')} className="menu-link">
+            <a onClick={() => handleNavigate("add-UPI")} className="menu-link">
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Payment Method">Add UPI</div>
             </a>
@@ -193,7 +197,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
-            setShowExposure(false)
+            setShowExposure(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -244,7 +248,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
-            setShowExposure(false)
+            setShowExposure(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -281,7 +285,6 @@ const Master = () => {
               <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
             </a>
           </li>
-   
         </ul>
       </li>
       <li
@@ -295,7 +298,7 @@ const Master = () => {
             justifyContent: "center",
           }}
           onMouseEnter={() => {
-            setShowExposure(true)
+            setShowExposure(true);
             setShowClients(false);
             setShowDeposit(false);
             setShowPayments(false);

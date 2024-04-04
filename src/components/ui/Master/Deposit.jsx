@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
+import { useState } from "react";
+import Slip from "../../modal/Master/Deposit/Slip";
 
 const Deposit = ({ data, title }) => {
   const { setEditPendingDeposit, setDownLineId, setClientId } =
     useContextState();
   const navigate = useNavigate();
+  const [showImage, setShowImage] = useState(false);
+  const [image,setImage] = useState('')
   return (
     <div className="card">
+      {showImage && <Slip setShowImage={setShowImage} image={image} />}
       <h5 className="card-header">{title}</h5>
       <div className="table-responsive text-nowrap">
         <table className="table table-hover table-sm">
@@ -17,7 +22,6 @@ const Deposit = ({ data, title }) => {
               <th>UTR</th>
               <th>Slip</th>
               <th>Type</th>
-
               <th>Status</th>
               <th>Remark</th>
               <th>Date</th>
@@ -40,7 +44,21 @@ const Deposit = ({ data, title }) => {
                   <td>{item?.amount}</td>
 
                   <td>{item?.utr}</td>
-                  <td>{item?.image}</td>
+                  <td>
+                    {item?.image ? (
+                      <span
+                        onClick={() => {
+                          setShowImage(true)
+                          setImage(item?.image)
+                        }}
+                        style={{ color: "#346cee", cursor: "pointer" }}
+                      >
+                        View
+                      </span>
+                    ) : (
+                      "N/A"
+                    )}
+                  </td>
                   <td>{item?.type}</td>
                   <td>
                     <span

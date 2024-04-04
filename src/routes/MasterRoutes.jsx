@@ -8,6 +8,8 @@ import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
 import AddQR from "../pages/Master/Payments/AddQR";
 import AddUPI from "../pages/Master/Payments/AddUPI";
 import ViewPaymentMethod from "../pages/Master/Payments/ViewPaymentMethod";
+import DepositStatement from "../pages/Master/Statement/DepositStatement";
+import WithdrawStatement from "../pages/Master/Statement/WithdrawStatement";
 import CompletedWithdraw from "../pages/Master/Withdraw/CompletedWithdraw";
 import PendingWithdraw from "../pages/Master/Withdraw/PendingWithdraw";
 import RejectedWithdraw from "../pages/Master/Withdraw/RejectedWithdraw";
@@ -64,5 +66,13 @@ export const MasterRoutes = [
   {
     path: "/pnl",
     element: <PNL />,
+  },
+  {
+    path: "/deposit-statement",
+    element: <DepositStatement />,
+  },
+  {
+    path: "/withdraw-statement",
+    element: <WithdrawStatement />,
   },
 ];

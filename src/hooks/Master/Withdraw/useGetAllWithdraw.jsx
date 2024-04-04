@@ -4,7 +4,7 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../api";
 
-const useGetALLWithdraw = (args) => {
+const useGetALLWithdraw = (args, time) => {
   const { token, tokenLoading } = useContextState();
 
   const { data: allWithdraw = [], refetch: refetchAllWithdraw } = useQuery({
@@ -28,6 +28,7 @@ const useGetALLWithdraw = (args) => {
       }
     },
     gcTime: 0,
+    refetchInterval: time ? time : null,
   });
   return { allWithdraw, refetchAllWithdraw };
 };
