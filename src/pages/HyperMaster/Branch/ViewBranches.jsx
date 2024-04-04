@@ -10,6 +10,7 @@ const ViewBranches = () => {
     setShowDeposit,
     setShowWithdraw,
     setDownLineId,
+    setShowCreditRef,
   } = useContextState();
 
   return (
@@ -25,12 +26,13 @@ const ViewBranches = () => {
                 <th>P/L</th>
 
                 <th>Status</th>
-                <th>Type</th>
+                <th>Reg. Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
               {branches?.map((branch, i) => {
+            
                 return (
                   <tr key={i}>
                     <td>
@@ -50,7 +52,8 @@ const ViewBranches = () => {
                         {branch?.userStatus === 1 ? "active" : "inactive"}
                       </span>
                     </td>
-                    <td>{branch?.accountType}</td>
+                    <td>{branch?.registrationDate
+}</td>
                     <td style={{ display: "flex", color: "white" }}>
                       <a
                         onClick={() =>
@@ -102,6 +105,20 @@ const ViewBranches = () => {
                         className="btn btn-icon btn-sm btn-dark"
                       >
                         S
+                      </a>
+                      &nbsp;
+                      <a
+                        style={{ color: "white" }}
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowCreditRef,
+                            branch?.username,
+                            setDownLineId
+                          )
+                        }
+                        className="btn btn-icon btn-sm btn-primary"
+                      >
+                        CR
                       </a>
                     </td>
                   </tr>

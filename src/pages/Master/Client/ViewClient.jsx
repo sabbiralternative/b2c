@@ -15,6 +15,7 @@ const ViewClient = () => {
     setDownLineId,
     setShowChangePassword,
     setShowChangeStatus,
+    setShowCreditRef,
   } = useContextState();
   const { clients, refetchClients } = useGetClient(clientId);
 
@@ -75,12 +76,13 @@ const ViewClient = () => {
               <tr>
                 <th>Username</th>
                 <th>Mobile</th>
+                <th>Credit Referance</th>
                 <th>Balance</th>
                 <th>Total Deposit</th>
                 <th>Total Withdraw</th>
                 <th>Exposure</th>
                 <th>Status</th>
-                <th>Type</th>
+                <th>Reg. Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -93,6 +95,10 @@ const ViewClient = () => {
                     </td>
                     <td>
                       <strong>{client?.mobile}</strong>
+                    </td>
+                    <td>
+                      <strong>{client?.creditReferance
+}</strong>
                     </td>
                     <td>
                       <strong>{client?.balance}</strong>
@@ -111,7 +117,8 @@ const ViewClient = () => {
                         {client?.userStatus === 1 ? "Active" : "InActive"}
                       </span>
                     </td>
-                    <td>{client?.accountType}</td>
+                    <td>{client?.registrationDate
+}</td>
                     <td>
                       <a
                         style={{ color: "white" }}
@@ -163,6 +170,20 @@ const ViewClient = () => {
                         className="btn btn-icon btn-sm btn-dark"
                       >
                         S
+                      </a>
+                      &nbsp;
+                      <a
+                        style={{ color: "white" }}
+                        onClick={() =>
+                          handleDownLineId(
+                            setShowCreditRef,
+                            client?.username,
+                            setDownLineId
+                          )
+                        }
+                        className="btn btn-icon btn-sm btn-primary"
+                      >
+                        CR
                       </a>
                     </td>
                   </tr>
