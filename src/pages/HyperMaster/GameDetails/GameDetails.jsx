@@ -64,7 +64,7 @@ const GameDetails = () => {
     return;
   }
   return (
-    <div className="main-content">
+    <div className="container-xxl flex-grow-1 container-p-y">
       <div className="page-content">
         <div className="container-fluid">
           <div className="row">

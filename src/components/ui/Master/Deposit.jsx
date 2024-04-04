@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 
-const Deposit = ({ data,title }) => {
-  const { setEditPendingDeposit,setDownLineId } = useContextState();
+const Deposit = ({ data, title }) => {
+  const { setEditPendingDeposit, setDownLineId, setClientId } =
+    useContextState();
+  const navigate = useNavigate();
   return (
     <div className="card">
       <h5 className="card-header">{title}</h5>
@@ -23,10 +26,17 @@ const Deposit = ({ data,title }) => {
           </thead>
           <tbody className="table-border-bottom-0">
             {data?.map((item, i) => {
-    
               return (
                 <tr key={i}>
-                  <td>{item?.loginname}</td>
+                  <td
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setClientId(item?.loginname);
+                      navigate("/view-client");
+                    }}
+                  >
+                    {item?.loginname}
+                  </td>
                   <td>{item?.amount}</td>
 
                   <td>{item?.utr}</td>
@@ -48,10 +58,10 @@ const Deposit = ({ data,title }) => {
                   {item?.status === "PENDING" && (
                     <td>
                       <a
-                      style={{color:'white'}}
+                        style={{ color: "white" }}
                         onClick={() => {
-                          setDownLineId(item?.id)
-                          setEditPendingDeposit(true)
+                          setDownLineId(item?.id);
+                          setEditPendingDeposit(true);
                         }}
                         className="btn btn-icon btn-sm btn-success"
                       >

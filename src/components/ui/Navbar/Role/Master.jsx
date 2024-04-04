@@ -8,6 +8,7 @@ const Master = () => {
   const [showPayments, setShowPayments] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showExposure, setShowExposure] = useState(false);
   const navigate = useNavigate();
 
   const clientsRef = useRef();
@@ -31,6 +32,11 @@ const Master = () => {
   useCloseModalClickOutside(withdrawRef, () => {
     setShowWithdraw(false);
   });
+  const exposureRef = useRef();
+  useCloseModalClickOutside(exposureRef, () => {
+    setShowExposure(false);
+  });
+
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -39,6 +45,7 @@ const Master = () => {
     setShowPayments(false);
     setShowStatement(false);
     setShowWithdraw(false);
+    setShowExposure(false)
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -57,6 +64,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowExposure(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -98,6 +106,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowWithdraw(false);
+            setShowExposure(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -139,6 +148,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowExposure(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -183,6 +193,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowExposure(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -233,6 +244,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
+            setShowExposure(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -267,6 +279,53 @@ const Master = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
+            </a>
+          </li>
+   
+        </ul>
+      </li>
+      <li
+        ref={exposureRef}
+        className={`menu-item ${showExposure ? "open" : ""}`}
+      >
+        <a
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onMouseEnter={() => {
+            setShowExposure(true)
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowPayments(false);
+            setShowStatement(false);
+            setShowWithdraw(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Exposure</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("market-analysis")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Market Analysis</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("current-bets")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Current Bets</div>
             </a>
           </li>
         </ul>

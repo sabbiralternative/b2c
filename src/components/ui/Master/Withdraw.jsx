@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 
-const Withdraw = ({ data,title }) => {
-  const { setEditPendingWithdraw, setDownLineId } = useContextState();
+const Withdraw = ({ data, title }) => {
+  const { setEditPendingWithdraw, setDownLineId, setClientId } =
+    useContextState();
+  const navigate = useNavigate();
   return (
     <div className="card">
       <h5 className="card-header">{title}</h5>
@@ -24,10 +27,17 @@ const Withdraw = ({ data,title }) => {
           </thead>
           <tbody className="table-border-bottom-0">
             {data?.map((item, i) => {
-           
               return (
                 <tr key={i}>
-                  <td>{item?.loginname}</td>
+                  <td
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setClientId(item?.loginname);
+                      navigate("/view-client");
+                    }}
+                  >
+                    {item?.loginname}
+                  </td>
                   <td>{item?.amount}</td>
 
                   <td>{item?.mobile}</td>

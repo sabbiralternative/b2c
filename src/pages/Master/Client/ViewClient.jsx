@@ -1,42 +1,36 @@
 import { useForm } from "react-hook-form";
 import useContextState from "../../../hooks/useContextState";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import axios from "axios";
-import { API } from "../../../api";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
+import useGetClient from "../../../hooks/Master/Client/useGetClient";
+import { useEffect } from "react";
 
 const ViewClient = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, reset } = useForm();
+  const { handleSubmit } = useForm();
   const {
-    token,
+    clientId,
+    setClientId,
     setClientDeposit,
     setDownLineId,
     setShowChangePassword,
     setShowChangeStatus,
-    clientData,
-    setClientData,
   } = useContextState();
-  const onSubmit = async ({ searchId }) => {
-    const generatedToken = handleRandomToken();
-    const payload = {
-      searchId,
-      token: generatedToken,
-    };
-    const res = await axios.post(API.viewClients, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = res.data;
-    if (data?.success) {
-      setClientData(data?.result);
-      reset();
-    }
+  const { clients, refetchClients } = useGetClient(clientId);
+
+  const onSubmit = async () => {
+    refetchClients();
+    setClientId("");
   };
   const handleNavigate = (username, link) => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
   };
+  useEffect(() => {
+    if (clients?.length > 0) {
+      setClientId("");
+    }
+  }, [setClientId, clients]);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="col-12">
@@ -49,12 +43,11 @@ const ViewClient = () => {
             >
               <div className="col-md-6 fv-plugins-icon-container">
                 <input
-                  {...register("searchId", {
-                    required: true,
-                  })}
+                  onChange={(e) => setClientId(e.target.value)}
                   type="text"
                   className="form-control"
                   placeholder="Search Client"
+                  value={clientId}
                 />
                 <div className="fv-plugins-message-container invalid-feedback"></div>
               </div>
@@ -92,7 +85,7 @@ const ViewClient = () => {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {clientData?.map((client, i) => {
+              {clients?.map((client, i) => {
                 return (
                   <tr key={i}>
                     <td>
