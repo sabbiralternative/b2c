@@ -3,6 +3,7 @@ import useContextState from "../../../hooks/useContextState";
 import Dropdown from "./Dropdown";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import { Link } from "react-router-dom";
+import profileImg from '../../../../src/assets/img/avatars/1.png'
 
 const Navbar = () => {
   const {
@@ -138,7 +139,7 @@ const Navbar = () => {
               >
                 <div className="avatar avatar-online">
                   <img
-                    src="/src/assets/img/avatars/1.png"
+                    src={profileImg}
                     className="rounded-circle"
                   />
                 </div>
@@ -148,6 +149,7 @@ const Navbar = () => {
                 setShowDropdown={setShowDropdown}
                 adminName={adminName}
                 adminRole={adminRole}
+                profileImg={profileImg}
                 
               />
             </li>
