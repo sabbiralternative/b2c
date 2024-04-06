@@ -1,14 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slip from "../../modal/Master/Deposit/Slip";
+import toast from "react-hot-toast";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 
 const Deposit = ({ data, title }) => {
   const { setEditPendingDeposit, setDownLineId, setClientId } =
     useContextState();
   const navigate = useNavigate();
   const [showImage, setShowImage] = useState(false);
-  const [image,setImage] = useState('')
+  const [image, setImage] = useState("");
+  const [message, setMessage] = useState("");
+  const location = useLocation();
+
+
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+      setMessage("");
+    }
+  }, [message]);
   return (
     <div className="card">
       {showImage && <Slip setShowImage={setShowImage} image={image} />}
@@ -43,13 +56,23 @@ const Deposit = ({ data, title }) => {
                   </td>
                   <td>{item?.amount}</td>
 
-                  <td>{item?.utr}</td>
+                  <td>
+                    {item?.utr}{" "}
+                    {location.pathname === "/pending-deposit" && (
+                      <MdOutlineContentCopy
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          handleCopyToClipBoard(item?.utr, setMessage)
+                        }
+                      />
+                    )}
+                  </td>
                   <td>
                     {item?.image ? (
                       <span
                         onClick={() => {
-                          setShowImage(true)
-                          setImage(item?.image)
+                          setShowImage(true);
+                          setImage(item?.image);
                         }}
                         style={{ color: "#346cee", cursor: "pointer" }}
                       >
