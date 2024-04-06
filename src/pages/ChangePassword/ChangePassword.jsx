@@ -13,9 +13,6 @@ const ChangePassword = () => {
   const navigate = useNavigate();
 
   const onSubmit = async ({ oldPassword, newPassword, confirmPassword }) => {
-    if (newPassword !== oldPassword) {
-      return toast.error("The  Password does not match");
-    }
 
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -35,6 +32,7 @@ const ChangePassword = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
+
     if (data?.success) {
       toast.success(data?.result?.message);
       setTimeout(() => {

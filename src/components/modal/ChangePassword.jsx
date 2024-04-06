@@ -20,9 +20,9 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
   const { token, adminRole } = useContextState();
   const onSubmit = async ({ password, confirmPassword }) => {
     const generatedToken = handleRandomToken();
-    if (password !== confirmPassword) {
-      return toast.error("Password did not matched");
-    }
+    // if (password !== confirmPassword) {
+    //   return toast.error("Password did not matched");
+    // }
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
     //     confirmPassword: newPasswordConfirm,
@@ -41,6 +41,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
+    console.log(data);
     if (data?.success) {
       toast.success(data?.result?.message);
       reset();
