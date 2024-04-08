@@ -3,7 +3,7 @@ import useContextState from "../../../hooks/useContextState";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const ViewClient = () => {
   const navigate = useNavigate();
@@ -22,17 +22,18 @@ const ViewClient = () => {
 
   const onSubmit = async () => {
     refetchClients();
-    setClientId("");
+    // setClientId("");
   };
   const handleNavigate = (username, link) => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
   };
-  useEffect(() => {
-    if (clients?.length > 0) {
-      setClientId("");
-    }
-  }, [setClientId, clients]);
+  // useEffect(() => {
+  //   if (clients?.length > 0) {
+  //     // setClientId("");
+  //   }
+  // }, [setClientId, clients]);
+  // console.log(clientId);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="col-12">
