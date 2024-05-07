@@ -11,6 +11,7 @@ import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranc
 const Withdraw = ({ downlineId, setShowWithdraw }) => {
   const { refetchAllBranch } = useGetAllBranch();
 
+  /* close modal click outside */
   const withdrawRef = useRef();
   useCloseModalClickOutside(withdrawRef, () => {
     setShowWithdraw(false);
@@ -18,6 +19,8 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
 
+
+  /* handle withdraw submit */
   const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({

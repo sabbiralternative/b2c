@@ -15,6 +15,8 @@ const AddUPI = () => {
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
+
+  /* add upi */
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
     const payload = {

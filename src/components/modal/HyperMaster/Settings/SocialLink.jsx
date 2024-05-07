@@ -11,6 +11,8 @@ import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAl
 const SocialLink = ({ setShowSocialLink }) => {
   const { socialLinks, refetchAllSocialLinks, isLoading } =
     useGetAllSocialLink();
+
+    /* close modal click outside */
   const socialLinkRef = useRef();
   useCloseModalClickOutside(socialLinkRef, () => {
     setShowSocialLink(false);
@@ -19,8 +21,8 @@ const SocialLink = ({ setShowSocialLink }) => {
   const { register, handleSubmit, reset } = useForm({});
   const { token } = useContextState();
 
+  /* handle edit social link */
   const onSubmit = async ({ whatsapp, instagram, telegram }) => {
-
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,

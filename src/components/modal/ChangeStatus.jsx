@@ -12,6 +12,8 @@ import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
   const { refetchAllBranch } = useGetAllBranch();
   const {refetchClient} = useRefetchClient(downlineId)
+
+  /* close modal ck=lick outside */
   const statusRef = useRef();
   useCloseModalClickOutside(statusRef, () => {
     setShowChangeStatus(false);
@@ -21,6 +23,8 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
   const [userStatus, setUserStatus] = useState(false);
   const { status, refetchStatus } = useGetStatus("getStatus", downlineId);
 
+
+  /* set check box default value */
   useEffect(() => {
     if (status?.bettingStatus === 0) {
       setBetStatus(false);
@@ -34,6 +38,8 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
     }
   }, [status]);
 
+
+  /* handle edit user lock */
   const handleChangeUserLock = async (e) => {
     e.preventDefault();
     const generatedToken = handleRandomToken();

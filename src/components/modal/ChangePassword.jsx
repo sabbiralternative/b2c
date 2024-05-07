@@ -12,12 +12,16 @@ import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 const ChangePassword = ({ setShowChangePassword, downlineId }) => {
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClient } = useRefetchClient(downlineId);
+
+  /* close modal click outside */
   const changePasswordRef = useRef();
   useCloseModalClickOutside(changePasswordRef, () => {
     setShowChangePassword(false);
   });
+
   const { register, handleSubmit, reset } = useForm();
   const { token, adminRole } = useContextState();
+  /* handle change password */
   const onSubmit = async ({ password, confirmPassword }) => {
     const generatedToken = handleRandomToken();
     // if (password !== confirmPassword) {

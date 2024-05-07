@@ -10,6 +10,8 @@ const AddClient = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
+
+  /* handle add client */
   const onSubmit = async ({ username, password, mobile, remark }) => {
     const generatedToken = handleRandomToken();
     const payload = {

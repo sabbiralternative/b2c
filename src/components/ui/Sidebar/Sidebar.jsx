@@ -6,6 +6,7 @@ import MasterSidebar from "./MasterSidebar";
 
 const Sidebar = () => {
   const { setShowSidebar, showSidebar, adminRole } = useContextState();
+  /* close modal click outside */
   const sidebarRef = useRef();
   useCloseModalClickOutside(sidebarRef, () => {
     setShowSidebar(false);

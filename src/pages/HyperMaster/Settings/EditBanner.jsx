@@ -15,8 +15,9 @@ const EditBanner = () => {
   const bannerId = localStorage.getItem("bannerId");
   const { singleBanner, isLoading, isFetching } = useGetSingleBanner(bannerId);
   const { refetchAllBanners } = useGetViewAllBanner();
-  const onSubmit = async ({ status, priority }) => {
 
+/* handle edit banner */
+  const onSubmit = async ({ status, priority }) => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "updateBanner",

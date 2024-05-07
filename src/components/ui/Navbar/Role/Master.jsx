@@ -10,6 +10,8 @@ const Master = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const navigate = useNavigate();
+  
+/* close modal click outside */
 
   const clientsRef = useRef();
   useCloseModalClickOutside(clientsRef, () => {

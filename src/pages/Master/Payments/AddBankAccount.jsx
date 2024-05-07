@@ -16,6 +16,8 @@ const AddBankAccount = () => {
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
+
+  /* handle add bank */
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
     const payload = {

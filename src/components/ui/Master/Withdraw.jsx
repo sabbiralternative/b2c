@@ -12,7 +12,7 @@ const Withdraw = ({ data, title }) => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const location = useLocation();
-  console.log(location);
+
   useEffect(() => {
     if (message) {
       toast.success(message);

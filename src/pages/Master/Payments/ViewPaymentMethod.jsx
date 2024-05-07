@@ -15,6 +15,8 @@ const ViewPaymentMethod = () => {
   const { paymentsMethods, refetchPaymentMethods } =
     useGetPaymentMethod(payload);
 
+
+    /* delete payments method */
   const handleDeletePaymentMethod = async (paymentId) => {
     Swal.fire({
       title: "Are you sure?",

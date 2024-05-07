@@ -9,6 +9,7 @@ import useContextState from "../../../../hooks/useContextState";
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const AddBranch = ({ setShowAddBranch }) => {
+  /* close modal click outside */
   const addBranchRef = useRef();
   useCloseModalClickOutside(addBranchRef, () => {
     setShowAddBranch(false);
@@ -18,6 +19,8 @@ const AddBranch = ({ setShowAddBranch }) => {
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
 
+
+  /* add branch submit */
   const onSubmit = async ({ username, password, notes }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({

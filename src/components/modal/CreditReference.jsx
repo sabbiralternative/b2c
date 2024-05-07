@@ -11,6 +11,7 @@ import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useGetClient from "../../hooks/Master/Client/useGetClient";
 
 const CreditReference = ({ downlineId, setShowCreditRef }) => {
+  /* close modal click outside */
   const creditRef = useRef();
   useCloseModalClickOutside(creditRef, () => {
     setShowCreditRef(false);
@@ -21,6 +22,7 @@ const CreditReference = ({ downlineId, setShowCreditRef }) => {
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClients } = useGetClient(downlineId);
 
+  /* handle update credit reference */
   const onSubmit = async ({ amount }) => {
     const generatedToken = handleRandomToken();
     const payload = {

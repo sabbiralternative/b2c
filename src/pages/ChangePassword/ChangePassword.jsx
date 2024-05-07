@@ -12,6 +12,8 @@ const ChangePassword = () => {
   const { token } = useContextState();
   const navigate = useNavigate();
 
+
+  /* handle change password  */
   const onSubmit = async ({ oldPassword, newPassword, confirmPassword }) => {
 
     const generatedToken = handleRandomToken();

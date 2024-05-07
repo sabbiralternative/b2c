@@ -13,6 +13,7 @@ const Navbar = () => {
   } = useContextState();
   const [showDropdown, setShowDropdown] = useState(false);
 
+  /* close modal click outside */
   const dropdownRef = useRef();
   useCloseModalClickOutside(dropdownRef, () => {
     setShowDropdown(false);
