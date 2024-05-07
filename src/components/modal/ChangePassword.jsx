@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API } from "../../api";
+import { API, Settings } from "../../api";
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
@@ -36,6 +36,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
       password,
       confirmPassword,
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

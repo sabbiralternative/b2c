@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { API } from "../../../api";
+import { API, Settings } from "../../../api";
 import useContextState from "../../useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
@@ -15,6 +15,7 @@ const useGetStatus = (type, downLineId) => {
         downlineId: downLineId,
         type,
         token: generatedToken,
+        site:Settings.siteUrl
       };
       const res = await axios.post(API.downLineEdit, payload, {
         headers: {

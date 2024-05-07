@@ -1,6 +1,7 @@
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import useContextState from "../../../hooks/useContextState";
 import useGetAllBranch from "../../../hooks/HyperMaster/Branch/useGetAllBranch";
+import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const ViewBranches = () => {
   const { branches } = useGetAllBranch();
@@ -36,7 +37,7 @@ const ViewBranches = () => {
                 return (
                   <tr key={i}>
                     <td>
-                      <strong>{branch?.username}</strong>
+                      <strong>{handleSplitUserName(branch?.username)}</strong>
                     </td>
                     <td>{branch?.balance}</td>
                     <td>{branch?.pnl}</td>

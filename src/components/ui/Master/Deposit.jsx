@@ -5,6 +5,7 @@ import Slip from "../../modal/Master/Deposit/Slip";
 import toast from "react-hot-toast";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
+import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const Deposit = ({ data, title }) => {
   const { setEditPendingDeposit, setDownLineId, setClientId } =
@@ -14,7 +15,6 @@ const Deposit = ({ data, title }) => {
   const [image, setImage] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
-
 
   useEffect(() => {
     if (message) {
@@ -52,7 +52,7 @@ const Deposit = ({ data, title }) => {
                       navigate("/view-client");
                     }}
                   >
-                    {item?.loginname}
+                    {handleSplitUserName(item?.loginname)}
                   </td>
                   <td>{item?.amount}</td>
 

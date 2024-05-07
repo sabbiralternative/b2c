@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../api";
+import { API, Settings } from "../../api";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useRef } from "react";
@@ -28,6 +28,7 @@ const CreditReference = ({ downlineId, setShowCreditRef }) => {
       amount,
       type: "updateCreditReference",
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

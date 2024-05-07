@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useContextState from "./useContextState";
 import handleRandomToken from "../utils/handleRandomToken";
 import handleEncryptData from "../utils/handleEncryptData";
-import { API } from "../api";
+import { API, Settings } from "../api";
 import axios from "axios";
 
 
@@ -16,6 +16,7 @@ const useCurrentBets = () => {
       const encryptedData = handleEncryptData({
         type: "sports",
         token: generatedToken,
+        site:Settings.siteUrl
       });
       const res = await axios.post(API.currentBets, encryptedData, {
         headers: {

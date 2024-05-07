@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../../api";
+import { API, Settings } from "../../../api";
 import toast from "react-hot-toast";
 
 const AddClient = () => {
@@ -18,6 +18,7 @@ const AddClient = () => {
       mobile,
       remark,
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.registerPanel, payload, {
       headers: { Authorization: `Bearer ${token}` },

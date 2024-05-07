@@ -3,7 +3,7 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
 import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
-import { API } from "../../../api";
+import { API, Settings } from "../../../api";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 const AddQR = () => {
   const payload = {
     type: "viewPaymentMethods",
+    site:Settings.siteUrl
   };
   const [qr_code, setQr_code] = useState("");
   const [image, setImage] = useState(null);
@@ -47,6 +48,7 @@ const AddQR = () => {
       ...values,
       method: "qr",
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },

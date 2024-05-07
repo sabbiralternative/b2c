@@ -3,6 +3,7 @@ import useContextState from "../../../hooks/useContextState";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
+import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 // import { useEffect } from "react";
 
 const ViewClient = () => {
@@ -34,6 +35,8 @@ const ViewClient = () => {
   //   }
   // }, [setClientId, clients]);
   // console.log(clientId);
+
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="col-12">
@@ -93,7 +96,7 @@ const ViewClient = () => {
                 return (
                   <tr key={i}>
                     <td>
-                      <strong>{client?.username}</strong>
+                      <strong>{handleSplitUserName(client?.username)}</strong>
                     </td>
                     <td>
                       <strong>{client?.mobile}</strong>

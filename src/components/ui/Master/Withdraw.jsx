@@ -4,6 +4,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import toast from "react-hot-toast";
+import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const Withdraw = ({ data, title }) => {
   const { setEditPendingWithdraw, setDownLineId, setClientId } =
@@ -50,7 +51,7 @@ const Withdraw = ({ data, title }) => {
                       navigate("/view-client");
                     }}
                   >
-                    {item?.loginname}
+                    {handleSplitUserName(item?.loginname)}
                   </td>
                   <td>{item?.amount}</td>
 

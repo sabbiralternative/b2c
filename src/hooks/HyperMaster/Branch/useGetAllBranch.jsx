@@ -3,6 +3,7 @@ import axios from "axios";
 import useContextState from "../../useContextState";
 import { API } from "../../../api";
 
+
 const useGetAllBranch = () => {
   const { token, tokenLoading,adminRole } = useContextState();
   const { data: branches = [], refetch: refetchAllBranch } = useQuery({
@@ -12,6 +13,7 @@ const useGetAllBranch = () => {
       if (adminRole != "hyper_master") {
         return;
       }
+ 
       const res = await axios.post(
         API.viewBranches,
         {},

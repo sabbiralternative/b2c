@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { API } from "../../api";
+import { API, Settings } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 // import handleEncryptData from "../../utils/handleEncryptData";
@@ -25,6 +25,7 @@ const Login = () => {
     const loginData = {
       username: username,
       password: password,
+      site:Settings.siteUrl
       // token: generatedToken,
     };
     // /* Encrypted the post data */

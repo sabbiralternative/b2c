@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../../api";
+import { API, Settings } from "../../../api";
 import useContextState from "../../../hooks/useContextState";
 import toast from "react-hot-toast";
 
@@ -10,6 +10,7 @@ const ViewPaymentMethod = () => {
   const { token, setShowEditPayment, setDownLineId } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
+    site:Settings.siteUrl
   };
   const { paymentsMethods, refetchPaymentMethods } =
     useGetPaymentMethod(payload);
@@ -30,6 +31,7 @@ const ViewPaymentMethod = () => {
           type: "deletePayment",
           paymentId,
           token: generatedToken,
+          site:Settings.siteUrl
         };
         const res = await axios.post(API.payments, payload, {
           headers: { Authorization: `Bearer ${token}` },

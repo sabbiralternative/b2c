@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "./useContextState";
 import handleRandomToken from "../utils/handleRandomToken";
-import { API } from "../api";
+import { API, Settings } from "../api";
 import axios from "axios";
 
 const useGetCurrentRef = (downlineId) => {
@@ -15,6 +15,7 @@ const useGetCurrentRef = (downlineId) => {
         downlineId: downlineId,
         type: "viewCreditReference",
         token: generatedToken,
+        site:Settings.siteUrl
       };
       const res = await axios.post(API.downLineEdit, payload, {
         headers: {

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useContextState from "../../useContextState";
-import { API } from "../../../api";
+import { API, Settings } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 
@@ -15,6 +15,7 @@ const useGetViewAllBanner = () => {
       const payload = {
         token: generatedToken,
         type: "getBanners",
+        site:Settings.siteUrl
       };
       const res = await axios.post(API.banner, payload, {
         headers: {

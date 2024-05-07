@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API } from "../../../../api";
+import { API, Settings } from "../../../../api";
 import toast from "react-hot-toast";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import useContextState from "../../../../hooks/useContextState";
@@ -33,6 +33,7 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
       amount,
       remark,
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import useContextState from "../../../../hooks/useContextState";
 import axios from "axios";
-import { API } from "../../../../api";
+import { API, Settings } from "../../../../api";
 import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
 
 const SocialLink = ({ setShowSocialLink }) => {
@@ -35,6 +35,7 @@ const SocialLink = ({ setShowSocialLink }) => {
       instagram,
       telegram,
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.socialLinks, payload, {
       headers: { Authorization: `Bearer ${token}` },

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import useContextState from "../../../hooks/useContextState";
-import { API } from "../../../api";
+import { API, Settings } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -46,6 +46,7 @@ const AddBanner = () => {
       banner_link: filePath,
       priority,
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.banner, payload, {
       headers: { Authorization: `Bearer ${token}` },

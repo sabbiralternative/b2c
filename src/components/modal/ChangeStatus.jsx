@@ -3,7 +3,7 @@ import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
 import handleRandomToken from "../../utils/handleRandomToken";
 import axios from "axios";
-import { API } from "../../api";
+import { API, Settings } from "../../api";
 import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
@@ -43,6 +43,7 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
       userStatus: userStatus ? 1 : 0,
       bettingStatus: betStatus ? 1 : 0,
       token: generatedToken,
+      site:Settings.siteUrl
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: {
