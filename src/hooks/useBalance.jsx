@@ -8,7 +8,8 @@ import { handleLogOut } from "../utils/handleLogOut";
 // import handleEncryptData from "../utils/handleEncryptData";
 /* Balance api */
 const useBalance = () => {
-  const { token, setGetToken, tokenLoading } = useContextState();
+  const token = localStorage.getItem("adminToken");
+  const { setGetToken, tokenLoading } = useContextState();
   const { data: balanceData, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
     enabled: !tokenLoading,

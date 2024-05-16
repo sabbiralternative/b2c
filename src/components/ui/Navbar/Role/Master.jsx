@@ -22,7 +22,7 @@ const Master = () => {
   const [playSound, setPlaySound] = useState(false);
 
   useEffect(() => {
-    if (dwCount?.depositCount || dwCount?.withdrawCount) {
+    if (dwCount?.depositCount >= 0 || dwCount?.withdrawCount >= 0) {
       if (
         (playSound &&
           depositCount !== null &&
@@ -43,7 +43,7 @@ const Master = () => {
   /* Sound notification end */
 
 
-  
+
   /* close modal click outside */
   const clientsRef = useRef();
   useCloseModalClickOutside(clientsRef, () => {

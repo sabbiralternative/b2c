@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { handleLogOut } from "../../../utils/handleLogOut";
+import useContextState from "../../../hooks/useContextState";
+
 
 const Dropdown = ({
   showDropdown,
@@ -9,6 +11,8 @@ const Dropdown = ({
   profileImg,
 }) => {
   const navigate = useNavigate();
+  const { setGetToken } = useContextState();
+
   return (
     <ul
       className={`dropdown-menu dropdown-menu-end  ${
@@ -49,6 +53,7 @@ const Dropdown = ({
         <a
           onClick={() => {
             handleLogOut();
+            setGetToken((prev) => !prev);
             navigate("/login");
           }}
           className="dropdown-item"

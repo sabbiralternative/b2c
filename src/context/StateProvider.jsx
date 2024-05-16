@@ -37,6 +37,8 @@ const StateProvider = ({ children }) => {
       setAdminName(adminName);
       setAdminRole(adminRole);
       setTokenLoading(false);
+    }else{
+      setTokenLoading(true);
     }
   }, [getToken, token]);
 

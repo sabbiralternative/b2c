@@ -2,6 +2,7 @@ import { handleDownLineId } from "../../../utils/handleDownLineId";
 import useContextState from "../../../hooks/useContextState";
 import useGetAllBranch from "../../../hooks/HyperMaster/Branch/useGetAllBranch";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+import { useNavigate } from "react-router-dom";
 
 const ViewBranches = () => {
   const { branches } = useGetAllBranch();
@@ -13,8 +14,12 @@ const ViewBranches = () => {
     setDownLineId,
     setShowCreditRef,
   } = useContextState();
+  const navigate = useNavigate();
 
-  
+  const handleNavigate = (username, link) => {
+    localStorage.setItem("downLineId", username);
+    navigate(`/${link}`);
+  };
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -25,6 +30,7 @@ const ViewBranches = () => {
             <thead className="table-dark">
               <tr>
                 <th>Username</th>
+                <th>Credit Reference</th>
                 <th>Balance</th>
                 <th>P/L</th>
 
@@ -35,12 +41,12 @@ const ViewBranches = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {branches?.map((branch, i) => {
-            
                 return (
                   <tr key={i}>
                     <td>
                       <strong>{handleSplitUserName(branch?.username)}</strong>
                     </td>
+                    <td>{branch?.creditReferance}</td>
                     <td>{branch?.balance}</td>
                     <td>{branch?.pnl}</td>
 
@@ -55,8 +61,7 @@ const ViewBranches = () => {
                         {branch?.userStatus === 1 ? "active" : "inactive"}
                       </span>
                     </td>
-                    <td>{branch?.registrationDate
-}</td>
+                    <td>{branch?.registrationDate}</td>
                     <td style={{ display: "flex", color: "white" }}>
                       <a
                         onClick={() =>
@@ -82,6 +87,16 @@ const ViewBranches = () => {
                         className="btn btn-icon btn-sm btn-danger"
                       >
                         W
+                      </a>
+                      &nbsp;
+                      <a
+                        style={{ color: "white" }}
+                        onClick={() => {
+                          handleNavigate(branch?.username, "pnl");
+                        }}
+                        className="btn btn-icon btn-sm btn-warning"
+                      >
+                        PL
                       </a>
                       &nbsp;
                       <a
