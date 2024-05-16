@@ -1,8 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
+import notification from "../../../../assets/notification.wav";
 
 const Master = () => {
+  const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
   const [showStatement, setShowStatement] = useState(false);
   const [showPayments, setShowPayments] = useState(false);
@@ -10,9 +13,38 @@ const Master = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const navigate = useNavigate();
-  
-/* close modal click outside */
 
+  /* Sound notification start */
+  const [depositCount, setDepositCount] = useState(null);
+  const [withdrawCount, setWithdrawCount] = useState(null);
+  const depositRefCount = useRef(depositCount);
+  const withdrawRefCount = useRef(withdrawCount);
+  const [playSound, setPlaySound] = useState(false);
+
+  useEffect(() => {
+    if (dwCount?.depositCount || dwCount?.withdrawCount) {
+      if (
+        (playSound &&
+          depositCount !== null &&
+          depositCount > depositRefCount.current) ||
+        (playSound &&
+          withdrawCount !== null &&
+          withdrawCount > withdrawRefCount.current)
+      ) {
+        new Audio(notification).play();
+      }
+      depositRefCount.current = depositCount;
+      withdrawRefCount.current = withdrawCount;
+      setDepositCount(dwCount?.depositCount);
+      setWithdrawCount(dwCount?.withdrawCount);
+      setPlaySound(true);
+    }
+  }, [depositCount, withdrawCount, playSound, dwCount]);
+  /* Sound notification end */
+
+
+  
+  /* close modal click outside */
   const clientsRef = useRef();
   useCloseModalClickOutside(clientsRef, () => {
     setShowClients(false);
@@ -48,6 +80,7 @@ const Master = () => {
     setShowWithdraw(false);
     setShowExposure(false);
   };
+
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
       <li className="menu-item">
@@ -203,7 +236,23 @@ const Master = () => {
           }}
           className="menu-link menu-toggle"
         >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
+          {depositCount ? (
+            <span
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#39da8a",
+                marginRight: "5px",
+                padding: "0px 4px",
+                color: "black",
+                fontWeight: "500",
+              }}
+            >
+              {depositCount}
+            </span>
+          ) : (
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+          )}
+
           <div data-i18n="Deposit">Deposit</div>
         </a>
 
@@ -254,7 +303,23 @@ const Master = () => {
           }}
           className="menu-link menu-toggle"
         >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
+          {withdrawCount ? (
+            <span
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#39da8a",
+                marginRight: "5px",
+                padding: "0px 4px",
+                color: "black",
+                fontWeight: "500",
+              }}
+            >
+              {withdrawCount}
+            </span>
+          ) : (
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+          )}
+
           <div data-i18n="Withdraw">Withdraw</div>
         </a>
 

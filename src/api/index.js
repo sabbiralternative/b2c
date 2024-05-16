@@ -56,13 +56,13 @@ export const API = {
   addBranch: config?.result?.endpoint?.addBranch,
   socialLinks: config?.result?.endpoint?.socialLink,
   viewClients: config?.result?.endpoint?.viewClients,
-  registerPanel:config?.result?.endpoint?.registerPanel,
-  payments:config?.result?.endpoint?.payments,
-  depositClient:config?.result?.endpoint?.depositClient,
-  utr:config?.result?.endpoint?.utr,
-  withdraw:config?.result?.endpoint?.withdraw,
-  statement:config?.result?.endpoint?.statement
-  
+  registerPanel: config?.result?.endpoint?.registerPanel,
+  payments: config?.result?.endpoint?.payments,
+  depositClient: config?.result?.endpoint?.depositClient,
+  utr: config?.result?.endpoint?.utr,
+  withdraw: config?.result?.endpoint?.withdraw,
+  statement: config?.result?.endpoint?.statement,
+  dwCount: config?.result?.endpoint?.dwCount,
 };
 
 export const Settings = {

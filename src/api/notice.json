@@ -89,7 +89,8 @@
       "utr": "https://admin.api7.live/api/b2c/utr",
       "withdraw": "https://admin.api7.live/api/b2c/withdraw",
       "marketAnalysis": "https://admin.api7.live/api/b2c/marketAnalysis",
-      "statement":"https://admin.api7.live/api/b2c/statement"
+      "statement": "https://admin.api7.live/api/b2c/statement",
+      "dwCount": "https://admin.api7.live/api/b2c/dwCount"
     }
   },
   "success": true
