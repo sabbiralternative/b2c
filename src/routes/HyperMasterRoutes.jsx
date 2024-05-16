@@ -25,11 +25,11 @@ export const HyperMasterRoutes = [
   },
   {
     path: "/market-analysis",
-    element: <MarketAnalysis/>,
+    element: <MarketAnalysis />,
   },
   {
     path: "/current-bets",
-    element: <CurrentBets/>,
+    element: <CurrentBets />,
   },
   {
     path: "/game-details/:eventTypeId/:eventId",

@@ -41,7 +41,7 @@ const Withdraw = ({ data, title }) => {
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
-            {data?.map((item, i) => {
+            {Array.isArray(data) && data?.map((item, i) => {
               return (
                 <tr key={i}>
                   <td

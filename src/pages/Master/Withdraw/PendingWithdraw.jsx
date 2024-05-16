@@ -6,12 +6,13 @@ const PendingWithdraw = () => {
   const payload = {
     type: "viewWithdraw",
     status: "PENDING",
-    site:Settings.siteUrl
+    site: Settings.siteUrl,
   };
-  const { allWithdraw } = useGetALLWithdraw(payload,30000);
+  const { allWithdraw } = useGetALLWithdraw(payload, 30000);
+  
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Withdraw data={allWithdraw} title='Pending Withdraw' />
+      <Withdraw data={allWithdraw} title="Pending Withdraw" />
     </div>
   );
 };
