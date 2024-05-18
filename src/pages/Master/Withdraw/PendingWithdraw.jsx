@@ -9,7 +9,7 @@ const PendingWithdraw = () => {
     site: Settings.siteUrl,
   };
   const { allWithdraw } = useGetALLWithdraw(payload, 30000);
-  
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <Withdraw data={allWithdraw} title="Pending Withdraw" />
