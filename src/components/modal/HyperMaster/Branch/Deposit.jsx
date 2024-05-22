@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useContextState from "../../../../hooks/useContextState";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import axios from "axios";
-import { API, Settings } from "../../../../api";
+import { API} from "../../../../api";
 import toast from "react-hot-toast";
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
@@ -17,7 +17,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
     setShowDeposit(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token,site } = useContextState();
   const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -33,7 +33,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
       amount,
       remark,
       token: generatedToken,
-      site:Settings.siteUrl
+      site
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

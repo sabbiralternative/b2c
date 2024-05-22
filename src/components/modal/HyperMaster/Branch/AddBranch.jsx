@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import axios from "axios";
-import { API, Settings } from "../../../../api";
+import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
@@ -17,7 +17,7 @@ const AddBranch = ({ setShowAddBranch }) => {
   const { refetchAllBranch } = useGetAllBranch();
 
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token,site } = useContextState();
 
 
   /* add branch submit */
@@ -35,7 +35,7 @@ const AddBranch = ({ setShowAddBranch }) => {
       password,
       notes,
       token: generatedToken,
-      site:Settings.siteUrl
+      site
     };
     const res = await axios.post(API.addBranch, payload, {
       headers: { Authorization: `Bearer ${token}` },

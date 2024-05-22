@@ -9,6 +9,7 @@ const StateProvider = ({ children }) => {
   const [adminRole, setAdminRole] = useState("");
   const [getToken, setGetToken] = useState(false);
   const [tokenLoading, setTokenLoading] = useState(true);
+  const [site, setSite] = useState("");
   const [logo, setLogo] = useState("");
   const [icon, setIcon] = useState("");
   const [showSidebar, setShowSidebar] = useState(false);
@@ -22,22 +23,24 @@ const StateProvider = ({ children }) => {
   /* Master state */
   const [clientDeposit, setClientDeposit] = useState(false);
   const [clientData, setClientData] = useState([]);
-  const [editPendingDeposit,setEditPendingDeposit] = useState(false)
-  const [editPendingWithdraw,setEditPendingWithdraw] = useState(false)
-  const [showEditPayment,setShowEditPayment] = useState(false)
-  const [clientId, setClientId] = useState('');
-  const [showCreditRef,setShowCreditRef] = useState(false)
+  const [editPendingDeposit, setEditPendingDeposit] = useState(false);
+  const [editPendingWithdraw, setEditPendingWithdraw] = useState(false);
+  const [showEditPayment, setShowEditPayment] = useState(false);
+  const [clientId, setClientId] = useState("");
+  const [showCreditRef, setShowCreditRef] = useState(false);
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
     const adminName = localStorage.getItem("adminName");
     const adminRole = localStorage.getItem("adminRole");
+    const adminSite = localStorage.getItem("adminSite");
     if (getToken) {
       setToken(getToken);
       setAdminName(adminName);
       setAdminRole(adminRole);
+      setSite(adminSite);
       setTokenLoading(false);
-    }else{
+    } else {
       setTokenLoading(true);
     }
   }, [getToken, token]);
@@ -78,6 +81,8 @@ const StateProvider = ({ children }) => {
     setIcon,
     adminName,
     setAdminName,
+    site,
+    setSite,
     adminRole,
     setAdminRole,
     showSidebar,
@@ -98,12 +103,18 @@ const StateProvider = ({ children }) => {
     setDownLineId,
     clientDeposit,
     setClientDeposit,
-    clientData, setClientData,
-    editPendingDeposit,setEditPendingDeposit,
-    editPendingWithdraw,setEditPendingWithdraw,
-    showEditPayment,setShowEditPayment,
-    clientId, setClientId,
-    showCreditRef,setShowCreditRef
+    clientData,
+    setClientData,
+    editPendingDeposit,
+    setEditPendingDeposit,
+    editPendingWithdraw,
+    setEditPendingWithdraw,
+    showEditPayment,
+    setShowEditPayment,
+    clientId,
+    setClientId,
+    showCreditRef,
+    setShowCreditRef,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

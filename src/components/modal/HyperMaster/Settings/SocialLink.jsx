@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import useContextState from "../../../../hooks/useContextState";
 import axios from "axios";
-import { API, Settings } from "../../../../api";
+import { API } from "../../../../api";
 import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
 
 const SocialLink = ({ setShowSocialLink }) => {
@@ -19,7 +19,7 @@ const SocialLink = ({ setShowSocialLink }) => {
   });
 
   const { register, handleSubmit, reset } = useForm({});
-  const { token } = useContextState();
+  const { token,site } = useContextState();
 
   /* handle edit social link */
   const onSubmit = async ({ whatsapp, instagram, telegram }) => {
@@ -37,7 +37,7 @@ const SocialLink = ({ setShowSocialLink }) => {
       instagram,
       telegram,
       token: generatedToken,
-      site:Settings.siteUrl
+      site
     };
     const res = await axios.post(API.socialLinks, payload, {
       headers: { Authorization: `Bearer ${token}` },

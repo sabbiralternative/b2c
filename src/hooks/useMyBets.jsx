@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { API, Settings } from "../api";
+import { API } from "../api";
 import useContextState from "./useContextState";
 import handleRandomToken from "../utils/handleRandomToken";
 import handleEncryptData from "../utils/handleEncryptData";
 
 const useCurrentBets = (eventId) => {
-  const { token, tokenLoading } = useContextState();
+  const { token, tokenLoading,site } = useContextState();
   const { data: myBets, refetch: refetchCurrentBets } = useQuery({
     queryKey: ["currentBets"],
     enabled: !tokenLoading,
@@ -15,7 +15,7 @@ const useCurrentBets = (eventId) => {
       const encryptedData = handleEncryptData({
         type: eventId,
         token: generatedToken,
-        site:Settings.siteUrl
+        site
       });
       const res = await axios.post(`${API.currentBets}`, encryptedData, {
         headers: {

@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import useContextState from "../../useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 
 const useGetStatus = (type, downLineId) => {
-  const { token, tokenLoading } = useContextState();
-  const { data: status, refetch:refetchStatus } = useQuery({
+  const { token, tokenLoading, site } = useContextState();
+  const { data: status, refetch: refetchStatus } = useQuery({
     queryKey: ["creditRef"],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -15,7 +15,7 @@ const useGetStatus = (type, downLineId) => {
         downlineId: downLineId,
         type,
         token: generatedToken,
-        site:Settings.siteUrl
+        site,
       };
       const res = await axios.post(API.downLineEdit, payload, {
         headers: {
@@ -27,7 +27,7 @@ const useGetStatus = (type, downLineId) => {
         return data?.result;
       }
     },
-    gcTime:0
+    gcTime: 0,
   });
   return { status, refetchStatus };
 };

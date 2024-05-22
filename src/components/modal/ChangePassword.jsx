@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API, Settings } from "../../api";
+import { API } from "../../api";
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
@@ -20,7 +20,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
   });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+  const { token, adminRole,site } = useContextState();
   /* handle change password */
   const onSubmit = async ({ password, confirmPassword }) => {
     const generatedToken = handleRandomToken();
@@ -40,7 +40,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
       password,
       confirmPassword,
       token: generatedToken,
-      site:Settings.siteUrl
+      site
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

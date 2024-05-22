@@ -46,6 +46,7 @@ const Login = () => {
           localStorage.setItem("adminToken", data?.result?.token);
           localStorage.setItem("adminName", data?.result?.loginname);
           localStorage.setItem("adminRole", data?.result?.role);
+          localStorage.setItem("adminSite", data?.result?.site);
           const modal = [
             { banner: data?.result?.banner },
             { bannerTitle: data?.result?.bannerTitle },

@@ -9,16 +9,17 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 const AddQR = () => {
+  const { token,site } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
-    site:Settings.siteUrl
+    site
   };
   const [qr_code, setQr_code] = useState("");
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+
 
   /* Upload image */
   useEffect(() => {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
@@ -14,7 +14,7 @@ const AddUPI = () => {
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, site } = useContextState();
 
   /* add upi */
   const onSubmit = async (values) => {
@@ -24,7 +24,7 @@ const AddUPI = () => {
       ...values,
       method: "upi",
       token: generatedToken,
-      site:Settings.siteUrl
+      site,
     };
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },

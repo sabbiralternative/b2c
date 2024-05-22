@@ -3,13 +3,13 @@ import useContextState from "../../hooks/useContextState";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { API, Settings } from "../../api";
+import { API } from "../../api";
 import { handleLogOut } from "../../utils/handleLogOut";
 import handleRandomToken from "../../utils/handleRandomToken";
 
 const ChangePassword = () => {
   const { register, handleSubmit } = useForm();
-  const { token } = useContextState();
+  const { token,site } = useContextState();
   const navigate = useNavigate();
 
 
@@ -29,7 +29,7 @@ const ChangePassword = () => {
       oldPassword,
       confirmPassword,
       token: generatedToken,
-      site:Settings.siteUrl
+      site
     };
     const res = await axios.post(API.changePassword, payload, {
       headers: { Authorization: `Bearer ${token}` },

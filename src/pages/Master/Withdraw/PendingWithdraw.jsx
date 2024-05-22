@@ -1,12 +1,13 @@
-import { Settings } from "../../../api";
 import Withdraw from "../../../components/ui/Master/Withdraw";
 import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw";
+import useContextState from "../../../hooks/useContextState";
 
 const PendingWithdraw = () => {
+  const {site} = useContextState()
   const payload = {
     type: "viewWithdraw",
     status: "PENDING",
-    site: Settings.siteUrl,
+    site
   };
   const { allWithdraw } = useGetALLWithdraw(payload, 30000);
 

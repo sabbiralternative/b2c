@@ -2,16 +2,17 @@ import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 import useDatePicker from "../../../hooks/useDatePicker";
 import { DateRangePicker } from "rsuite";
 import Deposit from "../../../components/ui/Master/Deposit";
-import { Settings } from "../../../api";
+import useContextState from "../../../hooks/useContextState";
 
 const DepositStatement = () => {
+  const {site} = useContextState()
   const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
   const payload = {
     type: "viewUTR",
     status: "APPROVED",
     fromDate: formattedStartDate,
     toDate: formattedEndDate,
-    site:Settings.siteUrl
+    site
   };
   const {
     allUTRs: depositStatements,

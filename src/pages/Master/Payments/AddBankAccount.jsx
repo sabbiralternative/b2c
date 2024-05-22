@@ -2,20 +2,21 @@ import { useForm } from "react-hook-form";
 import useContextState from "../../../hooks/useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API} from "../../../api";
 import toast from "react-hot-toast";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
 import { useNavigate } from "react-router-dom";
 
 const AddBankAccount = () => {
+  const { token,site } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
-    site:Settings.siteUrl
+    site
   };
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+
 
   /* handle add bank */
   const onSubmit = async (values) => {
@@ -25,7 +26,7 @@ const AddBankAccount = () => {
       ...values,
       method: "bank",
       token: generatedToken,
-      site:Settings.siteUrl
+      site
     };
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },

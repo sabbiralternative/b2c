@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "./useContextState";
 import axios from "axios";
-import { API, Settings } from "../api";
+import { API } from "../api";
 import handleRandomToken from "../utils/handleRandomToken";
 import handleEncryptData from "../utils/handleEncryptData";
 
 /* exposure api */
 const useExposer = (eventId) => {
 
-  const { token, tokenLoading } = useContextState();
+  const { token, tokenLoading, site } = useContextState();
   const { data: exposer = [], refetch: refetchExposure } = useQuery({
     queryKey: ["exposure"],
     enabled: !tokenLoading,
@@ -16,7 +16,7 @@ const useExposer = (eventId) => {
       const generatedToken = handleRandomToken();
       const encryptedData = handleEncryptData({
         token:generatedToken,
-        site:Settings.siteUrl
+        site
       });
       const res = await axios.post(
         `${API.adminExposure}/${eventId}`,

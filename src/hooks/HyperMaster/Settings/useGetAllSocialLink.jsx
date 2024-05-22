@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useContextState from "../../useContextState";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetAllSocialLink = () => {
-  const { token, tokenLoading } = useContextState();
+  const { token, tokenLoading,site } = useContextState();
   const {
     data: socialLinks = [],
     refetch: refetchAllSocialLinks,
@@ -18,7 +18,7 @@ const useGetAllSocialLink = () => {
       const payload = {
         token: generatedToken,
         type: "getSocial",
-        site:Settings.siteUrl
+        site
       };
       const res = await axios.post(API.socialLinks, payload, {
         headers: {

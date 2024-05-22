@@ -4,21 +4,17 @@ import axios from "axios";
 import { API } from "../../../api";
 
 const useGetMarketAnalysis = () => {
-  const { token, tokenLoading } = useContextState();
+  const { token, tokenLoading, site } = useContextState();
   const { data: marketAnalysis = [], refetch: refetchMarketAnalysis } =
     useQuery({
       queryKey: ["branch"],
       enabled: !tokenLoading,
       queryFn: async () => {
-        const res = await axios.post(
-          API.marketAnalysis,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await axios.post(API.marketAnalysis, site, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const data = res.data;
         if (data?.success) {

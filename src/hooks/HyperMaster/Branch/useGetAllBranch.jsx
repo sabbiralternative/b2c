@@ -2,10 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useContextState from "../../useContextState";
 import { API } from "../../../api";
+import handleRandomToken from "../../../utils/handleRandomToken";
 
 
 const useGetAllBranch = () => {
-  const { token, tokenLoading,adminRole } = useContextState();
+  const { token, tokenLoading, adminRole, site } = useContextState();
   const { data: branches = [], refetch: refetchAllBranch } = useQuery({
     queryKey: ["branch"],
     enabled: !tokenLoading,
@@ -13,16 +14,13 @@ const useGetAllBranch = () => {
       if (adminRole != "hyper_master") {
         return;
       }
- 
-      const res = await axios.post(
-        API.viewBranches,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const generatedToken = handleRandomToken();
+      const payload = { token: generatedToken, site };
+      const res = await axios.post(API.viewBranches, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const data = res.data;
       if (data?.success) {

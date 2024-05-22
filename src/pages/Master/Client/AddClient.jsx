@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API} from "../../../api";
 import toast from "react-hot-toast";
 
 const AddClient = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token,site } = useContextState();
 
   /* handle add client */
   const onSubmit = async ({ username, password, mobile, remark }) => {
@@ -20,7 +20,7 @@ const AddClient = () => {
       mobile,
       remark,
       token: generatedToken,
-      site:Settings.siteUrl
+      site
     };
     const res = await axios.post(API.registerPanel, payload, {
       headers: { Authorization: `Bearer ${token}` },
