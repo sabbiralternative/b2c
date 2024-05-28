@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
@@ -10,12 +10,14 @@ import useGetSingleWithdraw from "../../../../hooks/Master/Withdraw/useSingleWit
 import useGetALLWithdraw from "../../../../hooks/Master/Withdraw/useGetAllWithdraw";
 
 const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
+  const [image, setImage] = useState(null);
   const editWithdrawRef = useRef();
   useCloseModalClickOutside(editWithdrawRef, () => {
     setEditPendingWithdraw(false);
   });
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, watch } = useForm();
   const { token, downLineId } = useContextState();
+  const statusField = watch("status");
 
   const SingleWithdrawPayload = {
     type: "viewSingleWithdraw",
@@ -51,6 +53,34 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+    e.target.value = null;
+  };
+
+  useEffect(() => {
+    if (image) {
+      const handleSubmitImage = async () => {
+        const formData = new FormData();
+        formData.append("image", image);
+        const res = await axios.post(API.uploadScreenshot, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = res.data;
+        console.log(data);
+        if (data?.success) {
+          setImage(null);
+        } else {
+          setImage(null);
+          toast.error(data?.error);
+        }
+      };
+      handleSubmitImage();
+    }
+  }, [image, token]);
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -139,6 +169,24 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
                       </select>
                     </div>
                   </div>
+                  {statusField === "APPROVED" && (
+                    <div className="row mb-3" id="bank_account_name_div">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-name"
+                      >
+                        Withdraw Slip
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          onChange={(e) => handleImageChange(e)}
+                          type="file"
+                          className="form-control"
+                          id="basic-default-name"
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   <div className="row mb-3" id="bank_account_name_div">
                     <label
