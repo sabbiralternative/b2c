@@ -13,6 +13,7 @@ import { RxCross2 } from "react-icons/rx";
 const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
   const [image, setImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState("");
+  const [filename, setFilename] = useState("");
 
   const editWithdrawRef = useRef();
   useCloseModalClickOutside(editWithdrawRef, () => {
@@ -42,7 +43,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
       remark,
       type: "editWithdraw",
       token: generatedToken,
-      fileName: uploadedImage,
+      fileName: filename,
     };
     const res = await axios.post(API.withdraw, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -78,6 +79,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
         if (data?.success) {
           setImage(null);
           setUploadedImage(data?.filePath);
+          setFilename(data?.fileName);
         } else {
           setImage(null);
           toast.error(data?.error);
