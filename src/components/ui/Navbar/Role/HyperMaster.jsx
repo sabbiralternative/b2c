@@ -8,6 +8,7 @@ const HyperMaster = () => {
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
+  const [showReport, setShowReport] = useState(false);
 
   const navigate = useNavigate();
   const settingsRef = useRef();
@@ -22,12 +23,17 @@ const HyperMaster = () => {
   useCloseModalClickOutside(exposureRef, () => {
     setShowExposure(false);
   });
+  const reportRef = useRef();
+  useCloseModalClickOutside(reportRef, () => {
+    setShowReport(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
     setShowBranch(false);
     setShowSettings(false);
     setShowExposure(false)
+    setShowReport(false);
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -48,6 +54,7 @@ const HyperMaster = () => {
             setShowBranch(true);
             setShowExposure(false);
             setShowSettings(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -105,6 +112,7 @@ const HyperMaster = () => {
             setShowSettings(true);
             setShowExposure(false);
             setShowBranch(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -172,6 +180,7 @@ const HyperMaster = () => {
             setShowExposure(true);
             setShowSettings(false);
             setShowBranch(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -199,6 +208,41 @@ const HyperMaster = () => {
               <div data-i18n="Add Banner">Current Bets</div>
             </a>
           </li>
+        </ul>
+      </li>
+      <li
+        ref={reportRef}
+        className={`menu-item ${showReport ? "open" : ""}`}
+      >
+        <a
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onMouseEnter={() => {
+            setShowReport(true);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Report</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("add-client")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Add Client</div>
+            </a>
+          </li>
+
         </ul>
       </li>
     </ul>

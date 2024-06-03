@@ -90,7 +90,9 @@
       "withdraw": "https://admin.api7.live/api/b2c/withdraw",
       "marketAnalysis": "https://admin.api7.live/api/b2c/marketAnalysis",
       "statement": "https://admin.api7.live/api/b2c/statement",
-      "dwCount": "https://admin.api7.live/api/b2c/dwCount"
+      "dwCount": "https://admin.api7.live/api/b2c/dwCount",
+      "export":"http://admin.winbuzz365.co/api/b2c/export"
+
     }
   },
   "success": true

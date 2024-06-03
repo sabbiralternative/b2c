@@ -119,7 +119,7 @@ const Master = () => {
 
           <li className="menu-item">
             <a
-              onClick={() => handleNavigate("add-client")}
+              onClick={() => handleNavigate("add-clients")}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-user"></i>
