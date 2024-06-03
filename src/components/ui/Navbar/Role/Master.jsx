@@ -12,6 +12,7 @@ const Master = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -71,6 +72,11 @@ const Master = () => {
     setShowExposure(false);
   });
 
+  const reportRef = useRef();
+  useCloseModalClickOutside(reportRef, () => {
+    setShowReport(false);
+  });
+
   const handleNavigate = (link) => {
     navigate(`/${link}`);
     setShowClients(false);
@@ -79,6 +85,7 @@ const Master = () => {
     setShowStatement(false);
     setShowWithdraw(false);
     setShowExposure(false);
+    setShowReport(false)
   };
 
   return (
@@ -99,6 +106,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
+            setShowReport(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -119,7 +127,7 @@ const Master = () => {
 
           <li className="menu-item">
             <a
-              onClick={() => handleNavigate("add-clients")}
+              onClick={() => handleNavigate("add-client")}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-user"></i>
@@ -141,6 +149,7 @@ const Master = () => {
             setShowPayments(false);
             setShowWithdraw(false);
             setShowExposure(false);
+            setShowReport(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -182,6 +191,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
+            setShowReport(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -233,6 +243,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
+            setShowReport(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -300,6 +311,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowExposure(false);
+            setShowReport(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -371,6 +383,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowReport(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -396,6 +409,61 @@ const Master = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Banner">Current Bets</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        ref={reportRef}
+        className={`menu-item ${showReport ? "open" : ""}`}
+      >
+        <a
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onMouseEnter={() => {
+            setShowReport(true)
+            setShowWithdraw(false);
+            setShowExposure(false);
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowPayments(false);
+            setShowStatement(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Report</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("client-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Client Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("deposit-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Deposit Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("withdraw-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Withdraw Report</div>
             </a>
           </li>
         </ul>

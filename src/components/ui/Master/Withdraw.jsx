@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const Withdraw = ({ data, title }) => {
+ 
   const { setEditPendingWithdraw, setDownLineId, setClientId } =
     useContextState();
   const navigate = useNavigate();

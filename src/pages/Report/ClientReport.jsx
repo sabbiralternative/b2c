@@ -1,20 +1,20 @@
-import useDatePicker from "../../../hooks/useDatePicker";
 import { DateRangePicker } from "rsuite";
 import "rsuite/DateRangePicker/styles/index.css";
-import useGetExport from "../../../hooks/HyperMaster/Report/useGetExport";
-const AddHyperClient = () => {
-  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
+import useDatePicker from "../../hooks/useDatePicker";
+import useGetReport from "../../hooks/HyperMaster/Report/useGetReport";
+const ClientReport = () => {
+  const { formattedEndDate: formattedCurrentDate, onChange } = useDatePicker();
   const payload = {
     type: "getClients",
-    fromDate: formattedStartDate,
-    toDate: formattedEndDate,
+    fromDate: formattedCurrentDate,
+    toDate: formattedCurrentDate,
   };
-  const { exports, refetchExports } = useGetExport(payload);
+  const { reports, refetchReports } = useGetReport(payload);
 
   /* Handle user history */
   const handleUserHistory = async (e) => {
     e.preventDefault();
-    refetchExports();
+    refetchReports();
   };
 
   return (
@@ -29,16 +29,13 @@ const AddHyperClient = () => {
             >
               <div className="col-md-6 col-12 mb-4">
                 <label htmlFor="flatpickr-range" className="form-label">
-                  Range Picker
+                  Client Registration Date
                 </label>
                 <DateRangePicker
                   format="dd-MM-yyyy"
                   editable
                   onChange={onChange}
-                  defaultValue={[
-                    new Date(new Date().setDate(new Date().getDate() - 7)),
-                    new Date(),
-                  ]}
+                  defaultValue={[new Date(), new Date()]}
                   block
                 />
                 {/* <input
@@ -105,4 +102,4 @@ const AddHyperClient = () => {
   );
 };
 
-export default AddHyperClient;
+export default ClientReport;

@@ -20,6 +20,7 @@ import EditPendingDeposit from "../modal/Master/Deposit/EditPendingDeposit";
 import EditPendingWithdraw from "../modal/Master/Withdraw/EditPendingWithdraw";
 import EditPayment from "../modal/Master/Payment/EditPayment";
 import CreditReference from "../modal/CreditReference";
+import UploadedImage from "../modal/Master/Withdraw/UploadedImage";
 
 const MainLayout = () => {
   const {
@@ -48,6 +49,9 @@ const MainLayout = () => {
     setShowEditPayment,
     showCreditRef,
     setShowCreditRef,
+    uploadedImage,
+    showUploadedImage,
+
   } = useContextState();
   const navigate = useNavigate();
 
@@ -149,6 +153,9 @@ const MainLayout = () => {
                 setEditPendingWithdraw={setEditPendingWithdraw}
               />
             )}
+
+            {showUploadedImage && uploadedImage && <UploadedImage />}
+
             {showEditPayment && (
               <EditPayment setShowEditPayment={setShowEditPayment} />
             )}

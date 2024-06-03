@@ -4,9 +4,9 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
 
-const useGetExport = (args) => {
+const useGetReport = (args) => {
   const { token, tokenLoading } = useContextState();
-  const { data: exports = [], refetch: refetchExports } = useQuery({
+  const { data: reports = [], refetch: refetchReports } = useQuery({
     queryKey: ["exports"],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -23,10 +23,11 @@ const useGetExport = (args) => {
       });
 
       const data = res.data;
-      return data
+      return data;
     },
+    gcTime: 0,
   });
-  return { exports, refetchExports };
+  return { reports, refetchReports };
 };
 
-export default useGetExport;
+export default useGetReport;

@@ -20,7 +20,7 @@ export const MasterRoutes = [
     element: <ViewClient />,
   },
   {
-    path: "/add-clients",
+    path: "/add-client",
     element: <AddClient />,
   },
   {

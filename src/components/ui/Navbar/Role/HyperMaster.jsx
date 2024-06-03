@@ -235,11 +235,29 @@ const HyperMaster = () => {
         <ul className="menu-sub">
           <li className="menu-item">
             <a
-              onClick={() => handleNavigate("add-client")}
+              onClick={() => handleNavigate("client-report")}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">Add Client</div>
+              <div data-i18n="View Banners">Client Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("deposit-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Deposit Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("withdraw-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Withdraw Report</div>
             </a>
           </li>
 

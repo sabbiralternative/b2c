@@ -9,6 +9,8 @@ const MasterSidebar = () => {
   const [showPayments, setShowPayments] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showExposure, setShowExposure] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const navigate = useNavigate();
   const { setShowSidebar } = useContextState();
 
@@ -33,6 +35,15 @@ const MasterSidebar = () => {
   useCloseModalClickOutside(withdrawRef, () => {
     setShowWithdraw(false);
   });
+  const exposureRef = useRef();
+  useCloseModalClickOutside(exposureRef, () => {
+    setShowExposure(false);
+  });
+
+  const reportRef = useRef();
+  useCloseModalClickOutside(reportRef, () => {
+    setShowReport(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -42,6 +53,8 @@ const MasterSidebar = () => {
     setShowStatement(false);
     setShowWithdraw(false);
     setShowSidebar(false);
+    setShowExposure(false);
+    setShowReport(false);
   };
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
@@ -64,6 +77,8 @@ const MasterSidebar = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowExposure(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -105,6 +120,8 @@ const MasterSidebar = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowWithdraw(false);
+            setShowExposure(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -146,6 +163,8 @@ const MasterSidebar = () => {
             setShowDeposit(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowExposure(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -196,6 +215,8 @@ const MasterSidebar = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowExposure(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -246,6 +267,8 @@ const MasterSidebar = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
+            setShowExposure(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -282,6 +305,101 @@ const MasterSidebar = () => {
               <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
             </a>
           </li>
+        </ul>
+      </li>
+      <li
+         ref={exposureRef}
+        className={`menu-item ${showExposure ? "open" : ""}`}
+      >
+        <a
+          onClick={() => {
+            setShowExposure((prev) => !prev);
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowPayments(false);
+            setShowStatement(false);
+            setShowWithdraw(false);
+            setShowReport(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Withdraw">Exposure</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+             onClick={() => handleNavigate("market-analysis")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Market Analysis</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+               onClick={() => handleNavigate("current-bets")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Current Bets</div>
+            </a>
+          </li>
+    
+        </ul>
+      </li>
+      <li
+              ref={reportRef}
+        className={`menu-item ${showReport ? "open" : ""}`}
+      >
+        <a
+          onClick={() => {
+            setShowReport((prev) => !prev);
+            setShowExposure(false);
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowPayments(false);
+            setShowStatement(false);
+            setShowWithdraw(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Withdraw">Report</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+             onClick={() => handleNavigate("client-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Client Report</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+               onClick={() => handleNavigate("deposit-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Deposit Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+               onClick={() => handleNavigate("withdraw-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Withdraw Report</div>
+            </a>
+          </li>
+    
         </ul>
       </li>
     </ul>

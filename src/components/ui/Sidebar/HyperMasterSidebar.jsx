@@ -5,6 +5,8 @@ import { useState } from "react";
 const HyperMasterSidebar = () => {
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showExposure, setShowExposure] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const { setShowSidebar, setShowAddBranch, setShowSocialLink } =
     useContextState();
   return (
@@ -25,6 +27,8 @@ const HyperMasterSidebar = () => {
           onClick={() => {
             setShowBranch((prev) => !prev);
             setShowSettings(false);
+            setShowExposure(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -64,6 +68,8 @@ const HyperMasterSidebar = () => {
           onClick={() => {
             setShowSettings((prev) => !prev);
             setShowBranch(false);
+            setShowExposure(false);
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -84,10 +90,14 @@ const HyperMasterSidebar = () => {
           </li>
 
           <li className="menu-item">
-            <a className="menu-link">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/add-banner"
+              className="menu-link"
+            >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Banner">Add Banner</div>
-            </a>
+            </Link>
           </li>
 
           <li className="menu-item">
@@ -101,6 +111,94 @@ const HyperMasterSidebar = () => {
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Social Links">Social Links</div>
             </a>
+          </li>
+        </ul>
+      </li>
+      <li className={`menu-item ${showExposure ? "open" : ""}`}>
+        <a
+          style={{}}
+          onClick={() => {
+            setShowExposure((prev) => !prev);
+            setShowSettings(false);
+            setShowBranch(false);
+            setShowReport(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Exposure</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              to="/market-analysis"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Market Analysis</div>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/current-bets"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Current Bets</div>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className={`menu-item ${showReport ? "open" : ""}`}>
+        <a
+          style={{}}
+          onClick={() => {
+            setShowReport((prev) => !prev);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Report</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              to="/client-report"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Client Report</div>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/deposit-report"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Deposit Report</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/withdraw-report"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Withdraw Report</div>
+            </Link>
           </li>
         </ul>
       </li>
