@@ -29,7 +29,7 @@ const WithdrawReport = () => {
             >
               <div className="col-md-6 col-12 mb-4">
                 <label htmlFor="flatpickr-range" className="form-label">
-                  Withdraw Registration Date
+                  Withdraw Date
                 </label>
                 <DateRangePicker
                   format="dd-MM-yyyy"

@@ -8,17 +8,18 @@ import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 import useGetSingleWithdraw from "../../../../hooks/Master/Withdraw/useSingleWithdraw";
 import useGetALLWithdraw from "../../../../hooks/Master/Withdraw/useGetAllWithdraw";
+import { RxCross2 } from "react-icons/rx";
 
-const EditPendingWithdraw = ({ setEditPendingWithdraw,}) => {
+const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
   const [image, setImage] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState("");
 
-  
   const editWithdrawRef = useRef();
   useCloseModalClickOutside(editWithdrawRef, () => {
     setEditPendingWithdraw(false);
   });
   const { register, handleSubmit, reset, watch } = useForm();
-  const { token, downLineId,setUploadedImage,setShowUploadedImage } = useContextState();
+  const { token, downLineId } = useContextState();
   const statusField = watch("status");
 
   const SingleWithdrawPayload = {
@@ -41,6 +42,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw,}) => {
       remark,
       type: "editWithdraw",
       token: generatedToken,
+      fileName: uploadedImage,
     };
     const res = await axios.post(API.withdraw, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -51,7 +53,6 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw,}) => {
       toast.success(data?.result?.message);
       reset();
       setEditPendingWithdraw(false);
-      setShowUploadedImage(true)
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -59,7 +60,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw,}) => {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
-    // e.target.value = null;
+    e.target.value = null;
   };
 
   useEffect(() => {
@@ -75,7 +76,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw,}) => {
         const data = res.data;
         console.log(data);
         if (data?.success) {
-          // setImage(null);
+          setImage(null);
           setUploadedImage(data?.filePath);
         } else {
           setImage(null);
@@ -173,7 +174,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw,}) => {
                       </select>
                     </div>
                   </div>
-                  {statusField === "APPROVED" && (
+                  {!uploadedImage && statusField === "APPROVED" && (
                     <div className="row mb-3" id="bank_account_name_div">
                       <label
                         className="col-sm-2 col-form-label"
@@ -188,6 +189,43 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw,}) => {
                           className="form-control"
                           id="basic-default-name"
                           required={statusField === "APPROVED"}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  {uploadedImage && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        position: "relative",
+                      }}
+                      className="row mb-3"
+                      id="bank_account_name_div"
+                    >
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-name"
+                      >
+                        <RxCross2
+                          onClick={() => setUploadedImage("")}
+                          cursor="pointer"
+                          size={20}
+                        />
+                      </label>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                        className="col-sm-10"
+                      >
+                        <img
+                          style={{ width: "400px", height: "200px" }}
+                          src={uploadedImage}
+                          alt=""
                         />
                       </div>
                     </div>

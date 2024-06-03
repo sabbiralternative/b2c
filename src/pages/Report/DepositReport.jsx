@@ -29,7 +29,7 @@ const DepositReport = () => {
             >
               <div className="col-md-6 col-12 mb-4">
                 <label htmlFor="flatpickr-range" className="form-label">
-                  Deposit Registration Date
+                  Deposit Date
                 </label>
                 <DateRangePicker
                   format="dd-MM-yyyy"

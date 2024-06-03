@@ -28,8 +28,7 @@ const StateProvider = ({ children }) => {
   const [showEditPayment, setShowEditPayment] = useState(false);
   const [clientId, setClientId] = useState("");
   const [showCreditRef, setShowCreditRef] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState("");
-  const [showUploadedImage, setShowUploadedImage] = useState(false);
+ 
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
@@ -117,8 +116,8 @@ const StateProvider = ({ children }) => {
     setClientId,
     showCreditRef,
     setShowCreditRef,
-    uploadedImage, setUploadedImage,
-    showUploadedImage, setShowUploadedImage
+
+  
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

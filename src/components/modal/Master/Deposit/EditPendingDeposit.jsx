@@ -10,6 +10,7 @@ import useGetSingleDeposit from "../../../../hooks/Master/Deposit/useGetSingleDe
 import useGetALLDeposit from "../../../../hooks/Master/Deposit/useGetALLDeposit";
 
 const EditPendingDeposit = ({ setEditPendingDeposit }) => {
+
   const editDepositRef = useRef();
   useCloseModalClickOutside(editDepositRef, () => {
     setEditPendingDeposit(false);
