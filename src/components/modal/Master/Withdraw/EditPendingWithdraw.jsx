@@ -225,7 +225,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
                         className="col-sm-10"
                       >
                         <img
-                          style={{ width: "400px", height: "100px" }}
+                          style={{ width: "400px", height: "100px",objectFit:'contain' }}
                           src={uploadedImage}
                           alt=""
                         />
