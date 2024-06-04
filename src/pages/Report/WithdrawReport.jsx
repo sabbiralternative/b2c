@@ -1,20 +1,41 @@
 import { DateRangePicker } from "rsuite";
 import "rsuite/DateRangePicker/styles/index.css";
 import useDatePicker from "../../hooks/useDatePicker";
-import useGetReport from "../../hooks/HyperMaster/Report/useGetReport";
+import useContextState from "../../hooks/useContextState";
+import handleRandomToken from "../../utils/handleRandomToken";
+import { API, Settings } from "../../api";
+import axios from "axios";
+import { utils, writeFile } from "xlsx";
 const WithdrawReport = () => {
+  const { token } = useContextState();
   const { formattedEndDate: formattedCurrentDate, onChange } = useDatePicker();
-  const payload = {
-    type: "getWithdraw",
-    fromDate: formattedCurrentDate,
-    toDate: formattedCurrentDate,
-  };
-  const { reports, refetchReports } = useGetReport(payload);
+  const [date, month, year] = formattedCurrentDate.split("-");
+  const newFormattedCurrentDate = `${year}-${month}-${date}`;
 
-  /* Handle user history */
-  const handleUserHistory = async (e) => {
+  const exportToExcel = async (e) => {
     e.preventDefault();
-    refetchReports();
+    const generatedToken = handleRandomToken();
+    const payload = {
+      type: "getWithdraw",
+      fromDate: newFormattedCurrentDate,
+      toDate: newFormattedCurrentDate,
+      token: generatedToken,
+      site: Settings.siteUrl,
+    };
+    const res = await axios.post(API.export, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = res.data;
+    if (data?.success) {
+      if (data?.result?.length > 0) {
+        const ws = utils.json_to_sheet(data?.result);
+        const wb = utils.book_new();
+        utils.book_append_sheet(wb, ws, "Sheet1");
+        writeFile(wb, "withdraw_data.xlsx");
+      }
+    }
   };
 
   return (
@@ -25,7 +46,6 @@ const WithdrawReport = () => {
             <form
               id="formValidationExamples"
               className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
-              onSubmit={handleUserHistory}
             >
               <div className="col-md-6 col-12 mb-4">
                 <label htmlFor="flatpickr-range" className="form-label">
@@ -49,6 +69,7 @@ const WithdrawReport = () => {
 
               <div className="col-12">
                 <input
+                  onClick={exportToExcel}
                   type="submit"
                   name="submit"
                   className="btn btn-primary"

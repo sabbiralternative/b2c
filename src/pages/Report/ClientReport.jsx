@@ -10,15 +10,16 @@ import useContextState from "../../hooks/useContextState";
 const ClientReport = () => {
   const { token } = useContextState();
   const { formattedEndDate: formattedCurrentDate, onChange } = useDatePicker();
+  const [date, month, year] = formattedCurrentDate.split("-");
+  const newFormattedCurrentDate = `${year}-${month}-${date}`;
 
-  
   const exportToExcel = async (e) => {
     e.preventDefault();
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getClients",
-      fromDate: formattedCurrentDate,
-      toDate: formattedCurrentDate,
+      fromDate: newFormattedCurrentDate,
+      toDate: newFormattedCurrentDate,
       token: generatedToken,
       site: Settings.siteUrl,
     };
