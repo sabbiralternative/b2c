@@ -1,19 +1,22 @@
 import { DateRangePicker } from "rsuite";
 import "rsuite/DateRangePicker/styles/index.css";
 import useDatePicker from "../../hooks/useDatePicker";
-import useContextState from "../../hooks/useContextState";
+import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API, Settings } from "../../api";
 import axios from "axios";
-import { utils, writeFile } from "xlsx";
+import useContextState from "../../hooks/useContextState";
+import { useState } from "react";
+
 const WithdrawReport = () => {
   const { token } = useContextState();
+  const [viewWithdrawData, setViewWithdrawData] = useState(false);
+  const [withdrawData, setWithdrawData] = useState([]);
   const { formattedEndDate: formattedCurrentDate, onChange } = useDatePicker();
   const [date, month, year] = formattedCurrentDate.split("-");
   const newFormattedCurrentDate = `${year}-${month}-${date}`;
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
+  const getWithdrawReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getWithdraw",
@@ -27,7 +30,12 @@ const WithdrawReport = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    const data = res.data;
+    return res.data;
+  };
+
+  const exportToExcel = async (e) => {
+    e.preventDefault();
+    const data = await getWithdrawReport();
     if (data?.success) {
       if (data?.result?.length > 0) {
         const ws = utils.json_to_sheet(data?.result);
@@ -35,6 +43,15 @@ const WithdrawReport = () => {
         utils.book_append_sheet(wb, ws, "Sheet1");
         writeFile(wb, "withdraw_data.xlsx");
       }
+    }
+  };
+
+  const handleToggleViewWithdraw = async (e) => {
+    e.preventDefault();
+    const data = await getWithdrawReport();
+    if (data?.result?.length > 0) {
+      setWithdrawData(data?.result);
+      setViewWithdrawData(true);
     }
   };
 
@@ -58,17 +75,18 @@ const WithdrawReport = () => {
                   defaultValue={[new Date(), new Date()]}
                   block
                 />
-                {/* <input
-                  type="text"
-                  name="date"
-                  className="form-control flatpickr-input active"
-                  placeholder="YYYY-MM-DD to YYYY-MM-DD"
-                  id="flatpickr-range"
-                /> */}
               </div>
 
               <div className="col-12">
                 <input
+                  onClick={handleToggleViewWithdraw}
+                  type="submit"
+                  name="submit"
+                  className="btn btn-primary"
+                  value="View"
+                />
+                <input
+                  style={{ marginLeft: "10px" }}
                   onClick={exportToExcel}
                   type="submit"
                   name="submit"
@@ -81,44 +99,99 @@ const WithdrawReport = () => {
         </div>
       </div>
 
-      {/* <hr className="my-3" /> */}
-      {/* <div className="card">
-        <h5 className="card-header">Clients</h5>
-        <div className="table-responsive text-nowrap">
-          <table className="table table-hover table-sm">
-            <thead>
-              <tr>
-                <th style={{ textAlign: "right" }}>PL</th>
-                <th style={{ textAlign: "right" }}>Balance</th>
-                <th style={{ textAlign: "left" }}>Date</th>
-
-                <th style={{ textAlign: "left" }}>Narration</th>
-                <th style={{ textAlign: "left" }}>Type</th>
-              </tr>
-            </thead>
-            <tbody className="table-border-bottom-0">
-              {pnl?.map((item, i) => {
-                return (
-                  <tr key={i}>
-                    <td
-                      style={{ textAlign: "right" }}
-                      className={`${
-                        item?.pl > 0 ? "text-success" : "text-danger"
-                      }`}
-                    >
-                      <strong>{item?.pl}</strong>
-                    </td>
-                    <td style={{ textAlign: "right" }}>{item?.balance}</td>
-                    <td style={{ textAlign: "left" }}>{item?.date_added}</td>
-                    <td style={{ textAlign: "left" }}>{item?.narration}</td>
-                    <td style={{ textAlign: "left" }}>{item?.transfer_type}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div> */}
+      {viewWithdrawData && (
+        <>
+          <hr className="my-3" />
+          {withdrawData?.length > 0 ? (
+            <div className="card">
+              <h5 className="card-header">Withdraw Report</h5>
+              <div className="table-responsive text-nowrap">
+                <table className="table table-hover table-sm">
+                  <thead className="table-dark">
+                    <tr>
+                      <th>User Name</th>
+                      <th>Bank A/C</th>
+                      <th>Amount</th>
+                      <th>Bank Name</th>
+                      <th>Image</th>
+                      <th>Mobile</th>
+                      <th>Withdraw Date</th>
+                      <th>Account No</th>
+                      <th>Ifsc</th>
+                      <th>Remark</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="table-border-bottom-0">
+                    {withdrawData?.map((data, i) => {
+                      console.log(data);
+                      return (
+                        <tr key={i}>
+                          <td>{data?.loginname}</td>
+                          <td>{data?.bank_account_name}</td>
+                          <td>{data?.amount}</td>
+                          <td>{data?.bank_name}</td>
+                          <td>
+                            {data?.image && (
+                              <img
+                                style={{
+                                  height: "40px",
+                                  width: "40px",
+                                  objectFit: "contain",
+                                }}
+                                src={data?.image}
+                                alt=""
+                              />
+                            )}
+                          </td>
+                          <td>{data?.mobile}</td>
+                          <td>{data?.withdraw_date}</td>
+                          <td>{data?.account_number}</td>
+                          <td>{data?.ifsc}</td>
+                          <td>{data?.remark}</td>
+                          <td>
+                            <span
+                              className={`badge ${
+                                data?.status == "APPROVED"
+                                  ? "bg-label-primary"
+                                  : "bg-label-warning"
+                              } me-1`}
+                            >
+                              {data?.status}
+                            </span>
+                          </td>
+                          <td>
+                            <a
+                              style={{ color: "white" }}
+                              className="btn btn-icon btn-sm btn-success"
+                            >
+                              <i className="bx bxs-edit"></i>
+                            </a>
+                            &nbsp;
+                            <a
+                              style={{ color: "white" }}
+                              className="btn btn-icon btn-sm btn-danger"
+                            >
+                              <i className="bx bxs-checkbox-minus"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ) : (
+            <div className="card">
+              <h5 style={{ fontSize: "18px" }} className="card-header">
+                No data found for given date range.
+              </h5>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
