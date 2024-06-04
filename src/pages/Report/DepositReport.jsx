@@ -7,8 +7,11 @@ import { API, Settings } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
+import ShowDepositReportImage from "../../components/modal/ShowDepositReportImage";
 
 const DepositReport = () => {
+  const [showDepositImage, setShowDepositImage] = useState(false);
+  const [image,setImage] = useState('')
   const { token } = useContextState();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
@@ -56,6 +59,12 @@ const DepositReport = () => {
   };
 
   return (
+   <>
+   {
+    showDepositImage && (
+      <ShowDepositReportImage image={image} setShowDepositImage={setShowDepositImage} />
+    )
+   }
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="col-12">
         <div className="card">
@@ -105,7 +114,7 @@ const DepositReport = () => {
 
           {depositData?.length > 0 ? (
             <div className="card">
-              <h5 className="card-header">Withdraw Report</h5>
+              <h5 className="card-header">Deposit Report</h5>
               <div className="table-responsive text-nowrap">
                 <table className="table table-hover table-sm">
                   <thead className="table-dark">
@@ -116,7 +125,6 @@ const DepositReport = () => {
                       <th>Image</th>
                       <th>Remark</th>
                       <th>Status</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody className="table-border-bottom-0">
@@ -127,15 +135,23 @@ const DepositReport = () => {
                           <td>{data?.mobile}</td>
                           <td>{data?.deposit_date}</td>
                           <td>
-                            <img
-                              style={{
-                                height: "40px",
-                                width: "40px",
-                                objectFit: "contain",
-                              }}
-                              src={data?.image}
-                              alt=""
-                            />
+                            {data?.image && (
+                              <img
+                                onClick={() => {
+                                  setImage('')
+                                  setShowDepositImage(true)
+                                  setImage(data?.image)
+                                }}
+                                style={{
+                                  height: "40px",
+                                  width: "40px",
+                                  objectFit: "contain",
+                                  cursor: "pointer",
+                                }}
+                                src={data?.image}
+                                alt=""
+                              />
+                            )}
                           </td>
                           <td>{data?.remark}</td>
                           <td>
@@ -148,21 +164,6 @@ const DepositReport = () => {
                             >
                               {data?.status}
                             </span>
-                          </td>
-                          <td>
-                            <a
-                              style={{ color: "white" }}
-                              className="btn btn-icon btn-sm btn-success"
-                            >
-                              <i className="bx bxs-edit"></i>
-                            </a>
-                            &nbsp;
-                            <a
-                              style={{ color: "white" }}
-                              className="btn btn-icon btn-sm btn-danger"
-                            >
-                              <i className="bx bxs-checkbox-minus"></i>
-                            </a>
                           </td>
                         </tr>
                       );
@@ -181,6 +182,7 @@ const DepositReport = () => {
         </>
       )}
     </div>
+   </>
   );
 };
 
