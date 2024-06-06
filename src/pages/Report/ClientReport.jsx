@@ -7,21 +7,25 @@ import { API, Settings } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
+import handleFormatDate from "../../utils/handleFormatDate";
 
 const ClientReport = () => {
   const { token } = useContextState();
   const [viewClientData, setViewClientData] = useState(false);
   const [clientData, setClientData] = useState([]);
-  const { formattedEndDate: formattedCurrentDate, onChange } = useDatePicker();
-  const [date, month, year] = formattedCurrentDate.split("-");
-  const newFormattedCurrentDate = `${year}-${month}-${date}`;
+  const { formattedEndDate, formattedStartDate, onChange } =
+    useDatePicker("currentDate");
+  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
+    formattedStartDate,
+    formattedEndDate
+  );
 
   const getClientReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getClients",
-      fromDate: newFormattedCurrentDate,
-      toDate: newFormattedCurrentDate,
+      fromDate: newFormattedStartDate,
+      toDate: newFormattedEndDate,
       token: generatedToken,
       site: Settings.siteUrl,
     };
@@ -111,7 +115,7 @@ const ClientReport = () => {
                       <th>Mobile</th>
                       <th>Registration Date</th>
                       <th>Credit Limit</th>
-                      <th>Action</th>
+                      
                     </tr>
                   </thead>
                   <tbody className="table-border-bottom-0">
@@ -122,21 +126,7 @@ const ClientReport = () => {
                           <td>{data?.mobile}</td>
                           <td>{data?.registrationDate}</td>
                           <td>{data?.credit_limit}</td>
-                          <td>
-                            <a
-                              style={{ color: "white" }}
-                              className="btn btn-icon btn-sm btn-success"
-                            >
-                              <i className="bx bxs-edit"></i>
-                            </a>
-                            &nbsp;
-                            <a
-                              style={{ color: "white" }}
-                              className="btn btn-icon btn-sm btn-danger"
-                            >
-                              <i className="bx bxs-checkbox-minus"></i>
-                            </a>
-                          </td>
+                        
                         </tr>
                       );
                     })}

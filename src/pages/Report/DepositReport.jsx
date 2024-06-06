@@ -8,23 +8,27 @@ import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import ShowDepositReportImage from "../../components/modal/ShowDepositReportImage";
+import handleFormatDate from "../../utils/handleFormatDate";
 
 const DepositReport = () => {
   const [showDepositImage, setShowDepositImage] = useState(false);
-  const [image,setImage] = useState('')
+  const [image, setImage] = useState("");
   const { token } = useContextState();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
-  const { formattedEndDate: formattedCurrentDate, onChange } = useDatePicker();
-  const [date, month, year] = formattedCurrentDate.split("-");
-  const newFormattedCurrentDate = `${year}-${month}-${date}`;
+  const { formattedEndDate, formattedStartDate, onChange } =
+    useDatePicker("currentDate");
+  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
+    formattedStartDate,
+    formattedEndDate
+  );
 
   const getDepositReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getDeposit",
-      fromDate: newFormattedCurrentDate,
-      toDate: newFormattedCurrentDate,
+      fromDate: newFormattedStartDate,
+      toDate: newFormattedEndDate,
       token: generatedToken,
       site: Settings.siteUrl,
     };
@@ -59,130 +63,131 @@ const DepositReport = () => {
   };
 
   return (
-   <>
-   {
-    showDepositImage && (
-      <ShowDepositReportImage image={image} setShowDepositImage={setShowDepositImage} />
-    )
-   }
-    <div className="container-xxl flex-grow-1 container-p-y">
-      <div className="col-12">
-        <div className="card">
-          <div className="card-body">
-            <form
-              id="formValidationExamples"
-              className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
-            >
-              <div className="col-md-6 col-12 mb-4">
-                <label htmlFor="flatpickr-range" className="form-label">
-                  Deposit Date
-                </label>
-                <DateRangePicker
-                  format="dd-MM-yyyy"
-                  editable
-                  onChange={onChange}
-                  defaultValue={[new Date(), new Date()]}
-                  block
-                />
-              </div>
+    <>
+      {showDepositImage && (
+        <ShowDepositReportImage
+          image={image}
+          setShowDepositImage={setShowDepositImage}
+        />
+      )}
+      <div className="container-xxl flex-grow-1 container-p-y">
+        <div className="col-12">
+          <div className="card">
+            <div className="card-body">
+              <form
+                id="formValidationExamples"
+                className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
+              >
+                <div className="col-md-6 col-12 mb-4">
+                  <label htmlFor="flatpickr-range" className="form-label">
+                    Deposit Date
+                  </label>
+                  <DateRangePicker
+                    format="dd-MM-yyyy"
+                    editable
+                    onChange={onChange}
+                    defaultValue={[new Date(), new Date()]}
+                    block
+                  />
+                </div>
 
-              <div className="col-12">
-                <input
-                  onClick={handleToggleViewDeposit}
-                  type="submit"
-                  name="submit"
-                  className="btn btn-primary"
-                  value="View"
-                />
-                <input
-                  style={{ marginLeft: "10px" }}
-                  onClick={exportToExcel}
-                  type="submit"
-                  name="submit"
-                  className="btn btn-primary"
-                  value="Export"
-                />
-              </div>
-            </form>
+                <div className="col-12">
+                  <input
+                    onClick={handleToggleViewDeposit}
+                    type="submit"
+                    name="submit"
+                    className="btn btn-primary"
+                    value="View"
+                  />
+                  <input
+                    style={{ marginLeft: "10px" }}
+                    onClick={exportToExcel}
+                    type="submit"
+                    name="submit"
+                    className="btn btn-primary"
+                    value="Export"
+                  />
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
 
-      {viewDepositData && (
-        <>
-          <hr className="my-3" />
+        {viewDepositData && (
+          <>
+            <hr className="my-3" />
 
-          {depositData?.length > 0 ? (
-            <div className="card">
-              <h5 className="card-header">Deposit Report</h5>
-              <div className="table-responsive text-nowrap">
-                <table className="table table-hover table-sm">
-                  <thead className="table-dark">
-                    <tr>
-                      <th>User Name</th>
-                      <th>Mobile</th>
-                      <th>Deposit Date</th>
-                      <th>Image</th>
-                      <th>Remark</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="table-border-bottom-0">
-                    {depositData?.map((data, i) => {
-                      return (
-                        <tr key={i}>
-                          <td>{data?.loginname}</td>
-                          <td>{data?.mobile}</td>
-                          <td>{data?.deposit_date}</td>
-                          <td>
-                            {data?.image && (
-                              <img
-                                onClick={() => {
-                                  setImage('')
-                                  setShowDepositImage(true)
-                                  setImage(data?.image)
-                                }}
-                                style={{
-                                  height: "40px",
-                                  width: "40px",
-                                  objectFit: "contain",
-                                  cursor: "pointer",
-                                }}
-                                src={data?.image}
-                                alt=""
-                              />
-                            )}
-                          </td>
-                          <td>{data?.remark}</td>
-                          <td>
-                            <span
-                              className={`badge ${
-                                data?.status == "APPROVED"
-                                  ? "bg-label-primary"
-                                  : "bg-label-warning"
-                              } me-1`}
-                            >
-                              {data?.status}
-                            </span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+            {depositData?.length > 0 ? (
+              <div className="card">
+                <h5 className="card-header">Deposit Report</h5>
+                <div className="table-responsive text-nowrap">
+                  <table className="table table-hover table-sm">
+                    <thead className="table-dark">
+                      <tr>
+                        <th>User Name</th>
+                        <th>Mobile</th>
+                        <th>Deposit Date</th>
+                        <th>Image</th>
+                        <th>Remark</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="table-border-bottom-0">
+                      {depositData?.map((data, i) => {
+                        return (
+                          <tr key={i}>
+                            <td>{data?.loginname}</td>
+                            <td>{data?.mobile}</td>
+                            <td>{data?.deposit_date}</td>
+                            <td>
+                              {data?.image && (
+                                <img
+                                  onClick={() => {
+                                    setImage("");
+                                    setShowDepositImage(true);
+                                    setImage(data?.image);
+                                  }}
+                                  style={{
+                                    height: "40px",
+                                    width: "40px",
+                                    objectFit: "contain",
+                                    cursor: "pointer",
+                                  }}
+                                  src={data?.image}
+                                  alt=""
+                                />
+                              )}
+                            </td>
+                            <td>{data?.remark}</td>
+                            <td>
+                              <span
+                                className={`badge ${
+                                  data?.status == "APPROVED"
+                                    ? "bg-label-primary"
+                                    : "bg-label-warning"
+                                } me-1`}
+                              >
+                                {data?.status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="card">
-              <h5 style={{ fontSize: "18px" }} className="card-header">
-                No data found for given date range.
-              </h5>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-   </>
+            ) : (
+              <div className="card">
+                <h5 style={{ fontSize: "18px" }} className="card-header">
+                  No data found for given date range.
+                </h5>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

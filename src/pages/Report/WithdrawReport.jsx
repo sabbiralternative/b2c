@@ -7,21 +7,25 @@ import { API, Settings } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
+import handleFormatDate from "../../utils/handleFormatDate";
 
 const WithdrawReport = () => {
   const { token } = useContextState();
   const [viewWithdrawData, setViewWithdrawData] = useState(false);
   const [withdrawData, setWithdrawData] = useState([]);
-  const { formattedEndDate: formattedCurrentDate, onChange } = useDatePicker();
-  const [date, month, year] = formattedCurrentDate.split("-");
-  const newFormattedCurrentDate = `${year}-${month}-${date}`;
+  const { formattedEndDate, formattedStartDate, onChange } =
+    useDatePicker("currentDate");
+  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
+    formattedStartDate,
+    formattedEndDate
+  );
 
   const getWithdrawReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getWithdraw",
-      fromDate: newFormattedCurrentDate,
-      toDate: newFormattedCurrentDate,
+      fromDate: newFormattedStartDate,
+      toDate: newFormattedEndDate,
       token: generatedToken,
       site: Settings.siteUrl,
     };
