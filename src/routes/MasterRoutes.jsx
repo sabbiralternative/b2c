@@ -5,6 +5,7 @@ import CompletedDeposit from "../pages/Master/Deposit/CompletedDeposit";
 import PendingDeposit from "../pages/Master/Deposit/PendingDeposit";
 import RejectedDeposit from "../pages/Master/Deposit/RejectedDeposit";
 import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
+import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway";
 import AddQR from "../pages/Master/Payments/AddQR";
 import AddUPI from "../pages/Master/Payments/AddUPI";
 import ViewPaymentMethod from "../pages/Master/Payments/ViewPaymentMethod";
@@ -62,6 +63,10 @@ export const MasterRoutes = [
   {
     path: "/add-UPI",
     element: <AddUPI />,
+  },
+  {
+    path: "/add-new-payment-gateway",
+    element: <AddNewPaymentGateway />,
   },
   {
     path: "/pnl",

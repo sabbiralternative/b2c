@@ -43,8 +43,6 @@ const Master = () => {
   }, [depositCount, withdrawCount, playSound, dwCount]);
   /* Sound notification end */
 
-
-
   /* close modal click outside */
   const clientsRef = useRef();
   useCloseModalClickOutside(clientsRef, () => {
@@ -85,7 +83,7 @@ const Master = () => {
     setShowStatement(false);
     setShowWithdraw(false);
     setShowExposure(false);
-    setShowReport(false)
+    setShowReport(false);
   };
 
   return (
@@ -106,7 +104,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
-            setShowReport(false)
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -149,7 +147,7 @@ const Master = () => {
             setShowPayments(false);
             setShowWithdraw(false);
             setShowExposure(false);
-            setShowReport(false)
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -191,7 +189,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
-            setShowReport(false)
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -231,6 +229,15 @@ const Master = () => {
               <div data-i18n="Add Payment Method">Add UPI</div>
             </a>
           </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("add-new-payment-gateway")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Payment Method">Add New Payment Gateway</div>
+            </a>
+          </li>
         </ul>
       </li>
 
@@ -243,7 +250,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
-            setShowReport(false)
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -311,7 +318,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowExposure(false);
-            setShowReport(false)
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -383,7 +390,7 @@ const Master = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
-            setShowReport(false)
+            setShowReport(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -413,10 +420,7 @@ const Master = () => {
           </li>
         </ul>
       </li>
-      <li
-        ref={reportRef}
-        className={`menu-item ${showReport ? "open" : ""}`}
-      >
+      <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
         <a
           style={{
             display: "flex",
@@ -424,7 +428,7 @@ const Master = () => {
             justifyContent: "center",
           }}
           onMouseEnter={() => {
-            setShowReport(true)
+            setShowReport(true);
             setShowWithdraw(false);
             setShowExposure(false);
             setShowClients(false);
