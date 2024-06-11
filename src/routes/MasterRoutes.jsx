@@ -65,7 +65,7 @@ export const MasterRoutes = [
     element: <AddUPI />,
   },
   {
-    path: "/add-new-payment-gateway",
+    path: "/add-payment-gateway",
     element: <AddNewPaymentGateway />,
   },
   {

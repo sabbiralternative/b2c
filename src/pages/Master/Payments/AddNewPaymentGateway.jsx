@@ -20,10 +20,10 @@ const AddNewPaymentGateway = () => {
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      type: "addPayments",
+      type: "addPayment",
       ...values,
       token: generatedToken,
-      method: "qr",
+      method: "pg",
       site,
     };
 

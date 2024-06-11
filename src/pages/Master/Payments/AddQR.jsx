@@ -47,7 +47,7 @@ const AddQR = () => {
       type: "addPayment",
       qr_code,
       ...values,
-      method: "pg",
+      method: "qr",
       token: generatedToken,
       site:Settings.siteUrl
     };
@@ -55,7 +55,6 @@ const AddQR = () => {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
-
     if (data?.success) {
       refetchPaymentMethods();
       toast.success(data?.result?.message);
