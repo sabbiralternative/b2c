@@ -7,19 +7,19 @@ import { API, Settings } from "../../../api";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import { RxCross2 } from "react-icons/rx";
 
 const AddQR = () => {
-  const { token,site } = useContextState();
+  const { token, site } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
-    site
+    site,
   };
   const [qr_code, setQr_code] = useState("");
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
-
 
   /* Upload image */
   useEffect(() => {
@@ -40,7 +40,7 @@ const AddQR = () => {
       handleSubmitImage();
     }
   }, [image, token]);
-
+  
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
     const payload = {
@@ -49,7 +49,7 @@ const AddQR = () => {
       ...values,
       method: "qr",
       token: generatedToken,
-      site:Settings.siteUrl
+      site: Settings.siteUrl,
     };
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -75,23 +75,46 @@ const AddQR = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row mb-3" id="qr_code">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    htmlFor="basic-default-company"
-                  >
-                    QR Code
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      onChange={(e) => setImage(e.target.files[0])}
-                      className="form-control"
-                      type="file"
-                      id="fileToUpload"
-                      name="fileToUpload"
-                    />
+                {!qr_code ? (
+                  <div className="row mb-3" id="qr_code">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      QR Code
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        onChange={(e) => setImage(e.target.files[0])}
+                        className="form-control"
+                        type="file"
+                        id="fileToUpload"
+                        name="fileToUpload"
+                      />
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="row mb-3" id="qr_code">
+                    <span
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      <RxCross2
+                        onClick={() => setQr_code("")}
+                        size={30}
+                        cursor="pointer"
+                      />
+                    </span>
+                    <div className="col-sm-10">
+                      <img
+                        style={{ height: "200px", objectFit: "contain" }}
+                        className="form-control"
+                        src={qr_code}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                )}
 
                 <div className="row mb-3">
                   <label
