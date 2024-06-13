@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewAllBanner";
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
+import { FaSpinner } from "react-icons/fa";
 
 const AddBanner = () => {
   const navigate = useNavigate();
@@ -16,10 +17,12 @@ const AddBanner = () => {
   const { token } = useContextState();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   /* Upload image */
   useEffect(() => {
     if (image) {
+      setLoading(true);
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
@@ -29,6 +32,7 @@ const AddBanner = () => {
           },
         });
         const data = res.data;
+        setLoading(false);
         if (data?.success) {
           setFilePath(data?.filePath);
         }
@@ -73,7 +77,7 @@ const AddBanner = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
-                {!filePath ? (
+                {!loading && !filePath && (
                   <div className="row mb-3" id="bank_account_name_div">
                     <label
                       className="col-sm-2 col-form-label"
@@ -92,7 +96,9 @@ const AddBanner = () => {
                       />
                     </div>
                   </div>
-                ) : (
+                )}
+
+                {!loading && filePath && (
                   <div className="row mb-3">
                     <span
                       className="col-sm-2 col-form-label"
@@ -111,6 +117,29 @@ const AddBanner = () => {
                         src={filePath}
                         alt=""
                       />
+                    </div>
+                  </div>
+                )}
+                {loading && (
+                  <div className="row mb-3" id="qr_code">
+                    <span
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      {" "}
+                      QR Code
+                    </span>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: "5px",
+                        marginBottom: "5px",
+                      }}
+                      className="col-sm-10"
+                    >
+                      <FaSpinner size={30} className="animate-spin" />
                     </div>
                   </div>
                 )}

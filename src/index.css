@@ -37,3 +37,20 @@ div:where(.swal2-container) .swal2-html-container {
 .rs-picker-popup {
   background-color: #283144 !important;
 }
+
+
+/* Loader start*/
+
+.animate-spin {
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Loader end*/

@@ -8,6 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { FaSpinner } from "react-icons/fa";
 
 const AddQR = () => {
   const { token, site } = useContextState();
@@ -18,12 +19,14 @@ const AddQR = () => {
   const [qr_code, setQr_code] = useState("");
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
 
   /* Upload image */
   useEffect(() => {
     if (image) {
+      setLoading(true);
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
@@ -33,6 +36,7 @@ const AddQR = () => {
           },
         });
         const data = res.data;
+        setLoading(false);
         if (data?.success) {
           setQr_code(data?.filePath);
         }
@@ -40,7 +44,7 @@ const AddQR = () => {
       handleSubmitImage();
     }
   }, [image, token]);
-  
+
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
     const payload = {
@@ -75,7 +79,7 @@ const AddQR = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
-                {!qr_code ? (
+                {!loading && !qr_code && (
                   <div className="row mb-3" id="qr_code">
                     <label
                       className="col-sm-2 col-form-label"
@@ -93,7 +97,8 @@ const AddQR = () => {
                       />
                     </div>
                   </div>
-                ) : (
+                )}
+                {!loading && qr_code && (
                   <div className="row mb-3" id="qr_code">
                     <span
                       className="col-sm-2 col-form-label"
@@ -112,6 +117,29 @@ const AddQR = () => {
                         src={qr_code}
                         alt=""
                       />
+                    </div>
+                  </div>
+                )}
+                {loading && (
+                  <div className="row mb-3" id="qr_code">
+                    <span
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      {" "}
+                      QR Code
+                    </span>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: "5px",
+                        marginBottom: "5px",
+                      }}
+                      className="col-sm-10"
+                    >
+                      <FaSpinner size={30} className="animate-spin" />
                     </div>
                   </div>
                 )}
