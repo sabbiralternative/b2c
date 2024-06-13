@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewAllBanner";
 import { useNavigate } from "react-router-dom";
+import { RxCross2 } from "react-icons/rx";
 
 const AddBanner = () => {
   const navigate = useNavigate();
@@ -28,7 +29,6 @@ const AddBanner = () => {
           },
         });
         const data = res.data;
-   
         if (data?.success) {
           setFilePath(data?.filePath);
         }
@@ -37,8 +37,9 @@ const AddBanner = () => {
     }
   }, [image, token]);
 
+  console.log(filePath);
+
   const onSubmit = async ({ status, priority }) => {
- 
     const generatedToken = handleRandomToken();
     const payload = {
       type: "addBanner",
@@ -46,7 +47,7 @@ const AddBanner = () => {
       banner_link: filePath,
       priority,
       token: generatedToken,
-      site:Settings.siteUrl
+      site: Settings.siteUrl,
     };
     const res = await axios.post(API.banner, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -72,24 +73,47 @@ const AddBanner = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row mb-3" id="bank_account_name_div">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    htmlFor="basic-default-name"
-                  >
-                    Banner Image
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      onChange={(e) => setImage(e.target.files[0])}
-                      type="file"
-                      name="banner_link"
-                      className="form-control"
-                      required
-                      id="basic-default-name"
-                    />
+                {!filePath ? (
+                  <div className="row mb-3" id="bank_account_name_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      Banner Image
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        onChange={(e) => setImage(e.target.files[0])}
+                        type="file"
+                        name="banner_link"
+                        className="form-control"
+                        required
+                        id="basic-default-name"
+                      />
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="row mb-3">
+                    <span
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      <RxCross2
+                        onClick={() => setFilePath("")}
+                        size={30}
+                        cursor="pointer"
+                      />
+                    </span>
+                    <div className="col-sm-10">
+                      <img
+                        style={{ height: "200px", objectFit: "contain" }}
+                        className="form-control"
+                        src={filePath}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                )}
                 <div className="row mb-3" id="bank_account_number_div">
                   <label
                     className="col-sm-2 col-form-label"
