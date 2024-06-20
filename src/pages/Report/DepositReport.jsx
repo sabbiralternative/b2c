@@ -126,6 +126,7 @@ const DepositReport = () => {
                       <tr>
                         <th>User Name</th>
                         <th>Mobile</th>
+                        <th>Amount</th>
                         <th>Deposit Date</th>
                         <th>Image</th>
                         <th>Remark</th>
@@ -138,6 +139,7 @@ const DepositReport = () => {
                           <tr key={i}>
                             <td>{data?.loginname}</td>
                             <td>{data?.mobile}</td>
+                            <td>{data?.amount}</td>
                             <td>{data?.deposit_date}</td>
                             <td>
                               {data?.image && (
