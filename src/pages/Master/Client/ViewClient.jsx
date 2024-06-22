@@ -60,6 +60,7 @@ const ViewClient = () => {
 
               <div className="col-12">
                 <input
+                disabled={clientId?.length < 6}
                   type="submit"
                   name="submit"
                   className="btn btn-primary"

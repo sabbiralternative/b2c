@@ -135,7 +135,7 @@ const Master = () => {
         </ul>
       </li>
 
-      <li
+      {/* <li
         ref={statementRef}
         className={`menu-item ${showStatement ? "open" : ""}`}
       >
@@ -175,7 +175,7 @@ const Master = () => {
             </a>
           </li>
         </ul>
-      </li>
+      </li> */}
 
       <li
         ref={paymentsRef}
