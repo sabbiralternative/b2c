@@ -132,6 +132,15 @@ const Master = () => {
               <div data-i18n="Add Client">Add Client</div>
             </a>
           </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("clients-with-balance")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-user"></i>
+              <div data-i18n="Add Client">Clients with balance</div>
+            </a>
+          </li>
         </ul>
       </li>
 

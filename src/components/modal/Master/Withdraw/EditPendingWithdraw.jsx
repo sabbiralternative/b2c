@@ -35,7 +35,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
   const { refetchAllWithdraw } = useGetALLWithdraw(payload);
   const { singleWithdraw } = useGetSingleWithdraw(SingleWithdrawPayload);
 
-  const onSubmit = async ({ remark, status,utr }) => {
+  const onSubmit = async ({ remark, status, utr }) => {
     const generatedToken = handleRandomToken();
     const payload = {
       withdrawId: downLineId,
@@ -237,25 +237,28 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
                       </div>
                     </div>
                   )}
-                  <div className="row mb-3" id="bank_account_name_div">
-                    <label
-                      className="col-sm-2 col-form-label"
-                      htmlFor="basic-default-name"
-                    >
-                      UTR
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        {...register("utr", {
-                          value: singleWithdraw?.utr,
-                          required: true,
-                        })}
-                        type="text"
-                        className="form-control"
-                        id="basic-default-name"
-                      />
+                  {statusField === "APPROVED" && (
+                    <div className="row mb-3" id="bank_account_name_div">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-name"
+                      >
+                        UTR
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("utr", {
+                            value: singleWithdraw?.utr,
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-name"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
+
                   <div className="row mb-3" id="bank_account_name_div">
                     <label
                       className="col-sm-2 col-form-label"

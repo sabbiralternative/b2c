@@ -1,4 +1,5 @@
 import AddClient from "../pages/Master/Client/AddClient";
+import ClientWithBalance from "../pages/Master/Client/ClientWithBalance";
 import PNL from "../pages/Master/Client/PNL";
 import ViewClient from "../pages/Master/Client/ViewClient";
 import CompletedDeposit from "../pages/Master/Deposit/CompletedDeposit";
@@ -23,6 +24,10 @@ export const MasterRoutes = [
   {
     path: "/add-client",
     element: <AddClient />,
+  },
+  {
+    path: "/clients-with-balance",
+    element: <ClientWithBalance />,
   },
   {
     path: "/pending-deposit",

@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import useContextState from "../../../hooks/useContextState";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
-import useGetClient from "../../../hooks/Master/Client/useGetClient";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+import useGetClientWithBalance from "../../../hooks/Master/Client/useGetClientWithBalance";
 // import { useEffect } from "react";
 
-const ViewClient = () => {
+const ClientWithBalance = () => {
   const navigate = useNavigate();
 
   const { handleSubmit } = useForm();
@@ -19,10 +19,11 @@ const ViewClient = () => {
     setShowChangeStatus,
     setShowCreditRef,
   } = useContextState();
-  const { clients, refetchClients } = useGetClient(clientId);
+  const { clientWithBalance, refetchClientWithBalance } = useGetClientWithBalance();
 
+  console.log(clientWithBalance);
   const onSubmit = async () => {
-    refetchClients();
+    refetchClientWithBalance();
     // setClientId("");
   };
   const handleNavigate = (username, link) => {
@@ -94,7 +95,7 @@ const ViewClient = () => {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {clients?.map((client, i) => {
+              {clientWithBalance?.map((client, i) => {
                 return (
                   <tr key={i}>
                       <td>
@@ -205,4 +206,4 @@ const ViewClient = () => {
   );
 };
 
-export default ViewClient;
+export default ClientWithBalance;

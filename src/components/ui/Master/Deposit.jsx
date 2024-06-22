@@ -30,6 +30,7 @@ const Deposit = ({ data, title }) => {
         <table className="table table-hover table-sm">
           <thead className="table-dark">
             <tr>
+              <th>User Id</th>
               <th>Username</th>
               <th>Amount</th>
               <th>UTR</th>
@@ -45,6 +46,15 @@ const Deposit = ({ data, title }) => {
             {data?.map((item, i) => {
               return (
                 <tr key={i}>
+                  <td
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setClientId(item?.userId);
+                      navigate("/view-client");
+                    }}
+                  >
+                    {item?.userId}
+                  </td>
                   <td
                     style={{ cursor: "pointer" }}
                     onClick={() => {
