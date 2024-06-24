@@ -42,7 +42,7 @@ const TransferStatement = () => {
         const ws = utils.json_to_sheet(data?.result);
         const wb = utils.book_new();
         utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "deposit_data.xlsx");
+        writeFile(wb, "transfer_data.xlsx");
       }
     }
   };
