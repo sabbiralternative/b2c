@@ -2,6 +2,19 @@ import useBalance from "../../hooks/useBalance";
 
 const Home = () => {
   const { balanceData } = useBalance();
+
+  const defineColorOfUpperLevel = (amount) => {
+    if (amount) {
+      const parseAmount = parseFloat(amount);
+      if (parseAmount === 0) {
+        return "white";
+      } else if (parseAmount > 0) {
+        return "#39da8a";
+      } else {
+        return "#ff5b5c";
+      }
+    }
+  };
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="row">
@@ -28,12 +41,9 @@ const Home = () => {
                     <h2
                       className="mb-1"
                       style={{
-                        color: `${
-                          balanceData?.upperLevel &&
-                          parseFloat(balanceData?.upperLevel) > 0
-                            ? "#39da8a"
-                            : "#ff5b5c "
-                        }`,
+                        color: `${defineColorOfUpperLevel(
+                          balanceData?.upperLevel
+                        )}`,
                       }}
                     >
                       {balanceData?.upperLevel}
