@@ -18,10 +18,14 @@ const ClientWithBalance = () => {
     setShowChangePassword,
     setShowChangeStatus,
     setShowCreditRef,
+    adminRole,
   } = useContextState();
-  const { clientWithBalance, refetchClientWithBalance } = useGetClientWithBalance();
+  const { clientWithBalance, refetchClientWithBalance } =
+    useGetClientWithBalance();
 
-  console.log(clientWithBalance);
+
+
+  
   const onSubmit = async () => {
     refetchClientWithBalance();
     // setClientId("");
@@ -36,7 +40,6 @@ const ClientWithBalance = () => {
   //   }
   // }, [setClientId, clients]);
   // console.log(clientId);
-
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -61,7 +64,7 @@ const ClientWithBalance = () => {
 
               <div className="col-12">
                 <input
-                disabled={clientId?.length < 6}
+                  disabled={clientId?.length < 6}
                   type="submit"
                   name="submit"
                   className="btn btn-primary"
@@ -83,7 +86,7 @@ const ClientWithBalance = () => {
               <tr>
                 <th>User Id</th>
                 <th>Username</th>
-                <th>Mobile</th>
+                {adminRole !== "master" && <th>Mobile</th>}
                 {/* <th>Credit Referance</th> */}
                 <th>Balance</th>
                 <th>Total Deposit</th>
@@ -98,15 +101,18 @@ const ClientWithBalance = () => {
               {clientWithBalance?.map((client, i) => {
                 return (
                   <tr key={i}>
-                      <td>
+                    <td>
                       <strong>{client?.userId}</strong>
                     </td>
                     <td>
                       <strong>{handleSplitUserName(client?.username)}</strong>
                     </td>
-                    <td>
-                      <strong>{client?.mobile}</strong>
-                    </td>
+                    {adminRole !== "master" && (
+                      <td>
+                        <strong>{client?.mobile}</strong>
+                      </td>
+                    )}
+
                     {/* <td>
                       <strong>{client?.creditReferance}</strong>
                     </td> */}

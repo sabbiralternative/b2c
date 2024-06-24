@@ -18,6 +18,7 @@ const ViewClient = () => {
     setShowChangePassword,
     setShowChangeStatus,
     setShowCreditRef,
+    adminRole,
   } = useContextState();
   const { clients, refetchClients } = useGetClient(clientId);
 
@@ -35,6 +36,7 @@ const ViewClient = () => {
   //   }
   // }, [setClientId, clients]);
   // console.log(clientId);
+
 
 
   return (
@@ -60,7 +62,7 @@ const ViewClient = () => {
 
               <div className="col-12">
                 <input
-                disabled={clientId?.length < 6}
+                  disabled={clientId?.length < 6}
                   type="submit"
                   name="submit"
                   className="btn btn-primary"
@@ -82,7 +84,7 @@ const ViewClient = () => {
               <tr>
                 <th>User Id</th>
                 <th>Username</th>
-                <th>Mobile</th>
+                {adminRole !== "master" && <th>Mobile</th>}
                 {/* <th>Credit Referance</th> */}
                 <th>Balance</th>
                 <th>Total Deposit</th>
@@ -97,15 +99,18 @@ const ViewClient = () => {
               {clients?.map((client, i) => {
                 return (
                   <tr key={i}>
-                      <td>
+                    <td>
                       <strong>{client?.userId}</strong>
                     </td>
                     <td>
                       <strong>{handleSplitUserName(client?.username)}</strong>
                     </td>
-                    <td>
-                      <strong>{client?.mobile}</strong>
-                    </td>
+                    {adminRole !== "master" && (
+                      <td>
+                        <strong>{client?.mobile}</strong>
+                      </td>
+                    )}
+
                     {/* <td>
                       <strong>{client?.creditReferance}</strong>
                     </td> */}

@@ -70,7 +70,7 @@ const DepositReport = () => {
       for (let data of depositData) {
         totalDeposit += parseFloat(data?.amount);
       }
-      setTotalDeposit(totalDeposit);
+      setTotalDeposit(totalDeposit?.toFixed(2));
     }
   }, [depositData]);
 

@@ -66,7 +66,7 @@ const WithdrawReport = () => {
       for (let data of withdrawData) {
         totalWithdraw += parseFloat(data?.amount);
       }
-      setTotalWithdraw(totalWithdraw);
+      setTotalWithdraw(totalWithdraw?.toFixed(2));
     }
   }, [withdrawData]);
 

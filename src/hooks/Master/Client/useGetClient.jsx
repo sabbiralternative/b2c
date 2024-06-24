@@ -6,13 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 
 const useGetClient = (searchId) => {
   const { token, tokenLoading } = useContextState();
+  
   const { data: clients = [], refetch: refetchClients } = useQuery({
     queryKey: ["viewClient"],
-    enabled: !tokenLoading,
+    enabled: !tokenLoading && searchId !== "",
     queryFn: async () => {
-      if (!searchId) {
-        return;
-      }
+      
       const generatedToken = handleRandomToken();
       const payload = {
         searchId,
@@ -26,6 +25,7 @@ const useGetClient = (searchId) => {
       });
 
       const data = res.data;
+      console.log(data);
       if (data?.success) {
         return data?.result;
       }

@@ -8,7 +8,7 @@ const useGetClientWithBalance = () => {
   const { token, tokenLoading } = useContextState();
   const { data: clientWithBalance = [], refetch: refetchClientWithBalance } =
     useQuery({
-      queryKey: ["viewClient"],
+      queryKey: ["userWithCredit"],
       enabled: !tokenLoading,
       queryFn: async () => {
         const generatedToken = handleRandomToken();

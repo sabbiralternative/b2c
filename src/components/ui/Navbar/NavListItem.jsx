@@ -20,7 +20,9 @@ const NavListItem = () => {
       <div className="container-xxl d-flex h-100">
         <a className="menu-horizontal-prev d-none"></a>
         <div className="menu-horizontal-wrapper">
-          {adminRole === "hyper_master" && <HyperMaster />}
+          {adminRole === "hyper_master" || adminRole === "admin_master" ? (
+            <HyperMaster />
+          ) : null}
           {adminRole === "master" && <Master />}
         </div>
         <a className="menu-horizontal-next d-none"></a>
