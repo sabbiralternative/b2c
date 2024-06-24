@@ -9,11 +9,13 @@ import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 import ShowDepositReportImage from "../../components/modal/ShowDepositReportImage";
 import handleFormatDate from "../../utils/handleFormatDate";
+import { useNavigate } from "react-router-dom";
 
 const DepositReport = () => {
   const [showDepositImage, setShowDepositImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token } = useContextState();
+  const { token,setClientId, adminRole } = useContextState();
+  const navigate = useNavigate();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
   const [totalDeposit, setTotalDeposit] = useState(null);
@@ -136,8 +138,13 @@ const DepositReport = () => {
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
                       <tr>
-                        <th>User Name</th>
-                        <th>Mobile</th>
+                      <th>User Id</th>
+                      {adminRole !== "master" && (
+                        <>
+                          <th>User Name</th>
+                          <th>Mobile</th>
+                        </>
+                      )}
                         <th>Amount</th>
                         <th>Deposit Date</th>
                         <th>Image</th>
@@ -149,8 +156,23 @@ const DepositReport = () => {
                       {depositData?.map((data, i) => {
                         return (
                           <tr key={i}>
-                            <td>{data?.loginname}</td>
-                            <td>{data?.mobile}</td>
+                                <td
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setClientId(data?.userId);
+                              navigate("/view-client");
+                            }}
+                          >
+                            {data?.userId}
+                          </td>
+                           {
+                            adminRole !== 'master' && (
+                              <>
+                              <td>{data?.loginname}</td>
+                              <td>{data?.mobile}</td> 
+                              </>
+                            )
+                           }
                             <td>{data?.amount}</td>
                             <td>{data?.deposit_date}</td>
                             <td>

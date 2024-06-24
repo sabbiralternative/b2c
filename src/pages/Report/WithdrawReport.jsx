@@ -8,9 +8,11 @@ import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 import handleFormatDate from "../../utils/handleFormatDate";
+import { useNavigate } from "react-router-dom";
 
 const WithdrawReport = () => {
-  const { token } = useContextState();
+  const { token, setClientId, adminRole } = useContextState();
+  const navigate = useNavigate();
   const [viewWithdrawData, setViewWithdrawData] = useState(false);
   const [withdrawData, setWithdrawData] = useState([]);
   const [totalWithdraw, setTotalWithdraw] = useState(null);
@@ -125,12 +127,18 @@ const WithdrawReport = () => {
                 <table className="table table-hover table-sm">
                   <thead className="table-dark">
                     <tr>
-                      <th>User Name</th>
+                      <th>User Id</th>
+                      {adminRole !== "master" && (
+                        <>
+                          <th>User Name</th>
+                          <th>Mobile</th>
+                        </>
+                      )}
+
                       <th>Bank A/C</th>
                       <th>Amount</th>
                       <th>Bank Name</th>
                       <th>Image</th>
-                      <th>Mobile</th>
                       <th>Withdraw Date</th>
                       <th>Account No</th>
                       <th>Ifsc</th>
@@ -143,7 +151,21 @@ const WithdrawReport = () => {
                     {withdrawData?.map((data, i) => {
                       return (
                         <tr key={i}>
-                          <td>{data?.loginname}</td>
+                          <td
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setClientId(data?.userId);
+                              navigate("/view-client");
+                            }}
+                          >
+                            {data?.userId}
+                          </td>
+                          {adminRole !== "master" && (
+                            <>
+                              <td>{data?.loginname}</td>
+                              <td>{data?.mobile}</td>
+                            </>
+                          )}
                           <td>{data?.bank_account_name}</td>
                           <td>{data?.amount}</td>
                           <td>{data?.bank_name}</td>
@@ -160,7 +182,7 @@ const WithdrawReport = () => {
                               />
                             )}
                           </td>
-                          <td>{data?.mobile}</td>
+
                           <td>{data?.withdraw_date}</td>
                           <td>{data?.account_number}</td>
                           <td>{data?.ifsc}</td>

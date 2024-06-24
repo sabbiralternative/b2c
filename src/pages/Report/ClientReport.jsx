@@ -8,11 +8,13 @@ import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import handleFormatDate from "../../utils/handleFormatDate";
+import { useNavigate } from "react-router-dom";
 
 const ClientReport = () => {
-  const { token } = useContextState();
+  const { token, setClientId, adminRole } = useContextState();
   const [viewClientData, setViewClientData] = useState(false);
   const [clientData, setClientData] = useState([]);
+  const navigate = useNavigate();
   const { formattedEndDate, formattedStartDate, onChange } =
     useDatePicker("currentDate");
   const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
@@ -115,8 +117,13 @@ const ClientReport = () => {
                 <table className="table table-hover table-sm">
                   <thead className="table-dark">
                     <tr>
-                      <th>User Name</th>
-                      <th>Mobile</th>
+                      <th>User Id</th>
+                      {adminRole !== "master" && (
+                        <>
+                          <th>User Name</th>
+                          <th>Mobile</th>
+                        </>
+                      )}
                       <th>Registration Date</th>
                       <th>Credit Limit</th>
                     </tr>
@@ -125,8 +132,23 @@ const ClientReport = () => {
                     {clientData?.map((data, i) => {
                       return (
                         <tr key={i}>
-                          <td>{data?.username}</td>
-                          <td>{data?.mobile}</td>
+                          <td
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setClientId(data?.userId);
+                              navigate("/view-client");
+                            }}
+                          >
+                            {data?.userId}
+                          </td>
+                         {
+                          adminRole !== 'master' && (
+                            <>
+                             <td>{data?.username}</td>
+                             <td>{data?.mobile}</td>
+                            </>
+                          )
+                         }
                           <td>{data?.registrationDate}</td>
                           <td>{data?.credit_limit}</td>
                         </tr>

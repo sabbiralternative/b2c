@@ -21,11 +21,23 @@ const Home = () => {
                 </div>
               </a>
             </div> */}
-                   <div className="col-sm-6 col-12 mb-4">
+            <div className="col-sm-6 col-12 mb-4">
               <a>
                 <div className="card">
                   <div className="card-body text-center">
-                    <h2 className="mb-1">{balanceData?.upperLevel}</h2>
+                    <h2
+                      className="mb-1"
+                      style={{
+                        color: `${
+                          balanceData?.upperLevel &&
+                          parseFloat(balanceData?.upperLevel) > 0
+                            ? "#39da8a"
+                            : "#ff5b5c "
+                        }`,
+                      }}
+                    >
+                      {balanceData?.upperLevel}
+                    </h2>
                     <span className="text-muted">Upper Level</span>
                   </div>
                 </div>
@@ -38,7 +50,7 @@ const Home = () => {
                   <h2 className="mb-1">
                     {balanceData?.downLevelOccupyBalance}
                   </h2>
-                  <span className="text-muted">Down level occupy balance</span>
+                  <span className="text-muted">Total Client Balance</span>
                 </div>
               </div>
             </div>
@@ -57,7 +69,7 @@ const Home = () => {
                 </div>
               </div>
             </div> */}
-                <div className="col-sm-6 col-12 mb-4">
+            <div className="col-sm-6 col-12 mb-4">
               <div className="card">
                 <div className="card-body text-center">
                   <h2 className="mb-1">{balanceData?.availableBalance}</h2>
@@ -79,8 +91,6 @@ const Home = () => {
 
         <div className="col-lg-6 col-md-12">
           <div className="row">
-     
-
             {/* <div className="col-sm-6 col-12 mb-4">
               <div className="card">
                 <div className="card-body text-center">
@@ -94,8 +104,6 @@ const Home = () => {
 
         <div className="col-lg-6 col-md-12">
           <div className="row">
-        
-
             {/* <div className="col-sm-6 col-12 mb-4">
               <div className="card">
                 <div className="card-body text-center">
