@@ -63,7 +63,8 @@ export const API = {
   withdraw: config?.result?.endpoint?.withdraw,
   statement: config?.result?.endpoint?.statement,
   dwCount: config?.result?.endpoint?.dwCount,
-  export:config?.result?.endpoint?.export
+  export: config?.result?.endpoint?.export,
+  transferStatement: config?.result?.endpoint?.transferStatement,
 };
 
 export const Settings = {

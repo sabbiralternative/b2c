@@ -8,6 +8,7 @@ import { MasterRoutes } from "./MasterRoutes";
 import ClientReport from "../pages/Report/ClientReport";
 import DepositReport from "../pages/Report/DepositReport";
 import WithdrawReport from "../pages/Report/WithdrawReport";
+import TransferStatement from "../pages/Report/TransferStatement";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "/withdraw-report",
         element: <WithdrawReport />,
+      },
+      {
+        path: "/transfer-statement",
+        element: <TransferStatement />,
       },
       /*Hyper Master Routes */
       ...HyperMasterRoutes,
