@@ -104,6 +104,10 @@ const ClientReport = () => {
       {viewClientData && (
         <>
           <hr className="my-3" />
+          {clientData?.length > 0 && (
+            <span>Number of clients : {clientData?.length}</span>
+          )}
+
           {clientData?.length > 0 ? (
             <div className="card">
               <h5 className="card-header">Client Report</h5>
@@ -115,7 +119,6 @@ const ClientReport = () => {
                       <th>Mobile</th>
                       <th>Registration Date</th>
                       <th>Credit Limit</th>
-                      
                     </tr>
                   </thead>
                   <tbody className="table-border-bottom-0">
@@ -126,7 +129,6 @@ const ClientReport = () => {
                           <td>{data?.mobile}</td>
                           <td>{data?.registrationDate}</td>
                           <td>{data?.credit_limit}</td>
-                        
                         </tr>
                       );
                     })}

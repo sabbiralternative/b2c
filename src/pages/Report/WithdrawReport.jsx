@@ -6,13 +6,14 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API, Settings } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import handleFormatDate from "../../utils/handleFormatDate";
 
 const WithdrawReport = () => {
   const { token } = useContextState();
   const [viewWithdrawData, setViewWithdrawData] = useState(false);
   const [withdrawData, setWithdrawData] = useState([]);
+  const [totalWithdraw, setTotalWithdraw] = useState(null);
   const { formattedEndDate, formattedStartDate, onChange } =
     useDatePicker("currentDate");
   const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
@@ -53,11 +54,21 @@ const WithdrawReport = () => {
   const handleToggleViewWithdraw = async (e) => {
     e.preventDefault();
     const data = await getWithdrawReport();
+    setViewWithdrawData(true);
     if (data?.result?.length > 0) {
       setWithdrawData(data?.result);
-      setViewWithdrawData(true);
     }
   };
+
+  useEffect(() => {
+    if (withdrawData?.length > 0) {
+      let totalWithdraw = 0;
+      for (let data of withdrawData) {
+        totalWithdraw += parseFloat(data?.amount);
+      }
+      setTotalWithdraw(totalWithdraw);
+    }
+  }, [withdrawData]);
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -106,6 +117,7 @@ const WithdrawReport = () => {
       {viewWithdrawData && (
         <>
           <hr className="my-3" />
+          {totalWithdraw && <span> Total Withdraw : {totalWithdraw}</span>}
           {withdrawData?.length > 0 ? (
             <div className="card">
               <h5 className="card-header">Withdraw Report</h5>
@@ -124,12 +136,11 @@ const WithdrawReport = () => {
                       <th>Ifsc</th>
                       <th>Remark</th>
                       <th>Status</th>
-                      <th>Action</th>
+                      {/* <th>Action</th> */}
                     </tr>
                   </thead>
                   <tbody className="table-border-bottom-0">
                     {withdrawData?.map((data, i) => {
-                      console.log(data);
                       return (
                         <tr key={i}>
                           <td>{data?.loginname}</td>
@@ -165,7 +176,7 @@ const WithdrawReport = () => {
                               {data?.status}
                             </span>
                           </td>
-                          <td>
+                          {/* <td>
                             <a
                               style={{ color: "white" }}
                               className="btn btn-icon btn-sm btn-success"
@@ -179,7 +190,7 @@ const WithdrawReport = () => {
                             >
                               <i className="bx bxs-checkbox-minus"></i>
                             </a>
-                          </td>
+                          </td> */}
                         </tr>
                       );
                     })}

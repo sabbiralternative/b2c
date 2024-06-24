@@ -6,7 +6,7 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API, Settings } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ShowDepositReportImage from "../../components/modal/ShowDepositReportImage";
 import handleFormatDate from "../../utils/handleFormatDate";
 
@@ -16,6 +16,7 @@ const DepositReport = () => {
   const { token } = useContextState();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
+  const [totalDeposit, setTotalDeposit] = useState(null);
   const { formattedEndDate, formattedStartDate, onChange } =
     useDatePicker("currentDate");
   const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
@@ -56,11 +57,22 @@ const DepositReport = () => {
   const handleToggleViewDeposit = async (e) => {
     e.preventDefault();
     const data = await getDepositReport();
+    setViewDepositData(true);
     if (data?.result?.length > 0) {
       setDepositData(data?.result);
-      setViewDepositData(true);
+     
     }
   };
+
+  useEffect(() => {
+    if (depositData?.length > 0) {
+      let totalDeposit = 0;
+      for (let data of depositData) {
+        totalDeposit += parseFloat(data?.amount);
+      }
+      setTotalDeposit(totalDeposit);
+    }
+  }, [depositData]);
 
   return (
     <>
@@ -116,7 +128,7 @@ const DepositReport = () => {
         {viewDepositData && (
           <>
             <hr className="my-3" />
-
+            {totalDeposit && <span> Total Deposit : {totalDeposit}</span>}
             {depositData?.length > 0 ? (
               <div className="card">
                 <h5 className="card-header">Deposit Report</h5>
