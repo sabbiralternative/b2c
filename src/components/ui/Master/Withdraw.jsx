@@ -66,7 +66,7 @@ const Withdraw = ({ data, title }) => {
                     </td>
                     <td>{item?.amount}</td>
 
-                    <td>{item?.mobile}</td>
+                    {/* <td>{item?.mobile}</td> */}
                     <td>
                       {item?.bank_account_name}{" "}
                       {location.pathname === "/pending-withdraw" && (
