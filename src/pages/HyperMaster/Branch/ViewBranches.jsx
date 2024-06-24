@@ -13,6 +13,7 @@ const ViewBranches = () => {
     setShowWithdraw,
     setDownLineId,
     setShowCreditRef,
+    setRegistrationStatus,
   } = useContextState();
   const navigate = useNavigate();
 
@@ -35,12 +36,15 @@ const ViewBranches = () => {
                 <th>P/L</th>
 
                 <th>Status</th>
+                <th>Betting Status</th>
+                <th>Registration Status</th>
                 <th>Reg. Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
               {branches?.map((branch, i) => {
+                console.log(branch);
                 return (
                   <tr key={i}>
                     <td>
@@ -61,6 +65,31 @@ const ViewBranches = () => {
                         {branch?.userStatus === 1 ? "active" : "inactive"}
                       </span>
                     </td>
+                    <td>
+                      <span
+                        className={`badge  me-1 ${
+                          branch?.bettingStatus === 1
+                            ? "bg-label-primary"
+                            : "bg-label-danger"
+                        }`}
+                      >
+                        {branch?.bettingStatus === 1 ? "active" : "inactive"}
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        className={`badge  me-1 ${
+                          branch?.registrationStatus === 1
+                            ? "bg-label-primary"
+                            : "bg-label-danger"
+                        }`}
+                      >
+                        {branch?.registrationStatus === 1
+                          ? "active"
+                          : "inactive"}
+                      </span>
+                    </td>
+
                     <td>{branch?.registrationDate}</td>
                     <td style={{ display: "flex", color: "white" }}>
                       <a
@@ -100,26 +129,27 @@ const ViewBranches = () => {
                       </a>
                       &nbsp;
                       <a
-                        onClick={() =>
+                        onClick={() => {
                           handleDownLineId(
                             setShowChangePassword,
                             branch?.username,
                             setDownLineId
-                          )
-                        }
+                          );
+                        }}
                         className="btn btn-icon btn-sm btn-info"
                       >
                         P
                       </a>
                       &nbsp;
                       <a
-                        onClick={() =>
+                        onClick={() => {
                           handleDownLineId(
                             setShowChangeStatus,
                             branch?.username,
                             setDownLineId
-                          )
-                        }
+                          );
+                          setRegistrationStatus(branch?.registrationStatus);
+                        }}
                         className="btn btn-icon btn-sm btn-dark"
                       >
                         S

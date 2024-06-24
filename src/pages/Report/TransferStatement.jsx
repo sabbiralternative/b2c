@@ -9,7 +9,7 @@ import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 
 const TransferStatement = () => {
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
   const [viewTransferStatementData, setViewTransferStatementData] =
     useState(false);
   const [transferStatement, setTransferStatement] = useState([]);
@@ -68,7 +68,7 @@ const TransferStatement = () => {
               >
                 <div className="col-md-6 col-12 mb-4">
                   <label htmlFor="flatpickr-range" className="form-label">
-                    Deposit Date
+                    Transfer Date
                   </label>
                   <DateRangePicker
                     format="dd-MM-yyyy"
@@ -81,19 +81,21 @@ const TransferStatement = () => {
                     block
                   />
                 </div>
-                <div className="col-md-6 col-12 mb-4">
-                  <label htmlFor="flatpickr-range" className="form-label">
-                    Type
-                  </label>
-                  <select
-                    onChange={(e) => setType(e.target.value)}
-                    className="select2 form-select select2-hidden-accessible"
-                  >
-                    <option value="All">All</option>
-                    <option value="Upline">Upline</option>
-                    <option value="Downline">Downline</option>
-                  </select>
-                </div>
+                {adminRole !== "master" && (
+                  <div className="col-md-6 col-12 mb-4">
+                    <label htmlFor="flatpickr-range" className="form-label">
+                      Type
+                    </label>
+                    <select
+                      onChange={(e) => setType(e.target.value)}
+                      className="select2 form-select select2-hidden-accessible"
+                    >
+                      <option value="All">All</option>
+                      <option value="Upline">Upline</option>
+                      <option value="Downline">Downline</option>
+                    </select>
+                  </div>
+                )}
 
                 <div className="col-12">
                   <input
@@ -120,15 +122,10 @@ const TransferStatement = () => {
         {viewTransferStatementData && (
           <>
             <hr className="my-3" />
-            {transferStatement?.length > 0 && (
-              <span>
-                {" "}
-                Total Transfer Statement : {transferStatement?.length}
-              </span>
-            )}
+
             {transferStatement?.length > 0 ? (
               <div className="card">
-                <h5 className="card-header">Deposit Report</h5>
+                <h5 className="card-header">Transfer Statement</h5>
                 <div className="table-responsive text-nowrap">
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
@@ -146,16 +143,12 @@ const TransferStatement = () => {
                           <tr key={i}>
                             <td>{data?.date}</td>
                             <td
-                              style={{
-                                color: `${data?.credit > 0 ? "green" : "red"}`,
-                              }}
+                          
                             >
                               {data?.credit}
                             </td>
                             <td
-                              style={{
-                                color: `${data?.debit > 0 ? "green" : "red"}`,
-                              }}
+                         
                             >
                               {data?.debit}
                             </td>

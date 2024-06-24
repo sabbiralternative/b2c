@@ -28,7 +28,8 @@ const StateProvider = ({ children }) => {
   const [showEditPayment, setShowEditPayment] = useState(false);
   const [clientId, setClientId] = useState("");
   const [showCreditRef, setShowCreditRef] = useState(false);
- 
+  const [registrationStatus, setRegistrationStatus] = useState(null);
+
   /* Get token from locale storage */
   useEffect(() => {
     const getToken = localStorage.getItem("adminToken");
@@ -116,8 +117,7 @@ const StateProvider = ({ children }) => {
     setClientId,
     showCreditRef,
     setShowCreditRef,
-
-  
+    registrationStatus, setRegistrationStatus
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

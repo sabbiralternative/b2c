@@ -8,21 +8,27 @@ import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
+import { useLocation } from "react-router-dom";
 
-const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
+const ChangeStatus = ({
+  setShowChangeStatus,
+  downlineId,
+  registrationStatus: regiStatus,
+}) => {
   const { refetchAllBranch } = useGetAllBranch();
-  const {refetchClient} = useRefetchClient(downlineId)
+  const { refetchClient } = useRefetchClient(downlineId);
+  const location = useLocation();
 
   /* close modal ck=lick outside */
   const statusRef = useRef();
   useCloseModalClickOutside(statusRef, () => {
     setShowChangeStatus(false);
   });
-  const { token, adminRole,site } = useContextState();
+  const { token, adminRole, site } = useContextState();
   const [betStatus, setBetStatus] = useState(false);
   const [userStatus, setUserStatus] = useState(false);
+  const [registrationStatus, setRegistrationStatus] = useState(false);
   const { status, refetchStatus } = useGetStatus("getStatus", downlineId);
-
 
   /* set check box default value */
   useEffect(() => {
@@ -36,21 +42,33 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
     } else {
       setUserStatus(true);
     }
-  }, [status]);
-
+    if (regiStatus === 0) {
+      setRegistrationStatus(false);
+    } else {
+      setRegistrationStatus(true);
+    }
+  }, [status, regiStatus]);
 
   /* handle edit user lock */
   const handleChangeUserLock = async (e) => {
     e.preventDefault();
     const generatedToken = handleRandomToken();
-    const payload = {
+    let payload = {
       downlineId,
+      // registrationStatus: registrationStatus ? 1 : 0,
       type: "changeStatus",
       userStatus: userStatus ? 1 : 0,
       bettingStatus: betStatus ? 1 : 0,
       token: generatedToken,
-      site
+      site,
     };
+
+    if (
+      location.pathname !== "/clients-with-balance" &&
+      location.pathname !== "/view-client"
+    ) {
+      payload.registrationStatus = registrationStatus ? 1 : 0;
+    }
     const res = await axios.post(API.downLineEdit, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,8 +78,8 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
     if (data?.success) {
       if (adminRole === "hyper_master") {
         refetchAllBranch();
-      }else{
-        refetchClient()
+      } else {
+        refetchClient();
       }
 
       toast.success(data?.result?.message);
@@ -133,6 +151,30 @@ const ChangeStatus = ({ setShowChangeStatus, downlineId }) => {
                     </label>
                   </div>
                 </div>
+                {location.pathname !== "/clients-with-balance" &&
+                location.pathname !== "/view-client" ? (
+                  <div className="row">
+                    <div className="col mb-3">
+                      <label className="switch">
+                        <input
+                          onChange={() =>
+                            setRegistrationStatus((prev) => !prev)
+                          }
+                          type="checkbox"
+                          className="switch-input"
+                          checked={registrationStatus}
+                        />
+                        <span className="switch-toggle-slider">
+                          <span className="switch-on"></span>
+                          <span className="switch-off"></span>
+                        </span>
+                        <span className="switch-label">
+                          Registration Status
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                ) : null}
               </div>
               <div className="modal-footer">
                 <button

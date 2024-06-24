@@ -49,6 +49,7 @@ const MainLayout = () => {
     setShowEditPayment,
     showCreditRef,
     setShowCreditRef,
+    registrationStatus
 
 
   } = useContextState();
@@ -123,6 +124,7 @@ const MainLayout = () => {
               <ChangeStatus
                 setShowChangeStatus={setShowChangeStatus}
                 downlineId={downLineId}
+                registrationStatus={registrationStatus}
               />
             )}
             {/* Modals end for Hyper_master and master*/}
