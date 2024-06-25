@@ -4,10 +4,11 @@ import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+import { useState } from "react";
 
 const ViewClient = () => {
   const navigate = useNavigate();
-
+  const [fetchClients, setFetchClients] = useState(false);
   const { handleSubmit } = useForm();
   const {
     clientId,
@@ -19,9 +20,14 @@ const ViewClient = () => {
     setShowCreditRef,
     adminRole,
   } = useContextState();
-  const { clients, refetchClients, isSuccess } = useGetClient(clientId);
+  const { clients, refetchClients, isSuccess } = useGetClient(
+    clientId,
+    setFetchClients,
+    fetchClients
+  );
 
   const onSubmit = async () => {
+    setFetchClients(true);
     refetchClients();
   };
   const handleNavigate = (username, link) => {
@@ -212,7 +218,7 @@ const ViewClient = () => {
       {isSuccess && clients?.length === 0 && (
         <div className="card">
           <h5 style={{ fontSize: "18px" }} className="card-header">
-            No data found for given date range.
+            No users found with given search query.
           </h5>
         </div>
       )}
