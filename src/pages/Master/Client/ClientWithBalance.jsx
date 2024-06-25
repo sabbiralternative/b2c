@@ -1,18 +1,13 @@
-import { useForm } from "react-hook-form";
 import useContextState from "../../../hooks/useContextState";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import useGetClientWithBalance from "../../../hooks/Master/Client/useGetClientWithBalance";
-// import { useEffect } from "react";
 
 const ClientWithBalance = () => {
   const navigate = useNavigate();
 
-  const { handleSubmit } = useForm();
   const {
-    clientId,
-    setClientId,
     setClientDeposit,
     setDownLineId,
     setShowChangePassword,
@@ -20,64 +15,15 @@ const ClientWithBalance = () => {
     setShowCreditRef,
     adminRole,
   } = useContextState();
-  const { clientWithBalance, refetchClientWithBalance } =
-    useGetClientWithBalance();
+  const { clientWithBalance } = useGetClientWithBalance();
 
-
-
-  
-  const onSubmit = async () => {
-    refetchClientWithBalance();
-    // setClientId("");
-  };
   const handleNavigate = (username, link) => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
   };
-  // useEffect(() => {
-  //   if (clients?.length > 0) {
-  //     // setClientId("");
-  //   }
-  // }, [setClientId, clients]);
-  // console.log(clientId);
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <div className="col-12">
-        <div className="card">
-          <div className="card-body">
-            <form
-              id="formValidationExamples"
-              className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <div className="col-md-6 fv-plugins-icon-container">
-                <input
-                  onChange={(e) => setClientId(e.target.value)}
-                  type="text"
-                  className="form-control"
-                  placeholder="Search Client"
-                  value={clientId}
-                />
-                <div className="fv-plugins-message-container invalid-feedback"></div>
-              </div>
-
-              <div className="col-12">
-                <input
-                  disabled={clientId?.length < 6}
-                  type="submit"
-                  name="submit"
-                  className="btn btn-primary"
-                  value="Search"
-                />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <hr className="my-3" />
-
       <div className="card">
         <h5 className="card-header">Clients</h5>
         <div className="table-responsive text-nowrap">
@@ -87,11 +33,11 @@ const ClientWithBalance = () => {
                 <th>User Id</th>
                 <th>Username</th>
                 {adminRole !== "master" && <th>Mobile</th>}
-                {/* <th>Credit Referance</th> */}
                 <th>Balance</th>
                 <th>Total Deposit</th>
                 <th>Total Withdraw</th>
                 <th>Exposure</th>
+                <th>Betting Status</th>
                 <th>Status</th>
                 <th>Reg. Date</th>
                 <th>Actions</th>
@@ -113,15 +59,23 @@ const ClientWithBalance = () => {
                       </td>
                     )}
 
-                    {/* <td>
-                      <strong>{client?.creditReferance}</strong>
-                    </td> */}
                     <td>
                       <strong>{client?.balance}</strong>
                     </td>
                     <td>{client?.totalDeposit}</td>
                     <td>{client?.totalWithdraw}</td>
                     <td>{client?.exposure}</td>
+                    <td>
+                      <span
+                        className={`badge  me-1 ${
+                          client?.bettingStatus === 1
+                            ? "bg-label-primary"
+                            : "bg-label-danger"
+                        }`}
+                      >
+                        {client?.bettingStatus === 1 ? "Active" : "InActive"}
+                      </span>
+                    </td>
                     <td>
                       <span
                         className={`badge  me-1 ${

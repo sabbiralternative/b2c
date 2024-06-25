@@ -15,6 +15,7 @@ const Home = () => {
       }
     }
   };
+  console.log(balanceData);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="row">
@@ -101,29 +102,35 @@ const Home = () => {
 
         <div className="col-lg-6 col-md-12">
           <div className="row">
-            {/* <div className="col-sm-6 col-12 mb-4">
+            <div className="col-sm-6 col-12 mb-4">
               <div className="card">
                 <div className="card-body text-center">
-                  <h2 className="mb-1">{balanceData?.downLevelProfitLoss}</h2>
-                  <span className="text-muted">Downlevel Profit/Loss</span>
+                  <h2 className="mb-1">{balanceData?.usersToday}</h2>
+                  <span className="text-muted">New Users Today</span>
                 </div>
               </div>
-            </div> */}
+            </div>
+            <div className="col-sm-6 col-12 mb-4">
+              <div className="card">
+                <div className="card-body text-center">
+                  <h2 className="mb-1">{balanceData?.depositToday}</h2>
+                  <span className="text-muted">Total Deposit Today</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="col-lg-6 col-md-12">
           <div className="row">
-            {/* <div className="col-sm-6 col-12 mb-4">
+            <div className="col-sm-6 col-12 mb-4">
               <div className="card">
                 <div className="card-body text-center">
-                  <h2 className="mb-1">
-                    {balanceData?.availableBalanceWithProfitLoss}
-                  </h2>
-                  <span className="text-muted">Available Balance with P/L</span>
+                  <h2 className="mb-1">{balanceData?.withdrawToday}</h2>
+                  <span className="text-muted">Total Withdraw Today</span>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
