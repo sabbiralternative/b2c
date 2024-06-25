@@ -90,6 +90,7 @@ const ViewClient = () => {
                 <th>Total Deposit</th>
                 <th>Total Withdraw</th>
                 <th>Exposure</th>
+                <th>Betting Status</th>
                 <th>Status</th>
                 <th>Reg. Date</th>
                 <th>Actions</th>
@@ -97,6 +98,7 @@ const ViewClient = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {clients?.map((client, i) => {
+                // console.log(client);
                 return (
                   <tr key={i}>
                     <td>
@@ -120,6 +122,17 @@ const ViewClient = () => {
                     <td>{client?.totalDeposit}</td>
                     <td>{client?.totalWithdraw}</td>
                     <td>{client?.exposure}</td>
+                    <td>
+                      <span
+                        className={`badge  me-1 ${
+                          client?.bettingStatus === 1
+                            ? "bg-label-primary"
+                            : "bg-label-danger"
+                        }`}
+                      >
+                        {client?.bettingStatus === 1 ? "Active" : "InActive"}
+                      </span>
+                    </td>
                     <td>
                       <span
                         className={`badge  me-1 ${
