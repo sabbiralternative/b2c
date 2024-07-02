@@ -29,6 +29,7 @@ const StateProvider = ({ children }) => {
   const [clientId, setClientId] = useState("");
   const [showCreditRef, setShowCreditRef] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState(null);
+  const [refetchViewClient,setRefetchViewClient] = useState(false)
 
   /* Get token from locale storage */
   useEffect(() => {
@@ -117,7 +118,8 @@ const StateProvider = ({ children }) => {
     setClientId,
     showCreditRef,
     setShowCreditRef,
-    registrationStatus, setRegistrationStatus
+    registrationStatus, setRegistrationStatus,
+    refetchViewClient,setRefetchViewClient
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

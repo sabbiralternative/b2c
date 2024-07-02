@@ -4,7 +4,7 @@ import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ViewClient = () => {
   const navigate = useNavigate();
@@ -19,6 +19,8 @@ const ViewClient = () => {
     setShowChangeStatus,
     setShowCreditRef,
     adminRole,
+    refetchViewClient,
+    setRefetchViewClient,
   } = useContextState();
   const { clients, refetchClients, isSuccess } = useGetClient(
     clientId,
@@ -34,6 +36,15 @@ const ViewClient = () => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
   };
+
+  useEffect(() => {
+    if (refetchViewClient) {
+      setFetchClients(true);
+      refetchClients();
+      setRefetchViewClient(false);
+      setClientId("")
+    }
+  }, [refetchClients, refetchViewClient, setRefetchViewClient,setClientId]);
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">

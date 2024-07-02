@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const Withdraw = ({ data, title }) => {
-  const { setEditPendingWithdraw, setDownLineId, setClientId } =
+  const { setEditPendingWithdraw, setDownLineId, setClientId,setRefetchViewClient } =
     useContextState();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -50,6 +50,7 @@ const Withdraw = ({ data, title }) => {
                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         setClientId(item?.userId);
+                        setRefetchViewClient(true)
                         navigate("/view-client");
                       }}
                     >
@@ -59,6 +60,7 @@ const Withdraw = ({ data, title }) => {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setClientId(item?.loginname);
+                        setRefetchViewClient(true)
                         navigate("/view-client");
                       }}
                     >

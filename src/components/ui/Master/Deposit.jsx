@@ -8,7 +8,7 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const Deposit = ({ data, title }) => {
-  const { setEditPendingDeposit, setDownLineId, setClientId } =
+  const { setEditPendingDeposit, setDownLineId, setClientId,setRefetchViewClient } =
     useContextState();
   const navigate = useNavigate();
   const [showImage, setShowImage] = useState(false);
@@ -50,6 +50,7 @@ const Deposit = ({ data, title }) => {
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setClientId(item?.userId);
+                      setRefetchViewClient(true)
                       navigate("/view-client");
                     }}
                   >
@@ -59,6 +60,7 @@ const Deposit = ({ data, title }) => {
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setClientId(item?.loginname);
+                      setRefetchViewClient(true)
                       navigate("/view-client");
                     }}
                   >

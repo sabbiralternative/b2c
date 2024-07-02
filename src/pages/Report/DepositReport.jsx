@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const DepositReport = () => {
   const [showDepositImage, setShowDepositImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token,setClientId, adminRole } = useContextState();
+  const { token,setClientId, adminRole,setRefetchViewClient } = useContextState();
   const navigate = useNavigate();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
@@ -160,6 +160,7 @@ const DepositReport = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               setClientId(data?.userId);
+                              setRefetchViewClient(true)
                               navigate("/view-client");
                             }}
                           >

@@ -14,9 +14,9 @@ import { useNavigate } from "react-router-dom";
 const FTDReport = () => {
   const [showFTDImage, setShowFTDImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setClientId, adminRole } = useContextState();
+  const { token, setClientId, adminRole,setRefetchViewClient } = useContextState();
   const navigate = useNavigate();
-  const [viewDepositData, setViewFTDData] = useState(false);
+  const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
   const [totalFTD, setTotalFTD] = useState(null);
   const { formattedEndDate, formattedStartDate, onChange } =
@@ -29,7 +29,7 @@ const FTDReport = () => {
   const getFTDReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
-      type: "viewFTD",
+      type: "getFTD",
       fromDate: newFormattedStartDate,
       toDate: newFormattedEndDate,
       token: generatedToken,
@@ -40,7 +40,7 @@ const FTDReport = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-   
+    console.log(res);
     return res.data;
   };
 
@@ -127,13 +127,13 @@ const FTDReport = () => {
           </div>
         </div>
 
-        {viewDepositData && (
+        {viewFRDData && (
           <>
             <hr className="my-3" />
-            {totalFTD && <span> Total Deposit : {totalFTD}</span>}
+            {totalFTD && <span> Total FRD : {totalFTD}</span>}
             {FTDData?.length > 0 ? (
               <div className="card">
-                <h5 className="card-header">Deposit Report</h5>
+                <h5 className="card-header">FRD Report</h5>
                 <div className="table-responsive text-nowrap">
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
@@ -146,7 +146,7 @@ const FTDReport = () => {
                           </>
                         )}
                         <th>Amount</th>
-                        <th>Deposit Date</th>
+                        <th>FRD Date</th>
                         <th>Image</th>
                         <th>Remark</th>
                         <th>Status</th>
@@ -160,6 +160,7 @@ const FTDReport = () => {
                               style={{ cursor: "pointer" }}
                               onClick={() => {
                                 setClientId(data?.userId);
+                                setRefetchViewClient(true)
                                 navigate("/view-client");
                               }}
                             >
@@ -172,7 +173,7 @@ const FTDReport = () => {
                               </>
                             )}
                             <td>{data?.amount}</td>
-                            <td>{data?.deposit_date}</td>
+                            <td>{data?.withdraw_date}</td>
                             <td>
                               {data?.image && (
                                 <img

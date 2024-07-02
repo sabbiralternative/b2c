@@ -11,7 +11,7 @@ import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
 const ClientReport = () => {
-  const { token, setClientId, adminRole } = useContextState();
+  const { token, setClientId, adminRole,setRefetchViewClient } = useContextState();
   const [viewClientData, setViewClientData] = useState(false);
   const [clientData, setClientData] = useState([]);
   const navigate = useNavigate();
@@ -136,6 +136,7 @@ const ClientReport = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               setClientId(data?.userId);
+                              setRefetchViewClient(true)
                               navigate("/view-client");
                             }}
                           >

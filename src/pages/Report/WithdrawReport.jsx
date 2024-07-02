@@ -11,7 +11,7 @@ import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
 const WithdrawReport = () => {
-  const { token, setClientId, adminRole } = useContextState();
+  const { token, setClientId, adminRole,setRefetchViewClient } = useContextState();
   const navigate = useNavigate();
   const [viewWithdrawData, setViewWithdrawData] = useState(false);
   const [withdrawData, setWithdrawData] = useState([]);
@@ -155,6 +155,7 @@ const WithdrawReport = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               setClientId(data?.userId);
+                              setRefetchViewClient(true)
                               navigate("/view-client");
                             }}
                           >
