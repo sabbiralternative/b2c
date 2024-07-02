@@ -472,6 +472,15 @@ const Master = () => {
           </li>
           <li className="menu-item">
             <a
+              onClick={() => handleNavigate("ftd-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">FTD Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
               onClick={() => handleNavigate("withdraw-report")}
               className="menu-link"
             >

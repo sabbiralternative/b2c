@@ -9,6 +9,7 @@ import ClientReport from "../pages/Report/ClientReport";
 import DepositReport from "../pages/Report/DepositReport";
 import WithdrawReport from "../pages/Report/WithdrawReport";
 import TransferStatement from "../pages/Report/TransferStatement";
+import FTDReport from "../pages/Report/FTDReport";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/deposit-report",
         element: <DepositReport />,
+      },
+      {
+        path: "/ftd-report",
+        element: <FTDReport />,
       },
       {
         path: "/withdraw-report",
