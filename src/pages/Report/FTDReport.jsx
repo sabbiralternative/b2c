@@ -35,12 +35,12 @@ const FTDReport = () => {
       token: generatedToken,
       site: Settings.siteUrl,
     };
-    const res = await axios.post(API.ftdReport, payload, {
+    const res = await axios.post(API.export, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res);
+  
     return res.data;
   };
 

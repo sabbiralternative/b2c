@@ -65,7 +65,7 @@ export const API = {
   dwCount: config?.result?.endpoint?.dwCount,
   export: config?.result?.endpoint?.export,
   transferStatement: config?.result?.endpoint?.transferStatement,
-  ftdReport:config?.result?.endpoint?.ftdReport
+
 };
 
 export const Settings = {

@@ -33,7 +33,9 @@ const ShowDepositReportImage = ({ image, setShowDepositImage }) => {
             <form>
               <div className="modal-body">
                 <div className="row">
-                  <div className="col mb-3">
+                  <div className="col mb-3"
+                  style={{display:'flex',alignItems:'center',justifyContent:'center'}}
+                  >
                     <img
                       style={{
                         height: "500px",
