@@ -8,8 +8,13 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const Deposit = ({ data, title }) => {
-  const { setEditPendingDeposit, setDownLineId, setClientId,setRefetchViewClient } =
-    useContextState();
+  const {
+    setEditPendingDeposit,
+    setDownLineId,
+    setClientId,
+    setRefetchViewClient,
+    readOnly,
+  } = useContextState();
   const navigate = useNavigate();
   const [showImage, setShowImage] = useState(false);
   const [image, setImage] = useState("");
@@ -50,7 +55,7 @@ const Deposit = ({ data, title }) => {
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setClientId(item?.userId);
-                      setRefetchViewClient(true)
+                      setRefetchViewClient(true);
                       navigate("/view-client");
                     }}
                   >
@@ -60,7 +65,7 @@ const Deposit = ({ data, title }) => {
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setClientId(item?.loginname);
-                      setRefetchViewClient(true)
+                      setRefetchViewClient(true);
                       navigate("/view-client");
                     }}
                   >
@@ -111,10 +116,10 @@ const Deposit = ({ data, title }) => {
                   {item?.status === "PENDING" && (
                     <td>
                       <a
-                        style={{ color: "white" }}
+                        style={{ color: "white",  cursor: `${!readOnly ? "pointer" : "not-allowed"}`, }}
                         onClick={() => {
-                          setDownLineId(item?.id);
-                          setEditPendingDeposit(true);
+                          !readOnly && setDownLineId(item?.id);
+                          !readOnly && setEditPendingDeposit(true);
                         }}
                         className="btn btn-icon btn-sm btn-success"
                       >

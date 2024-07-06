@@ -3,8 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
+import useContextState from "../../../../hooks/useContextState";
 
 const Master = () => {
+  const { readOnly } = useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
   const [showStatement, setShowStatement] = useState(false);
@@ -122,16 +124,18 @@ const Master = () => {
               <div data-i18n="View Clients">View Clients</div>
             </a>
           </li>
+          {!readOnly && (
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("add-client")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-user"></i>
+                <div data-i18n="Add Client">Add Client</div>
+              </a>
+            </li>
+          )}
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("add-client")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="Add Client">Add Client</div>
-            </a>
-          </li>
           <li className="menu-item">
             <a
               onClick={() => handleNavigate("clients-with-balance")}
@@ -217,36 +221,46 @@ const Master = () => {
             </a>
           </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("add-bank-account")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Payment Method">Add Bank Account</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a onClick={() => handleNavigate("add-QR")} className="menu-link">
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Payment Method">Add QR</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a onClick={() => handleNavigate("add-UPI")} className="menu-link">
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Payment Method">Add UPI</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("add-payment-gateway")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Payment Method">Add Payment Gateway</div>
-            </a>
-          </li>
+          {!readOnly && (
+            <>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-bank-account")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Payment Method">Add Bank Account</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-QR")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Payment Method">Add QR</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-UPI")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Payment Method">Add UPI</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-payment-gateway")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Payment Method">Add Payment Gateway</div>
+                </a>
+              </li>
+            </>
+          )}
         </ul>
       </li>
 

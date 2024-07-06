@@ -7,8 +7,13 @@ import toast from "react-hot-toast";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
 const Withdraw = ({ data, title }) => {
-  const { setEditPendingWithdraw, setDownLineId, setClientId,setRefetchViewClient } =
-    useContextState();
+  const {
+    setEditPendingWithdraw,
+    setDownLineId,
+    setClientId,
+    setRefetchViewClient,
+    readOnly,
+  } = useContextState();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const location = useLocation();
@@ -47,10 +52,10 @@ const Withdraw = ({ data, title }) => {
                 return (
                   <tr key={i}>
                     <td
-                     style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         setClientId(item?.userId);
-                        setRefetchViewClient(true)
+                        setRefetchViewClient(true);
                         navigate("/view-client");
                       }}
                     >
@@ -60,7 +65,7 @@ const Withdraw = ({ data, title }) => {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setClientId(item?.loginname);
-                        setRefetchViewClient(true)
+                        setRefetchViewClient(true);
                         navigate("/view-client");
                       }}
                     >
@@ -135,10 +140,13 @@ const Withdraw = ({ data, title }) => {
                     {item?.status === "PENDING" && (
                       <td>
                         <a
-                          style={{ color: "white" }}
+                          style={{
+                            color: "white",
+                            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                          }}
                           onClick={() => {
-                            setDownLineId(item?.withdraw_id);
-                            setEditPendingWithdraw(true);
+                            !readOnly && setDownLineId(item?.withdraw_id);
+                            !readOnly && setEditPendingWithdraw(true);
                           }}
                           className="btn btn-icon btn-sm btn-success"
                         >

@@ -9,14 +9,22 @@ import toast from "react-hot-toast";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 import { useLocation } from "react-router-dom";
+import useGetClient from "../../hooks/Master/Client/useGetClient";
 
 const ChangeStatus = ({
   setShowChangeStatus,
   downlineId,
   registrationStatus: regiStatus,
 }) => {
+  const { token, adminRole, site, clientId } = useContextState();
+  const [fetchClients, setFetchClients] = useState(false);
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClient } = useRefetchClient(downlineId);
+  const { refetchClients } = useGetClient(
+    clientId,
+    setFetchClients,
+    fetchClients
+  );
   const location = useLocation();
 
   /* close modal ck=lick outside */
@@ -24,7 +32,7 @@ const ChangeStatus = ({
   useCloseModalClickOutside(statusRef, () => {
     setShowChangeStatus(false);
   });
-  const { token, adminRole, site } = useContextState();
+
   const [betStatus, setBetStatus] = useState(false);
   const [userStatus, setUserStatus] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState(false);
@@ -79,6 +87,7 @@ const ChangeStatus = ({
       if (adminRole === "hyper_master") {
         refetchAllBranch();
       } else {
+        refetchClients();
         refetchClient();
       }
 

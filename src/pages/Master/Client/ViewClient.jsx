@@ -11,6 +11,7 @@ const ViewClient = () => {
   const [fetchClients, setFetchClients] = useState(false);
   const { handleSubmit } = useForm();
   const {
+    readOnly,
     clientId,
     setClientId,
     setClientDeposit,
@@ -42,9 +43,11 @@ const ViewClient = () => {
       setFetchClients(true);
       refetchClients();
       setRefetchViewClient(false);
-      setClientId("")
+      setClientId("");
     }
-  }, [refetchClients, refetchViewClient, setRefetchViewClient,setClientId]);
+  }, [refetchClients, refetchViewClient, setRefetchViewClient, setClientId]);
+
+ 
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -152,23 +155,35 @@ const ViewClient = () => {
                         <td>{client?.registrationDate}</td>
                         <td>
                           <a
-                            style={{ color: "white" }}
-                            onClick={() =>
-                              handleDownLineId(
-                                setClientDeposit,
-                                client?.username,
-                                setDownLineId
-                              )
-                            }
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly &&
+                                handleDownLineId(
+                                  setClientDeposit,
+                                  client?.username,
+                                  setDownLineId
+                                );
+                            }}
                             className="btn btn-icon btn-sm btn-success"
                           >
                             D
                           </a>
                           &nbsp;
                           <a
-                            style={{ color: "white" }}
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
                             onClick={() => {
-                              handleNavigate(client?.username, "pnl");
+                              !readOnly &&
+                                handleNavigate(client?.username, "pnl");
                             }}
                             className="btn btn-icon btn-sm btn-warning"
                           >
@@ -176,42 +191,60 @@ const ViewClient = () => {
                           </a>
                           &nbsp;
                           <a
-                            style={{ color: "white" }}
-                            onClick={() =>
-                              handleDownLineId(
-                                setShowChangePassword,
-                                client?.username,
-                                setDownLineId
-                              )
-                            }
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly &&
+                                handleDownLineId(
+                                  setShowChangePassword,
+                                  client?.username,
+                                  setDownLineId
+                                );
+                            }}
                             className="btn btn-icon btn-sm btn-info"
                           >
                             P
                           </a>
                           &nbsp;
                           <a
-                            style={{ color: "white" }}
-                            onClick={() =>
-                              handleDownLineId(
-                                setShowChangeStatus,
-                                client?.username,
-                                setDownLineId
-                              )
-                            }
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly &&
+                                handleDownLineId(
+                                  setShowChangeStatus,
+                                  client?.username,
+                                  setDownLineId
+                                );
+                            }}
                             className="btn btn-icon btn-sm btn-dark"
                           >
                             S
                           </a>
                           &nbsp;
                           <a
-                            style={{ color: "white" }}
-                            onClick={() =>
-                              handleDownLineId(
-                                setShowCreditRef,
-                                client?.username,
-                                setDownLineId
-                              )
-                            }
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly &&
+                                handleDownLineId(
+                                  setShowCreditRef,
+                                  client?.username,
+                                  setDownLineId
+                                );
+                            }}
                             className="btn btn-icon btn-sm btn-primary"
                           >
                             CR

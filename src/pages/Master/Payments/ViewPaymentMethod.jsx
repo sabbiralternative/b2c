@@ -7,16 +7,16 @@ import useContextState from "../../../hooks/useContextState";
 import toast from "react-hot-toast";
 
 const ViewPaymentMethod = () => {
-  const { token, setShowEditPayment, setDownLineId,site } = useContextState();
+  const { token, setShowEditPayment, setDownLineId, site, readOnly } =
+    useContextState();
   const payload = {
     type: "viewPaymentMethods",
-    site
+    site,
   };
   const { paymentsMethods, refetchPaymentMethods } =
     useGetPaymentMethod(payload);
 
-
-    /* delete payments method */
+  /* delete payments method */
   const handleDeletePaymentMethod = async (paymentId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -33,7 +33,7 @@ const ViewPaymentMethod = () => {
           type: "deletePayment",
           paymentId,
           token: generatedToken,
-          site
+          site,
         };
         const res = await axios.post(API.payments, payload, {
           headers: { Authorization: `Bearer ${token}` },
@@ -67,7 +67,6 @@ const ViewPaymentMethod = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {paymentsMethods?.map((method, i) => {
-             
                 return (
                   <tr key={i}>
                     <td>{method?.type}</td>
@@ -91,10 +90,13 @@ const ViewPaymentMethod = () => {
 
                     <td>
                       <a
-                        style={{ color: "white" }}
+                        style={{
+                          color: "white",
+                          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                        }}
                         onClick={() => {
-                          setDownLineId(method?.id);
-                          setShowEditPayment(true);
+                          !readOnly && setDownLineId(method?.id);
+                          !readOnly && setShowEditPayment(true);
                         }}
                         className="btn btn-icon btn-sm btn-success"
                       >
@@ -102,8 +104,13 @@ const ViewPaymentMethod = () => {
                       </a>
                       &nbsp;
                       <a
-                        onClick={() => handleDeletePaymentMethod(method?.id)}
-                        style={{ color: "white" }}
+                        onClick={() => {
+                          !readOnly && handleDeletePaymentMethod(method?.id);
+                        }}
+                        style={{
+                          color: "white",
+                          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                        }}
                         className="btn btn-icon btn-sm btn-danger"
                       >
                         <i className="bx bxs-checkbox-minus"></i>

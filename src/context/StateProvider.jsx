@@ -29,7 +29,8 @@ const StateProvider = ({ children }) => {
   const [clientId, setClientId] = useState("");
   const [showCreditRef, setShowCreditRef] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState(null);
-  const [refetchViewClient,setRefetchViewClient] = useState(false)
+  const [refetchViewClient, setRefetchViewClient] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
 
   /* Get token from locale storage */
   useEffect(() => {
@@ -37,7 +38,9 @@ const StateProvider = ({ children }) => {
     const adminName = localStorage.getItem("adminName");
     const adminRole = localStorage.getItem("adminRole");
     const adminSite = localStorage.getItem("adminSite");
+    const readOnly = localStorage.getItem("readOnly");
     if (getToken) {
+      setReadOnly(readOnly == "true" ? true : false);
       setToken(getToken);
       setAdminName(adminName);
       setAdminRole(adminRole);
@@ -118,8 +121,11 @@ const StateProvider = ({ children }) => {
     setClientId,
     showCreditRef,
     setShowCreditRef,
-    registrationStatus, setRegistrationStatus,
-    refetchViewClient,setRefetchViewClient
+    registrationStatus,
+    setRegistrationStatus,
+    refetchViewClient,
+    setRefetchViewClient,
+    readOnly, setReadOnly
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>
