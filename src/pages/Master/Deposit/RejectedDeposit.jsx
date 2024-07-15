@@ -6,12 +6,16 @@ const RejectedDeposit = () => {
   const payload = {
     type: "viewUTR",
     status: "REJECTED",
-    site:Settings.siteUrl
+    site: Settings.siteUrl,
   };
   const { allUTRs } = useGetALLDeposit(payload);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Deposit data={allUTRs} title='Rejected Deposit' />
+      <Deposit
+        time="Rejection Time"
+        data={allUTRs}
+        title="Rejected Deposit"
+      />
     </div>
   );
 };

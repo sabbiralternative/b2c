@@ -6,12 +6,12 @@ const CompletedDeposit = () => {
   const payload = {
     type: "viewUTR",
     status: "APPROVED",
-    site:Settings.siteUrl
+    site: Settings.siteUrl,
   };
   const { allUTRs } = useGetALLDeposit(payload);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Deposit data={allUTRs}  title='Completed Deposit'/>
+      <Deposit time="Approval Time" data={allUTRs} title="Completed Deposit" />
     </div>
   );
 };

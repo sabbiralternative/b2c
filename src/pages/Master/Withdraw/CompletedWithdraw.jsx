@@ -12,7 +12,7 @@ const CompletedWithdraw = () => {
   const { allWithdraw } = useGetALLWithdraw(payload);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Withdraw data={allWithdraw} title='Completed Withdraw' />
+      <Withdraw time="Approval Time" data={allWithdraw} title='Completed Withdraw' />
     </div>
   );
 };

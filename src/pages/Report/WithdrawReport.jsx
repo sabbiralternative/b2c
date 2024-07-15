@@ -139,7 +139,8 @@ const WithdrawReport = () => {
                       <th>Amount</th>
                       <th>Bank Name</th>
                       <th>Image</th>
-                      <th>Withdraw Date</th>
+                      <th>Request Time</th>
+                        <th>Approval Time</th>
                       <th>Account No</th>
                       <th>Ifsc</th>
                       <th>Remark</th>
@@ -185,6 +186,7 @@ const WithdrawReport = () => {
                           </td>
 
                           <td>{data?.withdraw_date}</td>
+                          <td>{data?.date_modified}</td>
                           <td>{data?.account_number}</td>
                           <td>{data?.ifsc}</td>
                           <td>{data?.remark}</td>

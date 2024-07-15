@@ -7,7 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
-const Deposit = ({ data, title }) => {
+const Deposit = ({ data, title,time }) => {
   const {
     setEditPendingDeposit,
     setDownLineId,
@@ -43,8 +43,8 @@ const Deposit = ({ data, title }) => {
               <th>Type</th>
               <th>Status</th>
               <th>Remark</th>
-              <th>Date</th>
-              <th>Action</th>
+              <th>Request Time</th>
+              <th>{time}</th>
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
@@ -113,6 +113,7 @@ const Deposit = ({ data, title }) => {
                   </td>
                   <td>{item?.remark}</td>
                   <td>{item?.date_added}</td>
+                  <td>{item?.date_modified}</td>
                   {item?.status === "PENDING" && (
                     <td>
                       <a

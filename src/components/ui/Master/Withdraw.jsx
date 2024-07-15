@@ -6,7 +6,7 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import toast from "react-hot-toast";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
-const Withdraw = ({ data, title }) => {
+const Withdraw = ({ data, title,time }) => {
   const {
     setEditPendingWithdraw,
     setDownLineId,
@@ -42,13 +42,14 @@ const Withdraw = ({ data, title }) => {
               <th>IFSC</th>
 
               <th>Status</th>
-              <th>Date</th>
-              <th>Action</th>
+              <th>Request Time</th>
+              <th>{time}</th>
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
             {Array.isArray(data) &&
               data?.map((item, i) => {
+              
                 return (
                   <tr key={i}>
                     <td
@@ -137,6 +138,7 @@ const Withdraw = ({ data, title }) => {
                     </td>
 
                     <td>{item?.date_added}</td>
+                    <td>{item?.date_modified}</td>
                     {item?.status === "PENDING" && (
                       <td>
                         <a

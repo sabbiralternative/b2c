@@ -14,7 +14,8 @@ import { useNavigate } from "react-router-dom";
 const DepositReport = () => {
   const [showDepositImage, setShowDepositImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token,setClientId, adminRole,setRefetchViewClient } = useContextState();
+  const { token, setClientId, adminRole, setRefetchViewClient } =
+    useContextState();
   const navigate = useNavigate();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
@@ -62,7 +63,6 @@ const DepositReport = () => {
     setViewDepositData(true);
     if (data?.result?.length > 0) {
       setDepositData(data?.result);
-     
     }
   };
 
@@ -138,15 +138,16 @@ const DepositReport = () => {
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
                       <tr>
-                      <th>User Id</th>
-                      {adminRole !== "master" && (
-                        <>
-                          <th>User Name</th>
-                          <th>Mobile</th>
-                        </>
-                      )}
+                        <th>User Id</th>
+                        {adminRole !== "master" && (
+                          <>
+                            <th>User Name</th>
+                            <th>Mobile</th>
+                          </>
+                        )}
                         <th>Amount</th>
-                        <th>Deposit Date</th>
+                        <th>Request Time</th>
+                        <th>Approval Time</th>
                         <th>Image</th>
                         <th>Remark</th>
                         <th>Status</th>
@@ -154,28 +155,28 @@ const DepositReport = () => {
                     </thead>
                     <tbody className="table-border-bottom-0">
                       {depositData?.map((data, i) => {
+              
                         return (
                           <tr key={i}>
-                                <td
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                              setClientId(data?.userId);
-                              setRefetchViewClient(true)
-                              navigate("/view-client");
-                            }}
-                          >
-                            {data?.userId}
-                          </td>
-                           {
-                            adminRole !== 'master' && (
+                            <td
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                setClientId(data?.userId);
+                                setRefetchViewClient(true);
+                                navigate("/view-client");
+                              }}
+                            >
+                              {data?.userId}
+                            </td>
+                            {adminRole !== "master" && (
                               <>
-                              <td>{data?.loginname}</td>
-                              <td>{data?.mobile}</td> 
+                                <td>{data?.loginname}</td>
+                                <td>{data?.mobile}</td>
                               </>
-                            )
-                           }
+                            )}
                             <td>{data?.amount}</td>
                             <td>{data?.deposit_date}</td>
+                            <td>{data?.date_modified}</td>
                             <td>
                               {data?.image && (
                                 <img

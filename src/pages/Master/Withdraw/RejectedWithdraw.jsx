@@ -3,16 +3,21 @@ import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw"
 import useContextState from "../../../hooks/useContextState";
 
 const RejectedWithdraw = () => {
-  const {site}  = useContextState()
+  const { site } = useContextState();
   const payload = {
     type: "viewWithdraw",
     status: "REJECTED",
-    site
+    site,
   };
   const { allWithdraw } = useGetALLWithdraw(payload);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Withdraw data={allWithdraw} title='Rejected Withdraw' />
+      <Withdraw
+        time="Rejection Time
+"
+        data={allWithdraw}
+        title="Rejected Withdraw"
+      />
     </div>
   );
 };
