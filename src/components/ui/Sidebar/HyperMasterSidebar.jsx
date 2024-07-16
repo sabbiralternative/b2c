@@ -7,8 +7,12 @@ const HyperMasterSidebar = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
-  const { setShowSidebar, setShowAddBranch, setShowSocialLink } =
-    useContextState();
+  const {
+    setShowSidebar,
+    setShowAddBranch,
+    setShowSocialLink,
+    setSiteNotification,
+  } = useContextState();
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
       <li className="menu-item">
@@ -110,6 +114,18 @@ const HyperMasterSidebar = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Social Links">Social Links</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => {
+                setSiteNotification(true);
+                setShowSidebar(false);
+              }}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Social Links">Site Notification</div>
             </a>
           </li>
         </ul>
