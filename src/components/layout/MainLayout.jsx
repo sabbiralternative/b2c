@@ -20,10 +20,12 @@ import EditPendingDeposit from "../modal/Master/Deposit/EditPendingDeposit";
 import EditPendingWithdraw from "../modal/Master/Withdraw/EditPendingWithdraw";
 import EditPayment from "../modal/Master/Payment/EditPayment";
 import CreditReference from "../modal/CreditReference";
-
+import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
 
 const MainLayout = () => {
   const {
+    siteNotification,
+    setSiteNotification,
     tokenLoading,
     showSidebar,
     showAddBranch,
@@ -49,9 +51,7 @@ const MainLayout = () => {
     setShowEditPayment,
     showCreditRef,
     setShowCreditRef,
-    registrationStatus
-
-
+    registrationStatus,
   } = useContextState();
   const navigate = useNavigate();
 
@@ -107,6 +107,9 @@ const MainLayout = () => {
             {showSocialLink && (
               <SocialLink setShowSocialLink={setShowSocialLink} />
             )}
+            {siteNotification && (
+              <SiteNotification setSiteNotification={setSiteNotification} />
+            )}
             {showDeposit && (
               <Deposit
                 downlineId={downLineId}
@@ -154,8 +157,6 @@ const MainLayout = () => {
                 setEditPendingWithdraw={setEditPendingWithdraw}
               />
             )}
-
-      
 
             {showEditPayment && (
               <EditPayment setShowEditPayment={setShowEditPayment} />

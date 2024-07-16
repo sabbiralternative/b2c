@@ -24,7 +24,6 @@
       "inPlayAndPopularEvents": "https://api7.live/api/exchange/odds/inPlayAndPopularEvents",
       "menu": "https://cache.api7.live/api/exchange/diamond/menu2",
       "balance": "https://admin.api7.live/api/b2c/balance",
-      "notification": "https://cache.api7.live/api/exchange/diamond/notification",
       "openEvents": "https://cache.api7.live/api/exchange/diamond/openEvents",
       "stats": "https://cache.api7.live/api/exchange/diamond/stats.php?id=",
       "odds": "https://cache.api7.live/api/exchange/diamond/odds/event",
@@ -92,7 +91,8 @@
       "statement": "https://admin.api7.live/api/b2c/statement",
       "dwCount": "https://admin.api7.live/api/b2c/dwCount",
       "transferStatement": "https://admin.api7.live/api/b2c/transferStatement",
-      "export":"https://admin.api7.live/api/b2c/export"
+      "export":"https://admin.api7.live/api/b2c/export",
+      "notification":"https://admin.api7.live/api/b2c/notification"
     }
   },
   "success": true

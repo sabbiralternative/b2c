@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 
 const HyperMaster = () => {
-  const { setShowAddBranch, setShowSocialLink } = useContextState();
+  const { setShowAddBranch, setShowSocialLink, setSiteNotification } =
+    useContextState();
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
@@ -32,7 +33,7 @@ const HyperMaster = () => {
     navigate(`/${link}`);
     setShowBranch(false);
     setShowSettings(false);
-    setShowExposure(false)
+    setShowExposure(false);
     setShowReport(false);
   };
   return (
@@ -164,6 +165,18 @@ const HyperMaster = () => {
               <div data-i18n="Social Links">Social Links</div>
             </a>
           </li>
+          <li className="menu-item">
+            <a
+              onClick={() => {
+                setSiteNotification(true);
+                setShowSettings(false);
+              }}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Social Links">Site Notification</div>
+            </a>
+          </li>
         </ul>
       </li>
       <li
@@ -210,10 +223,7 @@ const HyperMaster = () => {
           </li>
         </ul>
       </li>
-      <li
-        ref={reportRef}
-        className={`menu-item ${showReport ? "open" : ""}`}
-      >
+      <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
         <a
           style={{
             display: "flex",
@@ -260,7 +270,6 @@ const HyperMaster = () => {
               <div data-i18n="View Banners">Withdraw Report</div>
             </a>
           </li>
-
         </ul>
       </li>
     </ul>

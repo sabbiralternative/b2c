@@ -31,6 +31,7 @@ const StateProvider = ({ children }) => {
   const [registrationStatus, setRegistrationStatus] = useState(null);
   const [refetchViewClient, setRefetchViewClient] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
+  const [siteNotification, setSiteNotification] = useState(false);
 
   /* Get token from locale storage */
   useEffect(() => {
@@ -125,7 +126,10 @@ const StateProvider = ({ children }) => {
     setRegistrationStatus,
     refetchViewClient,
     setRefetchViewClient,
-    readOnly, setReadOnly
+    readOnly,
+    setReadOnly,
+    siteNotification,
+    setSiteNotification,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>
