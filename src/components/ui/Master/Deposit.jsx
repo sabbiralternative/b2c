@@ -7,7 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 
-const Deposit = ({ data, title,time }) => {
+const Deposit = ({ data, title, time }) => {
   const {
     setEditPendingDeposit,
     setDownLineId,
@@ -44,7 +44,7 @@ const Deposit = ({ data, title,time }) => {
               <th>Status</th>
               <th>Remark</th>
               <th>Request Time</th>
-              <th>{time}</th>
+              {time && <th>{time}</th>}
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
@@ -113,11 +113,14 @@ const Deposit = ({ data, title,time }) => {
                   </td>
                   <td>{item?.remark}</td>
                   <td>{item?.date_added}</td>
-                  <td>{item?.date_modified}</td>
+                  {time && <td>{item?.date_modified}</td>}
                   {item?.status === "PENDING" && (
                     <td>
                       <a
-                        style={{ color: "white",  cursor: `${!readOnly ? "pointer" : "not-allowed"}`, }}
+                        style={{
+                          color: "white",
+                          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                        }}
                         onClick={() => {
                           !readOnly && setDownLineId(item?.id);
                           !readOnly && setEditPendingDeposit(true);

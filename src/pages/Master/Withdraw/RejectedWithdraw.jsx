@@ -13,8 +13,7 @@ const RejectedWithdraw = () => {
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <Withdraw
-        time="Rejection Time
-"
+        time="Rejection Time"
         data={allWithdraw}
         title="Rejected Withdraw"
       />
