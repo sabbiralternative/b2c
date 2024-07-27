@@ -32,12 +32,10 @@ div:where(.swal2-container) .swal2-html-container {
   background-color: rgb(40, 49, 68) !important;
   border: 1px solid #546990 !important;
   color: #8894ab !important;
-
 }
 .rs-picker-popup {
   background-color: #283144 !important;
 }
-
 
 /* Loader start*/
 
@@ -54,3 +52,14 @@ div:where(.swal2-container) .swal2-html-container {
   }
 }
 /* Loader end*/
+
+.pl-withdraw {
+  color: #a8faff !important;
+}
+.pl-deposit {
+  color: #faffaf !important;
+}
+.text-green {
+  color: green;
+}
+
