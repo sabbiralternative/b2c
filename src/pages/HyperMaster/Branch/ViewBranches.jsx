@@ -3,6 +3,9 @@ import useContextState from "../../../hooks/useContextState";
 import useGetAllBranch from "../../../hooks/HyperMaster/Branch/useGetAllBranch";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API } from "../../../api";
+import handleRandomToken from "../../../utils/handleRandomToken";
 
 const ViewBranches = () => {
   const { branches } = useGetAllBranch();
@@ -14,12 +17,44 @@ const ViewBranches = () => {
     setDownLineId,
     setShowCreditRef,
     setRegistrationStatus,
+    token,
+    adminRole,
   } = useContextState();
   const navigate = useNavigate();
 
   const handleNavigate = (username, link) => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
+  };
+
+  /* Handle login read only without password */
+  const handleLoginReadOnly = async (username) => {
+    const generatedToken = handleRandomToken();
+    const payload = {
+      username,
+      token: generatedToken,
+    };
+    const res = await axios.post(API.loginReadOnly, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = res.data;
+    if (data?.success) {
+      const baseUrl = window.location.origin;
+      const readOnlyLoginCredential = {
+        token: data?.result?.token,
+        site: data?.result?.site,
+        role: data?.result?.role,
+        loginname: data?.result?.loginname,
+        readOnly: data?.result?.readOnly,
+      };
+      const readOnlyLoginData = encodeURIComponent(
+        JSON.stringify(readOnlyLoginCredential)
+      );
+      const newTabUrl = `${baseUrl}?data=${readOnlyLoginData}`;
+      window.open(newTabUrl, "_blank");
+    }
   };
 
   return (
@@ -34,7 +69,6 @@ const ViewBranches = () => {
                 <th>Credit Reference</th>
                 <th>Balance</th>
                 <th>P/L</th>
-
                 <th>Status</th>
                 <th>Betting Status</th>
                 <th>Registration Status</th>
@@ -44,7 +78,6 @@ const ViewBranches = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {branches?.map((branch, i) => {
-                console.log(branch);
                 return (
                   <tr key={i}>
                     <td>
@@ -168,6 +201,19 @@ const ViewBranches = () => {
                       >
                         CR
                       </a>
+                      &nbsp;
+                      {adminRole === "hyper_master" && (
+                        <a
+                          style={{
+                            color: "white",
+                            backgroundColor: "lightseagreen",
+                          }}
+                          onClick={() => handleLoginReadOnly(branch?.username)}
+                          className="btn btn-icon btn-sm btn-read-only-login"
+                        >
+                          L
+                        </a>
+                      )}
                     </td>
                   </tr>
                 );

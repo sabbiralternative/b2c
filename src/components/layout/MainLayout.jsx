@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../ui/Navbar/Navbar";
 import { handleLogOut } from "../../utils/handleLogOut";
 import { Settings } from "../../api";
@@ -21,9 +21,11 @@ import EditPendingWithdraw from "../modal/Master/Withdraw/EditPendingWithdraw";
 import EditPayment from "../modal/Master/Payment/EditPayment";
 import CreditReference from "../modal/CreditReference";
 import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
+import toast from "react-hot-toast";
 
 const MainLayout = () => {
   const {
+    setGetToken,
     siteNotification,
     setSiteNotification,
     tokenLoading,
@@ -54,6 +56,7 @@ const MainLayout = () => {
     registrationStatus,
   } = useContextState();
   const navigate = useNavigate();
+  const location = useLocation();
 
   /* TODO */
   const token = localStorage.getItem("adminToken");
@@ -92,6 +95,25 @@ const MainLayout = () => {
       });
     }
   }, [navigate, disabledDevtool]);
+
+    /* Handle login read only without password */
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const readOnlyLoginData = queryParams.get("data");
+    if (readOnlyLoginData) {
+      try {
+        const parsedData = JSON.parse(decodeURIComponent(readOnlyLoginData));
+        localStorage.setItem("readOnly", parsedData?.readOnly);
+        localStorage.setItem("adminToken", parsedData?.token);
+        localStorage.setItem("adminName", parsedData?.loginname);
+        localStorage.setItem("adminRole", parsedData?.role);
+        localStorage.setItem("adminSite", parsedData?.site);
+        setGetToken((prev) => !prev);
+      } catch (error) {
+        toast.error("Something went wrong!");
+      }
+    }
+  }, [location, setGetToken]);
   return (
     <div className="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
       <div className="layout-container">

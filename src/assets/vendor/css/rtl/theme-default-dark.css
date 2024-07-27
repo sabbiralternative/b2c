@@ -410,6 +410,12 @@ button.list-group-item-primary.active {
   border-color: #7ba4f1 !important;
   box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.25) !important;
 }
+.btn-read-only-login:hover {
+  color: #fff !important;
+  background-color: rgb(96, 187, 183) !important;
+  border-color: rgb(96, 187, 183) !important;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.25) !important;
+}
 .btn-check:focus + .btn-primary,
 .btn-primary:focus,
 .btn-primary.focus {
