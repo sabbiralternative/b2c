@@ -486,11 +486,20 @@ const Master = () => {
           </li>
           <li className="menu-item">
             <a
-              onClick={() => handleNavigate("ftd-report")}
+              onClick={() => handleNavigate("first-deposit-report")}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">FTD Report</div>
+              <div data-i18n="View Banners">First Deposit Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("no-deposit-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">No Deposit Report</div>
             </a>
           </li>
           <li className="menu-item">

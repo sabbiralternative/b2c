@@ -392,11 +392,38 @@ const MasterSidebar = () => {
           </li>
           <li className="menu-item">
             <a
+               onClick={() => handleNavigate("first-deposit-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">First Deposit Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+               onClick={() => handleNavigate("no-deposit-report")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">No Deposit Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
                onClick={() => handleNavigate("withdraw-report")}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Completed Withdraw">Withdraw Report</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+               onClick={() => handleNavigate("transfer-statement")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Transfer Statement</div>
             </a>
           </li>
     

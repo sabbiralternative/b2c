@@ -11,10 +11,11 @@ import ShowDepositReportImage from "../../components/modal/ShowDepositReportImag
 import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
-const FTDReport = () => {
+const FirstDepositReport = () => {
   const [showFTDImage, setShowFTDImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setClientId, adminRole,setRefetchViewClient } = useContextState();
+  const { token, setClientId, adminRole, setRefetchViewClient } =
+    useContextState();
   const navigate = useNavigate();
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
@@ -40,7 +41,7 @@ const FTDReport = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-  
+
     return res.data;
   };
 
@@ -160,7 +161,7 @@ const FTDReport = () => {
                               style={{ cursor: "pointer" }}
                               onClick={() => {
                                 setClientId(data?.userId);
-                                setRefetchViewClient(true)
+                                setRefetchViewClient(true);
                                 navigate("/view-client");
                               }}
                             >
@@ -226,4 +227,4 @@ const FTDReport = () => {
   );
 };
 
-export default FTDReport;
+export default FirstDepositReport;
