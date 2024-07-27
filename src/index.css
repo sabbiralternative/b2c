@@ -54,12 +54,14 @@ div:where(.swal2-container) .swal2-html-container {
 /* Loader end*/
 
 .pl-withdraw {
-  color: #a8faff !important;
-}
-.pl-deposit {
   color: #faffaf !important;
 }
-.text-green {
-  color: green;
+.pl-deposit {
+  color: #a8faff !important;
 }
-
+.text-green {
+  color: green !important;
+}
+.text-red {
+  color: red !important;
+}

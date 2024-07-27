@@ -8,15 +8,14 @@ import useContextState from "../../../hooks/useContextState";
 
 const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
   /* close modal click outside */
-  const {token} = useContextState()
+  const { token } = useContextState();
   const settleBetsRef = useRef();
   useCloseModalClickOutside(settleBetsRef, () => {
     setShowBetsModal(false);
   });
 
- 
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
+  //   const [filteredData, setFilteredData] = useState([]);
   //   const [betsType, setBetsType] = useState("all");
   //   const betsRef = useRef();
 
@@ -36,7 +35,7 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
       const data = res.data;
       if (data?.success) {
         setData(data?.result);
-        setFilteredData(data?.result);
+        // setFilteredData(data?.result);
       }
     };
     getSettledBetsData();
@@ -68,7 +67,11 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
         role="dialog"
         style={{ display: "block" }}
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
+        <div
+          className="modal-dialog modal-dialog-centered"
+          role="document"
+          style={{ maxWidth: "90%" }}
+        >
           <div className="modal-content" ref={settleBetsRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
@@ -89,7 +92,6 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
                     <table className="table table-hover table-striped align-middle table-nowrap mb-0">
                       <thead>
                         <tr>
-                          <th scope="col">Username</th>
                           <th scope="col">Nation</th>
                           <th scope="col">Rate</th>
                           <th scope="col">Bhav</th>
@@ -100,7 +102,7 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredData?.map((betData, i) => {
+                        {data?.map((betData, i) => {
                           return (
                             <tr
                               key={i}
@@ -108,13 +110,6 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
                                 betData?.betType === "Back" ? "BACK" : "LAY"
                               }`}
                             >
-                              <td
-                                style={{ color: "black" }}
-                                className="fw-medium"
-                              >
-                                {" "}
-                                {betData?.username}
-                              </td>
                               <td style={{ color: "black" }}>
                                 {" "}
                                 {betData?.nation}
@@ -132,7 +127,9 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
                               </td>
                               <td
                                 className={`${
-                                  data?.win > 0 ? "text-green" : "text-danger"
+                                  betData?.win > 0
+                                    ? "text-green"
+                                    : "text-red"
                                 }`}
                               >
                                 {betData?.win}
