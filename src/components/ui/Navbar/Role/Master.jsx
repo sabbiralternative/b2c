@@ -15,6 +15,7 @@ const Master = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
+  const [showBonus, setShowBonus] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -76,6 +77,10 @@ const Master = () => {
   useCloseModalClickOutside(reportRef, () => {
     setShowReport(false);
   });
+  const bonusRef = useRef();
+  useCloseModalClickOutside(bonusRef, () => {
+    setShowBonus(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -86,6 +91,7 @@ const Master = () => {
     setShowWithdraw(false);
     setShowExposure(false);
     setShowReport(false);
+    setShowBonus(false)
   };
 
   return (
@@ -107,6 +113,7 @@ const Master = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -203,6 +210,7 @@ const Master = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -274,6 +282,7 @@ const Master = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -342,6 +351,7 @@ const Master = () => {
             setShowStatement(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -397,6 +407,52 @@ const Master = () => {
         </ul>
       </li>
       <li
+        ref={bonusRef}
+        className={`menu-item ${showBonus ? "open" : ""}`}
+      >
+        <a
+          onMouseEnter={() => {
+            setShowBonus(true)
+            setShowWithdraw(false);
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowPayments(false);
+            setShowStatement(false);
+            setShowExposure(false);
+            setShowReport(false);
+           
+          }}
+          className="menu-link menu-toggle"
+        >
+        <i className="menu-icon tf-icons bx bx-layout"></i>
+
+          <div data-i18n="Withdraw">Bonus</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("view-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">View Bonus</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("add-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Add Bonus</div>
+            </a>
+          </li>
+
+      
+        </ul>
+      </li>
+      <li
         ref={exposureRef}
         className={`menu-item ${showExposure ? "open" : ""}`}
       >
@@ -414,6 +470,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -458,6 +515,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >

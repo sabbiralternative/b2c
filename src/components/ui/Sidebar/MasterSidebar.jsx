@@ -11,6 +11,7 @@ const MasterSidebar = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
+  const [showBonus, setShowBonus] = useState(false);
   const navigate = useNavigate();
   const { setShowSidebar } = useContextState();
 
@@ -44,6 +45,10 @@ const MasterSidebar = () => {
   useCloseModalClickOutside(reportRef, () => {
     setShowReport(false);
   });
+  const bonusRef = useRef();
+  useCloseModalClickOutside(bonusRef, () => {
+    setShowBonus(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -55,6 +60,7 @@ const MasterSidebar = () => {
     setShowSidebar(false);
     setShowExposure(false);
     setShowReport(false);
+    setShowBonus(false)
   };
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
@@ -79,6 +85,7 @@ const MasterSidebar = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -122,6 +129,7 @@ const MasterSidebar = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -165,6 +173,7 @@ const MasterSidebar = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -217,6 +226,7 @@ const MasterSidebar = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -269,6 +279,7 @@ const MasterSidebar = () => {
             setShowStatement(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -308,6 +319,55 @@ const MasterSidebar = () => {
         </ul>
       </li>
       <li
+        ref={bonusRef}
+        className={`menu-item ${showBonus ? "open" : ""}`}
+      >
+        <a
+          onClick={() => {
+            setShowBonus((prev) => !prev)
+            setShowWithdraw(false);
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowPayments(false);
+            setShowStatement(false);
+            setShowExposure(false);
+            setShowReport(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Withdraw">Bonus</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("view-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">View Bonus</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("add-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Add Bonus</div>
+            </a>
+          </li>
+
+     
+        </ul>
+      </li>
+
+
+
+
+
+      <li
          ref={exposureRef}
         className={`menu-item ${showExposure ? "open" : ""}`}
       >
@@ -320,6 +380,7 @@ const MasterSidebar = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowReport(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
@@ -363,6 +424,7 @@ const MasterSidebar = () => {
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
+            setShowBonus(false)
           }}
           className="menu-link menu-toggle"
         >
