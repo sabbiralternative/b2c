@@ -1,3 +1,4 @@
+import AddBonus from "../pages/Master/Bonus/AddBonus";
 import AddClient from "../pages/Master/Client/AddClient";
 import ClientWithBalance from "../pages/Master/Client/ClientWithBalance";
 import PNL from "../pages/Master/Client/PNL";
@@ -84,5 +85,9 @@ export const MasterRoutes = [
   {
     path: "/withdraw-statement",
     element: <WithdrawStatement />,
+  },
+  {
+    path: "/add-bonus",
+    element: <AddBonus />,
   },
 ];
