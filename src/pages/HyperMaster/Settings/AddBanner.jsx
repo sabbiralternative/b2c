@@ -83,7 +83,7 @@ const AddBanner = () => {
                       className="col-sm-2 col-form-label"
                       htmlFor="basic-default-name"
                     >
-                      Banner Image
+                      Banner Image (1350px * 583px)
                     </label>
                     <div className="col-sm-10">
                       <input
