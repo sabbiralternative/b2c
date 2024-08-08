@@ -5,8 +5,12 @@ import axios from "axios";
 import { API } from "../../../api";
 import useContextState from "../../../hooks/useContextState";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import ShowImage from "../../../components/modal/ShowImage";
 
 const ViewPaymentMethod = () => {
+  const [showPaymentImage, setShowPaymentImage] = useState(false);
+  const [image, setImage] = useState("");
   const { token, setShowEditPayment, setDownLineId, site, readOnly } =
     useContextState();
   const payload = {
@@ -50,80 +54,105 @@ const ViewPaymentMethod = () => {
   };
 
   return (
-    <div className="container-xxl flex-grow-1 container-p-y">
-      <div className="card">
-        <h5 className="card-header">Payment Methods</h5>
-        <div className="table-responsive text-nowrap">
-          <table className="table table-hover table-sm">
-            <thead className="table-dark">
-              <tr>
-                <th>Type</th>
-                <th>Account name</th>
-                <th>Limits</th>
+    <>
+      {showPaymentImage && (
+        <ShowImage image={image} setShowImage={setShowPaymentImage} />
+      )}
+      <div className="container-xxl flex-grow-1 container-p-y">
+        <div className="card">
+          <h5 className="card-header">Payment Methods</h5>
+          <div className="table-responsive text-nowrap">
+            <table className="table table-hover table-sm">
+              <thead className="table-dark">
+                <tr>
+                  <th>Type</th>
+                  <th>Account name</th>
+                  <th>Image</th>
+                  <th>Limits</th>
 
-                <th>status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody className="table-border-bottom-0">
-              {paymentsMethods?.map((method, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{method?.type}</td>
-                    <td>{method?.name}</td>
+                  <th>status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody className="table-border-bottom-0">
+                {paymentsMethods?.map((method, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{method?.type}</td>
+                      <td>{method?.name}</td>
+                      <td>
+                        {method?.image && (
+                          <img
+                            onClick={() => {
+                              setImage("");
+                              setShowPaymentImage(true);
+                              setImage(method?.image);
+                            }}
+                            style={{
+                              height: "40px",
+                              width: "40px",
+                              objectFit: "contain",
+                              cursor: "pointer",
+                            }}
+                            src={method?.image}
+                            alt=""
+                          />
+                        )}
+                      </td>
 
-                    <td>
-                      Rs.{method?.minAmount}-{method?.maxAmount}
-                    </td>
+                      <td>
+                        Rs.{method?.minAmount}-{method?.maxAmount}
+                      </td>
 
-                    <td>
-                      <span
-                        className={`badge ${
-                          method?.status == 1
-                            ? "bg-label-primary"
-                            : "bg-label-warning"
-                        } me-1`}
-                      >
-                        {method?.status == 1 ? "Active" : "inactive"}
-                      </span>
-                    </td>
+                      <td>
+                        <span
+                          className={`badge ${
+                            method?.status == 1
+                              ? "bg-label-primary"
+                              : "bg-label-warning"
+                          } me-1`}
+                        >
+                          {method?.status == 1 ? "Active" : "inactive"}
+                        </span>
+                      </td>
 
-                    <td>
-                      <a
-                        style={{
-                          color: "white",
-                          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                        }}
-                        onClick={() => {
-                          !readOnly && setDownLineId(method?.id);
-                          !readOnly && setShowEditPayment(true);
-                        }}
-                        className="btn btn-icon btn-sm btn-success"
-                      >
-                        <i className="bx bxs-edit"></i>
-                      </a>
-                      &nbsp;
-                      <a
-                        onClick={() => {
-                          !readOnly && handleDeletePaymentMethod(method?.id);
-                        }}
-                        style={{
-                          color: "white",
-                          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                        }}
-                        className="btn btn-icon btn-sm btn-danger"
-                      >
-                        <i className="bx bxs-checkbox-minus"></i>
-                      </a>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      <td>
+                        <a
+                          style={{
+                            color: "white",
+                            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                          }}
+                          onClick={() => {
+                            !readOnly && setDownLineId(method?.id);
+                            !readOnly && setShowEditPayment(true);
+                          }}
+                          className="btn btn-icon btn-sm btn-success"
+                        >
+                          <i className="bx bxs-edit"></i>
+                        </a>
+                        &nbsp;
+                        <a
+                          onClick={() => {
+                            !readOnly && handleDeletePaymentMethod(method?.id);
+                          }}
+                          style={{
+                            color: "white",
+                            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                          }}
+                          className="btn btn-icon btn-sm btn-danger"
+                        >
+                          <i className="bx bxs-checkbox-minus"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

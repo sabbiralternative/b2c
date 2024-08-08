@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 
-const ShowDepositReportImage = ({ image, setShowDepositImage }) => {
-  const depositImageRef = useRef();
-  useCloseModalClickOutside(depositImageRef, () => {
-    setShowDepositImage(false);
+const ShowImage = ({ image, setShowImage }) => {
+  const showImageRef = useRef();
+  useCloseModalClickOutside(showImageRef, () => {
+    setShowImage(false);
   });
   return (
     <>
@@ -17,13 +17,13 @@ const ShowDepositReportImage = ({ image, setShowDepositImage }) => {
         style={{ display: "block" }}
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content" ref={depositImageRef}>
+          <div className="modal-content" ref={showImageRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Deposit Image
+                Image
               </h5>
               <button
-                onClick={() => setShowDepositImage(false)}
+                onClick={() => setShowImage(false)}
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
@@ -33,8 +33,13 @@ const ShowDepositReportImage = ({ image, setShowDepositImage }) => {
             <form>
               <div className="modal-body">
                 <div className="row">
-                  <div className="col mb-3"
-                  style={{display:'flex',alignItems:'center',justifyContent:'center'}}
+                  <div
+                    className="col mb-3"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
                     <img
                       style={{
@@ -50,7 +55,7 @@ const ShowDepositReportImage = ({ image, setShowDepositImage }) => {
               </div>
               <div className="modal-footer">
                 <button
-                  onClick={() => setShowDepositImage(false)}
+                  onClick={() => setShowImage(false)}
                   type="button"
                   className="btn btn-label-secondary"
                   data-bs-dismiss="modal"
@@ -66,4 +71,4 @@ const ShowDepositReportImage = ({ image, setShowDepositImage }) => {
   );
 };
 
-export default ShowDepositReportImage;
+export default ShowImage;

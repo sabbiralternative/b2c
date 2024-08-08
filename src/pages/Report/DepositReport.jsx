@@ -7,7 +7,7 @@ import { API, Settings } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
-import ShowDepositReportImage from "../../components/modal/ShowDepositReportImage";
+import ShowImage from "../../components/modal/ShowImage";
 import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
@@ -79,10 +79,7 @@ const DepositReport = () => {
   return (
     <>
       {showDepositImage && (
-        <ShowDepositReportImage
-          image={image}
-          setShowDepositImage={setShowDepositImage}
-        />
+        <ShowImage image={image} setShowImage={setShowDepositImage} />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
@@ -155,7 +152,6 @@ const DepositReport = () => {
                     </thead>
                     <tbody className="table-border-bottom-0">
                       {depositData?.map((data, i) => {
-              
                         return (
                           <tr key={i}>
                             <td

@@ -7,9 +7,10 @@ import { API, Settings } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
-import ShowDepositReportImage from "../../components/modal/ShowDepositReportImage";
+
 import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
+import ShowImage from "../../components/modal/ShowImage";
 
 const FirstDepositReport = () => {
   const [showFTDImage, setShowFTDImage] = useState(false);
@@ -80,10 +81,7 @@ const FirstDepositReport = () => {
   return (
     <>
       {showFTDImage && (
-        <ShowDepositReportImage
-          image={image}
-          setShowDepositImage={setShowFTDImage}
-        />
+        <ShowImage image={image} setShowImage={setShowFTDImage} />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
