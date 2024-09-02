@@ -55,6 +55,7 @@ const AddQR = () => {
       token: generatedToken,
       site: Settings.siteUrl,
     };
+
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -79,6 +80,24 @@ const AddQR = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row mb-3" id="qr_code">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    Title
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      {...register("title", {
+                        required: true,
+                      })}
+                      className="form-control"
+                      type="text"
+                   
+                    />
+                  </div>
+                </div>
                 {!loading && !qr_code && (
                   <div className="row mb-3" id="qr_code">
                     <label
