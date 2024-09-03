@@ -7,7 +7,8 @@ export const getSetApis = (setNoticeLoaded) => {
     .then((res) => {
       const data = res.data;
       if (data?.result) {
-        (API.accessToken = data?.result?.endpoint?.accessToken),
+        (API.downineEditForm = data?.result?.endpoint?.downineEditForm),
+          (API.accessToken = data?.result?.endpoint?.accessToken),
           (API.balance = data?.result?.endpoint?.balance),
           (API.changePassword = data?.result?.endpoint?.changePassword),
           (API.group = data?.result?.endpoint?.group),

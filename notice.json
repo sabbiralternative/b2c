@@ -60,8 +60,7 @@
       "liveCasinoIframe": " https://api7.live/api/livecasino/iframe",
       "liveCasino": " https://cache.api7.live/api/exchange/diamond/liveCasino",
       "downline": "https://admin.api7.live/api/downline",
-      "downLineEditForm": "https://admin.api7.live/api/downlineEditForm",
-      "downLineEdit": "https://admin.api7.live/api/b2c/downlineEdit",
+   
       "createDownLine": "https://admin.api7.live/api/createDownline",
       "checkUsername": "https://admin.api7.live/api/checkUsername",
       "accountStatement": "https://admin.api7.live/api/accountStatement",
@@ -93,7 +92,10 @@
       "transferStatement": "https://admin.api7.live/api/b2c/transferStatement",
       "export": "https://admin.api7.live/api/b2c/export",
       "notification": "https://admin.api7.live/api/b2c/notification",
-      "loginReadOnly": "https://admin.api7.live/api/b2c/loginReadOnly"
+      "loginReadOnly": "https://admin.api7.live/api/b2c/loginReadOnly",
+      "downineEditForm" : "https://admin.api7.live/api/b2c/downlineEditForm",
+      "downLineEditForm": "https://admin.api7.live/api/downlineEditForm",
+      "downLineEdit": "https://admin.api7.live/api/b2c/downlineEdit"
     }
   },
   "success": true

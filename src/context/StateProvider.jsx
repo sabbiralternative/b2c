@@ -34,6 +34,7 @@ const StateProvider = ({ children }) => {
   const [readOnly, setReadOnly] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
   const [noticeLoaded, setNoticeLoaded] = useState(false);
+  const [directDeposit,setDirectDeposit] = useState(false)
 
   useEffect(() => {
     getSetApis(setNoticeLoaded);
@@ -144,6 +145,7 @@ const StateProvider = ({ children }) => {
     setReadOnly,
     siteNotification,
     setSiteNotification,
+    directDeposit,setDirectDeposit
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

@@ -22,9 +22,12 @@ import EditPayment from "../modal/Master/Payment/EditPayment";
 import CreditReference from "../modal/CreditReference";
 import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
 import toast from "react-hot-toast";
+import DirectDeposit from "../modal/Master/Client/DirectDeposit";
 
 const MainLayout = () => {
   const {
+    directDeposit,
+    setDirectDeposit,
     setGetToken,
     siteNotification,
     setSiteNotification,
@@ -96,7 +99,7 @@ const MainLayout = () => {
     }
   }, [navigate, disabledDevtool]);
 
-    /* Handle login read only without password */
+  /* Handle login read only without password */
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const readOnlyLoginData = queryParams.get("data");
@@ -164,6 +167,12 @@ const MainLayout = () => {
             {clientDeposit && (
               <ClientDeposit
                 setClientDeposit={setClientDeposit}
+                downlineId={downLineId}
+              />
+            )}
+            {directDeposit && (
+              <DirectDeposit
+                setDirectDeposit={setDirectDeposit}
                 downlineId={downLineId}
               />
             )}

@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { useEffect, useState } from "react";
+import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 
 const ViewClient = () => {
   const navigate = useNavigate();
   const [fetchClients, setFetchClients] = useState(false);
   const { handleSubmit } = useForm();
+  const [directWithdraw, setDirectWithdraw] = useState(false);
   const {
+    setDirectDeposit,
     readOnly,
     clientId,
     setClientId,
@@ -22,6 +25,7 @@ const ViewClient = () => {
     adminRole,
     refetchViewClient,
     setRefetchViewClient,
+    downLineId
   } = useContextState();
   const { clients, refetchClients, isSuccess } = useGetClient(
     clientId,
@@ -46,8 +50,6 @@ const ViewClient = () => {
       setClientId("");
     }
   }, [refetchClients, refetchViewClient, setRefetchViewClient, setClientId]);
-
- 
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -183,6 +185,26 @@ const ViewClient = () => {
                             }}
                             onClick={() => {
                               !readOnly &&
+                                handleDownLineId(
+                                  setDirectWithdraw,
+                                  client?.username,
+                                  setDownLineId
+                                );
+                            }}
+                            className="btn btn-icon btn-sm btn-danger"
+                          >
+                            W
+                          </a>
+                          &nbsp;
+                          <a
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly &&
                                 handleNavigate(client?.username, "pnl");
                             }}
                             className="btn btn-icon btn-sm btn-warning"
@@ -249,6 +271,26 @@ const ViewClient = () => {
                           >
                             CR
                           </a>
+                          &nbsp;
+                          <a
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly &&
+                                handleDownLineId(
+                                  setDirectDeposit,
+                                  client?.username,
+                                  setDownLineId
+                                );
+                            }}
+                            className="btn btn-icon btn-sm btn-success"
+                          >
+                            DD
+                          </a>
                         </td>
                       </tr>
                     );
@@ -258,6 +300,12 @@ const ViewClient = () => {
             </div>
           </div>
         </>
+      )}
+      {directWithdraw && (
+        <DirectWithdraw
+          downlineId={downLineId}
+          setDirectWithdraw={setDirectWithdraw}
+        />
       )}
       {isSuccess && clients?.length === 0 && (
         <div className="card">

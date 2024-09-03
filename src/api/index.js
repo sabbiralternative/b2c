@@ -62,6 +62,7 @@ export const API = {
   export: "",
   transferStatement: "",
   loginReadOnly: "",
+  downineEditForm:''
 };
 
 export const Settings = {
