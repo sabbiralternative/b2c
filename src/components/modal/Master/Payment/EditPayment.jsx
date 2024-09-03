@@ -93,7 +93,7 @@ const EditPayment = ({ setShowEditPayment }) => {
   useEffect(() => {
     if (currentPayment) {
       if (currentPayment?.type === "qr") {
-        setQr_code(currentPayment?.qr_code)
+        setQr_code(currentPayment?.qr_code);
         reset({
           title: currentPayment?.title,
           max_amount: currentPayment?.max_amount,
@@ -122,8 +122,6 @@ const EditPayment = ({ setShowEditPayment }) => {
   }, [currentPayment, reset]);
 
 
-
-
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -150,6 +148,37 @@ const EditPayment = ({ setShowEditPayment }) => {
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="modal-body">
+                <div className="row mb-3" id="qr_code">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    Status
+                  </label>
+                  <div className="col-sm-10">
+                    <select
+                      {...register("status", {
+                        required: true,
+                      })}
+                      name=""
+                      className="form-control"
+                      id=""
+                    >
+                      <option
+                        selected={currentPayment?.status === 1}
+                        value="active"
+                      >
+                        Active
+                      </option>
+                      <option
+                        selected={currentPayment?.status === 2}
+                        value="inactive"
+                      >
+                        In Active
+                      </option>
+                    </select>
+                  </div>
+                </div>
                 {currentPayment?.type === "qr" && (
                   <div className="row">
                     <div className="row mb-3">
