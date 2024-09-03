@@ -84,7 +84,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
           <div className="modal-content" ref={directDepositRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Withdraw
+                Direct Withdraw
               </h5>
               <button
                 onClick={() => setDirectWithdraw(false)}
@@ -113,7 +113,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName}
+                        {data?.userName} Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -169,7 +169,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2}
+                        {data?.userName2?.split("_")[0]} Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -191,7 +191,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
                         className=" col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2} after withdraw
+                        {data?.userName2?.split("_")[0]} after withdraw
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -222,10 +222,10 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
                       id="bank_account_name_div"
                     >
                       <label
-                        className="col-sm-2 col-form-label"
+                        className=" col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        Amount
+                        Withdraw Amount
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -297,7 +297,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
                   Close
                 </button>
                 <button type="submit" className="btn btn-primary">
-                  Deposit
+                  Withdraw
                 </button>
               </div>
             </form>

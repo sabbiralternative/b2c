@@ -84,7 +84,7 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
           <div className="modal-content" ref={directDepositRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Deposit
+                Direct Deposit
               </h5>
               <button
                 onClick={() => setDirectDeposit(false)}
@@ -113,7 +113,7 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName}
+                        {data?.userName} Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -169,7 +169,7 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2}
+                        {data?.userName2?.split("_")[0]} Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -191,7 +191,7 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
                         className=" col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2} after deposit
+                        {data?.userName2?.split("_")[0]} after deposit
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -209,55 +209,66 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
                       </div>
                     </div>
                   </div>
-                  <div      style={{
+                  <div
+                    style={{
                       display: "flex",
                       alignItems: "center",
                       width: "100%",
                     }}
-                  > 
-  <div className="row mb-3" 
-                    style={{ flexDirection: "column", width: "100%" }}
-                  id="bank_account_name_div">
-                    <label
-                      className="col-sm-2 col-form-label"
-                      htmlFor="basic-default-name"
+                  >
+                    <div
+                      className="row mb-3"
+                      style={{ flexDirection: "column", width: "100%" }}
+                      id="bank_account_name_div"
                     >
-                      Amount
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        onChange={(e) => {
-                          handleAmount(e.target.value);
-                          setAmount(e.target.value);
-                        }}
-                        type="number"
-                        className="form-control"
-                        id="basic-default-name"
-                        placeholder="Amount"
-                        required
-                      />
+                      <label
+                        className=" col-form-label"
+                        htmlFor="basic-default-name"
+                      >
+                        Deposit Amount
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          onChange={(e) => {
+                            handleAmount(e.target.value);
+                            setAmount(e.target.value);
+                          }}
+                          type="number"
+                          className="form-control"
+                          id="basic-default-name"
+                          placeholder="Amount"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div
+                      style={{ flexDirection: "column", width: "100%" }}
+                      className="row mb-3"
+                      id="bank_account_name_div"
+                    >
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-name"
+                      >
+                        Remark
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("remark", { required: true })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-name"
+                          placeholder="Remark"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div   style={{ flexDirection: "column", width: "100%" }} className="row mb-3" id="bank_account_name_div">
-                    <label
-                      className="col-sm-2 col-form-label"
-                      htmlFor="basic-default-name"
-                    >
-                      Remark
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        {...register("remark", { required: true })}
-                        type="text"
-                        className="form-control"
-                        id="basic-default-name"
-                        placeholder="Remark"
-                      />
-                    </div>
-                  </div>
-                  </div>
-                
-                  <div   style={{ flexDirection: "column", width: "60%" }} className="row mb-3" id="bank_account_name_div">
+
+                  <div
+                    style={{ flexDirection: "column", width: "60%" }}
+                    className="row mb-3"
+                    id="bank_account_name_div"
+                  >
                     <label
                       className=" col-form-label"
                       htmlFor="basic-default-name"
