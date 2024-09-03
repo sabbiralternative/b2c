@@ -91,9 +91,9 @@
       "statement": "https://admin.api7.live/api/b2c/statement",
       "dwCount": "https://admin.api7.live/api/b2c/dwCount",
       "transferStatement": "https://admin.api7.live/api/b2c/transferStatement",
-      "export":"https://admin.api7.live/api/b2c/export",
-      "notification":"https://admin.api7.live/api/b2c/notification",
-      "loginReadOnly":"https://admin.api7.live/api/b2c/loginReadOnly"
+      "export": "https://admin.api7.live/api/b2c/export",
+      "notification": "https://admin.api7.live/api/b2c/notification",
+      "loginReadOnly": "https://admin.api7.live/api/b2c/loginReadOnly"
     }
   },
   "success": true

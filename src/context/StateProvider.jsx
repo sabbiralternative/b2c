@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { API, Settings } from "../api";
+import { getSetApis } from "../api/config";
 export const StateContext = createContext(null);
 
 const StateProvider = ({ children }) => {
@@ -32,49 +33,62 @@ const StateProvider = ({ children }) => {
   const [refetchViewClient, setRefetchViewClient] = useState(false);
   const [readOnly, setReadOnly] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
+  const [noticeLoaded, setNoticeLoaded] = useState(false);
+
+  useEffect(() => {
+    getSetApis(setNoticeLoaded);
+  }, [noticeLoaded]);
 
   /* Get token from locale storage */
   useEffect(() => {
-    const getToken = localStorage.getItem("adminToken");
-    const adminName = localStorage.getItem("adminName");
-    const adminRole = localStorage.getItem("adminRole");
-    const adminSite = localStorage.getItem("adminSite");
-    const readOnly = localStorage.getItem("readOnly");
-    if (getToken) {
-      setReadOnly(readOnly == "true" ? true : false);
-      setToken(getToken);
-      setAdminName(adminName);
-      setAdminRole(adminRole);
-      setSite(adminSite);
-      setTokenLoading(false);
-    } else {
-      setTokenLoading(true);
+    if (noticeLoaded) {
+      const getToken = localStorage.getItem("adminToken");
+      const adminName = localStorage.getItem("adminName");
+      const adminRole = localStorage.getItem("adminRole");
+      const adminSite = localStorage.getItem("adminSite");
+      const readOnly = localStorage.getItem("readOnly");
+      if (getToken) {
+        setReadOnly(readOnly == "true" ? true : false);
+        setToken(getToken);
+        setAdminName(adminName);
+        setAdminRole(adminRole);
+        setSite(adminSite);
+        setTokenLoading(false);
+      } else {
+        setTokenLoading(true);
+      }
     }
-  }, [getToken, token]);
+  }, [getToken, token, noticeLoaded]);
 
   useEffect(() => {
-    /* Dynamically get  footer logo  */
-    const icon = `${API.assets}/${Settings.siteUrl}/nav-sprite.svg`;
-    setIcon(icon);
+    if (noticeLoaded) {
+      /* Dynamically get  footer logo  */
+      const icon = `${API.assets}/${Settings.siteUrl}/nav-sprite.svg`;
+      setIcon(icon);
 
-    /* Dynamically append  theme css  */
-    // const link = document.createElement("link");
-    // link.rel = "stylesheet";
-    // link.type = "text/css";
-    // link.href = `${API.assets}/${Settings.siteUrl}/theme.css`;
-    // document.head.appendChild(link);
-    /*Dynamically append Logo */
-    const logo = `${API.assets}/${Settings.siteUrl}/logo.png`;
-    setLogo(logo);
-    /* Dynamically append  favicon  */
-    const FavIconLink = document.createElement("link");
-    FavIconLink.rel = "icon";
-    FavIconLink.type = "image/png";
-    FavIconLink.href = `${API.assets}/${Settings.siteUrl}/favicon.png`;
-    document.head.appendChild(FavIconLink);
-    /* Site title */
-    document.title = Settings.siteTitle;
-  }, []);
+      /* Dynamically append  theme css  */
+      // const link = document.createElement("link");
+      // link.rel = "stylesheet";
+      // link.type = "text/css";
+      // link.href = `${API.assets}/${Settings.siteUrl}/theme.css`;
+      // document.head.appendChild(link);
+      /*Dynamically append Logo */
+      const logo = `${API.assets}/${Settings.siteUrl}/logo.png`;
+      setLogo(logo);
+      /* Dynamically append  favicon  */
+      const FavIconLink = document.createElement("link");
+      FavIconLink.rel = "icon";
+      FavIconLink.type = "image/png";
+      FavIconLink.href = `${API.assets}/${Settings.siteUrl}/favicon.png`;
+      document.head.appendChild(FavIconLink);
+      /* Site title */
+      document.title = Settings.siteTitle;
+    }
+  }, [noticeLoaded]);
+
+  if (!noticeLoaded) {
+    return;
+  }
   const stateInfo = {
     token,
     setToken,
