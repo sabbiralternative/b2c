@@ -254,11 +254,12 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
                       </label>
                       <div className="col-sm-10">
                         <input
-                          {...register("remark", { required: true })}
+                          {...register("remark")}
                           type="text"
                           className="form-control"
                           id="basic-default-name"
                           placeholder="Remark"
+                          required
                         />
                       </div>
                     </div>
@@ -277,11 +278,12 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("mpassword", { required: true })}
+                        {...register("mpassword")}
                         type="text"
                         className="form-control"
                         id="basic-default-name"
                         placeholder="Transaction Code"
+                        required
                       />
                     </div>
                   </div>
