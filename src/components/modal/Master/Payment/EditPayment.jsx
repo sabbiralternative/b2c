@@ -40,6 +40,7 @@ const EditPayment = ({ setShowEditPayment }) => {
         type: "updatePayment",
         paymentId: downLineId,
         ...fieldValues,
+        status:parseFloat(fieldValues?.status),
         qr_code,
         token: generatedToken,
       };
@@ -49,6 +50,7 @@ const EditPayment = ({ setShowEditPayment }) => {
         type: "updatePayment",
         paymentId: downLineId,
         ...fieldValues,
+        status:parseFloat(fieldValues?.status),
         token: generatedToken,
       };
     }
@@ -166,15 +168,15 @@ const EditPayment = ({ setShowEditPayment }) => {
                     >
                       <option
                         selected={currentPayment?.status === 1}
-                        value="active"
+                        value="1"
                       >
                         Active
                       </option>
                       <option
                         selected={currentPayment?.status === 2}
-                        value="inactive"
+                        value="2"
                       >
-                        In Active
+                        Inactive
                       </option>
                     </select>
                   </div>

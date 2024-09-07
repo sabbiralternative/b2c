@@ -15,7 +15,12 @@ const Login = () => {
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm();
+  } = useForm({
+    // defaultValues: {
+    //   username: "4ra1",
+    //   password: "Mnbv@1234",
+    // },
+  });
   const navigate = useNavigate();
 
   /* handle login user */
@@ -25,7 +30,7 @@ const Login = () => {
     const loginData = {
       username: username,
       password: password,
-      site:Settings.siteUrl
+      site: Settings.siteUrl,
       // token: generatedToken,
     };
     // /* Encrypted the post data */
@@ -43,7 +48,7 @@ const Login = () => {
         setGetToken((prev) => !prev);
         if (data?.success) {
           console.log(data);
-          localStorage.setItem('readOnly',data?.result?.readOnly)
+          localStorage.setItem("readOnly", data?.result?.readOnly);
           localStorage.setItem("adminToken", data?.result?.token);
           localStorage.setItem("adminName", data?.result?.loginname);
           localStorage.setItem("adminRole", data?.result?.role);
