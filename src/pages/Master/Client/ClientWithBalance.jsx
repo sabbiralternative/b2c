@@ -18,6 +18,8 @@ const ClientWithBalance = () => {
     setShowChangeStatus,
     setShowCreditRef,
     adminRole,
+    setRefetchViewClient,
+    setClientId,
   } = useContextState();
   const { clientWithBalance } = useGetClientWithBalance();
 
@@ -52,10 +54,24 @@ const ClientWithBalance = () => {
                 {clientWithBalance?.map((client, i) => {
                   return (
                     <tr key={i}>
-                      <td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setClientId(client?.userId);
+                          setRefetchViewClient(true);
+                          navigate("/view-client");
+                        }}
+                      >
                         <strong>{client?.userId}</strong>
                       </td>
-                      <td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setClientId(client?.username);
+                          setRefetchViewClient(true);
+                          navigate("/view-client");
+                        }}
+                      >
                         <strong>{handleSplitUserName(client?.username)}</strong>
                       </td>
                       {adminRole !== "master" && (
