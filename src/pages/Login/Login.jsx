@@ -16,10 +16,10 @@ const Login = () => {
     handleSubmit,
     // formState: { errors },
   } = useForm({
-    // defaultValues: {
-    //   username: "4ra1",
-    //   password: "Mnbv@1234",
-    // },
+    defaultValues: {
+      username: "4ra1",
+      password: "Mnbv@1234",
+    },
   });
   const navigate = useNavigate();
 

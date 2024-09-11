@@ -40,7 +40,7 @@ const EditPayment = ({ setShowEditPayment }) => {
         type: "updatePayment",
         paymentId: downLineId,
         ...fieldValues,
-        status:parseFloat(fieldValues?.status),
+        status: parseFloat(fieldValues?.status),
         qr_code,
         token: generatedToken,
       };
@@ -50,7 +50,7 @@ const EditPayment = ({ setShowEditPayment }) => {
         type: "updatePayment",
         paymentId: downLineId,
         ...fieldValues,
-        status:parseFloat(fieldValues?.status),
+        status: parseFloat(fieldValues?.status),
         token: generatedToken,
       };
     }
@@ -123,7 +123,6 @@ const EditPayment = ({ setShowEditPayment }) => {
     }
   }, [currentPayment, reset]);
 
-
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -162,22 +161,11 @@ const EditPayment = ({ setShowEditPayment }) => {
                       {...register("status", {
                         required: true,
                       })}
-                      name=""
                       className="form-control"
-                      id=""
+                   
                     >
-                      <option
-                        selected={currentPayment?.status === 1}
-                        value="1"
-                      >
-                        Active
-                      </option>
-                      <option
-                        selected={currentPayment?.status === 2}
-                        value="2"
-                      >
-                        Inactive
-                      </option>
+                      <option selected={ currentPayment?.status === 1} value="1">Active</option>
+                      <option selected={ currentPayment?.status === 2} value="2">Inactive</option>
                     </select>
                   </div>
                 </div>
