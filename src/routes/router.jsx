@@ -12,51 +12,56 @@ import TransferStatement from "../pages/Report/TransferStatement";
 import FirstDepositReport from "../pages/Report/FirstDepositReport";
 import NoDepositReport from "../pages/Report/NoDepositReport";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <App />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "/change-password",
+          element: <ChangePassword />,
+        },
+        {
+          path: "/client-report",
+          element: <ClientReport />,
+        },
+        {
+          path: "/deposit-report",
+          element: <DepositReport />,
+        },
+        {
+          path: "/first-deposit-report",
+          element: <FirstDepositReport />,
+        },
+        {
+          path: "/no-deposit-report",
+          element: <NoDepositReport />,
+        },
+        {
+          path: "/withdraw-report",
+          element: <WithdrawReport />,
+        },
+        {
+          path: "/transfer-statement",
+          element: <TransferStatement />,
+        },
+        /*Hyper Master Routes */
+        ...HyperMasterRoutes,
+        /* Master Routes */
+        ...MasterRoutes,
+      ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+  ],
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "/change-password",
-        element: <ChangePassword />,
-      },
-      {
-        path: "/client-report",
-        element: <ClientReport />,
-      },
-      {
-        path: "/deposit-report",
-        element: <DepositReport />,
-      },
-      {
-        path: "/first-deposit-report",
-        element: <FirstDepositReport />,
-      },
-      {
-        path: "/no-deposit-report",
-        element: <NoDepositReport />,
-      },
-      {
-        path: "/withdraw-report",
-        element: <WithdrawReport />,
-      },
-      {
-        path: "/transfer-statement",
-        element: <TransferStatement />,
-      },
-      /*Hyper Master Routes */
-      ...HyperMasterRoutes,
-      /* Master Routes */
-      ...MasterRoutes,
-    ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-]);
+    basename: import.meta.env.BASE_URL ?? "/",
+  }
+);

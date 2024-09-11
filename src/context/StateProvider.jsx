@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { API, Settings } from "../api";
 import { getSetApis } from "../api/config";
 export const StateContext = createContext(null);
-
+import notice from "../../notice.json";
 const StateProvider = ({ children }) => {
   /* Global state this states we are using in full project */
   const [token, setToken] = useState("");
@@ -35,10 +35,10 @@ const StateProvider = ({ children }) => {
   const [siteNotification, setSiteNotification] = useState(false);
   const [noticeLoaded, setNoticeLoaded] = useState(false);
   const [directDeposit,setDirectDeposit] = useState(false)
-
+  const baseUrl = notice?.result?.settings?.baseUrl;
   useEffect(() => {
-    getSetApis(setNoticeLoaded);
-  }, [noticeLoaded]);
+    getSetApis(setNoticeLoaded,baseUrl);
+  }, [noticeLoaded,baseUrl]);
 
   /* Get token from locale storage */
   useEffect(() => {

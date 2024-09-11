@@ -1,9 +1,11 @@
 import axios from "axios";
 import { API, Settings } from "./index";
 
-export const getSetApis = (setNoticeLoaded) => {
+export const getSetApis = (setNoticeLoaded,baseUrl) => {
+  const url = baseUrl ? `${baseUrl}/notice.json` : "/notice.json";
+
   axios
-    .get("/notice.json")
+    .get(url)
     .then((res) => {
       const data = res.data;
       if (data?.result) {
