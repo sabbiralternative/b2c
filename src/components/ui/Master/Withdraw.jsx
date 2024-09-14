@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import toast from "react-hot-toast";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+import { FaRegCopy } from "react-icons/fa";
 
 const Withdraw = ({ data, title, time }) => {
   const {
@@ -25,6 +26,25 @@ const Withdraw = ({ data, title, time }) => {
     }
   }, [message]);
 
+  const handleCopy = (item) => {
+    const formattedText = `
+    Client Id: ${item?.userId || ""}\n
+    Amount: ${Math.abs(item?.amount) || ""}\n
+    Bank Account Name: ${item?.bank_account_name || ""}\n
+    Account Number: ${item?.account_number || ""}\n
+    Bank Name: ${item?.bank_name || ""}\n
+    IFSC: ${item?.ifsc || ""}
+  `;
+    navigator.clipboard
+      .writeText(formattedText)
+      .then(() => {
+        toast.success("All data copied to clipboard");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
   return (
     <div className="card">
       <h5 className="card-header">{title}</h5>
@@ -44,6 +64,7 @@ const Withdraw = ({ data, title, time }) => {
               <th>Status</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
+              {title === "Pending Withdraw" && <th>Actions</th>}
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
@@ -139,21 +160,42 @@ const Withdraw = ({ data, title, time }) => {
                     <td>{item?.date_added}</td>
                     {time && <td>{item?.date_modified}</td>}
                     {item?.status === "PENDING" && (
-                      <td>
-                        <a
-                          style={{
-                            color: "white",
-                            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                          }}
-                          onClick={() => {
-                            !readOnly && setDownLineId(item?.withdraw_id);
-                            !readOnly && setEditPendingWithdraw(true);
-                          }}
-                          className="btn btn-icon btn-sm btn-success"
-                        >
-                          <i className="bx bxs-edit"></i>
-                        </a>
-                      </td>
+                      <>
+                        <td>
+                          <a
+                            title="Text Edit"
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly && setDownLineId(item?.withdraw_id);
+                              !readOnly && setEditPendingWithdraw(true);
+                            }}
+                            className="btn btn-icon btn-sm btn-success"
+                          >
+                            <i className="bx bxs-edit"></i>
+                          </a>
+                          &nbsp;
+                          <a
+                            title="Copy All"
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly && handleCopy(item);
+                            }}
+                            className="btn btn-icon btn-sm btn-success"
+                          >
+                            <FaRegCopy size={15} />
+                          </a>
+                        </td>
+                      </>
                     )}
                   </tr>
                 );
