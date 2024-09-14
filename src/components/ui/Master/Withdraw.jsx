@@ -28,11 +28,11 @@ const Withdraw = ({ data, title, time }) => {
 
   const handleCopy = (item) => {
     const formattedText = `
-    Client Id: ${item?.userId || ""}\n
-    Amount: ${Math.abs(item?.amount) || ""}\n
-    Bank Account Name: ${item?.bank_account_name || ""}\n
-    Account Number: ${item?.account_number || ""}\n
-    Bank Name: ${item?.bank_name || ""}\n
+    Client Id: ${item?.userId || ""}
+    Amount: ${Math.abs(item?.amount) || ""}
+    Bank Account Name: ${item?.bank_account_name || ""}
+    Account Number: ${item?.account_number || ""}
+    Bank Name: ${item?.bank_name || ""}
     IFSC: ${item?.ifsc || ""}
   `;
     navigator.clipboard
@@ -190,7 +190,7 @@ const Withdraw = ({ data, title, time }) => {
                             onClick={() => {
                               !readOnly && handleCopy(item);
                             }}
-                            className="btn btn-icon btn-sm btn-success"
+                            className="btn btn-icon btn-sm btn-warning"
                           >
                             <FaRegCopy size={15} />
                           </a>
