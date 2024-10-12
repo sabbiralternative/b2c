@@ -9,11 +9,14 @@ import useContextState from "../../../../hooks/useContextState";
 import useGetSingleWithdraw from "../../../../hooks/Master/Withdraw/useSingleWithdraw";
 import useGetALLWithdraw from "../../../../hooks/Master/Withdraw/useGetAllWithdraw";
 import { RxCross2 } from "react-icons/rx";
+import { FaSpinner } from "react-icons/fa";
 
 const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [uploadedImage, setUploadedImage] = useState("");
   const [filename, setFilename] = useState("");
+  const [utr, setUtr] = useState(null);
 
   const editWithdrawRef = useRef();
   useCloseModalClickOutside(editWithdrawRef, () => {
@@ -35,7 +38,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
   const { refetchAllWithdraw } = useGetALLWithdraw(payload);
   const { singleWithdraw } = useGetSingleWithdraw(SingleWithdrawPayload);
 
-  const onSubmit = async ({ remark, status, utr }) => {
+  const onSubmit = async ({ remark, status }) => {
     const generatedToken = handleRandomToken();
     const payload = {
       withdrawId: downLineId,
@@ -67,6 +70,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
 
   useEffect(() => {
     if (image) {
+      setLoading(true);
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
@@ -78,11 +82,17 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
         const data = res.data;
         console.log(data);
         if (data?.success) {
+          setLoading(false);
           setImage(null);
           setUploadedImage(data?.filePath);
-          setFilename(data?.fileName);
+          setUtr(data?.utr);
+          setFilename(data?.filePath);
         } else {
+          setLoading(false);
+          setFilename("");
           setImage(null);
+          setUtr(null);
+          setUploadedImage(null);
           toast.error(data?.error);
         }
       };
@@ -196,7 +206,30 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
                       </div>
                     </div>
                   )}
-                  {uploadedImage && (
+                  {!uploadedImage && loading && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        position: "relative",
+                      }}
+                      className="row mb-3"
+                      id="bank_account_name_div"
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                        className="col-sm-10"
+                      >
+                        <FaSpinner size={30} className="animate-spin" />
+                      </div>
+                    </div>
+                  )}
+                  {uploadedImage && !loading && (
                     <div
                       style={{
                         display: "flex",
@@ -247,13 +280,13 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
                       </label>
                       <div className="col-sm-10">
                         <input
-                          {...register("utr", {
-                            value: singleWithdraw?.utr,
-                            required: true,
-                          })}
+                          onChange={(e) => setUtr(e.target.value)}
                           type="text"
                           className="form-control"
                           id="basic-default-name"
+                          required={statusField === "APPROVED"}
+                          // defaultValue={singleWithdraw?.utr}
+                          value={utr}
                         />
                       </div>
                     </div>

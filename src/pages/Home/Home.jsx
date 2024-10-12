@@ -2,7 +2,6 @@ import useBalance from "../../hooks/useBalance";
 
 const Home = () => {
   const { balanceData } = useBalance();
-
   const defineColorOfUpperLevel = (amount) => {
     if (amount) {
       const parseAmount = parseFloat(amount);
@@ -128,6 +127,14 @@ const Home = () => {
                 <div className="card-body text-center">
                   <h2 className="mb-1">{balanceData?.withdrawToday}</h2>
                   <span className="text-muted">Total Withdraw Today</span>
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-6 col-12 mb-4">
+              <div className="card">
+                <div className="card-body text-center">
+                  <h2 className="mb-1">{balanceData?.pnlToday}</h2>
+                  <span className="text-muted">P/L Today</span>
                 </div>
               </div>
             </div>
