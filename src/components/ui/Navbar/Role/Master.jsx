@@ -6,7 +6,7 @@ import notification from "../../../../assets/notification.wav";
 import useContextState from "../../../../hooks/useContextState";
 
 const Master = () => {
-  const { readOnly } = useContextState();
+  const { readOnly, setShowSocialLink } = useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
   const [showStatement, setShowStatement] = useState(false);
@@ -24,6 +24,7 @@ const Master = () => {
   const depositRefCount = useRef(depositCount);
   const withdrawRefCount = useRef(withdrawCount);
   const [playSound, setPlaySound] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     if (dwCount?.depositCount >= 0 || dwCount?.withdrawCount >= 0) {
@@ -47,6 +48,11 @@ const Master = () => {
   /* Sound notification end */
 
   /* close modal click outside */
+
+  const settingsRef = useRef();
+  useCloseModalClickOutside(settingsRef, () => {
+    setShowSettings(false);
+  });
   const clientsRef = useRef();
   useCloseModalClickOutside(clientsRef, () => {
     setShowClients(false);
@@ -91,7 +97,8 @@ const Master = () => {
     setShowWithdraw(false);
     setShowExposure(false);
     setShowReport(false);
-    setShowBonus(false)
+    setShowBonus(false);
+    setShowSettings(false);
   };
 
   return (
@@ -107,13 +114,14 @@ const Master = () => {
         <a
           onMouseEnter={() => {
             setShowClients(true);
+            setShowSettings(false);
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
-            setShowBonus(false)
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -205,12 +213,13 @@ const Master = () => {
           onMouseEnter={() => {
             setShowPayments(true);
             setShowClients(false);
+            setShowSettings(false);
             setShowDeposit(false);
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
-            setShowBonus(false)
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -277,12 +286,13 @@ const Master = () => {
           onMouseEnter={() => {
             setShowDeposit(true);
             setShowClients(false);
+            setShowSettings(false);
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
-            setShowBonus(false)
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -347,11 +357,12 @@ const Master = () => {
             setShowWithdraw(true);
             setShowClients(false);
             setShowDeposit(false);
+            setShowSettings(false);
             setShowPayments(false);
             setShowStatement(false);
             setShowExposure(false);
             setShowReport(false);
-            setShowBonus(false)
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -406,25 +417,22 @@ const Master = () => {
           </li>
         </ul>
       </li>
-      <li
-        ref={bonusRef}
-        className={`menu-item ${showBonus ? "open" : ""}`}
-      >
+      <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
         <a
           onMouseEnter={() => {
-            setShowBonus(true)
+            setShowBonus(true);
             setShowWithdraw(false);
+            setShowSettings(false);
             setShowClients(false);
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
             setShowExposure(false);
             setShowReport(false);
-           
           }}
           className="menu-link menu-toggle"
         >
-        <i className="menu-icon tf-icons bx bx-layout"></i>
+          <i className="menu-icon tf-icons bx bx-layout"></i>
 
           <div data-i18n="Withdraw">Bonus</div>
         </a>
@@ -448,8 +456,6 @@ const Master = () => {
               <div data-i18n="Pending Withdraw">Add Bonus</div>
             </a>
           </li>
-
-      
         </ul>
       </li>
       <li
@@ -465,12 +471,13 @@ const Master = () => {
           onMouseEnter={() => {
             setShowExposure(true);
             setShowClients(false);
+            setShowSettings(false);
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
             setShowWithdraw(false);
             setShowReport(false);
-            setShowBonus(false)
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -515,7 +522,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
-            setShowBonus(false)
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -576,6 +583,48 @@ const Master = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="View Banners">Transfer Statement</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        ref={settingsRef}
+        className={`menu-item ${showSettings ? "open" : ""}`}
+      >
+        <a
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onMouseEnter={() => {
+            setShowSettings(true);
+            setShowReport(false);
+            setShowWithdraw(false);
+            setShowExposure(false);
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowPayments(false);
+            setShowStatement(false);
+            setShowBonus(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Settings</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => {
+                setShowSocialLink(true);
+                setShowSettings(false);
+              }}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Social Links</div>
             </a>
           </li>
         </ul>

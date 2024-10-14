@@ -12,14 +12,14 @@ const SocialLink = ({ setShowSocialLink }) => {
   const { socialLinks, refetchAllSocialLinks, isLoading } =
     useGetAllSocialLink();
 
-    /* close modal click outside */
+  /* close modal click outside */
   const socialLinkRef = useRef();
   useCloseModalClickOutside(socialLinkRef, () => {
     setShowSocialLink(false);
   });
 
   const { register, handleSubmit, reset } = useForm({});
-  const { token,site } = useContextState();
+  const { token, site, adminRole } = useContextState();
 
   /* handle edit social link */
   const onSubmit = async ({ whatsapp, instagram, telegram }) => {
@@ -31,14 +31,26 @@ const SocialLink = ({ setShowSocialLink }) => {
     //     type: "panel",
     //     token: generatedToken,
     //   });
-    const payload = {
-      type: "updateSocial",
-      whatsapp,
-      instagram,
-      telegram,
-      token: generatedToken,
-      site
-    };
+    let payload = {};
+
+    if (adminRole === "master") {
+      payload = {
+        type: "updateSocial",
+        whatsapp,
+        token: generatedToken,
+        site,
+      };
+    } else {
+      payload = {
+        type: "updateSocial",
+        whatsapp,
+        instagram,
+        telegram,
+        token: generatedToken,
+        site,
+      };
+    }
+
     const res = await axios.post(API.socialLinks, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -55,6 +67,7 @@ const SocialLink = ({ setShowSocialLink }) => {
   if (isLoading) {
     return;
   }
+
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -101,44 +114,48 @@ const SocialLink = ({ setShowSocialLink }) => {
                       />
                     </div>
                   </div>
-                  <div className="row mb-3" id="bank_account_number_div">
-                    <label
-                      className="col-sm-2 col-form-label"
-                      htmlFor="basic-default-company"
-                    >
-                      Instagram
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        {...register("instagram", {
-                          value: socialLinks?.[0]?.instagram,
-                        })}
-                        type="text"
-                        className="form-control"
-                        id="basic-default-company"
-                        placeholder=""
-                      />
-                    </div>
-                  </div>
-                  <div className="row mb-3" id="ifsc_div">
-                    <label
-                      className="col-sm-2 col-form-label"
-                      htmlFor="basic-default-company"
-                    >
-                      Telegram
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        {...register("telegram", {
-                          value: socialLinks?.[0]?.telegram,
-                        })}
-                        type="text"
-                        className="form-control"
-                        id="basic-default-company"
-                        placeholder=""
-                      />
-                    </div>
-                  </div>
+                  {adminRole !== "master" && (
+                    <>
+                      <div className="row mb-3" id="bank_account_number_div">
+                        <label
+                          className="col-sm-2 col-form-label"
+                          htmlFor="basic-default-company"
+                        >
+                          Instagram
+                        </label>
+                        <div className="col-sm-10">
+                          <input
+                            {...register("instagram", {
+                              value: socialLinks?.[0]?.instagram,
+                            })}
+                            type="text"
+                            className="form-control"
+                            id="basic-default-company"
+                            placeholder=""
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-3" id="ifsc_div">
+                        <label
+                          className="col-sm-2 col-form-label"
+                          htmlFor="basic-default-company"
+                        >
+                          Telegram
+                        </label>
+                        <div className="col-sm-10">
+                          <input
+                            {...register("telegram", {
+                              value: socialLinks?.[0]?.telegram,
+                            })}
+                            type="text"
+                            className="form-control"
+                            id="basic-default-company"
+                            placeholder=""
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="modal-footer">
