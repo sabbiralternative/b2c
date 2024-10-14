@@ -16,6 +16,7 @@ const Master = () => {
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -24,7 +25,6 @@ const Master = () => {
   const depositRefCount = useRef(depositCount);
   const withdrawRefCount = useRef(withdrawCount);
   const [playSound, setPlaySound] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     if (dwCount?.depositCount >= 0 || dwCount?.withdrawCount >= 0) {
