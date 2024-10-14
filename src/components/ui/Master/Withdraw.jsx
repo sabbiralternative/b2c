@@ -14,6 +14,7 @@ const Withdraw = ({ data, title, time }) => {
     setClientId,
     setRefetchViewClient,
     readOnly,
+    adminRole,
   } = useContextState();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
@@ -159,7 +160,7 @@ const Withdraw = ({ data, title, time }) => {
 
                     <td>{item?.date_added}</td>
                     {time && <td>{item?.date_modified}</td>}
-                    {item?.status === "PENDING" && (
+                    {item?.status === "PENDING" && adminRole === "master" && (
                       <>
                         <td>
                           <a

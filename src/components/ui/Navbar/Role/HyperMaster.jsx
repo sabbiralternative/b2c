@@ -1,17 +1,58 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useContextState from "../../../../hooks/useContextState";
 import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
-
+import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
+import notification from "../../../../assets/notification.wav";
 const HyperMaster = () => {
   const { setShowAddBranch, setShowSocialLink, setSiteNotification } =
     useContextState();
+  const { dwCount } = useGetDWCount();
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
-
+  const [showDeposit, setShowDeposit] = useState(false);
+  const [showWithdraw, setShowWithdraw] = useState(false);
   const navigate = useNavigate();
+
+  /* Sound notification start */
+  const [depositCount, setDepositCount] = useState(null);
+  const [withdrawCount, setWithdrawCount] = useState(null);
+  const depositRefCount = useRef(depositCount);
+  const withdrawRefCount = useRef(withdrawCount);
+  const [playSound, setPlaySound] = useState(false);
+
+  useEffect(() => {
+    if (dwCount?.depositCount >= 0 || dwCount?.withdrawCount >= 0) {
+      if (
+        (playSound &&
+          depositCount !== null &&
+          depositCount > depositRefCount.current) ||
+        (playSound &&
+          withdrawCount !== null &&
+          withdrawCount > withdrawRefCount.current)
+      ) {
+        new Audio(notification).play();
+      }
+      depositRefCount.current = depositCount;
+      withdrawRefCount.current = withdrawCount;
+      setDepositCount(dwCount?.depositCount);
+      setWithdrawCount(dwCount?.withdrawCount);
+      setPlaySound(true);
+    }
+  }, [depositCount, withdrawCount, playSound, dwCount]);
+  /* Sound notification end */
+
+  const depositRef = useRef();
+  useCloseModalClickOutside(depositRef, () => {
+    setShowDeposit(false);
+  });
+  const withdrawRef = useRef();
+  useCloseModalClickOutside(withdrawRef, () => {
+    setShowWithdraw(false);
+  });
+
   const settingsRef = useRef();
   useCloseModalClickOutside(settingsRef, () => {
     setShowSettings(false);
@@ -35,6 +76,8 @@ const HyperMaster = () => {
     setShowSettings(false);
     setShowExposure(false);
     setShowReport(false);
+    setShowWithdraw(false);
+    setShowDeposit(false);
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -53,6 +96,8 @@ const HyperMaster = () => {
           }}
           onMouseEnter={() => {
             setShowBranch(true);
+            setShowWithdraw(false);
+            setShowDeposit(false);
             setShowExposure(false);
             setShowSettings(false);
             setShowReport(false);
@@ -111,6 +156,8 @@ const HyperMaster = () => {
           }}
           onMouseEnter={() => {
             setShowSettings(true);
+            setShowWithdraw(false);
+            setShowDeposit(false);
             setShowExposure(false);
             setShowBranch(false);
             setShowReport(false);
@@ -192,6 +239,8 @@ const HyperMaster = () => {
           onMouseEnter={() => {
             setShowExposure(true);
             setShowSettings(false);
+            setShowWithdraw(false);
+            setShowDeposit(false);
             setShowBranch(false);
             setShowReport(false);
           }}
@@ -233,6 +282,8 @@ const HyperMaster = () => {
           onMouseEnter={() => {
             setShowReport(true);
             setShowExposure(false);
+            setShowWithdraw(false);
+            setShowDeposit(false);
             setShowSettings(false);
             setShowBranch(false);
           }}
@@ -268,6 +319,136 @@ const HyperMaster = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="View Banners">Withdraw Report</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li ref={depositRef} className={`menu-item ${showDeposit ? "open" : ""}`}>
+        <a
+          onMouseEnter={() => {
+            setShowDeposit(true);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowWithdraw(false);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          {depositCount ? (
+            <span
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#39da8a",
+                marginRight: "5px",
+                padding: "0px 4px",
+                color: "black",
+                fontWeight: "500",
+              }}
+            >
+              {depositCount}
+            </span>
+          ) : (
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+          )}
+
+          <div data-i18n="Deposit">Deposit</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("pending-deposit")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Deposit">Pending Deposit</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("completed-deposit")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Deposit">Completed Deposit</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("rejected-deposit")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Rejected Deposit">Rejected Deposit</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        ref={withdrawRef}
+        className={`menu-item ${showWithdraw ? "open" : ""}`}
+      >
+        <a
+          onMouseEnter={() => {
+            setShowWithdraw(true);
+            setShowDeposit(false);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          {withdrawCount ? (
+            <span
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#39da8a",
+                marginRight: "5px",
+                padding: "0px 4px",
+                color: "black",
+                fontWeight: "500",
+              }}
+            >
+              {withdrawCount}
+            </span>
+          ) : (
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+          )}
+
+          <div data-i18n="Withdraw">Withdraw</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("pending-withdraw")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Pending Withdraw</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("completed-withdraw")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Completed Withdraw</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("rejected-withdraw")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
             </a>
           </li>
         </ul>

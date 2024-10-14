@@ -7,6 +7,8 @@ const HyperMasterSidebar = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
+  const [showDeposit, setShowDeposit] = useState(false);
+  const [showWithdraw, setShowWithdraw] = useState(false);
   const {
     setShowSidebar,
     setShowAddBranch,
@@ -33,6 +35,8 @@ const HyperMasterSidebar = () => {
             setShowSettings(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowDeposit(false);
+            setShowWithdraw(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -74,6 +78,8 @@ const HyperMasterSidebar = () => {
             setShowBranch(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowDeposit(false);
+            setShowWithdraw(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -138,6 +144,8 @@ const HyperMasterSidebar = () => {
             setShowSettings(false);
             setShowBranch(false);
             setShowReport(false);
+            setShowDeposit(false);
+            setShowWithdraw(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -177,6 +185,8 @@ const HyperMasterSidebar = () => {
             setShowExposure(false);
             setShowSettings(false);
             setShowBranch(false);
+            setShowDeposit(false);
+            setShowWithdraw(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -214,6 +224,109 @@ const HyperMasterSidebar = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Banner">Withdraw Report</div>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className={`menu-item ${showDeposit ? "open" : ""}`}>
+        <a
+          style={{}}
+          onClick={() => {
+            setShowDeposit((prev) => !prev);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowBranch(false);
+
+            setShowWithdraw(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Deposit</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              to="/pending-deposit"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Pending Deposit</div>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/completed-deposit"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Completed Deposit</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/rejected-deposit"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Rejected Deposit</div>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className={`menu-item ${showWithdraw ? "open" : ""}`}>
+        <a
+          style={{}}
+          onClick={() => {
+            setShowWithdraw((prev) => !prev);
+            setShowDeposit(false);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Withdraw</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              to="/pending-withdraw"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Pending Withdraw</div>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/completed-withdraw"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Completed Withdraw</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/rejected-withdraw"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Rejected Withdraw</div>
             </Link>
           </li>
         </ul>

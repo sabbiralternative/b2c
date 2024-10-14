@@ -58,7 +58,7 @@ const SiteNotification = ({ setSiteNotification }) => {
           <div className="modal-content" ref={siteNotifyRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Social Links
+                Site Notification
               </h5>
               <button
                 onClick={() => setSiteNotification(false)}
