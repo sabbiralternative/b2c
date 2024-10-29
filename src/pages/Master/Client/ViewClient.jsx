@@ -25,7 +25,7 @@ const ViewClient = () => {
     adminRole,
     refetchViewClient,
     setRefetchViewClient,
-    downLineId
+    downLineId,
   } = useContextState();
   const { clients, refetchClients, isSuccess } = useGetClient(
     clientId,

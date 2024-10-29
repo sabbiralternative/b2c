@@ -35,6 +35,7 @@ const Withdraw = ({ data, title, time }) => {
     Account Number: ${item?.account_number || ""}
     Bank Name: ${item?.bank_name || ""}
     IFSC: ${item?.ifsc || ""}
+    Request Time: ${item?.date_added || ""}
   `;
     navigator.clipboard
       .writeText(formattedText)
@@ -44,6 +45,11 @@ const Withdraw = ({ data, title, time }) => {
       .catch((err) => {
         console.error("Failed to copy: ", err);
       });
+  };
+
+  const handleNavigate = (username, link) => {
+    localStorage.setItem("downLineId", username);
+    navigate(`/${link}`);
   };
 
   return (
@@ -71,6 +77,7 @@ const Withdraw = ({ data, title, time }) => {
           <tbody className="table-border-bottom-0">
             {Array.isArray(data) &&
               data?.map((item, i) => {
+                console.log(data);
                 return (
                   <tr key={i}>
                     <td
@@ -191,9 +198,25 @@ const Withdraw = ({ data, title, time }) => {
                             onClick={() => {
                               !readOnly && handleCopy(item);
                             }}
-                            className="btn btn-icon btn-sm btn-warning"
+                            className="btn btn-icon btn-sm btn-primary"
                           >
                             <FaRegCopy size={15} />
+                          </a>
+                          &nbsp;
+                          <a
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly &&
+                                handleNavigate(item?.loginname, "pnl");
+                            }}
+                            className="btn btn-icon btn-sm btn-warning"
+                          >
+                            PL
                           </a>
                         </td>
                       </>
