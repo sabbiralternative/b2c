@@ -8,6 +8,7 @@ const HyperMaster = () => {
   const { setShowAddBranch, setShowSocialLink, setSiteNotification } =
     useContextState();
   const { dwCount } = useGetDWCount();
+  const [showClients, setShowClients] = useState(false);
   const [showBranch, setShowBranch] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
@@ -44,6 +45,11 @@ const HyperMaster = () => {
   }, [depositCount, withdrawCount, playSound, dwCount]);
   /* Sound notification end */
 
+  const clientsRef = useRef();
+  useCloseModalClickOutside(clientsRef, () => {
+    setShowClients(false);
+  });
+
   const depositRef = useRef();
   useCloseModalClickOutside(depositRef, () => {
     setShowDeposit(false);
@@ -78,6 +84,7 @@ const HyperMaster = () => {
     setShowReport(false);
     setShowWithdraw(false);
     setShowDeposit(false);
+    setShowClients(false);
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -101,6 +108,7 @@ const HyperMaster = () => {
             setShowExposure(false);
             setShowSettings(false);
             setShowReport(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -144,6 +152,61 @@ const HyperMaster = () => {
           </li>
         </ul>
       </li>
+      <li ref={clientsRef} className={`menu-item ${showClients ? "open" : ""}`}>
+        <a
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onMouseEnter={() => {
+            setShowClients(true);
+            setShowBranch(false);
+            setShowWithdraw(false);
+            setShowDeposit(false);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowReport(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Branch">Clients</div>
+          {/* {showBranch ? (
+                    <MdOutlineKeyboardArrowUp
+                      style={{ marginTop: "3px" }}
+                      size={20}
+                    />
+                  ) : (
+                    <MdOutlineKeyboardArrowDown
+                      style={{ marginTop: "3px" }}
+                      size={20}
+                    />
+                  )} */}
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("view-client")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-user"></i>
+              <div data-i18n="View Clients">View Clients</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("clients-with-balance")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-user"></i>
+              <div data-i18n="Add Client">Clients with balance</div>
+            </a>
+          </li>
+        </ul>
+      </li>
       <li
         ref={settingsRef}
         className={`menu-item ${showSettings ? "open" : ""}`}
@@ -161,6 +224,7 @@ const HyperMaster = () => {
             setShowExposure(false);
             setShowBranch(false);
             setShowReport(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -243,6 +307,7 @@ const HyperMaster = () => {
             setShowDeposit(false);
             setShowBranch(false);
             setShowReport(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -286,6 +351,7 @@ const HyperMaster = () => {
             setShowDeposit(false);
             setShowSettings(false);
             setShowBranch(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -328,6 +394,7 @@ const HyperMaster = () => {
           onMouseEnter={() => {
             setShowDeposit(true);
             setShowReport(false);
+            setShowClients(false);
             setShowExposure(false);
             setShowWithdraw(false);
             setShowSettings(false);
@@ -397,6 +464,7 @@ const HyperMaster = () => {
             setShowDeposit(false);
             setShowReport(false);
             setShowExposure(false);
+            setShowClients(false);
             setShowSettings(false);
             setShowBranch(false);
           }}

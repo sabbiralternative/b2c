@@ -156,46 +156,50 @@ const ViewClient = () => {
                         </td>
                         <td>{client?.registrationDate}</td>
                         <td>
-                          <a
-                            style={{
-                              color: "white",
-                              cursor: `${
-                                !readOnly ? "pointer" : "not-allowed"
-                              }`,
-                            }}
-                            onClick={() => {
-                              !readOnly &&
-                                handleDownLineId(
-                                  setClientDeposit,
-                                  client?.username,
-                                  setDownLineId
-                                );
-                            }}
-                            className="btn btn-icon btn-sm btn-success"
-                          >
-                            D
-                          </a>
-                          &nbsp;
-                          <a
-                            style={{
-                              color: "white",
-                              cursor: `${
-                                !readOnly ? "pointer" : "not-allowed"
-                              }`,
-                            }}
-                            onClick={() => {
-                              !readOnly &&
-                                handleDownLineId(
-                                  setDirectWithdraw,
-                                  client?.username,
-                                  setDownLineId
-                                );
-                            }}
-                            className="btn btn-icon btn-sm btn-danger"
-                          >
-                            W
-                          </a>
-                          &nbsp;
+                          {adminRole !== "hyper_master" && (
+                            <>
+                              <a
+                                style={{
+                                  color: "white",
+                                  cursor: `${
+                                    !readOnly ? "pointer" : "not-allowed"
+                                  }`,
+                                }}
+                                onClick={() => {
+                                  !readOnly &&
+                                    handleDownLineId(
+                                      setClientDeposit,
+                                      client?.username,
+                                      setDownLineId
+                                    );
+                                }}
+                                className="btn btn-icon btn-sm btn-success"
+                              >
+                                D
+                              </a>
+                              &nbsp;
+                              <a
+                                style={{
+                                  color: "white",
+                                  cursor: `${
+                                    !readOnly ? "pointer" : "not-allowed"
+                                  }`,
+                                }}
+                                onClick={() => {
+                                  !readOnly &&
+                                    handleDownLineId(
+                                      setDirectWithdraw,
+                                      client?.username,
+                                      setDownLineId
+                                    );
+                                }}
+                                className="btn btn-icon btn-sm btn-danger"
+                              >
+                                W
+                              </a>
+                              &nbsp;
+                            </>
+                          )}
                           <a
                             style={{
                               color: "white",
@@ -251,46 +255,50 @@ const ViewClient = () => {
                           >
                             S
                           </a>
-                          &nbsp;
-                          <a
-                            style={{
-                              color: "white",
-                              cursor: `${
-                                !readOnly ? "pointer" : "not-allowed"
-                              }`,
-                            }}
-                            onClick={() => {
-                              !readOnly &&
-                                handleDownLineId(
-                                  setShowCreditRef,
-                                  client?.username,
-                                  setDownLineId
-                                );
-                            }}
-                            className="btn btn-icon btn-sm btn-primary"
-                          >
-                            CR
-                          </a>
-                          &nbsp;
-                          <a
-                            style={{
-                              color: "white",
-                              cursor: `${
-                                !readOnly ? "pointer" : "not-allowed"
-                              }`,
-                            }}
-                            onClick={() => {
-                              !readOnly &&
-                                handleDownLineId(
-                                  setDirectDeposit,
-                                  client?.username,
-                                  setDownLineId
-                                );
-                            }}
-                            className="btn btn-icon btn-sm btn-success"
-                          >
-                            DD
-                          </a>
+                          {adminRole !== "hyper_master" && (
+                            <>
+                              &nbsp;
+                              <a
+                                style={{
+                                  color: "white",
+                                  cursor: `${
+                                    !readOnly ? "pointer" : "not-allowed"
+                                  }`,
+                                }}
+                                onClick={() => {
+                                  !readOnly &&
+                                    handleDownLineId(
+                                      setShowCreditRef,
+                                      client?.username,
+                                      setDownLineId
+                                    );
+                                }}
+                                className="btn btn-icon btn-sm btn-primary"
+                              >
+                                CR
+                              </a>
+                              &nbsp;
+                              <a
+                                style={{
+                                  color: "white",
+                                  cursor: `${
+                                    !readOnly ? "pointer" : "not-allowed"
+                                  }`,
+                                }}
+                                onClick={() => {
+                                  !readOnly &&
+                                    handleDownLineId(
+                                      setDirectDeposit,
+                                      client?.username,
+                                      setDownLineId
+                                    );
+                                }}
+                                className="btn btn-icon btn-sm btn-success"
+                              >
+                                DD
+                              </a>
+                            </>
+                          )}
                         </td>
                       </tr>
                     );

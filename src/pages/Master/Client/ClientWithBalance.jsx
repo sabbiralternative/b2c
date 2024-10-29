@@ -110,34 +110,38 @@ const ClientWithBalance = () => {
                       </td>
                       <td>{client?.registrationDate}</td>
                       <td>
-                        <a
-                          style={{ color: "white" }}
-                          onClick={() =>
-                            handleDownLineId(
-                              setClientDeposit,
-                              client?.username,
-                              setDownLineId
-                            )
-                          }
-                          className="btn btn-icon btn-sm btn-success"
-                        >
-                          D
-                        </a>
-                        &nbsp;
-                        <a
-                          style={{ color: "white" }}
-                          onClick={() =>
-                            handleDownLineId(
-                              setDirectWithdraw,
-                              client?.username,
-                              setDownLineId
-                            )
-                          }
-                          className="btn btn-icon btn-sm btn-danger"
-                        >
-                          W
-                        </a>
-                        &nbsp;
+                        {adminRole !== "hyper_master" && (
+                          <>
+                            <a
+                              style={{ color: "white" }}
+                              onClick={() =>
+                                handleDownLineId(
+                                  setClientDeposit,
+                                  client?.username,
+                                  setDownLineId
+                                )
+                              }
+                              className="btn btn-icon btn-sm btn-success"
+                            >
+                              D
+                            </a>
+                            &nbsp;
+                            <a
+                              style={{ color: "white" }}
+                              onClick={() =>
+                                handleDownLineId(
+                                  setDirectWithdraw,
+                                  client?.username,
+                                  setDownLineId
+                                )
+                              }
+                              className="btn btn-icon btn-sm btn-danger"
+                            >
+                              W
+                            </a>
+                            &nbsp;
+                          </>
+                        )}
                         <a
                           style={{ color: "white" }}
                           onClick={() => {
@@ -175,36 +179,40 @@ const ClientWithBalance = () => {
                         >
                           S
                         </a>
-                        &nbsp;
-                        <a
-                          style={{ color: "white" }}
-                          onClick={() =>
-                            handleDownLineId(
-                              setShowCreditRef,
-                              client?.username,
-                              setDownLineId
-                            )
-                          }
-                          className="btn btn-icon btn-sm btn-primary"
-                        >
-                          CR
-                        </a>
-                        &nbsp;
-                        <a
-                          style={{
-                            color: "white",
-                          }}
-                          onClick={() => {
-                            handleDownLineId(
-                              setDirectDeposit,
-                              client?.username,
-                              setDownLineId
-                            );
-                          }}
-                          className="btn btn-icon btn-sm btn-success"
-                        >
-                          DD
-                        </a>
+                        {adminRole !== "hyper_master" && (
+                          <>
+                            &nbsp;
+                            <a
+                              style={{ color: "white" }}
+                              onClick={() =>
+                                handleDownLineId(
+                                  setShowCreditRef,
+                                  client?.username,
+                                  setDownLineId
+                                )
+                              }
+                              className="btn btn-icon btn-sm btn-primary"
+                            >
+                              CR
+                            </a>
+                            &nbsp;
+                            <a
+                              style={{
+                                color: "white",
+                              }}
+                              onClick={() => {
+                                handleDownLineId(
+                                  setDirectDeposit,
+                                  client?.username,
+                                  setDownLineId
+                                );
+                              }}
+                              className="btn btn-icon btn-sm btn-success"
+                            >
+                              DD
+                            </a>
+                          </>
+                        )}
                       </td>
                     </tr>
                   );

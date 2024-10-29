@@ -9,6 +9,7 @@ const HyperMasterSidebar = () => {
   const [showReport, setShowReport] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showClients, setShowClients] = useState(false);
   const {
     setShowSidebar,
     setShowAddBranch,
@@ -37,6 +38,7 @@ const HyperMasterSidebar = () => {
             setShowReport(false);
             setShowDeposit(false);
             setShowWithdraw(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -70,6 +72,46 @@ const HyperMasterSidebar = () => {
           </li>
         </ul>
       </li>
+      <li className={`menu-item ${showClients ? "open" : ""}`}>
+        <a
+          onClick={() => {
+            setShowClients((prev) => !prev);
+            setShowBranch(false);
+            setShowSettings(false);
+            setShowExposure(false);
+            setShowReport(false);
+            setShowDeposit(false);
+            setShowWithdraw(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Branch">Clients</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/view-client"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Branches">View Clients</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/clients-with-balance"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Branches">Clients with balance</div>
+            </Link>
+          </li>
+        </ul>
+      </li>
       <li className={`menu-item ${showSettings ? "open" : ""}`}>
         <a
           style={{}}
@@ -80,6 +122,7 @@ const HyperMasterSidebar = () => {
             setShowReport(false);
             setShowDeposit(false);
             setShowWithdraw(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -146,6 +189,7 @@ const HyperMasterSidebar = () => {
             setShowReport(false);
             setShowDeposit(false);
             setShowWithdraw(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -187,6 +231,7 @@ const HyperMasterSidebar = () => {
             setShowBranch(false);
             setShowDeposit(false);
             setShowWithdraw(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -237,7 +282,7 @@ const HyperMasterSidebar = () => {
             setShowExposure(false);
             setShowSettings(false);
             setShowBranch(false);
-
+            setShowClients(false);
             setShowWithdraw(false);
           }}
           className="menu-link menu-toggle"
@@ -290,6 +335,7 @@ const HyperMasterSidebar = () => {
             setShowExposure(false);
             setShowSettings(false);
             setShowBranch(false);
+            setShowClients(false);
           }}
           className="menu-link menu-toggle"
         >
