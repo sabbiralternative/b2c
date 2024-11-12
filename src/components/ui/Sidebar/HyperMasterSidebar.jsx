@@ -10,6 +10,7 @@ const HyperMasterSidebar = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showClients, setShowClients] = useState(false);
+  const [showBonus, setShowBonus] = useState(false);
   const {
     setShowSidebar,
     setShowAddBranch,
@@ -39,6 +40,7 @@ const HyperMasterSidebar = () => {
             setShowDeposit(false);
             setShowWithdraw(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -82,6 +84,7 @@ const HyperMasterSidebar = () => {
             setShowReport(false);
             setShowDeposit(false);
             setShowWithdraw(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -123,6 +126,7 @@ const HyperMasterSidebar = () => {
             setShowDeposit(false);
             setShowWithdraw(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -190,6 +194,7 @@ const HyperMasterSidebar = () => {
             setShowDeposit(false);
             setShowWithdraw(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -232,6 +237,7 @@ const HyperMasterSidebar = () => {
             setShowDeposit(false);
             setShowWithdraw(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -284,6 +290,7 @@ const HyperMasterSidebar = () => {
             setShowBranch(false);
             setShowClients(false);
             setShowWithdraw(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -336,6 +343,7 @@ const HyperMasterSidebar = () => {
             setShowSettings(false);
             setShowBranch(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -373,6 +381,49 @@ const HyperMasterSidebar = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Banner">Rejected Withdraw</div>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className={`menu-item ${showBonus ? "open" : ""}`}>
+        <a
+          style={{}}
+          onClick={() => {
+            setShowBonus((prev) => !prev);
+            setShowWithdraw(false);
+            setShowDeposit(false);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowBranch(false);
+            setShowClients(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Bonus</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              to="/view-bonus"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">View Bonus</div>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/add-bonus"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Add Bonus</div>
             </Link>
           </li>
         </ul>

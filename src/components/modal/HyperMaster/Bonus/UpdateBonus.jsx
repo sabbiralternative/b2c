@@ -1,49 +1,91 @@
 import axios from "axios";
-import { API } from "../../../api";
 import toast from "react-hot-toast";
-import handleRandomToken from "../../../utils/handleRandomToken";
+import { API } from "../../../../api";
+import handleRandomToken from "../../../../utils/handleRandomToken";
+import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import useContextState from "../../../hooks/useContextState";
+import { useEffect, useRef } from "react";
+import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import useGetSingleViewBonus from "../../../../hooks/HyperMaster/Bonus/useGetSingleViewBonus";
 
-const AddBonus = () => {
-  const navigate = useNavigate();
+const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
+  const { singleBonus } = useGetSingleViewBonus(editBonusId);
+  const editBonusRef = useRef();
+  useCloseModalClickOutside(editBonusRef, () => {
+    setEditBonusId("");
+  });
+
   const { register, handleSubmit, reset } = useForm();
   const { token, site } = useContextState();
 
-  /* handle add client */
-  const onSubmit = async (value) => {
+  const handleUpdateBonus = async (value) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      type: "addBonus",
+      type: "updateBonus",
       wagering_multiplier: 5,
+      bonus_id: editBonusId,
       ...value,
       token: generatedToken,
       site,
     };
+
     const res = await axios.post(API.bonus, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
     if (data?.success) {
-      toast.success("Bonus added successfully");
+      refetchBonus();
       reset();
-      navigate("/view-bonus");
+      toast.success("Bonus updated successfully");
+      setEditBonusId("");
     } else {
       toast.error(value?.error?.description);
     }
   };
-  return (
-    <div className="container-xxl flex-grow-1 container-p-y">
-      <h4 className="py-3 breadcrumb-wrapper mb-4">
-        <span className="text-muted fw-light">Home /</span> Add Bonus
-      </h4>
 
-      <div className="row">
-        <div className="col-xxl">
-          <div className="card mb-4">
-            <div className="card-body">
-              <form onSubmit={handleSubmit(onSubmit)}>
+  useEffect(() => {
+    if (singleBonus && Object.keys(singleBonus)) {
+      reset({
+        bonus_name: singleBonus?.bonus_name,
+        bonus_amount: singleBonus?.bonus_amount,
+        bonus_amount_type: singleBonus?.bonus_amount_type,
+        bonus_max_amount: singleBonus?.bonus_max_amount,
+        wagering_multiplier: singleBonus?.wagering_multiplier,
+        minimum_deposit: singleBonus?.minimum_deposit,
+        bonus_expiry_days: singleBonus?.bonus_expiry_days,
+        bonus_type: singleBonus?.bonus_type,
+        status: singleBonus?.status?.toString(),
+      });
+    }
+  }, [singleBonus, reset]);
+
+  return (
+    <>
+      <div className="content-backdrop fade show"></div>
+      <div
+        className="modal fade show"
+        id="modalCenter"
+        aria-modal="true"
+        role="dialog"
+        style={{ display: "block" }}
+      >
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content" ref={editBonusRef}>
+            <div className="modal-header">
+              <h5 className="modal-title" id="modalCenterTitle">
+                Update Bonus
+              </h5>
+              <button
+                onClick={() => setEditBonusId("")}
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div className="modal-body">
+              <form onSubmit={handleSubmit(handleUpdateBonus)}>
                 <div className="row mb-3" id="bank_account_name_div">
                   <label
                     className="col-sm-2 col-form-label"
@@ -307,8 +349,8 @@ const AddBonus = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default AddBonus;
+export default UpdateBonus;
