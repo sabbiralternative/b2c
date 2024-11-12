@@ -5,7 +5,8 @@ import EditBanner from "../pages/HyperMaster/Settings/EditBanner";
 import ViewBanner from "../pages/HyperMaster/Settings/ViewBanner";
 import MarketAnalysis from "../pages/HyperMaster/Exposure/MarketAnalysis";
 import CurrentBets from "../pages/HyperMaster/Exposure/CurrentBets";
-
+import AddBonus from "../pages/HyperMaster/Bonus/AddBonus";
+import ViewBonus from "../pages/HyperMaster/Bonus/ViewBonus";
 
 export const HyperMasterRoutes = [
   {
@@ -36,5 +37,12 @@ export const HyperMasterRoutes = [
     path: "/game-details/:eventTypeId/:eventId",
     element: <GameDetails />,
   },
-
+  {
+    path: "/add-bonus",
+    element: <AddBonus />,
+  },
+  {
+    path: "/view-bonus",
+    element: <ViewBonus />,
+  },
 ];

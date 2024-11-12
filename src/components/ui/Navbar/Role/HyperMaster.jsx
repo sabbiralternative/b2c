@@ -15,6 +15,7 @@ const HyperMaster = () => {
   const [showReport, setShowReport] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showBonus, setShowBonus] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -76,6 +77,11 @@ const HyperMaster = () => {
     setShowReport(false);
   });
 
+  const bonusRef = useRef();
+  useCloseModalClickOutside(bonusRef, () => {
+    setShowBonus(false);
+  });
+
   const handleNavigate = (link) => {
     navigate(`/${link}`);
     setShowBranch(false);
@@ -85,6 +91,7 @@ const HyperMaster = () => {
     setShowWithdraw(false);
     setShowDeposit(false);
     setShowClients(false);
+    setShowBonus(false);
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -109,6 +116,7 @@ const HyperMaster = () => {
             setShowSettings(false);
             setShowReport(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -167,6 +175,8 @@ const HyperMaster = () => {
             setShowExposure(false);
             setShowSettings(false);
             setShowReport(false);
+            setShowBonus(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -225,6 +235,7 @@ const HyperMaster = () => {
             setShowBranch(false);
             setShowReport(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -308,6 +319,7 @@ const HyperMaster = () => {
             setShowBranch(false);
             setShowReport(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -352,6 +364,7 @@ const HyperMaster = () => {
             setShowSettings(false);
             setShowBranch(false);
             setShowClients(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -399,6 +412,7 @@ const HyperMaster = () => {
             setShowWithdraw(false);
             setShowSettings(false);
             setShowBranch(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -467,6 +481,7 @@ const HyperMaster = () => {
             setShowClients(false);
             setShowSettings(false);
             setShowBranch(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -517,6 +532,46 @@ const HyperMaster = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
+        <a
+          onMouseEnter={() => {
+            setShowBonus(true);
+            setShowWithdraw(false);
+            setShowDeposit(false);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowClients(false);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+
+          <div data-i18n="Withdraw">Bonus</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("view-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">View Bonus</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("add-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Add Bonus</div>
             </a>
           </li>
         </ul>

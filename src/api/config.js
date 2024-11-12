@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API, Settings } from "./index";
 
-export const getSetApis = (setNoticeLoaded,baseUrl) => {
+export const getSetApis = (setNoticeLoaded, baseUrl) => {
   const url = baseUrl ? `${baseUrl}/notice.json` : "/notice.json";
 
   axios
@@ -11,6 +11,7 @@ export const getSetApis = (setNoticeLoaded,baseUrl) => {
       if (data?.result) {
         (API.downineEditForm = data?.result?.endpoint?.downineEditForm),
           (API.accessToken = data?.result?.endpoint?.accessToken),
+          (API.bonus = data?.result?.endpoint?.bonus),
           (API.balance = data?.result?.endpoint?.balance),
           (API.changePassword = data?.result?.endpoint?.changePassword),
           (API.group = data?.result?.endpoint?.group),
