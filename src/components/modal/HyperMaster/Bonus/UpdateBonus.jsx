@@ -22,7 +22,6 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "updateBonus",
-      wagering_multiplier: 5,
       bonus_id: editBonusId,
       ...value,
       token: generatedToken,
@@ -326,6 +325,24 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
                     <input
                       type="text"
                       {...register("bonus_max_amount", {
+                        required: true,
+                      })}
+                      className="form-control"
+                      id="basic-default-name"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3" id="bank_account_name_div">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-name"
+                  >
+                    Wagering Multiplier *
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      type="number"
+                      {...register("wagering_multiplier", {
                         required: true,
                       })}
                       className="form-control"
