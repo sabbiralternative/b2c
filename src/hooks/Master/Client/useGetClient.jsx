@@ -12,7 +12,7 @@ const useGetClient = (searchId, setFetchClients, fetchClients) => {
     isSuccess,
   } = useQuery({
     queryKey: ["viewClient"],
-    enabled: !tokenLoading && searchId?.length === 6 && fetchClients,
+    enabled: !tokenLoading && searchId?.length === 2 && fetchClients,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
       const payload = {

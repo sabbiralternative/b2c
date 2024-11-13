@@ -7,30 +7,43 @@ import axios from "axios";
 import { API } from "../../../api";
 import toast from "react-hot-toast";
 import UpdateBonus from "../../../components/modal/HyperMaster/Bonus/UpdateBonus";
+import Swal from "sweetalert2";
 
 const ViewBonus = () => {
   const [editBonusId, setEditBonusId] = useState("");
   const { bonus, refetchBonus } = useGetViewBonus();
   const { site, token } = useContextState();
 
-  const handleDeleteBonus = async (id) => {
-    const generatedToken = handleRandomToken();
-    const payload = {
-      type: "deleteBonus",
-      bonus_id: id,
-      token: generatedToken,
-      site,
-    };
-    const res = await axios.post(API.bonus, payload, {
-      headers: { Authorization: `Bearer ${token}` },
+  const handleDeleteBonus = async (bonus) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to delete ${bonus?.bonus_name}!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const generatedToken = handleRandomToken();
+        const payload = {
+          type: "deleteBonus",
+          bonus_id: bonus?.bonus_id,
+          token: generatedToken,
+          site,
+        };
+        const res = await axios.post(API.bonus, payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = res.data;
+        if (data?.success) {
+          refetchBonus();
+          toast.success("Bonus deleted successfully");
+        } else {
+          toast.error(data?.error?.description);
+        }
+      }
     });
-    const data = res.data;
-    if (data?.success) {
-      refetchBonus();
-      toast.success("Bonus deleted successfully");
-    } else {
-      toast.error(data?.error?.description);
-    }
   };
 
   return (
@@ -51,7 +64,7 @@ const ViewBonus = () => {
                 <tr>
                   <th>Bonus Name</th>
                   <th>Bonus Amount</th>
-                  <th>Bonus Amount Type</th>
+
                   <th>Max Bonus Amount</th>
                   <th>Wagering Multiplier</th>
                   <th>Min. Deposit</th>
@@ -63,6 +76,7 @@ const ViewBonus = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {bonus?.map((bonus, i) => {
+                  console.log(bonus);
                   return (
                     <tr key={i}>
                       <td>
@@ -70,13 +84,21 @@ const ViewBonus = () => {
                           {handleSplitUserName(bonus?.bonus_name)}
                         </strong>
                       </td>
-                      <td>{bonus?.bonus_amount}</td>
-                      <td>{bonus?.bonus_amount_type}</td>
+                      <td>
+                        {bonus?.bonus_amount_type === "percentage"
+                          ? `${bonus?.bonus_amount}%`
+                          : `Rs. ${bonus?.bonus_amount}`}
+                      </td>
+
                       <td>{bonus?.bonus_max_amount}</td>
 
                       <td>{bonus?.wagering_multiplier}</td>
                       <td>{bonus?.minimum_deposit}</td>
-                      <td>{bonus?.bonus_expiry_days}</td>
+                      <td>
+                        {bonus?.bonus_expiry_days > 1
+                          ? `${bonus?.bonus_expiry_days} days`
+                          : `${bonus?.bonus_expiry_days} day`}{" "}
+                      </td>
 
                       <td>{bonus?.bonus_type}</td>
                       <td>
@@ -100,7 +122,7 @@ const ViewBonus = () => {
                         </a>
                         &nbsp;
                         <a
-                          onClick={() => handleDeleteBonus(bonus?.bonus_id)}
+                          onClick={() => handleDeleteBonus(bonus)}
                           className="btn btn-icon btn-sm btn-danger"
                         >
                           D
