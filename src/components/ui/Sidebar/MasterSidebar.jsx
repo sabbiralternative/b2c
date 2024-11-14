@@ -353,20 +353,29 @@ const MasterSidebar = () => {
         <ul className="menu-sub">
           <li className="menu-item">
             <a
-              onClick={() => handleNavigate("view-bonus")}
+              onClick={() => handleNavigate("pending-bonus")}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">View Bonus</div>
+              <div data-i18n="Pending Withdraw">Pending Bonus</div>
             </a>
           </li>
           <li className="menu-item">
             <a
-              onClick={() => handleNavigate("add-bonus")}
+              onClick={() => handleNavigate("completed-bonus")}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">Add Bonus</div>
+              <div data-i18n="Pending Withdraw">Completed Bonus</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("rejected-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Rejected Bonus</div>
             </a>
           </li>
         </ul>

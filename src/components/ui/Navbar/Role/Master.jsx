@@ -15,6 +15,7 @@ const Master = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
+  const [showBonus, setShowBonus] = useState(false);
 
   const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
@@ -83,6 +84,10 @@ const Master = () => {
   useCloseModalClickOutside(reportRef, () => {
     setShowReport(false);
   });
+  const bonusRef = useRef();
+  useCloseModalClickOutside(bonusRef, () => {
+    setShowBonus(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -94,6 +99,7 @@ const Master = () => {
     setShowExposure(false);
     setShowReport(false);
     setShowSettings(false);
+    setShowBonus(false);
   };
 
   return (
@@ -116,6 +122,7 @@ const Master = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -213,6 +220,7 @@ const Master = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -285,6 +293,7 @@ const Master = () => {
             setShowWithdraw(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -354,6 +363,7 @@ const Master = () => {
             setShowStatement(false);
             setShowExposure(false);
             setShowReport(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -408,6 +418,72 @@ const Master = () => {
           </li>
         </ul>
       </li>
+      <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
+        <a
+          onMouseEnter={() => {
+            setShowBonus(true);
+            setShowWithdraw(false);
+            setShowClients(false);
+            setShowDeposit(false);
+            setShowSettings(false);
+            setShowPayments(false);
+            setShowStatement(false);
+            setShowExposure(false);
+            setShowReport(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          {dwCount?.claimCount !== 0 ? (
+            <span
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#39da8a",
+                marginRight: "5px",
+                padding: "0px 4px",
+                color: "black",
+                fontWeight: "500",
+              }}
+            >
+              {dwCount?.claimCount}
+            </span>
+          ) : (
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+          )}
+
+          <div data-i18n="Withdraw">Bonus</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("pending-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Pending Bonus</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("completed-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Completed Bonus</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("rejected-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
+            </a>
+          </li>
+        </ul>
+      </li>
 
       <li
         ref={exposureRef}
@@ -428,6 +504,7 @@ const Master = () => {
             setShowStatement(false);
             setShowWithdraw(false);
             setShowReport(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -472,6 +549,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -555,6 +633,7 @@ const Master = () => {
             setShowDeposit(false);
             setShowPayments(false);
             setShowStatement(false);
+            setShowBonus(false);
           }}
           className="menu-link menu-toggle"
         >
