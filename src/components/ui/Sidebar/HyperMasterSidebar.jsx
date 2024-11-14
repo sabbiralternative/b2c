@@ -426,6 +426,36 @@ const HyperMasterSidebar = () => {
               <div data-i18n="Add Banner">Add Bonus</div>
             </Link>
           </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/pending-bonus"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Pending Bonus</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/completed-bonus"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Completed Bonus</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/rejected-bonus"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Rejected Bonus</div>
+            </Link>
+          </li>
         </ul>
       </li>
     </ul>

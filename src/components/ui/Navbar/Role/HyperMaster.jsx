@@ -574,6 +574,34 @@ const HyperMaster = () => {
               <div data-i18n="Pending Withdraw">Add Bonus</div>
             </a>
           </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("pending-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Pending Bonus</div>
+            </a>
+          </li>
+
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("completed-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Completed Bonus</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("rejected-bonus")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
+            </a>
+          </li>
         </ul>
       </li>
     </ul>
