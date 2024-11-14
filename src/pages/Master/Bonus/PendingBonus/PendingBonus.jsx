@@ -6,10 +6,10 @@ const PendingBonus = () => {
     type: "viewBonusStatement",
     is_claimed: 2,
   };
-  const { bonus } = useGetAllBonus(payload, 30000);
+  const { bonus, refetchBonus } = useGetAllBonus(payload, 30000);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Bonus data={bonus} title="Pending Bonus" />
+      <Bonus data={bonus} title="Pending" refetchBonus={refetchBonus} />
     </div>
   );
 };

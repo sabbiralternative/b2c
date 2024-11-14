@@ -8,7 +8,7 @@ const useGetAllBonus = (args, time) => {
   const { token, tokenLoading } = useContextState();
 
   const { data: bonus = [], refetch: refetchBonus } = useQuery({
-    queryKey: ["bonus", args?.type],
+    queryKey: ["bonus", args?.is_claimed],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
