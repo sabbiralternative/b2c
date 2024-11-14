@@ -1,3 +1,6 @@
+import CompletedBonus from "../pages/Master/Bonus/CompletedBonus/CompletedBonus";
+import PendingBonus from "../pages/Master/Bonus/PendingBonus/PendingBonus";
+import RejectedBonus from "../pages/Master/Bonus/RejectedBonus/RejectedBonus";
 import AddClient from "../pages/Master/Client/AddClient";
 import ClientWithBalance from "../pages/Master/Client/ClientWithBalance";
 import PNL from "../pages/Master/Client/PNL";
@@ -52,6 +55,18 @@ export const MasterRoutes = [
   {
     path: "/completed-withdraw",
     element: <CompletedWithdraw />,
+  },
+  {
+    path: "/pending-bonus",
+    element: <PendingBonus />,
+  },
+  {
+    path: "/rejected-bonus",
+    element: <RejectedBonus />,
+  },
+  {
+    path: "/completed-bonus",
+    element: <CompletedBonus />,
   },
   {
     path: "/view-payment-method",
