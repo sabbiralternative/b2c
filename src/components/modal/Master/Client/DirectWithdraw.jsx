@@ -28,7 +28,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
     fetchClients
   );
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
 
   const handleAmount = (e) => {
     const userOne = (data?.amount + parseFloat(e)).toFixed(2);
@@ -45,6 +45,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
       ...values,
       amount,
       token: generatedToken,
+      role: adminRole,
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

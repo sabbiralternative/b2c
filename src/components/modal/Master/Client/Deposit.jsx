@@ -23,7 +23,7 @@ const Deposit = ({ setClientDeposit, downlineId }) => {
     reset,
     formState: { errors },
   } = useForm();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
 
@@ -39,7 +39,7 @@ const Deposit = ({ setClientDeposit, downlineId }) => {
           },
         });
         const data = res.data;
-       
+
         if (data?.success) {
           setFilePath(data?.filePath);
         }
@@ -57,6 +57,7 @@ const Deposit = ({ setClientDeposit, downlineId }) => {
       slip: filePath,
       utr,
       token: generatedToken,
+      role: adminRole,
     };
     const res = await axios.post(API.depositClient, payload, {
       headers: { Authorization: `Bearer ${token}` },

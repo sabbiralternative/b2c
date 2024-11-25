@@ -169,7 +169,7 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setClientDeposit,
-                                      client?.username,
+                                      client?.downlineId,
                                       setDownLineId
                                     );
                                 }}
@@ -189,7 +189,7 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setDirectWithdraw,
-                                      client?.username,
+                                      client?.downlineId,
                                       setDownLineId
                                     );
                                 }}
@@ -209,7 +209,7 @@ const ViewClient = () => {
                             }}
                             onClick={() => {
                               !readOnly &&
-                                handleNavigate(client?.username, "pnl");
+                                handleNavigate(client?.downlineId, "pnl");
                             }}
                             className="btn btn-icon btn-sm btn-warning"
                           >
@@ -227,7 +227,7 @@ const ViewClient = () => {
                               !readOnly &&
                                 handleDownLineId(
                                   setShowChangePassword,
-                                  client?.username,
+                                  client?.downlineId,
                                   setDownLineId
                                 );
                             }}
@@ -247,7 +247,7 @@ const ViewClient = () => {
                               !readOnly &&
                                 handleDownLineId(
                                   setShowChangeStatus,
-                                  client?.username,
+                                  client?.downlineId,
                                   setDownLineId
                                 );
                             }}
@@ -269,7 +269,7 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setShowCreditRef,
-                                      client?.username,
+                                      client?.downlineId,
                                       setDownLineId
                                     );
                                 }}
@@ -289,7 +289,7 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setDirectDeposit,
-                                      client?.username,
+                                      client?.downlineId,
                                       setDownLineId
                                     );
                                 }}

@@ -11,7 +11,7 @@ import useBalance from "../../../../hooks/useBalance";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 
 const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
-  const { clientId } = useContextState();
+  const { clientId, adminRole } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   const { data } = useGetDownlineEditForm("balance", downlineId);
   const { refetchBalance } = useBalance();
@@ -45,6 +45,7 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
       ...values,
       amount,
       token: generatedToken,
+      role: adminRole,
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -69,7 +70,6 @@ const DirectDeposit = ({ setDirectDeposit, downlineId }) => {
     }
   }, [data, reset]);
 
-  console.log(data);
   return (
     <>
       <div className="content-backdrop fade show"></div>

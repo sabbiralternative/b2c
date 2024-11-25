@@ -5,7 +5,9 @@ import useGetPNL from "../../../hooks/Master/Client/useGetPNL";
 import { useState } from "react";
 import SettleBets from "../../../components/modal/Master/SettleBets";
 import handleFormatDate from "../../../utils/handleFormatDate";
+import useContextState from "../../../hooks/useContextState";
 const PNL = () => {
+  const { adminRole } = useContextState();
   const [showBetsModal, setShowBetsModal] = useState(false);
   const [marketId, setMarketId] = useState("");
   const downlineId = localStorage.getItem("downLineId");
@@ -19,6 +21,7 @@ const PNL = () => {
     downlineId,
     fromDate: newFormattedStartDate,
     toDate: newFormattedEndDate,
+    role: adminRole,
   };
   const { pnl, refetchPNL } = useGetPNL(payload);
 

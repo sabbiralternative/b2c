@@ -1,12 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "./useContextState";
 import handleRandomToken from "../utils/handleRandomToken";
-import { API} from "../api";
+import { API } from "../api";
 import axios from "axios";
 
 const useGetCurrentRef = (downlineId) => {
-  const { token, tokenLoading,site } = useContextState();
-  const { data: currentRef = {}, refetch: refetchRef,isSuccess } = useQuery({
+  const { token, tokenLoading, site, adminRole } = useContextState();
+  const {
+    data: currentRef = {},
+    refetch: refetchRef,
+    isSuccess,
+  } = useQuery({
     queryKey: ["currentRef"],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -15,7 +19,8 @@ const useGetCurrentRef = (downlineId) => {
         downlineId: downlineId,
         type: "viewCreditReference",
         token: generatedToken,
-        site
+        site,
+        role: adminRole,
       };
       const res = await axios.post(API.downLineEdit, payload, {
         headers: {
@@ -27,9 +32,9 @@ const useGetCurrentRef = (downlineId) => {
         return data.result;
       }
     },
-    gcTime:0
+    gcTime: 0,
   });
-  return { currentRef, refetchRef,isSuccess };
+  return { currentRef, refetchRef, isSuccess };
 };
 
 export default useGetCurrentRef;

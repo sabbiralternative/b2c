@@ -69,6 +69,7 @@ const ChangeStatus = ({
       bettingStatus: betStatus ? 1 : 0,
       token: generatedToken,
       site,
+      role: adminRole,
     };
 
     if (
