@@ -7,6 +7,7 @@ import MarketAnalysis from "../pages/HyperMaster/Exposure/MarketAnalysis";
 import CurrentBets from "../pages/HyperMaster/Exposure/CurrentBets";
 import AddBonus from "../pages/HyperMaster/Bonus/AddBonus";
 import ViewBonus from "../pages/HyperMaster/Bonus/ViewBonus";
+import ViewChecker from "../pages/HyperMaster/Staff/ViewChecker";
 
 export const HyperMasterRoutes = [
   {
@@ -44,5 +45,9 @@ export const HyperMasterRoutes = [
   {
     path: "/view-bonus",
     element: <ViewBonus />,
+  },
+  {
+    path: "/view-checker",
+    element: <ViewChecker />,
   },
 ];

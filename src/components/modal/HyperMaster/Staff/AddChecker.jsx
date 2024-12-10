@@ -3,7 +3,10 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
 import useContextState from "../../../../hooks/useContextState";
-import { useAddChecker } from "../../../../hooks/HyperMaster/Staff";
+import {
+  useAddChecker,
+  useGetAllChecker,
+} from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
 
 const AddChecker = ({ setShowAddChecker }) => {
@@ -14,6 +17,10 @@ const AddChecker = ({ setShowAddChecker }) => {
   const { register, handleSubmit, reset } = useForm();
   const { site } = useContextState();
   const { mutate: addChecker } = useAddChecker();
+  const { refetch } = useGetAllChecker({
+    type: "viewStaff",
+    role: "checker",
+  });
 
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
@@ -28,7 +35,8 @@ const AddChecker = ({ setShowAddChecker }) => {
     addChecker(payload, {
       onSuccess: (data) => {
         if (data?.success) {
-          toast.error(data?.message);
+          refetch();
+          toast.success(data?.result);
           reset();
           setShowAddChecker(false);
         } else {
