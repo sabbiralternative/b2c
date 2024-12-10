@@ -12,10 +12,32 @@ export const useAddChecker = () => {
   });
 };
 
-export const useGetAllChecker = (payload) => {
+export const useGetAllChecker = () => {
   return useQuery({
     queryKey: ["view-checker"],
     queryFn: async () => {
+      const { data } = await AxiosSecure.post(API.staff, {
+        type: "viewStaff",
+        role: "checker",
+      });
+      return data;
+    },
+  });
+};
+
+export const useGetSingleChecker = (payload) => {
+  return useQuery({
+    queryKey: ["single-checker", payload],
+    queryFn: async () => {
+      const { data } = await AxiosSecure.post(API.staff, payload);
+      return data;
+    },
+  });
+};
+export const useUpdateSingleChecker = () => {
+  return useMutation({
+    mutationKey: ["update-single-checker"],
+    mutationFn: async (payload) => {
       const { data } = await AxiosSecure.post(API.staff, payload);
       return data;
     },
