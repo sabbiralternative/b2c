@@ -34,11 +34,12 @@ const StateProvider = ({ children }) => {
   const [readOnly, setReadOnly] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
   const [noticeLoaded, setNoticeLoaded] = useState(false);
-  const [directDeposit,setDirectDeposit] = useState(false)
+  const [directDeposit, setDirectDeposit] = useState(false);
+  const [showAddChecker, setAddChecker] = useState(false);
   const baseUrl = notice?.result?.settings?.baseUrl;
   useEffect(() => {
-    getSetApis(setNoticeLoaded,baseUrl);
-  }, [noticeLoaded,baseUrl]);
+    getSetApis(setNoticeLoaded, baseUrl);
+  }, [noticeLoaded, baseUrl]);
 
   /* Get token from locale storage */
   useEffect(() => {
@@ -145,7 +146,10 @@ const StateProvider = ({ children }) => {
     setReadOnly,
     siteNotification,
     setSiteNotification,
-    directDeposit,setDirectDeposit
+    directDeposit,
+    setDirectDeposit,
+    showAddChecker,
+    setAddChecker,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

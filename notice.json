@@ -97,7 +97,8 @@
       "downineEditForm": "https://admin.api7.live/api/b2c/downlineEditForm",
       "downLineEditForm": "https://admin.api7.live/api/downlineEditForm",
       "downLineEdit": "https://admin.api7.live/api/b2c/downlineEdit",
-      "bonus": "https://admin.api7.live/api/b2c/bonus"
+      "bonus": "https://admin.api7.live/api/b2c/bonus",
+      "staff": "https://admin.api7.live/api/b2c/staff"
     }
   },
   "success": true

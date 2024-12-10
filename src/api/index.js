@@ -64,6 +64,7 @@ export const API = {
   loginReadOnly: "",
   downineEditForm: "",
   bonus: "",
+  staff: "",
 };
 
 export const Settings = {

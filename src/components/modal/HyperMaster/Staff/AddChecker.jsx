@@ -1,0 +1,147 @@
+import { useRef } from "react";
+import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import handleRandomToken from "../../../../utils/handleRandomToken";
+import { useForm } from "react-hook-form";
+import useContextState from "../../../../hooks/useContextState";
+import { useAddChecker } from "../../../../hooks/HyperMaster/Staff";
+import toast from "react-hot-toast";
+
+const AddChecker = ({ setShowAddChecker }) => {
+  const addCheckerRef = useRef();
+  useCloseModalClickOutside(addCheckerRef, () => {
+    setShowAddChecker(false);
+  });
+  const { register, handleSubmit, reset } = useForm();
+  const { site } = useContextState();
+  const { mutate: addChecker } = useAddChecker();
+
+  const onSubmit = async (values) => {
+    const generatedToken = handleRandomToken();
+    const payload = {
+      ...values,
+      type: "addStaff",
+      role: "checker",
+      token: generatedToken,
+      site,
+    };
+
+    addChecker(payload, {
+      onSuccess: (data) => {
+        if (data?.success) {
+          toast.error(data?.message);
+          reset();
+          setShowAddChecker(false);
+        } else {
+          toast.error(data?.error);
+        }
+      },
+    });
+  };
+  return (
+    <>
+      <div className="content-backdrop fade show"></div>
+      <div
+        className="modal fade show"
+        id="modalCenter"
+        aria-modal="true"
+        role="dialog"
+        style={{ display: "block" }}
+      >
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content" ref={addCheckerRef}>
+            <div className="modal-header">
+              <h5 className="modal-title" id="modalCenterTitle">
+                Add Checker
+              </h5>
+              <button
+                onClick={() => setShowAddChecker(false)}
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="modal-body">
+                <div className="row">
+                  <div className="row mb-3" id="bank_account_name_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      Staff Name
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        type="text"
+                        {...register("staffname", {
+                          required: true,
+                        })}
+                        className="form-control"
+                        id="basic-default-name"
+                        placeholder=""
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3" id="bank_account_number_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      Username
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        type="text"
+                        {...register("username", {
+                          required: true,
+                        })}
+                        className="form-control"
+                        id="basic-default-company"
+                        placeholder=""
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3" id="ifsc_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      Password
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        type="text"
+                        {...register("password", {
+                          required: true,
+                        })}
+                        className="form-control"
+                        id="basic-default-company"
+                        placeholder=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  onClick={() => setShowAddChecker(false)}
+                  type="button"
+                  className="btn btn-label-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AddChecker;

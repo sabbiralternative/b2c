@@ -5,8 +5,12 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
 const HyperMaster = () => {
-  const { setShowAddBranch, setShowSocialLink, setSiteNotification } =
-    useContextState();
+  const {
+    setShowAddBranch,
+    setShowSocialLink,
+    setSiteNotification,
+    setAddChecker,
+  } = useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
   const [showBranch, setShowBranch] = useState(false);
@@ -16,6 +20,7 @@ const HyperMaster = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
+  const [showStaff, setShowStaff] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -81,6 +86,10 @@ const HyperMaster = () => {
   useCloseModalClickOutside(bonusRef, () => {
     setShowBonus(false);
   });
+  const staffRef = useRef();
+  useCloseModalClickOutside(staffRef, () => {
+    setShowStaff(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -92,6 +101,7 @@ const HyperMaster = () => {
     setShowDeposit(false);
     setShowClients(false);
     setShowBonus(false);
+    setShowStaff(false);
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
@@ -117,6 +127,7 @@ const HyperMaster = () => {
             setShowReport(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -177,6 +188,7 @@ const HyperMaster = () => {
             setShowReport(false);
             setShowBonus(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -236,6 +248,7 @@ const HyperMaster = () => {
             setShowReport(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -320,6 +333,7 @@ const HyperMaster = () => {
             setShowReport(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -365,6 +379,7 @@ const HyperMaster = () => {
             setShowBranch(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -413,6 +428,7 @@ const HyperMaster = () => {
             setShowSettings(false);
             setShowBranch(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -482,6 +498,7 @@ const HyperMaster = () => {
             setShowSettings(false);
             setShowBranch(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -547,6 +564,7 @@ const HyperMaster = () => {
             setShowClients(false);
             setShowSettings(false);
             setShowBranch(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -600,6 +618,44 @@ const HyperMaster = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li ref={staffRef} className={`menu-item ${showStaff ? "open" : ""}`}>
+        <a
+          onMouseEnter={() => {
+            setShowStaff(true);
+            setShowBonus(false);
+            setShowWithdraw(false);
+            setShowDeposit(false);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowClients(false);
+            setShowSettings(false);
+            setShowBranch(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+
+          <div data-i18n="Withdraw">Staff</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("view-checker")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">View Checker</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a onClick={() => setAddChecker(true)} className="menu-link">
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">Add Checker</div>
             </a>
           </li>
         </ul>

@@ -23,6 +23,7 @@ import CreditReference from "../modal/CreditReference";
 import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
 import toast from "react-hot-toast";
 import DirectDeposit from "../modal/Master/Client/DirectDeposit";
+import AddChecker from "../modal/HyperMaster/Staff/AddChecker";
 
 const MainLayout = () => {
   const {
@@ -57,6 +58,8 @@ const MainLayout = () => {
     showCreditRef,
     setShowCreditRef,
     registrationStatus,
+    showAddChecker,
+    setAddChecker,
   } = useContextState();
   const navigate = useNavigate();
   const location = useLocation();
@@ -198,6 +201,13 @@ const MainLayout = () => {
                 downlineId={downLineId}
               />
             )}
+            {showCreditRef && (
+              <CreditReference
+                setShowCreditRef={setShowCreditRef}
+                downlineId={downLineId}
+              />
+            )}
+            {showAddChecker && <AddChecker setShowAddChecker={setAddChecker} />}
             <Footer />
           </div>
 

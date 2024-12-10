@@ -11,11 +11,13 @@ const HyperMasterSidebar = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showClients, setShowClients] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
+  const [showStaff, setShowStaff] = useState(false);
   const {
     setShowSidebar,
     setShowAddBranch,
     setShowSocialLink,
     setSiteNotification,
+    setAddChecker,
   } = useContextState();
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
@@ -41,6 +43,7 @@ const HyperMasterSidebar = () => {
             setShowWithdraw(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -85,6 +88,7 @@ const HyperMasterSidebar = () => {
             setShowDeposit(false);
             setShowWithdraw(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -127,6 +131,7 @@ const HyperMasterSidebar = () => {
             setShowWithdraw(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -195,6 +200,7 @@ const HyperMasterSidebar = () => {
             setShowWithdraw(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -238,6 +244,7 @@ const HyperMasterSidebar = () => {
             setShowWithdraw(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -291,6 +298,7 @@ const HyperMasterSidebar = () => {
             setShowClients(false);
             setShowWithdraw(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -344,6 +352,7 @@ const HyperMasterSidebar = () => {
             setShowBranch(false);
             setShowClients(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -390,6 +399,7 @@ const HyperMasterSidebar = () => {
           style={{}}
           onClick={() => {
             setShowBonus((prev) => !prev);
+            setShowStaff(false);
             setShowWithdraw(false);
             setShowDeposit(false);
             setShowReport(false);
@@ -397,6 +407,7 @@ const HyperMasterSidebar = () => {
             setShowSettings(false);
             setShowBranch(false);
             setShowClients(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -454,6 +465,52 @@ const HyperMasterSidebar = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Pending Withdraw">Rejected Bonus</div>
+            </Link>
+          </li>
+        </ul>
+      </li>
+      <li className={`menu-item ${showStaff ? "open" : ""}`}>
+        <a
+          style={{}}
+          onClick={() => {
+            setShowStaff((prev) => !prev);
+            setShowWithdraw(false);
+            setShowDeposit(false);
+            setShowReport(false);
+            setShowExposure(false);
+            setShowSettings(false);
+            setShowBranch(false);
+            setShowClients(false);
+            setShowBonus(false);
+          }}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Staff</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              to="/view-checker"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">View Checker</div>
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              onClick={() => {
+                setShowSidebar(false);
+                setAddChecker(true);
+              }}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Add Banner">Add Checker</div>
             </Link>
           </li>
         </ul>
