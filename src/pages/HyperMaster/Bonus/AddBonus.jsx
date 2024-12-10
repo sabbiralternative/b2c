@@ -20,6 +20,7 @@ const AddBonus = () => {
       token: generatedToken,
       site,
     };
+
     const res = await axios.post(API.bonus, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -90,6 +91,23 @@ const AddBonus = () => {
                         type="radio"
                         {...register("bonus_type")}
                         value="deposit"
+                        className=""
+                        id="basic-default-name"
+                      />
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      <span>First Deposit Bonus</span>
+                      <input
+                        type="radio"
+                        {...register("bonus_type")}
+                        value="first_deposit"
                         className=""
                         id="basic-default-name"
                       />
