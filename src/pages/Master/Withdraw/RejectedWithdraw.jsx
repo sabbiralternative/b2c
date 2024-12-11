@@ -8,6 +8,7 @@ const RejectedWithdraw = () => {
     type: "viewWithdraw",
     status: "REJECTED",
     site,
+    pagination: true,
   };
   const { allWithdraw } = useGetALLWithdraw(payload);
   return (

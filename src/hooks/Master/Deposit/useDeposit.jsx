@@ -1,15 +1,25 @@
-import { useMutation } from "@tanstack/react-query";
-import { API } from "../../../api";
+import { useQuery } from "@tanstack/react-query";
+import { API, Settings } from "../../../api";
 import { AxiosSecure } from "../../../lib/AxiosSecure";
 
-const useDeposit = () => {
-  return useMutation({
-    queryKey: ["deposit-utr"],
-    mutationFn: async (payload) => {
+const useDeposit = (args, loop) => {
+  const { data = [], refetch } = useQuery({
+    queryKey: ["deposit-utr", args],
+    queryFn: async () => {
+      const payload = {
+        ...args,
+        type: "viewUTR",
+        site: Settings.siteUrl,
+      };
       const { data } = await AxiosSecure.post(API.utr, payload);
-      return data;
+      if (data?.success) {
+        return data?.result;
+      }
     },
+    refetchInterval: loop ? loop : null,
   });
+
+  return { data, refetch };
 };
 
 export default useDeposit;

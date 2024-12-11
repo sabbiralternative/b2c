@@ -1,5 +1,6 @@
 import useBalance from "../../hooks/useBalance";
 import useContextState from "../../hooks/useContextState";
+import { formatIndianNumber } from "../../utils/formatNumberWithCommas";
 
 const Home = () => {
   const { adminRole } = useContextState();
@@ -85,7 +86,11 @@ const Home = () => {
               <div className="col-sm-6 col-12 mb-4">
                 <div className="card">
                   <div className="card-body text-center">
-                    <h2 className="mb-1">{balanceData?.availableBalance}</h2>
+                    <h2 className="mb-1">
+                      {balanceData?.availableBalance ||
+                        (balanceData?.availableBalance == 0 &&
+                          balanceData?.availableBalance?.toFixed(2))}
+                    </h2>
                     <span className="text-muted">Available Balance</span>
                   </div>
                 </div>

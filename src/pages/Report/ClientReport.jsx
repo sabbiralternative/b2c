@@ -31,6 +31,7 @@ const ClientReport = () => {
       toDate: newFormattedEndDate,
       token: generatedToken,
       site: Settings.siteUrl,
+      pagination: true,
     };
     const res = await axios.post(API.export, payload, {
       headers: {

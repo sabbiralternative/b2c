@@ -7,6 +7,7 @@ const CompletedDeposit = () => {
     type: "viewUTR",
     status: "APPROVED",
     site: Settings.siteUrl,
+    pagination: true,
   };
   const { allUTRs } = useGetALLDeposit(payload);
   return (

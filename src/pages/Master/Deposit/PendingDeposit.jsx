@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Settings } from "../../../api";
 import useDeposit from "../../../hooks/Master/Deposit/useDeposit";
 import useContextState from "../../../hooks/useContextState";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,15 +17,22 @@ const PendingDeposit = () => {
     readOnly,
     adminRole,
   } = useContextState();
+  const [amountFrom, setAmountFrom] = useState(null);
+  const [amountTo, setAmountTo] = useState(null);
   const navigate = useNavigate();
   const [showImage, setShowImage] = useState(false);
   const [image, setImage] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
-  const { mutate: getPendingDeposit } = useDeposit();
-  const [depositData, setDepositData] = useState([]);
-  const [amountFrom, setAmountFrom] = useState(null);
-  const [amountTo, setAmountTo] = useState(null);
+  const { data } = useDeposit(
+    {
+      status: "PENDING",
+      amountFrom: amountFrom,
+      amountTo: amountTo,
+      pagination: true,
+    },
+    30000
+  );
 
   useEffect(() => {
     if (message) {
@@ -34,23 +40,6 @@ const PendingDeposit = () => {
       setMessage("");
     }
   }, [message]);
-
-  useEffect(() => {
-    const payload = {
-      type: "viewUTR",
-      status: "PENDING",
-      site: Settings.siteUrl,
-      amountFrom: amountFrom,
-      amountTo: amountTo,
-    };
-    getPendingDeposit(payload, {
-      onSuccess: (data) => {
-        if (data?.success) {
-          setDepositData(data?.result);
-        }
-      },
-    });
-  }, [amountFrom, amountTo]);
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -92,7 +81,7 @@ const PendingDeposit = () => {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {depositData?.map((item, i) => {
+              {data?.map((item, i) => {
                 return (
                   <tr key={i}>
                     <td

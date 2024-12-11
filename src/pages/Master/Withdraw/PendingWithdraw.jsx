@@ -8,6 +8,7 @@ const PendingWithdraw = () => {
     type: "viewWithdraw",
     status: "PENDING",
     site,
+    pagination: true,
   };
   const { allWithdraw } = useGetALLWithdraw(payload, 30000);
 

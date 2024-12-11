@@ -11,7 +11,6 @@ const useBalance = () => {
   const token = localStorage.getItem("adminToken");
   const adminRole = localStorage.getItem("adminRole");
   const { setGetToken, site } = useContextState();
-  console.log(adminRole);
   const { data: balanceData, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
     queryFn: async () => {

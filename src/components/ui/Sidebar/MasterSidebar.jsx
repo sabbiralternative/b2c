@@ -121,6 +121,46 @@ const MasterSidebar = () => {
               <div data-i18n="Add Client">Add Client</div>
             </a>
           </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/clients-with-balance"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Branches">Clients with balance</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/all-client"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Branches">All Client</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/active-client"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Branches">Active Client</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              onClick={() => setShowSidebar(false)}
+              to="/inactive-client"
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Branches">Inactive Client</div>
+            </Link>
+          </li>
         </ul>
       </li>
 
@@ -273,6 +313,15 @@ const MasterSidebar = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Rejected Deposit">Rejected Deposit</div>
+            </a>
+          </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("utr-search")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Rejected Deposit">UTR Search</div>
             </a>
           </li>
         </ul>

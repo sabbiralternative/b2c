@@ -129,7 +129,12 @@ const ViewClient = () => {
                         </td>
                         <td>{client?.totalDeposit}</td>
                         <td>{client?.totalWithdraw}</td>
-                        <td>{client?.exposure}</td>
+                        <td>
+                          {" "}
+                          {client?.exposure || client?.exposure == 0
+                            ? Number(client.exposure).toFixed(0)
+                            : client?.exposure}
+                        </td>
                         <td>
                           <span
                             className={`badge  me-1 ${

@@ -11,6 +11,7 @@ import ViewClient from "../pages/Master/Client/ViewClient";
 import CompletedDeposit from "../pages/Master/Deposit/CompletedDeposit";
 import PendingDeposit from "../pages/Master/Deposit/PendingDeposit";
 import RejectedDeposit from "../pages/Master/Deposit/RejectedDeposit";
+import UTRSearch from "../pages/Master/Deposit/UTRSearch";
 import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
 import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway";
 import AddQR from "../pages/Master/Payments/AddQR";
@@ -58,6 +59,10 @@ export const MasterRoutes = [
   {
     path: "/rejected-deposit",
     element: <RejectedDeposit />,
+  },
+  {
+    path: "/utr-search",
+    element: <UTRSearch />,
   },
   {
     path: "/pending-withdraw",

@@ -383,6 +383,15 @@ const Master = () => {
               <div data-i18n="Rejected Deposit">Rejected Deposit</div>
             </a>
           </li>
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("utr-search")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Rejected Deposit"> UTR Search</div>
+            </a>
+          </li>
         </ul>
       </li>
       <li
