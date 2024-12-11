@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { Settings } from "../../../api";
 import useDeposit from "../../../hooks/Master/Deposit/useDeposit";
-import moment from "moment";
 import useContextState from "../../../hooks/useContextState";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Slip from "../../../components/modal/Master/Deposit/Slip";
-import { DatePicker } from "rsuite";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
@@ -37,13 +35,13 @@ const PendingDeposit = () => {
     }
   }, [message]);
 
-  const handleGetPendingDeposit = () => {
+  useEffect(() => {
     const payload = {
       type: "viewUTR",
       status: "PENDING",
       site: Settings.siteUrl,
-      amountFrom: amountFrom ? moment(amountFrom).format("DD-MM-YYYY") : null,
-      amountTo: amountTo ? moment(amountTo).format("DD-MM-YYYY") : null,
+      amountFrom: amountFrom,
+      amountTo: amountTo,
     };
     getPendingDeposit(payload, {
       onSuccess: (data) => {
@@ -52,7 +50,7 @@ const PendingDeposit = () => {
         }
       },
     });
-  };
+  }, [amountFrom, amountTo]);
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -60,25 +58,20 @@ const PendingDeposit = () => {
         {showImage && <Slip setShowImage={setShowImage} image={image} />}
         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
           <h5 className="card-header">Pending Deposit</h5>
-          <DatePicker
-            format="dd-MM-yyyy"
-            editable
-            onChange={(data) => setAmountFrom(data)}
-            block
+          <input
+            style={{ width: "200px" }}
+            onChange={(e) => setAmountFrom(e.target.value)}
+            type="text"
+            className="form-control"
+            placeholder="Enter From Amount"
           />
-          <DatePicker
-            format="dd-MM-yyyy"
-            editable
-            onChange={(data) => setAmountTo(data)}
-            block
+          <input
+            style={{ width: "200px" }}
+            onChange={(e) => setAmountTo(e.target.value)}
+            type="text"
+            className="form-control"
+            placeholder="Enter To Amount"
           />
-          <button
-            onClick={handleGetPendingDeposit}
-            type="button"
-            className="btn btn-primary"
-          >
-            Submit
-          </button>
         </div>
 
         <div className="table-responsive text-nowrap">
