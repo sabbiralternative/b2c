@@ -6,7 +6,7 @@ import notification from "../../../../assets/notification.wav";
 import useContextState from "../../../../hooks/useContextState";
 
 const Master = () => {
-  const { readOnly, setShowSocialLink } = useContextState();
+  const { readOnly, setShowSocialLink, adminRole } = useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
   const [showStatement, setShowStatement] = useState(false);
@@ -111,58 +111,63 @@ const Master = () => {
         </Link>
       </li>
 
-      <li ref={clientsRef} className={`menu-item ${showClients ? "open" : ""}`}>
-        <a
-          onMouseEnter={() => {
-            setShowClients(true);
-            setShowSettings(false);
-            setShowDeposit(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowWithdraw(false);
-            setShowExposure(false);
-            setShowReport(false);
-            setShowBonus(false);
-          }}
-          className="menu-link menu-toggle"
+      {adminRole === "master" && (
+        <li
+          ref={clientsRef}
+          className={`menu-item ${showClients ? "open" : ""}`}
         >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Clients">Clients</div>
-        </a>
+          <a
+            onMouseEnter={() => {
+              setShowClients(true);
+              setShowSettings(false);
+              setShowDeposit(false);
+              setShowPayments(false);
+              setShowStatement(false);
+              setShowWithdraw(false);
+              setShowExposure(false);
+              setShowReport(false);
+              setShowBonus(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Clients">Clients</div>
+          </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("view-client")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="View Clients">View Clients</div>
-            </a>
-          </li>
-          {!readOnly && (
+          <ul className="menu-sub">
             <li className="menu-item">
               <a
-                onClick={() => handleNavigate("add-client")}
+                onClick={() => handleNavigate("view-client")}
                 className="menu-link"
               >
                 <i className="menu-icon tf-icons bx bxs-user"></i>
-                <div data-i18n="Add Client">Add Client</div>
+                <div data-i18n="View Clients">View Clients</div>
               </a>
             </li>
-          )}
+            {!readOnly && (
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-client")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                  <div data-i18n="Add Client">Add Client</div>
+                </a>
+              </li>
+            )}
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("clients-with-balance")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="Add Client">Clients with balance</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("clients-with-balance")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-user"></i>
+                <div data-i18n="Add Client">Clients with balance</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      )}
 
       {/* <li
         ref={statementRef}
@@ -205,82 +210,85 @@ const Master = () => {
           </li>
         </ul>
       </li> */}
-
-      <li
-        ref={paymentsRef}
-        className={`menu-item ${showPayments ? "open" : ""}`}
-      >
-        <a
-          onMouseEnter={() => {
-            setShowPayments(true);
-            setShowClients(false);
-            setShowSettings(false);
-            setShowDeposit(false);
-            setShowStatement(false);
-            setShowWithdraw(false);
-            setShowExposure(false);
-            setShowReport(false);
-            setShowBonus(false);
-          }}
-          className="menu-link menu-toggle"
+      {adminRole === "master" && (
+        <li
+          ref={paymentsRef}
+          className={`menu-item ${showPayments ? "open" : ""}`}
         >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Payments">Payments</div>
-        </a>
+          <a
+            onMouseEnter={() => {
+              setShowPayments(true);
+              setShowClients(false);
+              setShowSettings(false);
+              setShowDeposit(false);
+              setShowStatement(false);
+              setShowWithdraw(false);
+              setShowExposure(false);
+              setShowReport(false);
+              setShowBonus(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Payments">Payments</div>
+          </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("view-payment-method")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Payment Method">View Payment Method</div>
-            </a>
-          </li>
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("view-payment-method")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Payment Method">View Payment Method</div>
+              </a>
+            </li>
 
-          {!readOnly && (
-            <>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("add-bank-account")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Payment Method">Add Bank Account</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("add-QR")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Payment Method">Add QR</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("add-UPI")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Payment Method">Add UPI</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("add-payment-gateway")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Payment Method">Add Payment Gateway</div>
-                </a>
-              </li>
-            </>
-          )}
-        </ul>
-      </li>
+            {!readOnly && (
+              <>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-bank-account")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">Add Bank Account</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-QR")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">Add QR</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-UPI")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">Add UPI</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-payment-gateway")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">
+                      Add Payment Gateway
+                    </div>
+                  </a>
+                </li>
+              </>
+            )}
+          </ul>
+        </li>
+      )}
 
       <li ref={depositRef} className={`menu-item ${showDeposit ? "open" : ""}`}>
         <a
@@ -418,244 +426,251 @@ const Master = () => {
           </li>
         </ul>
       </li>
-      <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
-        <a
-          onMouseEnter={() => {
-            setShowBonus(true);
-            setShowWithdraw(false);
-            setShowClients(false);
-            setShowDeposit(false);
-            setShowSettings(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowExposure(false);
-            setShowReport(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          {dwCount?.claimCount !== 0 ? (
-            <span
-              style={{
-                borderRadius: "5px",
-                backgroundColor: "#39da8a",
-                marginRight: "5px",
-                padding: "0px 4px",
-                color: "black",
-                fontWeight: "500",
-              }}
-            >
-              {dwCount?.claimCount}
-            </span>
-          ) : (
-            <i className="menu-icon tf-icons bx bx-layout"></i>
-          )}
-
-          <div data-i18n="Withdraw">Bonus</div>
-        </a>
-
-        <ul className="menu-sub">
-          <li className="menu-item">
+      {adminRole === "master" && (
+        <>
+          <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
             <a
-              onClick={() => handleNavigate("pending-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">Pending Bonus</div>
-            </a>
-          </li>
-
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("completed-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Completed Withdraw">Completed Bonus</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("rejected-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-
-      <li
-        ref={exposureRef}
-        className={`menu-item ${showExposure ? "open" : ""}`}
-      >
-        <a
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowExposure(true);
-            setShowClients(false);
-            setShowSettings(false);
-            setShowDeposit(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowWithdraw(false);
-            setShowReport(false);
-            setShowBonus(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Settings">Exposure</div>
-        </a>
-
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("market-analysis")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">Market Analysis</div>
-            </a>
-          </li>
-
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("current-bets")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Banner">Current Bets</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
-        <a
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowReport(true);
-            setShowWithdraw(false);
-            setShowExposure(false);
-            setShowClients(false);
-            setShowDeposit(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowBonus(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Settings">Report</div>
-        </a>
-
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("client-report")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">Client Report</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("deposit-report")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">Deposit Report</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("first-deposit-report")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">First Deposit Report</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("no-deposit-report")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">No Deposit Report</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("withdraw-report")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">Withdraw Report</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("transfer-statement")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">Transfer Statement</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li
-        ref={settingsRef}
-        className={`menu-item ${showSettings ? "open" : ""}`}
-      >
-        <a
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowSettings(true);
-            setShowReport(false);
-            setShowWithdraw(false);
-            setShowExposure(false);
-            setShowClients(false);
-            setShowDeposit(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowBonus(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Settings">Settings</div>
-        </a>
-
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => {
-                setShowSocialLink(true);
+              onMouseEnter={() => {
+                setShowBonus(true);
+                setShowWithdraw(false);
+                setShowClients(false);
+                setShowDeposit(false);
                 setShowSettings(false);
+                setShowPayments(false);
+                setShowStatement(false);
+                setShowExposure(false);
+                setShowReport(false);
               }}
-              className="menu-link"
+              className="menu-link menu-toggle"
             >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">Social Links</div>
+              {dwCount?.claimCount !== 0 ? (
+                <span
+                  style={{
+                    borderRadius: "5px",
+                    backgroundColor: "#39da8a",
+                    marginRight: "5px",
+                    padding: "0px 4px",
+                    color: "black",
+                    fontWeight: "500",
+                  }}
+                >
+                  {dwCount?.claimCount}
+                </span>
+              ) : (
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+              )}
+
+              <div data-i18n="Withdraw">Bonus</div>
             </a>
+
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("pending-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                </a>
+              </li>
+
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("completed-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Completed Withdraw">Completed Bonus</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("rejected-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
+                </a>
+              </li>
+            </ul>
           </li>
-        </ul>
-      </li>
+
+          <li
+            ref={exposureRef}
+            className={`menu-item ${showExposure ? "open" : ""}`}
+          >
+            <a
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseEnter={() => {
+                setShowExposure(true);
+                setShowClients(false);
+                setShowSettings(false);
+                setShowDeposit(false);
+                setShowPayments(false);
+                setShowStatement(false);
+                setShowWithdraw(false);
+                setShowReport(false);
+                setShowBonus(false);
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Exposure</div>
+            </a>
+
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("market-analysis")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Market Analysis</div>
+                </a>
+              </li>
+
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("current-bets")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Banner">Current Bets</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li
+            ref={reportRef}
+            className={`menu-item ${showReport ? "open" : ""}`}
+          >
+            <a
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseEnter={() => {
+                setShowReport(true);
+                setShowWithdraw(false);
+                setShowExposure(false);
+                setShowClients(false);
+                setShowDeposit(false);
+                setShowPayments(false);
+                setShowStatement(false);
+                setShowBonus(false);
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Report</div>
+            </a>
+
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("client-report")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Client Report</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("deposit-report")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Deposit Report</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("first-deposit-report")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">First Deposit Report</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("no-deposit-report")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">No Deposit Report</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("withdraw-report")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Withdraw Report</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("transfer-statement")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Transfer Statement</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li
+            ref={settingsRef}
+            className={`menu-item ${showSettings ? "open" : ""}`}
+          >
+            <a
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseEnter={() => {
+                setShowSettings(true);
+                setShowReport(false);
+                setShowWithdraw(false);
+                setShowExposure(false);
+                setShowClients(false);
+                setShowDeposit(false);
+                setShowPayments(false);
+                setShowStatement(false);
+                setShowBonus(false);
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Settings</div>
+            </a>
+
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => {
+                    setShowSocialLink(true);
+                    setShowSettings(false);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Social Links</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </>
+      )}
     </ul>
   );
 };

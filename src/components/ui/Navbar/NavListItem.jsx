@@ -23,7 +23,9 @@ const NavListItem = () => {
           {adminRole === "hyper_master" || adminRole === "admin_master" ? (
             <HyperMaster />
           ) : null}
-          {adminRole === "master" && <Master />}
+          {adminRole === "master" || adminRole === "checker" ? (
+            <Master />
+          ) : null}
         </div>
         <a className="menu-horizontal-next d-none"></a>
       </div>

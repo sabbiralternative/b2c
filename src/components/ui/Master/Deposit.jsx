@@ -46,6 +46,9 @@ const Deposit = ({ data, title, time }) => {
               <th>Remark</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
+              {title === "Pending Deposit" && adminRole === "master" && (
+                <th>Actions</th>
+              )}
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">

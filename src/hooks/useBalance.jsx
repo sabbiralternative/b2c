@@ -9,22 +9,22 @@ import { handleLogOut } from "../utils/handleLogOut";
 /* Balance api */
 const useBalance = () => {
   const token = localStorage.getItem("adminToken");
-  const { setGetToken, tokenLoading,site } = useContextState();
+  const adminRole = localStorage.getItem("adminRole");
+  const { setGetToken, site } = useContextState();
+  console.log(adminRole);
   const { data: balanceData, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
-    enabled: !tokenLoading,
     queryFn: async () => {
+      if (adminRole == "checker") {
+        return;
+      }
       // const generatedToken = handleRandomToken();
       // const encryptedData = handleEncryptData(generatedToken);
-      const res = await axios.post(
-        API.balance,
-        site,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.post(API.balance, site, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (res?.data?.success === false && token) {
         /* Logout if success false  */

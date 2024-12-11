@@ -71,7 +71,9 @@ const Withdraw = ({ data, title, time }) => {
               <th>Status</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
-              {title === "Pending Withdraw" && <th>Actions</th>}
+              {title === "Pending Withdraw" && adminRole === "master" && (
+                <th>Actions</th>
+              )}
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
