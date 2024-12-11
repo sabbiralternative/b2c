@@ -28,10 +28,12 @@ const Deposit = ({ data, title, time }) => {
       setMessage("");
     }
   }, [message]);
+
   return (
     <div className="card">
       {showImage && <Slip setShowImage={setShowImage} image={image} />}
       <h5 className="card-header">{title}</h5>
+
       <div className="table-responsive text-nowrap">
         <table className="table table-hover table-sm">
           <thead className="table-dark">
