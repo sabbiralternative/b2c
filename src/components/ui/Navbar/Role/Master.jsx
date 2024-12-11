@@ -165,6 +165,34 @@ const Master = () => {
                 <div data-i18n="Add Client">Clients with balance</div>
               </a>
             </li>
+
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("all-client")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-user"></i>
+                <div data-i18n="Add Client">All Clients</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("active-client")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-user"></i>
+                <div data-i18n="Add Client">Active Clients</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("inactive-client")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-user"></i>
+                <div data-i18n="Add Client">Inactive Clients</div>
+              </a>
+            </li>
           </ul>
         </li>
       )}

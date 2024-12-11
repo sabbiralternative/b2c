@@ -2,12 +2,11 @@ import useContextState from "../../../hooks/useContextState";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
-
 import { useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 import { useClient } from "../../../hooks/Master/Client/useClient";
 
-const ClientWithBalance = () => {
+const InActiveClient = () => {
   const navigate = useNavigate();
   const [directWithdraw, setDirectWithdraw] = useState(false);
   const {
@@ -23,7 +22,7 @@ const ClientWithBalance = () => {
     setClientId,
   } = useContextState();
   const { data } = useClient({
-    searchId: "userWithCredit",
+    searchId: "inactiveUsers",
   });
 
   const handleNavigate = (username, link) => {
@@ -35,7 +34,7 @@ const ClientWithBalance = () => {
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
-          <h5 className="card-header">Clients</h5>
+          <h5 className="card-header">Inactive Clients</h5>
           <div className="table-responsive text-nowrap">
             <table className="table table-hover table-sm">
               <thead>
@@ -235,4 +234,4 @@ const ClientWithBalance = () => {
   );
 };
 
-export default ClientWithBalance;
+export default InActiveClient;

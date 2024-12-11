@@ -1,8 +1,11 @@
 import CompletedBonus from "../pages/Master/Bonus/CompletedBonus/CompletedBonus";
 import PendingBonus from "../pages/Master/Bonus/PendingBonus/PendingBonus";
 import RejectedBonus from "../pages/Master/Bonus/RejectedBonus/RejectedBonus";
+import ActiveClient from "../pages/Master/Client/ActiveClient";
 import AddClient from "../pages/Master/Client/AddClient";
+import AllClient from "../pages/Master/Client/AllClient";
 import ClientWithBalance from "../pages/Master/Client/ClientWithBalance";
+import InActiveClient from "../pages/Master/Client/InActiveClient";
 import PNL from "../pages/Master/Client/PNL";
 import ViewClient from "../pages/Master/Client/ViewClient";
 import CompletedDeposit from "../pages/Master/Deposit/CompletedDeposit";
@@ -31,6 +34,18 @@ export const MasterRoutes = [
   {
     path: "/clients-with-balance",
     element: <ClientWithBalance />,
+  },
+  {
+    path: "/all-client",
+    element: <AllClient />,
+  },
+  {
+    path: "/active-client",
+    element: <ActiveClient />,
+  },
+  {
+    path: "/inactive-client",
+    element: <InActiveClient />,
   },
   {
     path: "/pending-deposit",
