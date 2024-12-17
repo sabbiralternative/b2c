@@ -252,31 +252,31 @@ const ClientWithBalance = () => {
                 })}
               </tbody>
             </table>
+            {meta && (
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "end",
+                }}
+              >
+                <Pagination
+                  prev
+                  next
+                  size="md"
+                  total={meta?.totalRecords}
+                  limit={meta?.recordsPerPage}
+                  activePage={activePage}
+                  onChangePage={setActivePage}
+                  maxButtons={5}
+                  ellipsis
+                  boundaryLinks
+                />
+              </div>
+            )}
           </div>
         </div>
-        {meta && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "end",
-              width: "100%",
-            }}
-          >
-            <Pagination
-              prev
-              next
-              size="md"
-              total={meta?.totalRecords}
-              limit={meta?.recordsPerPage}
-              activePage={activePage}
-              onChangePage={setActivePage}
-              maxButtons={5}
-              ellipsis
-              boundaryLinks
-            />
-          </div>
-        )}
       </div>
 
       {directWithdraw && (
