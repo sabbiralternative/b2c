@@ -36,13 +36,32 @@ const ClientWithBalance = () => {
 
   const meta = data?.pagination;
 
-  console.log(data);
-
   return (
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
-          <h5 className="card-header">Clients</h5>
+          <div
+            className="card-header"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <h5>Clients</h5>
+            <Pagination
+              prev
+              next
+              size="md"
+              total={meta?.totalRecords}
+              limit={meta?.recordsPerPage}
+              activePage={activePage}
+              onChangePage={setActivePage}
+              maxButtons={5}
+              ellipsis
+              boundaryLinks
+            />
+          </div>
           <div className="table-responsive text-nowrap">
             <table className="table table-hover table-sm">
               <thead>
@@ -235,30 +254,30 @@ const ClientWithBalance = () => {
             </table>
           </div>
         </div>
+        {meta && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end",
+              width: "100%",
+            }}
+          >
+            <Pagination
+              prev
+              next
+              size="md"
+              total={meta?.totalRecords}
+              limit={meta?.recordsPerPage}
+              activePage={activePage}
+              onChangePage={setActivePage}
+              maxButtons={5}
+              ellipsis
+              boundaryLinks
+            />
+          </div>
+        )}
       </div>
-      {meta && (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "end",
-            width: "100%",
-          }}
-        >
-          <Pagination
-            prev
-            next
-            size="md"
-            total={meta?.totalRecords}
-            limit={meta?.recordsPerPage}
-            activePage={activePage}
-            onChangePage={setActivePage}
-            maxButtons={5}
-            ellipsis
-            boundaryLinks
-          />
-        </div>
-      )}
 
       {directWithdraw && (
         <DirectWithdraw

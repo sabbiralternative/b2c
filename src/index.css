@@ -70,3 +70,24 @@ div:where(.swal2-container) .swal2-html-container {
 .bonus-table td {
   text-align: center;
 }
+
+/*! Pagination */
+.rs-pagination-btn {
+  padding: 2px 8px !important;
+  min-width: 10px !important;
+  border-radius: 4px !important;
+  color: gainsboro !important;
+}
+
+.rs-pagination-btn:hover {
+  color: #283144 !important;
+}
+
+.rs-pagination-btn-active {
+  padding: 0px 7px !important;
+  min-width: 10px !important;
+  border-radius: 4px !important;
+}
+.rs-pagination-btn-active:hover {
+  color: gainsboro !important;
+}
