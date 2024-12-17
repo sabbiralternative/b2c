@@ -19,11 +19,15 @@ const useBalance = () => {
       }
       // const generatedToken = handleRandomToken();
       // const encryptedData = handleEncryptData(generatedToken);
-      const res = await axios.post(API.balance, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        API.balance,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (res?.data?.success === false && token) {
         /* Logout if success false  */
         handleLogOut();
