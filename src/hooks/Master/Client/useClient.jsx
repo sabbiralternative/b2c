@@ -1,4 +1,4 @@
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosSecure } from "../../../lib/AxiosSecure";
@@ -11,6 +11,7 @@ export const useClient = (args) => {
       const payload = {
         ...args,
         token: generatedToken,
+        pagination: true,
       };
       const { data } = await AxiosSecure.post(API.viewClients, payload);
       if (data?.success) {
