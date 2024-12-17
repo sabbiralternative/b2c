@@ -15,7 +15,7 @@ export const useClient = (args) => {
       };
       const { data } = await AxiosSecure.post(API.viewClients, payload);
       if (data?.success) {
-        return data?.result;
+        return data;
       }
     },
     gcTime: 0,

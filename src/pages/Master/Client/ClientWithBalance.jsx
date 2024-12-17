@@ -2,13 +2,15 @@ import useContextState from "../../../hooks/useContextState";
 import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
-
+import { Pagination } from "rsuite";
+import "rsuite/Pagination/styles/index.css";
 import { useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 import { useClient } from "../../../hooks/Master/Client/useClient";
 
 const ClientWithBalance = () => {
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState(1);
   const [directWithdraw, setDirectWithdraw] = useState(false);
   const {
     downLineId,
@@ -24,12 +26,17 @@ const ClientWithBalance = () => {
   } = useContextState();
   const { data } = useClient({
     searchId: "userWithCredit",
+    page: activePage,
   });
 
   const handleNavigate = (username, link) => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
   };
+
+  const meta = data?.pagination;
+
+  console.log(data);
 
   return (
     <>
@@ -54,7 +61,7 @@ const ClientWithBalance = () => {
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
-                {data?.map((client, i) => {
+                {data?.result?.map((client, i) => {
                   return (
                     <tr key={i}>
                       <td
@@ -229,6 +236,30 @@ const ClientWithBalance = () => {
           </div>
         </div>
       </div>
+      {meta && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "end",
+            width: "100%",
+          }}
+        >
+          <Pagination
+            prev
+            next
+            size="md"
+            total={meta?.totalRecords}
+            limit={meta?.recordsPerPage}
+            activePage={activePage}
+            onChangePage={setActivePage}
+            maxButtons={5}
+            ellipsis
+            boundaryLinks
+          />
+        </div>
+      )}
+
       {directWithdraw && (
         <DirectWithdraw
           downlineId={downLineId}
