@@ -14,7 +14,7 @@ const AddNewPaymentGateway = () => {
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
-  const { token, site } = useContextState();
+  const { token } = useContextState();
 
   /* add new payment gateway */
   const onSubmit = async (values) => {
@@ -24,7 +24,6 @@ const AddNewPaymentGateway = () => {
       ...values,
       token: generatedToken,
       method: "pg",
-      site,
     };
 
     const res = await axios.post(API.payments, payload, {

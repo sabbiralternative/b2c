@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import useContextState from "../../useContextState";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +18,8 @@ const useGetClient = (searchId, setFetchClients, fetchClients) => {
       const payload = {
         searchId,
         token: generatedToken,
-        site: Settings.siteUrl,
+
+        pagination: true,
       };
       const res = await axios.post(API.viewClients, payload, {
         headers: {

@@ -5,7 +5,7 @@ import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetSingleViewBonus = (bonus_id) => {
-  const { token, tokenLoading, site } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const { data: singleBonus = {}, refetch: refetchSingleBonus } = useQuery({
     queryKey: ["singleBonus", bonus_id],
     enabled: !tokenLoading,
@@ -13,7 +13,6 @@ const useGetSingleViewBonus = (bonus_id) => {
       const generatedToken = handleRandomToken();
       const payload = {
         token: generatedToken,
-        site,
         type: "viewSingleBonus",
         bonus_id,
       };

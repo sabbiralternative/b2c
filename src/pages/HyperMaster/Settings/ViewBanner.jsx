@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewAllBanner";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import useContextState from "../../../hooks/useContextState";
 import toast from "react-hot-toast";
@@ -32,7 +32,6 @@ const ViewBanner = () => {
         const payload = {
           type: "deleteBanner",
           bannerId: banner?.banner_id,
-          site: Settings?.siteUrl,
           token: generatedToken,
         };
         const res = await axios.post(API.banner, payload, {

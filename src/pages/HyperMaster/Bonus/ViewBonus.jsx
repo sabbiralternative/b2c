@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 const ViewBonus = () => {
   const [editBonusId, setEditBonusId] = useState("");
   const { bonus, refetchBonus } = useGetViewBonus();
-  const { site, token } = useContextState();
+  const { token } = useContextState();
 
   const handleDeleteBonus = async (bonus) => {
     Swal.fire({
@@ -30,7 +30,6 @@ const ViewBonus = () => {
           type: "deleteBonus",
           bonus_id: bonus?.bonus_id,
           token: generatedToken,
-          site,
         };
         const res = await axios.post(API.bonus, payload, {
           headers: { Authorization: `Bearer ${token}` },

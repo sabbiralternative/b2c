@@ -16,7 +16,7 @@ const EditBanner = () => {
   const { singleBanner, isLoading, isFetching } = useGetSingleBanner(bannerId);
   const { refetchAllBanners } = useGetViewAllBanner();
 
-/* handle edit banner */
+  /* handle edit banner */
   const onSubmit = async ({ status, priority }) => {
     const generatedToken = handleRandomToken();
     const payload = {
@@ -25,7 +25,6 @@ const EditBanner = () => {
       status,
       priority,
       token: generatedToken,
-      site: Settings.siteUrl,
     };
     const res = await axios.post(API.banner, payload, {
       headers: { Authorization: `Bearer ${token}` },

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
-import useContextState from "../../../../hooks/useContextState";
+
 import {
   useAddChecker,
   useGetAllChecker,
@@ -15,7 +15,6 @@ const AddChecker = ({ setShowAddChecker }) => {
     setShowAddChecker(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { site } = useContextState();
   const { mutate: addChecker } = useAddChecker();
   const { refetch } = useGetAllChecker({
     type: "viewStaff",
@@ -29,7 +28,6 @@ const AddChecker = ({ setShowAddChecker }) => {
       type: "addStaff",
       role: "checker",
       token: generatedToken,
-      site,
     };
 
     addChecker(payload, {

@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios"; 
+import axios from "axios";
 import useContextState from "../../useContextState";
-import { API} from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetSingleBanner = (bannerId) => {
-  const { token, tokenLoading,site } = useContextState();
-  const { data: singleBanner = [], refetch: refetchSingleBanner,isLoading,isFetching } = useQuery({
+  const { token, tokenLoading } = useContextState();
+  const {
+    data: singleBanner = [],
+    refetch: refetchSingleBanner,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ["banner"],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -15,7 +20,6 @@ const useGetSingleBanner = (bannerId) => {
         token: generatedToken,
         type: "getSingleBanner",
         bannerId,
-        site
       };
       const res = await axios.post(API.banner, payload, {
         headers: {
@@ -29,7 +33,7 @@ const useGetSingleBanner = (bannerId) => {
       }
     },
   });
-  return { singleBanner, refetchSingleBanner,isLoading,isFetching };
+  return { singleBanner, refetchSingleBanner, isLoading, isFetching };
 };
 
 export default useGetSingleBanner;

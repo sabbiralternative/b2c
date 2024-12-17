@@ -15,14 +15,13 @@ const useGetDownlineEditForm = (type, downlineId) => {
         downlineId,
         type,
         token: generatedToken,
-        site: Settings.siteUrl,
       };
       const res = await axios.post(API.downineEditForm, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-console.log(res);
+      console.log(res);
       const data = res.data;
       console.log(data);
       if (data?.success) {

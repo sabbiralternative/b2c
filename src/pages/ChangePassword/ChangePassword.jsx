@@ -9,13 +9,11 @@ import handleRandomToken from "../../utils/handleRandomToken";
 
 const ChangePassword = () => {
   const { register, handleSubmit } = useForm();
-  const { token,site } = useContextState();
+  const { token } = useContextState();
   const navigate = useNavigate();
-
 
   /* handle change password  */
   const onSubmit = async ({ oldPassword, newPassword, confirmPassword }) => {
-
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -29,7 +27,6 @@ const ChangePassword = () => {
       oldPassword,
       confirmPassword,
       token: generatedToken,
-      site
     };
     const res = await axios.post(API.changePassword, payload, {
       headers: { Authorization: `Bearer ${token}` },

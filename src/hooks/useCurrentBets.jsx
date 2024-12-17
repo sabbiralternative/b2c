@@ -5,9 +5,8 @@ import handleEncryptData from "../utils/handleEncryptData";
 import { API } from "../api";
 import axios from "axios";
 
-
 const useCurrentBets = () => {
-  const { token, tokenLoading,site } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const { data: currentBets } = useQuery({
     queryKey: ["currentBets"],
     enabled: !tokenLoading,
@@ -16,7 +15,6 @@ const useCurrentBets = () => {
       const encryptedData = handleEncryptData({
         type: "sports",
         token: generatedToken,
-        site
       });
       const res = await axios.post(API.currentBets, encryptedData, {
         headers: {

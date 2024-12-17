@@ -3,7 +3,7 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
 import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -11,10 +11,9 @@ import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 
 const AddQR = () => {
-  const { token, site } = useContextState();
+  const { token } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
-    site,
   };
   const [qr_code, setQr_code] = useState("");
   const [image, setImage] = useState(null);
@@ -53,7 +52,6 @@ const AddQR = () => {
       ...values,
       method: "qr",
       token: generatedToken,
-      site: Settings.siteUrl,
     };
 
     const res = await axios.post(API.payments, payload, {
@@ -94,7 +92,6 @@ const AddQR = () => {
                       })}
                       className="form-control"
                       type="text"
-                   
                     />
                   </div>
                 </div>

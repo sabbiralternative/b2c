@@ -11,7 +11,6 @@ export const useClient = (args) => {
       const payload = {
         ...args,
         token: generatedToken,
-        site: Settings.siteUrl,
       };
       const { data } = await AxiosSecure.post(API.viewClients, payload);
       if (data?.success) {

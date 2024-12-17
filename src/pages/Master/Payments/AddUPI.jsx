@@ -14,7 +14,7 @@ const AddUPI = () => {
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
-  const { token, site } = useContextState();
+  const { token } = useContextState();
 
   /* add upi */
   const onSubmit = async (values) => {
@@ -24,7 +24,6 @@ const AddUPI = () => {
       ...values,
       method: "upi",
       token: generatedToken,
-      site,
     };
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },

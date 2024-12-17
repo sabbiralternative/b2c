@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 
 const useGetALLWithdraw = (args, time) => {
   const { token, tokenLoading } = useContextState();
@@ -14,7 +14,6 @@ const useGetALLWithdraw = (args, time) => {
       const payload = {
         ...args,
         token: generatedToken,
-        site:Settings.siteUrl
       };
       const res = await axios.post(API.withdraw, payload, {
         headers: {

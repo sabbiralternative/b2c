@@ -35,7 +35,6 @@ const FirstDepositReport = () => {
       fromDate: newFormattedStartDate,
       toDate: newFormattedEndDate,
       token: generatedToken,
-      site: Settings.siteUrl,
     };
     const res = await axios.post(API.export, payload, {
       headers: {

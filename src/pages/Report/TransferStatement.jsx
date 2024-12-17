@@ -23,7 +23,6 @@ const TransferStatement = () => {
       fromDate: formattedStartDate,
       toDate: formattedEndDate,
       token: generatedToken,
-      site: Settings.siteUrl,
     };
 
     const res = await axios.post(API.transferStatement, payload, {
@@ -142,16 +141,8 @@ const TransferStatement = () => {
                         return (
                           <tr key={i}>
                             <td>{data?.date}</td>
-                            <td
-                          
-                            >
-                              {data?.credit}
-                            </td>
-                            <td
-                         
-                            >
-                              {data?.debit}
-                            </td>
+                            <td>{data?.credit}</td>
+                            <td>{data?.debit}</td>
                             <td>{data?.remark}</td>
                             <td>{data?.fromto}</td>
                           </tr>

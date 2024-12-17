@@ -11,11 +11,10 @@ import ShowImage from "../../../components/modal/ShowImage";
 const ViewPaymentMethod = () => {
   const [showPaymentImage, setShowPaymentImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setShowEditPayment, setDownLineId, site, readOnly } =
+  const { token, setShowEditPayment, setDownLineId, readOnly } =
     useContextState();
   const payload = {
     type: "viewPaymentMethods",
-    site,
   };
   const { paymentsMethods, refetchPaymentMethods } =
     useGetPaymentMethod(payload);
@@ -37,7 +36,6 @@ const ViewPaymentMethod = () => {
           type: "deletePayment",
           paymentId,
           token: generatedToken,
-          site,
         };
         const res = await axios.post(API.payments, payload, {
           headers: { Authorization: `Bearer ${token}` },

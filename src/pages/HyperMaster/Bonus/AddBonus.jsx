@@ -9,7 +9,7 @@ import useContextState from "../../../hooks/useContextState";
 const AddBonus = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
-  const { token, site } = useContextState();
+  const { token } = useContextState();
 
   /* handle add client */
   const onSubmit = async (value) => {
@@ -18,7 +18,6 @@ const AddBonus = () => {
       type: "addBonus",
       ...value,
       token: generatedToken,
-      site,
     };
 
     const res = await axios.post(API.bonus, payload, {

@@ -9,7 +9,6 @@ const useDeposit = (args, loop) => {
       const payload = {
         ...args,
         type: "viewUTR",
-        site: Settings.siteUrl,
       };
       const { data } = await AxiosSecure.post(API.utr, payload);
       if (data?.success) {

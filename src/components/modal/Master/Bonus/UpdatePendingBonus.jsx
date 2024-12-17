@@ -15,7 +15,7 @@ const UpdatePendingBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   });
 
   const { register, handleSubmit } = useForm();
-  const { token, site } = useContextState();
+  const { token } = useContextState();
 
   const handleUpdateBonus = async ({ status }) => {
     setDisabled(true);
@@ -25,7 +25,6 @@ const UpdatePendingBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
       bonus_statement_id: editBonusId,
       status,
       token: generatedToken,
-      site,
     };
 
     const res = await axios.post(API.bonus, payload, {

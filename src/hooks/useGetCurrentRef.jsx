@@ -5,7 +5,7 @@ import { API } from "../api";
 import axios from "axios";
 
 const useGetCurrentRef = (downlineId) => {
-  const { token, tokenLoading, site, adminRole } = useContextState();
+  const { token, tokenLoading, adminRole } = useContextState();
   const {
     data: currentRef = {},
     refetch: refetchRef,
@@ -19,7 +19,6 @@ const useGetCurrentRef = (downlineId) => {
         downlineId: downlineId,
         type: "viewCreditReference",
         token: generatedToken,
-        site,
         role: adminRole,
       };
       const res = await axios.post(API.downLineEdit, payload, {

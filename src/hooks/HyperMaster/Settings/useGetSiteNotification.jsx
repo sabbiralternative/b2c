@@ -5,7 +5,7 @@ import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetSiteNotification = () => {
-  const { token, tokenLoading, site } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const {
     data: siteNotification = [],
     refetch: refetchSiteNotification,
@@ -18,7 +18,6 @@ const useGetSiteNotification = () => {
       const payload = {
         token: generatedToken,
         type: "getNotification",
-        site,
       };
       const res = await axios.post(API.notification, payload, {
         headers: {
@@ -31,7 +30,7 @@ const useGetSiteNotification = () => {
         return data?.result?.message;
       }
     },
-    gcTime:0
+    gcTime: 0,
   });
   return { siteNotification, refetchSiteNotification, isLoading };
 };

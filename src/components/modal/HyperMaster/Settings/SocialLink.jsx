@@ -19,7 +19,7 @@ const SocialLink = ({ setShowSocialLink }) => {
   });
 
   const { register, handleSubmit, reset } = useForm({});
-  const { token, site, adminRole } = useContextState();
+  const { token, adminRole } = useContextState();
 
   /* handle edit social link */
   const onSubmit = async ({ whatsapp, instagram, telegram }) => {
@@ -38,7 +38,6 @@ const SocialLink = ({ setShowSocialLink }) => {
         type: "updateSocial",
         whatsapp,
         token: generatedToken,
-        site,
       };
     } else {
       payload = {
@@ -47,7 +46,6 @@ const SocialLink = ({ setShowSocialLink }) => {
         instagram,
         telegram,
         token: generatedToken,
-        site,
       };
     }
 

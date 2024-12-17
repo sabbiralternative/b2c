@@ -51,7 +51,6 @@ const AddBanner = () => {
       banner_link: filePath,
       priority,
       token: generatedToken,
-      site: Settings.siteUrl,
     };
     const res = await axios.post(API.banner, payload, {
       headers: { Authorization: `Bearer ${token}` },

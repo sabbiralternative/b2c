@@ -5,7 +5,7 @@ import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetAllSocialLink = () => {
-  const { token, tokenLoading,site } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const {
     data: socialLinks = [],
     refetch: refetchAllSocialLinks,
@@ -18,7 +18,6 @@ const useGetAllSocialLink = () => {
       const payload = {
         token: generatedToken,
         type: "getSocial",
-        site
       };
       const res = await axios.post(API.socialLinks, payload, {
         headers: {

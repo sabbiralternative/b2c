@@ -16,7 +16,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
     setShowDeposit(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, site, adminRole } = useContextState();
+  const { token, adminRole } = useContextState();
   const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -32,7 +32,6 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
       amount,
       remark,
       token: generatedToken,
-      site,
       role: adminRole,
     };
     const res = await axios.post(API.downLineEdit, payload, {

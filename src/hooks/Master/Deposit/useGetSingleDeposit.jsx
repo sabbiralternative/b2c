@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 
 const useGetSingleDeposit = (args) => {
   const { token, tokenLoading } = useContextState();
@@ -15,7 +15,6 @@ const useGetSingleDeposit = (args) => {
       const payload = {
         ...args,
         token: generatedToken,
-        site:Settings.siteUrl
       };
       const res = await axios.post(API.utr, payload, {
         headers: {
@@ -24,7 +23,7 @@ const useGetSingleDeposit = (args) => {
       });
 
       const data = res.data;
-  
+
       if (data?.success) {
         return data?.result;
       }

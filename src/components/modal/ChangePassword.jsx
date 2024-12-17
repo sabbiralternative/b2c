@@ -20,7 +20,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
   });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole, site } = useContextState();
+  const { token, adminRole } = useContextState();
   /* handle change password */
   const onSubmit = async ({ password, confirmPassword }) => {
     const generatedToken = handleRandomToken();
@@ -41,7 +41,6 @@ const ChangePassword = ({ setShowChangePassword, downlineId }) => {
       password,
       confirmPassword,
       token: generatedToken,
-      site,
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

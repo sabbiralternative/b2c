@@ -4,9 +4,8 @@ import useContextState from "../../useContextState";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
-
 const useGetAllBranch = () => {
-  const { token, tokenLoading, adminRole, site } = useContextState();
+  const { token, tokenLoading, adminRole } = useContextState();
   const { data: branches = [], refetch: refetchAllBranch } = useQuery({
     queryKey: ["branch"],
     enabled: !tokenLoading,
@@ -15,7 +14,7 @@ const useGetAllBranch = () => {
         return;
       }
       const generatedToken = handleRandomToken();
-      const payload = { token: generatedToken, site };
+      const payload = { token: generatedToken };
       const res = await axios.post(API.viewBranches, payload, {
         headers: {
           Authorization: `Bearer ${token}`,

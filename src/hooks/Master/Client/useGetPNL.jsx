@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
@@ -14,7 +14,6 @@ const useGetPNL = (args) => {
       const payload = {
         ...args,
         token: generatedToken,
-        site:Settings.siteUrl
       };
       const res = await axios.post(API.statement, payload, {
         headers: {

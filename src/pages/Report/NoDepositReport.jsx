@@ -11,7 +11,8 @@ import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
 const NoDepositReport = () => {
-  const { token, setClientId, adminRole,setRefetchViewClient } = useContextState();
+  const { token, setClientId, adminRole, setRefetchViewClient } =
+    useContextState();
   const [viewNoDepositReportData, setViewNoDepositReportData] = useState(false);
   const [noDepositReport, setNoDepositReportData] = useState([]);
   const navigate = useNavigate();
@@ -29,7 +30,6 @@ const NoDepositReport = () => {
       fromDate: newFormattedStartDate,
       toDate: newFormattedEndDate,
       token: generatedToken,
-      site: Settings.siteUrl,
     };
     const res = await axios.post(API.export, payload, {
       headers: {
@@ -70,7 +70,7 @@ const NoDepositReport = () => {
             >
               <div className="col-md-6 col-12 mb-4">
                 <label htmlFor="flatpickr-range" className="form-label">
-                No Deposit Report Registration Date
+                  No Deposit Report Registration Date
                 </label>
                 <DateRangePicker
                   format="dd-MM-yyyy"
@@ -136,20 +136,18 @@ const NoDepositReport = () => {
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                               setClientId(data?.userId);
-                              setRefetchViewClient(true)
+                              setRefetchViewClient(true);
                               navigate("/view-client");
                             }}
                           >
                             {data?.userId}
                           </td>
-                         {
-                          adminRole !== 'master' && (
+                          {adminRole !== "master" && (
                             <>
-                             <td>{data?.username}</td>
-                             <td>{data?.mobile}</td>
+                              <td>{data?.username}</td>
+                              <td>{data?.mobile}</td>
                             </>
-                          )
-                         }
+                          )}
                           <td>{data?.registrationDate}</td>
                           <td>{data?.credit_limit}</td>
                         </tr>

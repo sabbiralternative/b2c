@@ -17,7 +17,7 @@ const CreditReference = ({ downlineId, setShowCreditRef }) => {
     setShowCreditRef(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, site, adminRole } = useContextState();
+  const { token, adminRole } = useContextState();
   const { currentRef, isSuccess } = useGetCurrentRef(downlineId);
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClients } = useGetClient(downlineId);
@@ -30,7 +30,6 @@ const CreditReference = ({ downlineId, setShowCreditRef }) => {
       amount,
       type: "updateCreditReference",
       token: generatedToken,
-      site,
       role: adminRole,
     };
     const res = await axios.post(API.downLineEdit, payload, {

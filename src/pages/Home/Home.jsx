@@ -1,6 +1,5 @@
 import useBalance from "../../hooks/useBalance";
 import useContextState from "../../hooks/useContextState";
-import { formatIndianNumber } from "../../utils/formatNumberWithCommas";
 
 const Home = () => {
   const { adminRole } = useContextState();

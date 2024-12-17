@@ -18,7 +18,7 @@
       "disabledDevtool": false,
       "casinoCurrency": "AED",
       "otp": false,
-      "baseUrl": "/b2c"
+      "baseUrl": ""
     },
     "endpoint": {
       "login": "https://admin.api7.live/api/b2c/login",

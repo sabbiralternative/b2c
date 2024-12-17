@@ -5,13 +5,13 @@ import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetViewBonus = () => {
-  const { token, tokenLoading, site } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const { data: bonus = [], refetch: refetchBonus } = useQuery({
     queryKey: ["bonus"],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
-      const payload = { token: generatedToken, site, type: "viewBonus" };
+      const payload = { token: generatedToken, type: "viewBonus" };
       const res = await axios.post(API.bonus, payload, {
         headers: {
           Authorization: `Bearer ${token}`,

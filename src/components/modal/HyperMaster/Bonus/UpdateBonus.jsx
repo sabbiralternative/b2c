@@ -16,7 +16,7 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token, site } = useContextState();
+  const { token } = useContextState();
 
   const handleUpdateBonus = async (value) => {
     const generatedToken = handleRandomToken();
@@ -25,7 +25,6 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
       bonus_id: editBonusId,
       ...value,
       token: generatedToken,
-      site,
     };
 
     const res = await axios.post(API.bonus, payload, {

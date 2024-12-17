@@ -18,7 +18,7 @@ const SiteNotification = ({ setSiteNotification }) => {
   });
 
   const { register, handleSubmit, reset } = useForm({});
-  const { token, site } = useContextState();
+  const { token } = useContextState();
 
   /* handle edit site notification */
   const onSubmit = async ({ message }) => {
@@ -27,7 +27,6 @@ const SiteNotification = ({ setSiteNotification }) => {
       type: "setNotification",
       message,
       token: generatedToken,
-      site,
     };
     const res = await axios.post(API.notification, payload, {
       headers: { Authorization: `Bearer ${token}` },

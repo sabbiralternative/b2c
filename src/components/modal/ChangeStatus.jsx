@@ -16,7 +16,7 @@ const ChangeStatus = ({
   downlineId,
   registrationStatus: regiStatus,
 }) => {
-  const { token, adminRole, site, clientId } = useContextState();
+  const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClient } = useRefetchClient(downlineId);
@@ -68,7 +68,6 @@ const ChangeStatus = ({
       userStatus: userStatus ? 1 : 0,
       bettingStatus: betStatus ? 1 : 0,
       token: generatedToken,
-      site,
       role: adminRole,
     };
 

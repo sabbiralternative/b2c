@@ -10,7 +10,7 @@ import { handleLogOut } from "../utils/handleLogOut";
 const useBalance = () => {
   const token = localStorage.getItem("adminToken");
   const adminRole = localStorage.getItem("adminRole");
-  const { setGetToken, site } = useContextState();
+  const { setGetToken } = useContextState();
   const { data: balanceData, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
     queryFn: async () => {
@@ -19,12 +19,11 @@ const useBalance = () => {
       }
       // const generatedToken = handleRandomToken();
       // const encryptedData = handleEncryptData(generatedToken);
-      const res = await axios.post(API.balance, site, {
+      const res = await axios.post(API.balance, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (res?.data?.success === false && token) {
         /* Logout if success false  */
         handleLogOut();

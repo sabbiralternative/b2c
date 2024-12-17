@@ -6,7 +6,7 @@ import handleRandomToken from "../utils/handleRandomToken";
 import handleEncryptData from "../utils/handleEncryptData";
 
 const useCurrentBets = (eventId) => {
-  const { token, tokenLoading,site } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const { data: myBets, refetch: refetchCurrentBets } = useQuery({
     queryKey: ["currentBets"],
     enabled: !tokenLoading,
@@ -15,7 +15,6 @@ const useCurrentBets = (eventId) => {
       const encryptedData = handleEncryptData({
         type: eventId,
         token: generatedToken,
-        site
       });
       const res = await axios.post(`${API.currentBets}`, encryptedData, {
         headers: {

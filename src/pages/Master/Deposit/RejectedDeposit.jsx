@@ -6,7 +6,7 @@ const RejectedDeposit = () => {
   const payload = {
     type: "viewUTR",
     status: "REJECTED",
-    site: Settings.siteUrl,
+
     pagination: true,
   };
   const { allUTRs } = useGetALLDeposit(payload);

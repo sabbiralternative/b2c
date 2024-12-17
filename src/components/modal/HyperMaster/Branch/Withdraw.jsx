@@ -17,7 +17,7 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
     setShowWithdraw(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, site, adminRole } = useContextState();
+  const { token, adminRole } = useContextState();
 
   /* handle withdraw submit */
   const onSubmit = async ({ amount, remark }) => {
@@ -35,7 +35,6 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
       amount,
       remark,
       token: generatedToken,
-      site,
       role: adminRole,
     };
     const res = await axios.post(API.downLineEdit, payload, {

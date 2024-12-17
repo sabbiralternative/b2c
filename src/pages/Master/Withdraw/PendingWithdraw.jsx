@@ -1,13 +1,10 @@
 import Withdraw from "../../../components/ui/Master/Withdraw";
 import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw";
-import useContextState from "../../../hooks/useContextState";
 
 const PendingWithdraw = () => {
-  const { site } = useContextState();
   const payload = {
     type: "viewWithdraw",
     status: "PENDING",
-    site,
     pagination: true,
   };
   const { allWithdraw } = useGetALLWithdraw(payload, 30000);

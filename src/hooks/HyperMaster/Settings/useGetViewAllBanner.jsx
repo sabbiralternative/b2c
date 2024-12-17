@@ -4,9 +4,8 @@ import useContextState from "../../useContextState";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
-
 const useGetViewAllBanner = () => {
-  const { token, tokenLoading,site } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const { data: banners = [], refetch: refetchAllBanners } = useQuery({
     queryKey: ["banner"],
     enabled: !tokenLoading,
@@ -15,7 +14,6 @@ const useGetViewAllBanner = () => {
       const payload = {
         token: generatedToken,
         type: "getBanners",
-        site
       };
       const res = await axios.post(API.banner, payload, {
         headers: {

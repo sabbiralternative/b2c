@@ -2,15 +2,12 @@ import { DateRangePicker } from "rsuite";
 import Withdraw from "../../../components/ui/Master/Withdraw";
 import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw";
 import useDatePicker from "../../../hooks/useDatePicker";
-import useContextState from "../../../hooks/useContextState";
 
 const WithdrawStatement = () => {
-  const { site } = useContextState();
   const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
   const payload = {
     type: "viewWithdraw",
     status: "APPROVED",
-    site,
     fromDate: formattedStartDate,
     toDate: formattedEndDate,
   };
