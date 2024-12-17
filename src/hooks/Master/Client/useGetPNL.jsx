@@ -14,6 +14,7 @@ const useGetPNL = (args) => {
       const payload = {
         ...args,
         token: generatedToken,
+        pagination: true,
       };
       const res = await axios.post(API.statement, payload, {
         headers: {

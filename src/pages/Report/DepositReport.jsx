@@ -3,7 +3,7 @@ import "rsuite/DateRangePicker/styles/index.css";
 import useDatePicker from "../../hooks/useDatePicker";
 import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
-import { API, Settings } from "../../api";
+import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
@@ -34,7 +34,6 @@ const DepositReport = () => {
       fromDate: newFormattedStartDate,
       toDate: newFormattedEndDate,
       token: generatedToken,
-
       pagination: true,
     };
     const res = await axios.post(API.export, payload, {

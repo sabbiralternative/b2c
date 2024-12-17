@@ -1,4 +1,3 @@
-import { Settings } from "../../../api";
 import Deposit from "../../../components/ui/Master/Deposit";
 import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 
@@ -6,7 +5,6 @@ const RejectedDeposit = () => {
   const payload = {
     type: "viewUTR",
     status: "REJECTED",
-
     pagination: true,
   };
   const { allUTRs } = useGetALLDeposit(payload);

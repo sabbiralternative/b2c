@@ -18,7 +18,6 @@ const useGetClient = (searchId, setFetchClients, fetchClients) => {
       const payload = {
         searchId,
         token: generatedToken,
-
         pagination: true,
       };
       const res = await axios.post(API.viewClients, payload, {
