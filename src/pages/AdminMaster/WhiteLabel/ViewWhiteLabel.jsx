@@ -31,47 +31,106 @@ const ViewWhiteLabel = () => {
             <table className="table table-hover table-sm">
               <thead className="table-dark">
                 <tr>
-                  <th>Id</th>
-                  <th>Casino Currency </th>
-                  <th>Currency </th>
-                  <th>Deposit Limit</th>
-                  <th>Withdraw Limit</th>
                   <th>Site Name</th>
                   <th>Site URL</th>
+                  <th>Admin</th>
+                  <th>Theme</th>
+                  <th>Deposit Limit</th>
+                  <th>Withdraw Limit</th>
+                  <th>Casino Currency </th>
+                  <th>Currency </th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((whiteLabel, i) => {
+                  console.log(whiteLabel);
                   return (
                     <tr key={i}>
-                      <td>
-                        <strong>{whiteLabel?.id}</strong>
-                      </td>
-                      <td>{whiteLabel?.casino_currency}</td>
-                      <td>{whiteLabel?.currency}</td>
-                      <td>{whiteLabel?.deposit_limit}</td>
-                      <td>{whiteLabel?.withdraw_limit}</td>
-
                       <td>{whiteLabel?.site_name}</td>
                       <td>{whiteLabel?.site_url}</td>
+                      <td>{whiteLabel?.admin}</td>
+                      <td>{whiteLabel?.theme}</td>
+                      <td>{whiteLabel?.deposit_limit}</td>
+                      <td>{whiteLabel?.withdraw_limit}</td>
+                      <td>{whiteLabel?.casino_currency}</td>
+                      <td>{whiteLabel?.currency}</td>
+
                       <td style={{ display: "flex", color: "white" }}>
                         <a
-                          onClick={() =>
-                            setUpdateStatusId(whiteLabel?.staff_id)
-                          }
+                          // onClick={() =>
+                          //   handleDownLineId(
+                          //     setShowDeposit,
+                          //     branch?.username,
+                          //     setDownLineId
+                          //   )
+                          // }
                           className="btn btn-icon btn-sm btn-success"
                         >
-                          S
+                          D
                         </a>
                         &nbsp;
                         <a
-                          onClick={() =>
-                            setUpdatePasswordId(whiteLabel?.staff_id)
-                          }
+                          // onClick={() =>
+                          //   handleDownLineId(
+                          //     setShowWithdraw,
+                          //     branch?.username,
+                          //     setDownLineId
+                          //   )
+                          // }
                           className="btn btn-icon btn-sm btn-danger"
                         >
-                          p
+                          W
+                        </a>
+                        &nbsp;
+                        <a
+                          style={{ color: "white" }}
+                          // onClick={() => {
+                          //   handleNavigate(branch?.username, "pnl");
+                          // }}
+                          className="btn btn-icon btn-sm btn-warning"
+                        >
+                          PL
+                        </a>
+                        &nbsp;
+                        <a
+                          // onClick={() => {
+                          //   handleDownLineId(
+                          //     setShowChangePassword,
+                          //     branch?.username,
+                          //     setDownLineId
+                          //   );
+                          // }}
+                          className="btn btn-icon btn-sm btn-info"
+                        >
+                          P
+                        </a>
+                        &nbsp;
+                        <a
+                          style={{ color: "white" }}
+                          // onClick={() =>
+                          //   handleDownLineId(
+                          //     setShowCreditRef,
+                          //     branch?.username,
+                          //     setDownLineId
+                          //   )
+                          // }
+                          className="btn btn-icon btn-sm btn-primary"
+                        >
+                          CR
+                        </a>
+                        &nbsp;
+                        <a
+                          style={{
+                            color: "white",
+                            backgroundColor: "lightseagreen",
+                          }}
+                          // onClick={() =>
+                          //   handleLoginReadOnly(branch?.username)
+                          // }
+                          className="btn btn-icon btn-sm btn-read-only-login"
+                        >
+                          L
                         </a>
                       </td>
                     </tr>

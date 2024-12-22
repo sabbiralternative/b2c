@@ -27,9 +27,7 @@ export const useAddWhiteLabel = () => {
     mutationKey: ["addWhiteLabel"],
     mutationFn: async (payload) => {
       const { data } = await AxiosSecure.post(API.whitelabel, payload);
-      if (data?.success) {
-        return data;
-      }
+      return data;
     },
   });
 };

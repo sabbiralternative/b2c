@@ -50,6 +50,7 @@ const AddWhiteLabel = ({ setShowAddWhiteLabel }) => {
       },
     });
   };
+
   return (
     <>
       <div className="content-backdrop fade show"></div>
