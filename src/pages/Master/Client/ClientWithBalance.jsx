@@ -23,6 +23,8 @@ const ClientWithBalance = () => {
     adminRole,
     setRefetchViewClient,
     setClientId,
+    payloadRole,
+    setPayloadRole,
   } = useContextState();
   const { data } = useClient({
     searchId: "userWithCredit",
@@ -150,8 +152,10 @@ const ClientWithBalance = () => {
                               onClick={() =>
                                 handleDownLineId(
                                   setClientDeposit,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 )
                               }
                               className="btn btn-icon btn-sm btn-success"
@@ -164,8 +168,10 @@ const ClientWithBalance = () => {
                               onClick={() =>
                                 handleDownLineId(
                                   setDirectWithdraw,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 )
                               }
                               className="btn btn-icon btn-sm btn-danger"
@@ -190,8 +196,10 @@ const ClientWithBalance = () => {
                           onClick={() =>
                             handleDownLineId(
                               setShowChangePassword,
-                              client?.username,
-                              setDownLineId
+                              client?.downlineId,
+                              setDownLineId,
+                              client?.role,
+                              setPayloadRole
                             )
                           }
                           className="btn btn-icon btn-sm btn-info"
@@ -204,8 +212,10 @@ const ClientWithBalance = () => {
                           onClick={() =>
                             handleDownLineId(
                               setShowChangeStatus,
-                              client?.username,
-                              setDownLineId
+                              client?.downlineId,
+                              setDownLineId,
+                              client?.role,
+                              setPayloadRole
                             )
                           }
                           className="btn btn-icon btn-sm btn-dark"
@@ -220,8 +230,10 @@ const ClientWithBalance = () => {
                               onClick={() =>
                                 handleDownLineId(
                                   setShowCreditRef,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 )
                               }
                               className="btn btn-icon btn-sm btn-primary"
@@ -236,8 +248,10 @@ const ClientWithBalance = () => {
                               onClick={() => {
                                 handleDownLineId(
                                   setDirectDeposit,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 );
                               }}
                               className="btn btn-icon btn-sm btn-success"
@@ -281,6 +295,7 @@ const ClientWithBalance = () => {
 
       {directWithdraw && (
         <DirectWithdraw
+          role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}
         />

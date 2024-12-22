@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMethod";
 
-const Deposit = ({ setClientDeposit, downlineId }) => {
+const Deposit = ({ setClientDeposit, downlineId, role }) => {
   const payload = {
     type: "getActivePayments",
   };
@@ -23,7 +23,7 @@ const Deposit = ({ setClientDeposit, downlineId }) => {
     reset,
     formState: { errors },
   } = useForm();
-  const { token, adminRole } = useContextState();
+  const { token } = useContextState();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
 
@@ -51,13 +51,13 @@ const Deposit = ({ setClientDeposit, downlineId }) => {
   const onSubmit = async ({ amount, utr, paymentId }) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      downlineId,
+      id: downlineId,
       paymentId,
       amount,
       slip: filePath,
       utr,
       token: generatedToken,
-      role: adminRole,
+      role,
     };
     const res = await axios.post(API.depositClient, payload, {
       headers: { Authorization: `Bearer ${token}` },

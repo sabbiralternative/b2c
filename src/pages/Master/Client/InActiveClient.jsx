@@ -5,9 +5,11 @@ import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 import { useClient } from "../../../hooks/Master/Client/useClient";
+import { Pagination } from "rsuite";
 
 const InActiveClient = () => {
   const navigate = useNavigate();
+  const [activePage, setActivePage] = useState(1);
   const [directWithdraw, setDirectWithdraw] = useState(false);
   const {
     downLineId,
@@ -20,21 +22,46 @@ const InActiveClient = () => {
     adminRole,
     setRefetchViewClient,
     setClientId,
+    payloadRole,
+    setPayloadRole,
   } = useContextState();
   const { data } = useClient({
     searchId: "inactiveUsers",
+    page: activePage,
   });
 
   const handleNavigate = (username, link) => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
   };
-
+  const meta = data?.pagination;
   return (
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
-          <h5 className="card-header">Inactive Clients</h5>
+          <div
+            className="card-header"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <h5>Inactive Clients</h5>
+            <Pagination
+              prev
+              next
+              size="md"
+              total={meta?.totalRecords}
+              limit={meta?.recordsPerPage}
+              activePage={activePage}
+              onChangePage={setActivePage}
+              maxButtons={5}
+              ellipsis
+              boundaryLinks
+            />
+          </div>
+
           <div className="table-responsive text-nowrap">
             <table className="table table-hover table-sm">
               <thead>
@@ -124,8 +151,10 @@ const InActiveClient = () => {
                               onClick={() =>
                                 handleDownLineId(
                                   setClientDeposit,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 )
                               }
                               className="btn btn-icon btn-sm btn-success"
@@ -138,8 +167,10 @@ const InActiveClient = () => {
                               onClick={() =>
                                 handleDownLineId(
                                   setDirectWithdraw,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 )
                               }
                               className="btn btn-icon btn-sm btn-danger"
@@ -164,8 +195,10 @@ const InActiveClient = () => {
                           onClick={() =>
                             handleDownLineId(
                               setShowChangePassword,
-                              client?.username,
-                              setDownLineId
+                              client?.downlineId,
+                              setDownLineId,
+                              client?.role,
+                              setPayloadRole
                             )
                           }
                           className="btn btn-icon btn-sm btn-info"
@@ -178,8 +211,10 @@ const InActiveClient = () => {
                           onClick={() =>
                             handleDownLineId(
                               setShowChangeStatus,
-                              client?.username,
-                              setDownLineId
+                              client?.downlineId,
+                              setDownLineId,
+                              client?.role,
+                              setPayloadRole
                             )
                           }
                           className="btn btn-icon btn-sm btn-dark"
@@ -194,8 +229,10 @@ const InActiveClient = () => {
                               onClick={() =>
                                 handleDownLineId(
                                   setShowCreditRef,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 )
                               }
                               className="btn btn-icon btn-sm btn-primary"
@@ -210,8 +247,10 @@ const InActiveClient = () => {
                               onClick={() => {
                                 handleDownLineId(
                                   setDirectDeposit,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 );
                               }}
                               className="btn btn-icon btn-sm btn-success"
@@ -226,11 +265,35 @@ const InActiveClient = () => {
                 })}
               </tbody>
             </table>
+            {meta && (
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "end",
+                }}
+              >
+                <Pagination
+                  prev
+                  next
+                  size="md"
+                  total={meta?.totalRecords}
+                  limit={meta?.recordsPerPage}
+                  activePage={activePage}
+                  onChangePage={setActivePage}
+                  maxButtons={5}
+                  ellipsis
+                  boundaryLinks
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
       {directWithdraw && (
         <DirectWithdraw
+          role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}
         />

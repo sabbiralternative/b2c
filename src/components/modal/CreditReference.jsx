@@ -10,14 +10,14 @@ import useGetCurrentRef from "../../hooks/useGetCurrentRef";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useGetClient from "../../hooks/Master/Client/useGetClient";
 
-const CreditReference = ({ downlineId, setShowCreditRef }) => {
+const CreditReference = ({ downlineId, setShowCreditRef, role }) => {
   /* close modal click outside */
   const creditRef = useRef();
   useCloseModalClickOutside(creditRef, () => {
     setShowCreditRef(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+  const { token } = useContextState();
   const { currentRef, isSuccess } = useGetCurrentRef(downlineId);
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClients } = useGetClient(downlineId);
@@ -26,11 +26,11 @@ const CreditReference = ({ downlineId, setShowCreditRef }) => {
   const onSubmit = async ({ amount }) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      downlineId,
+      id: downlineId,
       amount,
       type: "updateCreditReference",
       token: generatedToken,
-      role: adminRole,
+      role,
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

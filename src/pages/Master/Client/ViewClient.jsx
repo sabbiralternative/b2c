@@ -26,6 +26,8 @@ const ViewClient = () => {
     refetchViewClient,
     setRefetchViewClient,
     downLineId,
+    payloadRole,
+    setPayloadRole,
   } = useContextState();
   const { clients, refetchClients, isSuccess } = useGetClient(
     clientId,
@@ -174,8 +176,10 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setClientDeposit,
-                                      client?.username,
-                                      setDownLineId
+                                      client?.downlineId,
+                                      setDownLineId,
+                                      client?.role,
+                                      setPayloadRole
                                     );
                                 }}
                                 className="btn btn-icon btn-sm btn-success"
@@ -194,8 +198,10 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setDirectWithdraw,
-                                      client?.username,
-                                      setDownLineId
+                                      client?.downlineId,
+                                      setDownLineId,
+                                      client?.role,
+                                      setPayloadRole
                                     );
                                 }}
                                 className="btn btn-icon btn-sm btn-danger"
@@ -232,8 +238,10 @@ const ViewClient = () => {
                               !readOnly &&
                                 handleDownLineId(
                                   setShowChangePassword,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 );
                             }}
                             className="btn btn-icon btn-sm btn-info"
@@ -252,8 +260,10 @@ const ViewClient = () => {
                               !readOnly &&
                                 handleDownLineId(
                                   setShowChangeStatus,
-                                  client?.username,
-                                  setDownLineId
+                                  client?.downlineId,
+                                  setDownLineId,
+                                  client?.role,
+                                  setPayloadRole
                                 );
                             }}
                             className="btn btn-icon btn-sm btn-dark"
@@ -274,8 +284,10 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setShowCreditRef,
-                                      client?.username,
-                                      setDownLineId
+                                      client?.downlineId,
+                                      setDownLineId,
+                                      client?.role,
+                                      setPayloadRole
                                     );
                                 }}
                                 className="btn btn-icon btn-sm btn-primary"
@@ -294,8 +306,10 @@ const ViewClient = () => {
                                   !readOnly &&
                                     handleDownLineId(
                                       setDirectDeposit,
-                                      client?.username,
-                                      setDownLineId
+                                      client?.downlineId,
+                                      setDownLineId,
+                                      client?.role,
+                                      setPayloadRole
                                     );
                                 }}
                                 className="btn btn-icon btn-sm btn-success"
@@ -316,6 +330,7 @@ const ViewClient = () => {
       )}
       {directWithdraw && (
         <DirectWithdraw
+          role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}
         />

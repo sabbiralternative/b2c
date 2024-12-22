@@ -10,7 +10,7 @@ import useGetDownlineEditForm from "../../../../hooks/Master/Client/useGetDownli
 import useBalance from "../../../../hooks/useBalance";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 
-const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
+const DirectWithdraw = ({ setDirectWithdraw, downlineId, role }) => {
   const { clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   const { data } = useGetDownlineEditForm("balance", downlineId);
@@ -28,7 +28,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
     fetchClients
   );
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+  const { token } = useContextState();
 
   const handleAmount = (e) => {
     const userOne = (data?.amount + parseFloat(e)).toFixed(2);
@@ -40,12 +40,12 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId }) => {
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      downlineId,
+      id: downlineId,
       type: "withdraw",
       ...values,
       amount,
       token: generatedToken,
-      role: adminRole,
+      role,
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

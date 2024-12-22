@@ -15,6 +15,7 @@ const ChangeStatus = ({
   setShowChangeStatus,
   downlineId,
   registrationStatus: regiStatus,
+  role,
 }) => {
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
@@ -62,13 +63,13 @@ const ChangeStatus = ({
     e.preventDefault();
     const generatedToken = handleRandomToken();
     let payload = {
-      downlineId,
+      id: downlineId,
       // registrationStatus: registrationStatus ? 1 : 0,
       type: "changeStatus",
       userStatus: userStatus ? 1 : 0,
       bettingStatus: betStatus ? 1 : 0,
       token: generatedToken,
-      role: adminRole,
+      role,
     };
 
     if (

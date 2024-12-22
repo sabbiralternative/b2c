@@ -48,6 +48,7 @@ const MainLayout = () => {
     showChangeStatus,
     downLineId,
     clientDeposit,
+    payloadRole,
     setClientDeposit,
     editPendingDeposit,
     setEditPendingDeposit,
@@ -153,6 +154,7 @@ const MainLayout = () => {
             {/* Modals end for Hyper_master and master*/}
             {showChangeStatus && (
               <ChangeStatus
+                role={payloadRole}
                 setShowChangeStatus={setShowChangeStatus}
                 downlineId={downLineId}
                 registrationStatus={registrationStatus}
@@ -161,6 +163,7 @@ const MainLayout = () => {
             {/* Modals end for Hyper_master and master*/}
             {showChangePassword && (
               <ChangePassword
+                role={payloadRole}
                 setShowChangePassword={setShowChangePassword}
                 downlineId={downLineId}
               />
@@ -171,10 +174,12 @@ const MainLayout = () => {
               <ClientDeposit
                 setClientDeposit={setClientDeposit}
                 downlineId={downLineId}
+                role={payloadRole}
               />
             )}
             {directDeposit && (
               <DirectDeposit
+                role={payloadRole}
                 setDirectDeposit={setDirectDeposit}
                 downlineId={downLineId}
               />
@@ -197,16 +202,12 @@ const MainLayout = () => {
             )}
             {showCreditRef && (
               <CreditReference
+                role={payloadRole}
                 setShowCreditRef={setShowCreditRef}
                 downlineId={downLineId}
               />
             )}
-            {showCreditRef && (
-              <CreditReference
-                setShowCreditRef={setShowCreditRef}
-                downlineId={downLineId}
-              />
-            )}
+
             {showAddChecker && <AddChecker setShowAddChecker={setAddChecker} />}
             <Footer />
           </div>
