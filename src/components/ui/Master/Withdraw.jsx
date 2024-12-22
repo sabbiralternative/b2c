@@ -6,8 +6,9 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import toast from "react-hot-toast";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { FaRegCopy } from "react-icons/fa";
+import { Pagination } from "rsuite";
 
-const Withdraw = ({ data, title, time }) => {
+const Withdraw = ({ data, title, time, meta, activePage, setActivePage }) => {
   const {
     setEditPendingWithdraw,
     setDownLineId,
@@ -54,7 +55,28 @@ const Withdraw = ({ data, title, time }) => {
 
   return (
     <div className="card">
-      <h5 className="card-header">{title}</h5>
+      <div
+        className="card-header"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <h5>{title}</h5>
+        <Pagination
+          prev
+          next
+          size="md"
+          total={meta?.totalRecords}
+          limit={meta?.recordsPerPage}
+          activePage={activePage}
+          onChangePage={setActivePage}
+          maxButtons={5}
+          ellipsis
+          boundaryLinks
+        />
+      </div>
       <div className="table-responsive text-nowrap">
         <table className="table table-hover table-sm">
           <thead className="table-dark">
@@ -228,6 +250,29 @@ const Withdraw = ({ data, title, time }) => {
               })}
           </tbody>
         </table>
+        {meta && (
+          <div
+            style={{
+              marginTop: "20px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end",
+            }}
+          >
+            <Pagination
+              prev
+              next
+              size="md"
+              total={meta?.totalRecords}
+              limit={meta?.recordsPerPage}
+              activePage={activePage}
+              onChangePage={setActivePage}
+              maxButtons={5}
+              ellipsis
+              boundaryLinks
+            />
+          </div>
+        )}
       </div>
     </div>
   );

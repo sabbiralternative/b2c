@@ -8,7 +8,7 @@ const useGetALLDeposit = (args, time) => {
   const { token, tokenLoading } = useContextState();
 
   const { data: allUTRs = [], refetch: refetchAllUTRs } = useQuery({
-    queryKey: ["pendingUTR"],
+    queryKey: ["pendingUTR", args],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
@@ -24,7 +24,7 @@ const useGetALLDeposit = (args, time) => {
 
       const data = res.data;
       if (data?.success) {
-        return data?.result;
+        return data;
       }
     },
     gcTime: 0,

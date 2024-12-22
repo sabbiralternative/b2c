@@ -7,7 +7,7 @@ import { API } from "../../../api";
 const useGetALLWithdraw = (args, time) => {
   const { token, tokenLoading } = useContextState();
   const { data: allWithdraw = [], refetch: refetchAllWithdraw } = useQuery({
-    queryKey: ["withdrawPAR"],
+    queryKey: ["withdrawPAR", args],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
@@ -23,7 +23,7 @@ const useGetALLWithdraw = (args, time) => {
 
       const data = res.data;
       if (data?.success) {
-        return data?.result;
+        return data;
       }
     },
     gcTime: 0,
