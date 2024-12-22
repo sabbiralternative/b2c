@@ -11,7 +11,7 @@ const PendingWithdraw = () => {
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <Withdraw data={allWithdraw} title="Pending Withdraw" />
+      <Withdraw data={allWithdraw?.result} title="Pending Withdraw" />
     </div>
   );
 };
