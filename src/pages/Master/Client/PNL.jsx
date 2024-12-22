@@ -1,5 +1,5 @@
 import useDatePicker from "../../../hooks/useDatePicker";
-import { DateRangePicker } from "rsuite";
+import { DateRangePicker, Pagination } from "rsuite";
 import "rsuite/DateRangePicker/styles/index.css";
 import useGetPNL from "../../../hooks/Master/Client/useGetPNL";
 import { useState } from "react";
@@ -7,23 +7,27 @@ import SettleBets from "../../../components/modal/Master/SettleBets";
 import handleFormatDate from "../../../utils/handleFormatDate";
 import useContextState from "../../../hooks/useContextState";
 const PNL = () => {
+  const [activePage, setActivePage] = useState(1);
   const { adminRole } = useContextState();
   const [showBetsModal, setShowBetsModal] = useState(false);
   const [marketId, setMarketId] = useState("");
   const downlineId = localStorage.getItem("downLineId");
-  const { formattedEndDate, formattedStartDate, onChange } =
-    useDatePicker("currentDate");
+
+  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
   const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
     formattedStartDate,
     formattedEndDate
   );
-  const payload = {
+
+  const { pnl, refetchPNL } = useGetPNL({
     downlineId,
     fromDate: newFormattedStartDate,
     toDate: newFormattedEndDate,
     role: adminRole,
-  };
-  const { pnl, refetchPNL } = useGetPNL(payload);
+    page: activePage,
+  });
+
+  const meta = pnl?.pagination;
 
   /* Handle user history */
   const handleUserHistory = async (e) => {
@@ -45,6 +49,8 @@ const PNL = () => {
       return "text-danger";
     }
   };
+
+  console.log(pnl);
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -101,7 +107,28 @@ const PNL = () => {
 
       <hr className="my-3" />
       <div className="card">
-        <h5 className="card-header">Clients</h5>
+        <div
+          className="card-header"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <h5>Clients</h5>
+          <Pagination
+            prev
+            next
+            size="md"
+            total={meta?.totalRecords}
+            limit={meta?.recordsPerPage}
+            activePage={activePage}
+            onChangePage={setActivePage}
+            maxButtons={5}
+            ellipsis
+            boundaryLinks
+          />
+        </div>
         <div className="table-responsive text-nowrap">
           <table className="table table-hover table-sm">
             <thead>
@@ -115,7 +142,7 @@ const PNL = () => {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {pnl?.map((item, i) => {
+              {pnl?.result?.map((item, i) => {
                 const handleSettledBets = (statement_type, market_id) => {
                   if (statement_type === "Betting P&L") {
                     setMarketId(market_id);
@@ -151,6 +178,29 @@ const PNL = () => {
               })}
             </tbody>
           </table>
+          {meta && (
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "end",
+              }}
+            >
+              <Pagination
+                prev
+                next
+                size="md"
+                total={meta?.totalRecords}
+                limit={meta?.recordsPerPage}
+                activePage={activePage}
+                onChangePage={setActivePage}
+                maxButtons={5}
+                ellipsis
+                boundaryLinks
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

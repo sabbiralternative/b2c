@@ -7,7 +7,7 @@ import useContextState from "../../useContextState";
 const useGetPNL = (args) => {
   const { token, tokenLoading } = useContextState();
   const { data: pnl = [], refetch: refetchPNL } = useQuery({
-    queryKey: ["PNL"],
+    queryKey: ["PNL", args],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
@@ -24,7 +24,7 @@ const useGetPNL = (args) => {
 
       const data = res.data;
       if (data?.success) {
-        return data?.result;
+        return data;
       }
     },
   });
