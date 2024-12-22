@@ -107,7 +107,7 @@ const Master = () => {
       <li className="menu-item">
         <Link tp="/" className="menu-link">
           <i className="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Dashboards">Dashboards</div>
+          <div data-i18n="Dashboards">Dashboard</div>
         </Link>
       </li>
 

@@ -10,6 +10,7 @@ const HyperMaster = () => {
     setShowSocialLink,
     setSiteNotification,
     setAddChecker,
+    adminRole,
   } = useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
@@ -21,6 +22,7 @@ const HyperMaster = () => {
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
   const [showStaff, setShowStaff] = useState(false);
+  const [showWhiteLabel, setShowWhiteLabel] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -90,6 +92,10 @@ const HyperMaster = () => {
   useCloseModalClickOutside(staffRef, () => {
     setShowStaff(false);
   });
+  const whiteLabelRef = useRef();
+  useCloseModalClickOutside(whiteLabelRef, () => {
+    setShowWhiteLabel(false);
+  });
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -102,38 +108,102 @@ const HyperMaster = () => {
     setShowClients(false);
     setShowBonus(false);
     setShowStaff(false);
+    setShowWhiteLabel(false);
   };
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
       <li className="menu-item">
         <Link to="/" className="menu-link">
           <i className="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Dashboards">Dashboards</div>
+          <div data-i18n="Dashboards">Dashboard</div>
         </Link>
       </li>
-      <li ref={branchRef} className={`menu-item ${showBranch ? "open" : ""}`}>
-        <a
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowBranch(true);
-            setShowWithdraw(false);
-            setShowDeposit(false);
-            setShowExposure(false);
-            setShowSettings(false);
-            setShowReport(false);
-            setShowClients(false);
-            setShowBonus(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
+
+      {adminRole === "admin_master" && (
+        <li
+          ref={whiteLabelRef}
+          className={`menu-item ${showWhiteLabel ? "open" : ""}`}
         >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Branch">Branch</div>
-          {/* {showBranch ? (
+          <a
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onMouseEnter={() => {
+              setShowWhiteLabel(true);
+              setShowBranch(false);
+              setShowWithdraw(false);
+              setShowDeposit(false);
+              setShowExposure(false);
+              setShowSettings(false);
+              setShowReport(false);
+              setShowClients(false);
+              setShowBonus(false);
+              setShowStaff(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Branch">Whitelabel</div>
+          </a>
+
+          <ul className="menu-sub">
+            <li className="menu-item ">
+              <a
+                onClick={() => handleNavigate("view-whitelabel")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Branches">View Whitelabel</div>
+              </a>
+            </li>
+
+            <li className="menu-item">
+              <a
+                onClick={() => {
+                  setShowAddBranch(true);
+                  setShowBranch(false);
+                }}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Add Branch">Add Whitelabel</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      )}
+
+      {adminRole !== "admin_master" && (
+        <>
+          <li
+            ref={branchRef}
+            className={`menu-item ${showBranch ? "open" : ""}`}
+          >
+            <a
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseEnter={() => {
+                setShowBranch(true);
+                setShowWithdraw(false);
+                setShowDeposit(false);
+                setShowExposure(false);
+                setShowSettings(false);
+                setShowReport(false);
+                setShowClients(false);
+                setShowBonus(false);
+                setShowStaff(false);
+                setShowWhiteLabel(false);
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Branch">Branch</div>
+              {/* {showBranch ? (
                     <MdOutlineKeyboardArrowUp
                       style={{ marginTop: "3px" }}
                       size={20}
@@ -144,57 +214,61 @@ const HyperMaster = () => {
                       size={20}
                     />
                   )} */}
-        </a>
-
-        <ul className="menu-sub">
-          <li className="menu-item ">
-            <a
-              onClick={() => handleNavigate("view-branches")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Branches">View Branches</div>
             </a>
-          </li>
 
-          <li className="menu-item">
+            <ul className="menu-sub">
+              <li className="menu-item ">
+                <a
+                  onClick={() => handleNavigate("view-branches")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Branches">View Branches</div>
+                </a>
+              </li>
+
+              <li className="menu-item">
+                <a
+                  onClick={() => {
+                    setShowAddBranch(true);
+                    setShowBranch(false);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Branch">Add Branch</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li
+            ref={clientsRef}
+            className={`menu-item ${showClients ? "open" : ""}`}
+          >
             <a
-              onClick={() => {
-                setShowAddBranch(true);
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseEnter={() => {
+                setShowClients(true);
                 setShowBranch(false);
+                setShowWithdraw(false);
+                setShowDeposit(false);
+                setShowExposure(false);
+                setShowSettings(false);
+                setShowReport(false);
+                setShowBonus(false);
+                setShowBonus(false);
+                setShowStaff(false);
+                setShowWhiteLabel(false);
               }}
-              className="menu-link"
+              className="menu-link menu-toggle"
             >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Branch">Add Branch</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li ref={clientsRef} className={`menu-item ${showClients ? "open" : ""}`}>
-        <a
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowClients(true);
-            setShowBranch(false);
-            setShowWithdraw(false);
-            setShowDeposit(false);
-            setShowExposure(false);
-            setShowSettings(false);
-            setShowReport(false);
-            setShowBonus(false);
-            setShowBonus(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Branch">Clients</div>
-          {/* {showBranch ? (
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Branch">Clients</div>
+              {/* {showBranch ? (
                     <MdOutlineKeyboardArrowUp
                       style={{ marginTop: "3px" }}
                       size={20}
@@ -205,83 +279,84 @@ const HyperMaster = () => {
                       size={20}
                     />
                   )} */}
-        </a>
+            </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("view-client")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="View Clients">View Clients</div>
-            </a>
-          </li>
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("view-client")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                  <div data-i18n="View Clients">View Clients</div>
+                </a>
+              </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("clients-with-balance")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="Add Client">Clients with balance</div>
-            </a>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("clients-with-balance")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                  <div data-i18n="Add Client">Clients with balance</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("all-client")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                  <div data-i18n="Add Client">All Clients</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("active-client")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                  <div data-i18n="Add Client">Active Clients</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("inactive-client")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                  <div data-i18n="Add Client">Inactive Clients</div>
+                </a>
+              </li>
+            </ul>
           </li>
-          <li className="menu-item">
+          <li
+            ref={settingsRef}
+            className={`menu-item ${showSettings ? "open" : ""}`}
+          >
             <a
-              onClick={() => handleNavigate("all-client")}
-              className="menu-link"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              onMouseEnter={() => {
+                setShowSettings(true);
+                setShowWithdraw(false);
+                setShowDeposit(false);
+                setShowExposure(false);
+                setShowBranch(false);
+                setShowReport(false);
+                setShowClients(false);
+                setShowBonus(false);
+                setShowStaff(false);
+                setShowWhiteLabel(false);
+              }}
+              className="menu-link menu-toggle"
             >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="Add Client">All Clients</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("active-client")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="Add Client">Active Clients</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("inactive-client")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-user"></i>
-              <div data-i18n="Add Client">Inactive Clients</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li
-        ref={settingsRef}
-        className={`menu-item ${showSettings ? "open" : ""}`}
-      >
-        <a
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowSettings(true);
-            setShowWithdraw(false);
-            setShowDeposit(false);
-            setShowExposure(false);
-            setShowBranch(false);
-            setShowReport(false);
-            setShowClients(false);
-            setShowBonus(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Settings">Settings</div>
-          {/* {showSettings ? (
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Settings</div>
+              {/* {showSettings ? (
                     <MdOutlineKeyboardArrowUp
                       style={{ marginTop: "3px" }}
                       size={20}
@@ -292,55 +367,58 @@ const HyperMaster = () => {
                       size={20}
                     />
                   )} */}
-        </a>
+            </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("view-banner")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">View Banners</div>
-            </a>
-          </li>
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("view-banner")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">View Banners</div>
+                </a>
+              </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("add-banner")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Add Banner">Add Banner</div>
-            </a>
-          </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-banner")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Banner">Add Banner</div>
+                </a>
+              </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => {
-                setShowSocialLink(true);
-                setShowSettings(false);
-              }}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Social Links">Social Links</div>
-            </a>
+              <li className="menu-item">
+                <a
+                  onClick={() => {
+                    setShowSocialLink(true);
+                    setShowSettings(false);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Social Links">Social Links</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => {
+                    setSiteNotification(true);
+                    setShowSettings(false);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Social Links">Site Notification</div>
+                </a>
+              </li>
+            </ul>
           </li>
-          <li className="menu-item">
-            <a
-              onClick={() => {
-                setSiteNotification(true);
-                setShowSettings(false);
-              }}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Social Links">Site Notification</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+        </>
+      )}
+
       <li
         ref={exposureRef}
         className={`menu-item ${showExposure ? "open" : ""}`}
@@ -361,6 +439,7 @@ const HyperMaster = () => {
             setShowClients(false);
             setShowBonus(false);
             setShowStaff(false);
+            setShowWhiteLabel(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -407,6 +486,7 @@ const HyperMaster = () => {
             setShowClients(false);
             setShowBonus(false);
             setShowStaff(false);
+            setShowWhiteLabel(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -456,6 +536,7 @@ const HyperMaster = () => {
             setShowBranch(false);
             setShowBonus(false);
             setShowStaff(false);
+            setShowWhiteLabel(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -535,6 +616,7 @@ const HyperMaster = () => {
             setShowBranch(false);
             setShowBonus(false);
             setShowStaff(false);
+            setShowWhiteLabel(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -589,113 +671,120 @@ const HyperMaster = () => {
           </li>
         </ul>
       </li>
-      <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
-        <a
-          onMouseEnter={() => {
-            setShowBonus(true);
-            setShowWithdraw(false);
-            setShowDeposit(false);
-            setShowReport(false);
-            setShowExposure(false);
-            setShowClients(false);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
 
-          <div data-i18n="Withdraw">Bonus</div>
-        </a>
+      {adminRole !== "admin_master" && (
+        <>
+          <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
+            <a
+              onMouseEnter={() => {
+                setShowBonus(true);
+                setShowWithdraw(false);
+                setShowDeposit(false);
+                setShowReport(false);
+                setShowExposure(false);
+                setShowClients(false);
+                setShowSettings(false);
+                setShowBranch(false);
+                setShowStaff(false);
+                setShowWhiteLabel(false);
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("view-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">View Bonus</div>
+              <div data-i18n="Withdraw">Bonus</div>
             </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("add-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">Add Bonus</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("pending-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">Pending Bonus</div>
-            </a>
-          </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("completed-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Completed Withdraw">Completed Bonus</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("rejected-bonus")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li ref={staffRef} className={`menu-item ${showStaff ? "open" : ""}`}>
-        <a
-          onMouseEnter={() => {
-            setShowStaff(true);
-            setShowBonus(false);
-            setShowWithdraw(false);
-            setShowDeposit(false);
-            setShowReport(false);
-            setShowExposure(false);
-            setShowClients(false);
-            setShowSettings(false);
-            setShowBranch(false);
-          }}
-          className="menu-link menu-toggle"
-        >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("view-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">View Bonus</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">Add Bonus</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("pending-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                </a>
+              </li>
 
-          <div data-i18n="Withdraw">Staff</div>
-        </a>
-
-        <ul className="menu-sub">
-          <li className="menu-item">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("completed-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Completed Withdraw">Completed Bonus</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("rejected-bonus")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li ref={staffRef} className={`menu-item ${showStaff ? "open" : ""}`}>
             <a
-              onClick={() => handleNavigate("view-checker")}
-              className="menu-link"
+              onMouseEnter={() => {
+                setShowStaff(true);
+                setShowBonus(false);
+                setShowWithdraw(false);
+                setShowDeposit(false);
+                setShowReport(false);
+                setShowExposure(false);
+                setShowClients(false);
+                setShowSettings(false);
+                setShowBranch(false);
+                setShowWhiteLabel(false);
+              }}
+              className="menu-link menu-toggle"
             >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">View Checker</div>
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+
+              <div data-i18n="Withdraw">Staff</div>
             </a>
+
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("view-checker")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">View Checker</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a onClick={() => setAddChecker(true)} className="menu-link">
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">Add Checker</div>
+                </a>
+              </li>
+            </ul>
           </li>
-          <li className="menu-item">
-            <a onClick={() => setAddChecker(true)} className="menu-link">
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">Add Checker</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+        </>
+      )}
     </ul>
   );
 };

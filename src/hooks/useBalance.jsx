@@ -28,6 +28,7 @@ const useBalance = () => {
           },
         }
       );
+
       if (res?.data?.success === false && token) {
         /* Logout if success false  */
         handleLogOut();
