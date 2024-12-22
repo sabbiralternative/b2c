@@ -65,6 +65,7 @@ export const API = {
   downineEditForm: "",
   bonus: "",
   staff: "",
+  whitelabel: "",
 };
 
 export const Settings = {

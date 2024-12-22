@@ -11,6 +11,7 @@ const HyperMaster = () => {
     setSiteNotification,
     setAddChecker,
     adminRole,
+    setAddWhiteLabel,
   } = useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
@@ -162,7 +163,7 @@ const HyperMaster = () => {
             <li className="menu-item">
               <a
                 onClick={() => {
-                  setShowAddBranch(true);
+                  setAddWhiteLabel(true);
                   setShowBranch(false);
                 }}
                 className="menu-link"

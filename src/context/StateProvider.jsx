@@ -37,6 +37,7 @@ const StateProvider = ({ children }) => {
   const [directDeposit, setDirectDeposit] = useState(false);
   const [showAddChecker, setAddChecker] = useState(false);
   const [payloadRole, setPayloadRole] = useState("");
+  const [addWhiteLabel, setAddWhiteLabel] = useState(false);
   const baseUrl = notice?.result?.settings?.baseUrl;
   useEffect(() => {
     getSetApis(setNoticeLoaded, baseUrl);
@@ -153,6 +154,8 @@ const StateProvider = ({ children }) => {
     setAddChecker,
     payloadRole,
     setPayloadRole,
+    addWhiteLabel,
+    setAddWhiteLabel,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

@@ -11,6 +11,7 @@ import WithdrawReport from "../pages/Report/WithdrawReport";
 import TransferStatement from "../pages/Report/TransferStatement";
 import FirstDepositReport from "../pages/Report/FirstDepositReport";
 import NoDepositReport from "../pages/Report/NoDepositReport";
+import { AdminMasterRoutes } from "./AdminMaster";
 
 export const router = createBrowserRouter(
   [
@@ -54,6 +55,7 @@ export const router = createBrowserRouter(
         ...HyperMasterRoutes,
         /* Master Routes */
         ...MasterRoutes,
+        ...AdminMasterRoutes,
       ],
     },
     {

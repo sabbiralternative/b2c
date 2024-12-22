@@ -24,6 +24,7 @@ import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
 import toast from "react-hot-toast";
 import DirectDeposit from "../modal/Master/Client/DirectDeposit";
 import AddChecker from "../modal/HyperMaster/Staff/AddChecker";
+import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
 
 const MainLayout = () => {
   const {
@@ -61,6 +62,8 @@ const MainLayout = () => {
     registrationStatus,
     showAddChecker,
     setAddChecker,
+    addWhiteLabel,
+    setAddWhiteLabel,
   } = useContextState();
   const navigate = useNavigate();
   const location = useLocation();
@@ -209,6 +212,9 @@ const MainLayout = () => {
             )}
 
             {showAddChecker && <AddChecker setShowAddChecker={setAddChecker} />}
+            {addWhiteLabel && (
+              <AddWhiteLabel setShowAddWhiteLabel={setAddWhiteLabel} />
+            )}
             <Footer />
           </div>
 

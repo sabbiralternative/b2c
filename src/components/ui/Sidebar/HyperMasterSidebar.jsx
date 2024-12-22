@@ -20,6 +20,7 @@ const HyperMasterSidebar = () => {
     setSiteNotification,
     setAddChecker,
     adminRole,
+    setAddWhiteLabel,
   } = useContextState();
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
@@ -69,7 +70,7 @@ const HyperMasterSidebar = () => {
             <li className="menu-item">
               <a
                 onClick={() => {
-                  setShowAddBranch(true);
+                  setAddWhiteLabel(true);
                   setShowSidebar(false);
                 }}
                 className="menu-link"
