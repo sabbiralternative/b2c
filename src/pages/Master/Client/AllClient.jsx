@@ -53,7 +53,7 @@ const AllClient = () => {
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
-                {data?.map((client, i) => {
+                {data?.result?.map((client, i) => {
                   return (
                     <tr key={i}>
                       <td

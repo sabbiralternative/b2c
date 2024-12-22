@@ -1,7 +1,7 @@
 import axios from "axios";
 import useContextState from "../../useContextState";
 import { useQuery } from "@tanstack/react-query";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const useGetDownlineEditForm = (type, downlineId) => {
