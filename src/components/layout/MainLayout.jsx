@@ -64,6 +64,7 @@ const MainLayout = () => {
     setAddChecker,
     addWhiteLabel,
     setAddWhiteLabel,
+    id,
   } = useContextState();
   const navigate = useNavigate();
   const location = useLocation();
@@ -157,6 +158,7 @@ const MainLayout = () => {
             {/* Modals end for Hyper_master and master*/}
             {showChangeStatus && (
               <ChangeStatus
+                id={id}
                 role={payloadRole}
                 setShowChangeStatus={setShowChangeStatus}
                 downlineId={downLineId}
@@ -166,6 +168,7 @@ const MainLayout = () => {
             {/* Modals end for Hyper_master and master*/}
             {showChangePassword && (
               <ChangePassword
+                id={id}
                 role={payloadRole}
                 setShowChangePassword={setShowChangePassword}
                 downlineId={downLineId}
@@ -175,6 +178,7 @@ const MainLayout = () => {
             {/* Modals end for master*/}
             {clientDeposit && (
               <ClientDeposit
+                id={id}
                 setClientDeposit={setClientDeposit}
                 downlineId={downLineId}
                 role={payloadRole}
@@ -182,6 +186,7 @@ const MainLayout = () => {
             )}
             {directDeposit && (
               <DirectDeposit
+                id={id}
                 role={payloadRole}
                 setDirectDeposit={setDirectDeposit}
                 downlineId={downLineId}
@@ -205,6 +210,7 @@ const MainLayout = () => {
             )}
             {showCreditRef && (
               <CreditReference
+                id={id}
                 role={payloadRole}
                 setShowCreditRef={setShowCreditRef}
                 downlineId={downLineId}

@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 
-const ChangePassword = ({ setShowChangePassword, downlineId, role }) => {
+const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClient } = useRefetchClient(downlineId);
 
@@ -36,7 +36,8 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role }) => {
     //   });
     const payload = {
       role,
-      id: downlineId,
+      id,
+      downlineId,
       type: "password",
       password,
       confirmPassword,

@@ -38,6 +38,7 @@ const StateProvider = ({ children }) => {
   const [showAddChecker, setAddChecker] = useState(false);
   const [payloadRole, setPayloadRole] = useState("");
   const [addWhiteLabel, setAddWhiteLabel] = useState(false);
+  const [id, setId] = useState("");
   const baseUrl = notice?.result?.settings?.baseUrl;
   useEffect(() => {
     getSetApis(setNoticeLoaded, baseUrl);
@@ -156,6 +157,8 @@ const StateProvider = ({ children }) => {
     setPayloadRole,
     addWhiteLabel,
     setAddWhiteLabel,
+    id,
+    setId,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

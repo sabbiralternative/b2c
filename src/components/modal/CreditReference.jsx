@@ -10,7 +10,7 @@ import useGetCurrentRef from "../../hooks/useGetCurrentRef";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useGetClient from "../../hooks/Master/Client/useGetClient";
 
-const CreditReference = ({ downlineId, setShowCreditRef, role }) => {
+const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
   /* close modal click outside */
   const creditRef = useRef();
   useCloseModalClickOutside(creditRef, () => {
@@ -26,7 +26,8 @@ const CreditReference = ({ downlineId, setShowCreditRef, role }) => {
   const onSubmit = async ({ amount }) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      id: downlineId,
+      id,
+      downlineId,
       amount,
       type: "updateCreditReference",
       token: generatedToken,

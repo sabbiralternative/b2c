@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMethod";
 
-const Deposit = ({ setClientDeposit, downlineId, role }) => {
+const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
   const payload = {
     type: "getActivePayments",
   };
@@ -51,7 +51,8 @@ const Deposit = ({ setClientDeposit, downlineId, role }) => {
   const onSubmit = async ({ amount, utr, paymentId }) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      id: downlineId,
+      id,
+      downlineId,
       paymentId,
       amount,
       slip: filePath,

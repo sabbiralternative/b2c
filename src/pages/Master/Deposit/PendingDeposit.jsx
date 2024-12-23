@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useDeposit from "../../../hooks/Master/Deposit/useDeposit";
 import useContextState from "../../../hooks/useContextState";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -7,6 +6,7 @@ import Slip from "../../../components/modal/Master/Deposit/Slip";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
+import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 
 const PendingDeposit = () => {
   const {
@@ -24,8 +24,9 @@ const PendingDeposit = () => {
   const [image, setImage] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
-  const { data } = useDeposit(
+  const { allUTRs } = useGetALLDeposit(
     {
+      type: "viewUTR",
       status: "PENDING",
       amountFrom: amountFrom,
       amountTo: amountTo,
@@ -81,7 +82,7 @@ const PendingDeposit = () => {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {data?.map((item, i) => {
+              {allUTRs?.result?.map((item, i) => {
                 return (
                   <tr key={i}>
                     <td

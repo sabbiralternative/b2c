@@ -16,6 +16,7 @@ const ChangeStatus = ({
   downlineId,
   registrationStatus: regiStatus,
   role,
+  id,
 }) => {
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
@@ -63,7 +64,8 @@ const ChangeStatus = ({
     e.preventDefault();
     const generatedToken = handleRandomToken();
     let payload = {
-      id: downlineId,
+      id,
+      downlineId,
       // registrationStatus: registrationStatus ? 1 : 0,
       type: "changeStatus",
       userStatus: userStatus ? 1 : 0,

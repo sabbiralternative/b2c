@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import useContextState from "../../../hooks/useContextState";
-import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
@@ -28,6 +27,8 @@ const ViewClient = () => {
     downLineId,
     payloadRole,
     setPayloadRole,
+    setId,
+    id,
   } = useContextState();
   const { clients, refetchClients, isSuccess } = useGetClient(
     clientId,
@@ -52,6 +53,12 @@ const ViewClient = () => {
       setClientId("");
     }
   }, [refetchClients, refetchViewClient, setRefetchViewClient, setClientId]);
+
+  const handleOpenModal = (setModal, username, role, id) => {
+    if (!readOnly) {
+      setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
+    }
+  };
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -111,6 +118,7 @@ const ViewClient = () => {
                 </thead>
                 <tbody className="table-border-bottom-0">
                   {clients?.map((client, i) => {
+                    console.log(client);
                     return (
                       <tr key={i}>
                         <td>
@@ -172,16 +180,14 @@ const ViewClient = () => {
                                     !readOnly ? "pointer" : "not-allowed"
                                   }`,
                                 }}
-                                onClick={() => {
-                                  !readOnly &&
-                                    handleDownLineId(
-                                      setClientDeposit,
-                                      client?.downlineId,
-                                      setDownLineId,
-                                      client?.role,
-                                      setPayloadRole
-                                    );
-                                }}
+                                onClick={() =>
+                                  handleOpenModal(
+                                    setClientDeposit,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  )
+                                }
                                 className="btn btn-icon btn-sm btn-success"
                               >
                                 D
@@ -195,14 +201,12 @@ const ViewClient = () => {
                                   }`,
                                 }}
                                 onClick={() => {
-                                  !readOnly &&
-                                    handleDownLineId(
-                                      setDirectWithdraw,
-                                      client?.downlineId,
-                                      setDownLineId,
-                                      client?.role,
-                                      setPayloadRole
-                                    );
+                                  handleOpenModal(
+                                    setDirectWithdraw,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  );
                                 }}
                                 className="btn btn-icon btn-sm btn-danger"
                               >
@@ -235,14 +239,12 @@ const ViewClient = () => {
                               }`,
                             }}
                             onClick={() => {
-                              !readOnly &&
-                                handleDownLineId(
-                                  setShowChangePassword,
-                                  client?.downlineId,
-                                  setDownLineId,
-                                  client?.role,
-                                  setPayloadRole
-                                );
+                              handleOpenModal(
+                                setShowChangePassword,
+                                client?.username,
+                                client?.role,
+                                client?.downlineId
+                              );
                             }}
                             className="btn btn-icon btn-sm btn-info"
                           >
@@ -257,14 +259,12 @@ const ViewClient = () => {
                               }`,
                             }}
                             onClick={() => {
-                              !readOnly &&
-                                handleDownLineId(
-                                  setShowChangeStatus,
-                                  client?.downlineId,
-                                  setDownLineId,
-                                  client?.role,
-                                  setPayloadRole
-                                );
+                              handleOpenModal(
+                                setShowChangeStatus,
+                                client?.username,
+                                client?.role,
+                                client?.downlineId
+                              );
                             }}
                             className="btn btn-icon btn-sm btn-dark"
                           >
@@ -281,14 +281,12 @@ const ViewClient = () => {
                                   }`,
                                 }}
                                 onClick={() => {
-                                  !readOnly &&
-                                    handleDownLineId(
-                                      setShowCreditRef,
-                                      client?.downlineId,
-                                      setDownLineId,
-                                      client?.role,
-                                      setPayloadRole
-                                    );
+                                  handleOpenModal(
+                                    setShowCreditRef,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  );
                                 }}
                                 className="btn btn-icon btn-sm btn-primary"
                               >
@@ -303,14 +301,12 @@ const ViewClient = () => {
                                   }`,
                                 }}
                                 onClick={() => {
-                                  !readOnly &&
-                                    handleDownLineId(
-                                      setDirectDeposit,
-                                      client?.downlineId,
-                                      setDownLineId,
-                                      client?.role,
-                                      setPayloadRole
-                                    );
+                                  handleOpenModal(
+                                    setDirectDeposit,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  );
                                 }}
                                 className="btn btn-icon btn-sm btn-success"
                               >
@@ -330,6 +326,7 @@ const ViewClient = () => {
       )}
       {directWithdraw && (
         <DirectWithdraw
+          id={id}
           role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}

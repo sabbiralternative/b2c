@@ -23,6 +23,7 @@ const useGetALLDeposit = (args, time) => {
       });
 
       const data = res.data;
+
       if (data?.success) {
         return data;
       }

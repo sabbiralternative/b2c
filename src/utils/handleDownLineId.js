@@ -3,10 +3,13 @@ export const handleDownLineId = (
   downLineId,
   setDownLineId,
   payloadRole,
-  setPayloadRole
+  setPayloadRole,
+  setId,
+  id
 ) => {
   setModal((prev) => !prev);
   setDownLineId("");
   setDownLineId(downLineId);
   setPayloadRole(payloadRole);
+  setId(id);
 };

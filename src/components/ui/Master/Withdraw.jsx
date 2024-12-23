@@ -8,7 +8,16 @@ import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { FaRegCopy } from "react-icons/fa";
 import { Pagination } from "rsuite";
 
-const Withdraw = ({ data, title, time, meta, activePage, setActivePage }) => {
+const Withdraw = ({
+  data,
+  title,
+  time,
+  meta,
+  activePage,
+  setActivePage,
+  setAmountFrom,
+  setAmountTo,
+}) => {
   const {
     setEditPendingWithdraw,
     setDownLineId,
@@ -56,26 +65,47 @@ const Withdraw = ({ data, title, time, meta, activePage, setActivePage }) => {
   return (
     <div className="card">
       <div
-        className="card-header"
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
         }}
       >
-        <h5>{title}</h5>
-        <Pagination
-          prev
-          next
-          size="md"
-          total={meta?.totalRecords}
-          limit={meta?.recordsPerPage}
-          activePage={activePage}
-          onChangePage={setActivePage}
-          maxButtons={5}
-          ellipsis
-          boundaryLinks
-        />
+        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+          <h5 className="card-header">{title}</h5>
+          {title === "Pending Withdraw" && (
+            <>
+              <input
+                style={{ width: "200px" }}
+                onChange={(e) => setAmountFrom(e.target.value)}
+                type="text"
+                className="form-control"
+                placeholder="Enter From Amount"
+              />
+              <input
+                style={{ width: "200px" }}
+                onChange={(e) => setAmountTo(e.target.value)}
+                type="text"
+                className="form-control"
+                placeholder="Enter To Amount"
+              />
+            </>
+          )}
+        </div>
+        {meta && (
+          <Pagination
+            prev
+            next
+            size="md"
+            total={meta?.totalRecords}
+            limit={meta?.recordsPerPage}
+            activePage={activePage}
+            onChangePage={setActivePage}
+            maxButtons={5}
+            ellipsis
+            boundaryLinks
+          />
+        )}
       </div>
       <div className="table-responsive text-nowrap">
         <table className="table table-hover table-sm">

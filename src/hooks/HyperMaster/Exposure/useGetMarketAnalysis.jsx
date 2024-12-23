@@ -10,11 +10,15 @@ const useGetMarketAnalysis = () => {
       queryKey: ["branch"],
       enabled: !tokenLoading,
       queryFn: async () => {
-        const res = await axios.post(API.marketAnalysis, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.post(
+          API.marketAnalysis,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = res.data;
         if (data?.success) {

@@ -34,6 +34,7 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
   const payload = {
     type: "viewWithdraw",
     status: "PENDING",
+    pagination: true,
   };
   const { refetchAllWithdraw } = useGetALLWithdraw(payload);
   const { singleWithdraw } = useGetSingleWithdraw(SingleWithdrawPayload);

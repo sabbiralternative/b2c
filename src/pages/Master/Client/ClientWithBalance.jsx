@@ -1,5 +1,4 @@
 import useContextState from "../../../hooks/useContextState";
-import { handleDownLineId } from "../../../utils/handleDownLineId";
 import { useNavigate } from "react-router-dom";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { Pagination } from "rsuite";
@@ -25,6 +24,8 @@ const ClientWithBalance = () => {
     setClientId,
     payloadRole,
     setPayloadRole,
+    setId,
+    id,
   } = useContextState();
   const { data } = useClient({
     searchId: "userWithCredit",
@@ -37,6 +38,10 @@ const ClientWithBalance = () => {
   };
 
   const meta = data?.pagination;
+
+  const handleOpenModal = (setModal, username, role, id) => {
+    setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
+  };
 
   return (
     <>
@@ -150,12 +155,11 @@ const ClientWithBalance = () => {
                             <a
                               style={{ color: "white" }}
                               onClick={() =>
-                                handleDownLineId(
+                                handleOpenModal(
                                   setClientDeposit,
-                                  client?.downlineId,
-                                  setDownLineId,
+                                  client?.username,
                                   client?.role,
-                                  setPayloadRole
+                                  client?.downlineId
                                 )
                               }
                               className="btn btn-icon btn-sm btn-success"
@@ -166,12 +170,11 @@ const ClientWithBalance = () => {
                             <a
                               style={{ color: "white" }}
                               onClick={() =>
-                                handleDownLineId(
+                                handleOpenModal(
                                   setDirectWithdraw,
-                                  client?.downlineId,
-                                  setDownLineId,
+                                  client?.username,
                                   client?.role,
-                                  setPayloadRole
+                                  client?.downlineId
                                 )
                               }
                               className="btn btn-icon btn-sm btn-danger"
@@ -194,12 +197,11 @@ const ClientWithBalance = () => {
                         <a
                           style={{ color: "white" }}
                           onClick={() =>
-                            handleDownLineId(
+                            handleOpenModal(
                               setShowChangePassword,
-                              client?.downlineId,
-                              setDownLineId,
+                              client?.username,
                               client?.role,
-                              setPayloadRole
+                              client?.downlineId
                             )
                           }
                           className="btn btn-icon btn-sm btn-info"
@@ -210,12 +212,11 @@ const ClientWithBalance = () => {
                         <a
                           style={{ color: "white" }}
                           onClick={() =>
-                            handleDownLineId(
+                            handleOpenModal(
                               setShowChangeStatus,
-                              client?.downlineId,
-                              setDownLineId,
+                              client?.username,
                               client?.role,
-                              setPayloadRole
+                              client?.downlineId
                             )
                           }
                           className="btn btn-icon btn-sm btn-dark"
@@ -228,12 +229,11 @@ const ClientWithBalance = () => {
                             <a
                               style={{ color: "white" }}
                               onClick={() =>
-                                handleDownLineId(
+                                handleOpenModal(
                                   setShowCreditRef,
-                                  client?.downlineId,
-                                  setDownLineId,
+                                  client?.username,
                                   client?.role,
-                                  setPayloadRole
+                                  client?.downlineId
                                 )
                               }
                               className="btn btn-icon btn-sm btn-primary"
@@ -246,12 +246,11 @@ const ClientWithBalance = () => {
                                 color: "white",
                               }}
                               onClick={() => {
-                                handleDownLineId(
+                                handleOpenModal(
                                   setDirectDeposit,
-                                  client?.downlineId,
-                                  setDownLineId,
+                                  client?.username,
                                   client?.role,
-                                  setPayloadRole
+                                  client?.downlineId
                                 );
                               }}
                               className="btn btn-icon btn-sm btn-success"
@@ -295,6 +294,7 @@ const ClientWithBalance = () => {
 
       {directWithdraw && (
         <DirectWithdraw
+          id={id}
           role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}
