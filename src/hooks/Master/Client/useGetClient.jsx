@@ -1,18 +1,16 @@
-import axios from "axios";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
-import useContextState from "../../useContextState";
 import { useQuery } from "@tanstack/react-query";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useGetClient = (searchId, setFetchClients, fetchClients) => {
-  const { token, tokenLoading } = useContextState();
   const {
     data: clients = [],
     refetch: refetchClients,
     isSuccess,
   } = useQuery({
     queryKey: ["viewClient"],
-    enabled: !tokenLoading && searchId?.length === 2 && fetchClients,
+    enabled: searchId?.length === 2 && fetchClients,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
       const payload = {
@@ -20,13 +18,9 @@ const useGetClient = (searchId, setFetchClients, fetchClients) => {
         token: generatedToken,
         pagination: true,
       };
-      const res = await axios.post(API.viewClients, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const res = await AxiosSecure.post(API.viewClients, payload);
       const data = res.data;
+
       if (data?.success) {
         setFetchClients(false);
         return data?.result;
