@@ -61,6 +61,8 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
+              {adminRole === "checker" && <th>Branch</th>}
+
               {/* <th>Username</th> */}
               <th>Amount</th>
               <th>UTR</th>
@@ -89,6 +91,8 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
                   >
                     {item?.userId}
                   </td>
+                  {adminRole === "checker" && <td>{item?.branch}</td>}
+
                   {/* <td
                     style={{ cursor: "pointer" }}
                     onClick={() => {

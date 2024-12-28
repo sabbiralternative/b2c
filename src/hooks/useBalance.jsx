@@ -40,7 +40,7 @@ const useBalance = () => {
       }
     },
     /* Refetch after 6 second */
-    refetchInterval: 6000,
+    // refetchInterval: 6000,
     gcTime: 0,
   });
 

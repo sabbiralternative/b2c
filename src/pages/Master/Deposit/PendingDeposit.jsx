@@ -95,6 +95,7 @@ const PendingDeposit = () => {
             <thead className="table-dark">
               <tr>
                 <th>User Id</th>
+                {adminRole === "checker" && <th>Branch</th>}
                 {/* <th>Username</th> */}
                 <th>Amount</th>
                 <th>UTR</th>
@@ -121,6 +122,7 @@ const PendingDeposit = () => {
                     >
                       {item?.userId}
                     </td>
+                    {adminRole === "checker" && <td>{item?.branch}</td>}
                     {/* <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {
