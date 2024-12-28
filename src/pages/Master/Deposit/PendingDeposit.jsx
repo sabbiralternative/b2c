@@ -3,10 +3,11 @@ import useContextState from "../../../hooks/useContextState";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Slip from "../../../components/modal/Master/Deposit/Slip";
-import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+// import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
+import { Pagination } from "rsuite";
 
 const PendingDeposit = () => {
   const {
@@ -24,6 +25,7 @@ const PendingDeposit = () => {
   const [image, setImage] = useState("");
   const [message, setMessage] = useState("");
   const location = useLocation();
+  const [activePage, setActivePage] = useState(1);
   const { allUTRs } = useGetALLDeposit(
     {
       type: "viewUTR",
@@ -31,9 +33,11 @@ const PendingDeposit = () => {
       amountFrom: amountFrom,
       amountTo: amountTo,
       pagination: true,
+      page: activePage,
     },
     30000
   );
+  const meta = allUTRs?.pagination;
 
   useEffect(() => {
     if (message) {
@@ -46,22 +50,44 @@ const PendingDeposit = () => {
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
         {showImage && <Slip setShowImage={setShowImage} image={image} />}
-        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-          <h5 className="card-header">Pending Deposit</h5>
-          <input
-            style={{ width: "200px" }}
-            onChange={(e) => setAmountFrom(e.target.value)}
-            type="text"
-            className="form-control"
-            placeholder="Enter From Amount"
-          />
-          <input
-            style={{ width: "200px" }}
-            onChange={(e) => setAmountTo(e.target.value)}
-            type="text"
-            className="form-control"
-            placeholder="Enter To Amount"
-          />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+            <h5 className="card-header">Pending Deposit</h5>
+            <input
+              style={{ width: "200px" }}
+              onChange={(e) => setAmountFrom(e.target.value)}
+              type="text"
+              className="form-control"
+              placeholder="Enter From Amount"
+            />
+            <input
+              style={{ width: "200px" }}
+              onChange={(e) => setAmountTo(e.target.value)}
+              type="text"
+              className="form-control"
+              placeholder="Enter To Amount"
+            />
+          </div>
+          {meta && (
+            <Pagination
+              prev
+              next
+              size="md"
+              total={meta?.totalRecords}
+              limit={meta?.recordsPerPage}
+              activePage={activePage}
+              onChangePage={setActivePage}
+              maxButtons={5}
+              ellipsis
+              boundaryLinks
+            />
+          )}
         </div>
 
         <div className="table-responsive text-nowrap">
@@ -69,7 +95,7 @@ const PendingDeposit = () => {
             <thead className="table-dark">
               <tr>
                 <th>User Id</th>
-                <th>Username</th>
+                {/* <th>Username</th> */}
                 <th>Amount</th>
                 <th>UTR</th>
                 <th>Slip</th>
@@ -95,7 +121,7 @@ const PendingDeposit = () => {
                     >
                       {item?.userId}
                     </td>
-                    <td
+                    {/* <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setClientId(item?.loginname);
@@ -104,7 +130,7 @@ const PendingDeposit = () => {
                       }}
                     >
                       {handleSplitUserName(item?.loginname)}
-                    </td>
+                    </td> */}
                     <td>{item?.amount}</td>
 
                     <td>
@@ -170,6 +196,29 @@ const PendingDeposit = () => {
               })}
             </tbody>
           </table>
+          {meta && (
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "end",
+              }}
+            >
+              <Pagination
+                prev
+                next
+                size="md"
+                total={meta?.totalRecords}
+                limit={meta?.recordsPerPage}
+                activePage={activePage}
+                onChangePage={setActivePage}
+                maxButtons={5}
+                ellipsis
+                boundaryLinks
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

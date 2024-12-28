@@ -4,7 +4,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import toast from "react-hot-toast";
-import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+// import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { FaRegCopy } from "react-icons/fa";
 import { Pagination } from "rsuite";
 
@@ -112,7 +112,7 @@ const Withdraw = ({
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
-              <th>Username</th>
+              {/* <th>Username</th> */}
               <th>Amount</th>
               {/* <th>Mobile</th> */}
               <th>Bank Account Name</th>
@@ -144,7 +144,7 @@ const Withdraw = ({
                     >
                       {item?.userId}
                     </td>
-                    <td
+                    {/* <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         setClientId(item?.loginname);
@@ -153,7 +153,7 @@ const Withdraw = ({
                       }}
                     >
                       {handleSplitUserName(item?.loginname)}
-                    </td>
+                    </td> */}
                     <td>{item?.amount}</td>
 
                     {/* <td>{item?.mobile}</td> */}

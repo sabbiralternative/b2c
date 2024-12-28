@@ -5,7 +5,7 @@ import Slip from "../../modal/Master/Deposit/Slip";
 import toast from "react-hot-toast";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
-import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+// import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { Pagination } from "rsuite";
 
 const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
@@ -61,7 +61,7 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
-              <th>Username</th>
+              {/* <th>Username</th> */}
               <th>Amount</th>
               <th>UTR</th>
               <th>Slip</th>
@@ -89,7 +89,7 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
                   >
                     {item?.userId}
                   </td>
-                  <td
+                  {/* <td
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setClientId(item?.loginname);
@@ -98,7 +98,7 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
                     }}
                   >
                     {handleSplitUserName(item?.loginname)}
-                  </td>
+                  </td> */}
                   <td>{item?.amount}</td>
 
                   <td>

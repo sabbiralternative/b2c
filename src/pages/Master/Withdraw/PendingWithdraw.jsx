@@ -3,6 +3,7 @@ import Withdraw from "../../../components/ui/Master/Withdraw";
 import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw";
 
 const PendingWithdraw = () => {
+  const [activePage, setActivePage] = useState(1);
   const [amountFrom, setAmountFrom] = useState(null);
   const [amountTo, setAmountTo] = useState(null);
   const payload = {
@@ -11,12 +12,17 @@ const PendingWithdraw = () => {
     pagination: true,
     amountFrom,
     amountTo,
+    page: activePage,
   };
   const { allWithdraw } = useGetALLWithdraw(payload, 30000);
+  const meta = allWithdraw?.pagination;
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <Withdraw
+        activePage={activePage}
+        setActivePage={setActivePage}
+        meta={meta}
         setAmountFrom={setAmountFrom}
         setAmountTo={setAmountTo}
         data={allWithdraw?.result}
