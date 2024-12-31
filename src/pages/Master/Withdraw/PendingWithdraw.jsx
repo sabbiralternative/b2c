@@ -14,12 +14,13 @@ const PendingWithdraw = () => {
     amountTo,
     page: activePage,
   };
-  const { allWithdraw } = useGetALLWithdraw(payload, 30000);
+  const { allWithdraw, refetchAllWithdraw } = useGetALLWithdraw(payload, 30000);
   const meta = allWithdraw?.pagination;
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <Withdraw
+        refetchAllWithdraw={refetchAllWithdraw}
         activePage={activePage}
         setActivePage={setActivePage}
         meta={meta}

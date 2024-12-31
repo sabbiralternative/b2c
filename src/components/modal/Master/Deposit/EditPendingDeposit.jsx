@@ -7,9 +7,8 @@ import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 import useGetSingleDeposit from "../../../../hooks/Master/Deposit/useGetSingleDeposit";
-import useGetALLDeposit from "../../../../hooks/Master/Deposit/useGetALLDeposit";
 
-const EditPendingDeposit = ({ setEditPendingDeposit }) => {
+const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
   const editDepositRef = useRef();
   useCloseModalClickOutside(editDepositRef, () => {
     setEditPendingDeposit(false);
@@ -21,15 +20,6 @@ const EditPendingDeposit = ({ setEditPendingDeposit }) => {
     depositId: downLineId,
   };
 
-  const pendingPayload = {
-    type: "viewUTR",
-    status: "PENDING",
-    amountFrom: null,
-    amountTo: null,
-    pagination: true,
-  };
-
-  const { refetchAllUTRs } = useGetALLDeposit(pendingPayload);
   const { singleDeposit } = useGetSingleDeposit(payload);
   const onSubmit = async ({ remark, status }) => {
     const generatedToken = handleRandomToken();

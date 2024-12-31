@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { FaRegCopy } from "react-icons/fa";
 import { Pagination } from "rsuite";
+import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
 
 const Withdraw = ({
   data,
@@ -17,9 +18,9 @@ const Withdraw = ({
   setActivePage,
   setAmountFrom,
   setAmountTo,
+  refetchAllWithdraw,
 }) => {
   const {
-    setEditPendingWithdraw,
     setDownLineId,
     setClientId,
     setRefetchViewClient,
@@ -29,6 +30,7 @@ const Withdraw = ({
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const location = useLocation();
+  const [showPendingWithdraw, setShowPendingWithdraw] = useState(false);
 
   useEffect(() => {
     if (message) {
@@ -64,6 +66,13 @@ const Withdraw = ({
 
   return (
     <div className="card">
+      {showPendingWithdraw && (
+        <EditPendingWithdraw
+          refetchAllWithdraw={refetchAllWithdraw}
+          editPendingWithdraw={showPendingWithdraw}
+          setEditPendingWithdraw={setShowPendingWithdraw}
+        />
+      )}
       <div
         style={{
           display: "flex",
@@ -236,7 +245,7 @@ const Withdraw = ({
                             }}
                             onClick={() => {
                               !readOnly && setDownLineId(item?.withdraw_id);
-                              !readOnly && setEditPendingWithdraw(true);
+                              !readOnly && setShowPendingWithdraw(true);
                             }}
                             className="btn btn-icon btn-sm btn-success"
                           >

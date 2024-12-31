@@ -24,8 +24,6 @@ const StateProvider = ({ children }) => {
   /* Master state */
   const [clientDeposit, setClientDeposit] = useState(false);
   const [clientData, setClientData] = useState([]);
-  const [editPendingDeposit, setEditPendingDeposit] = useState(false);
-  const [editPendingWithdraw, setEditPendingWithdraw] = useState(false);
   const [showEditPayment, setShowEditPayment] = useState(false);
   const [clientId, setClientId] = useState("");
   const [showCreditRef, setShowCreditRef] = useState(false);
@@ -131,10 +129,6 @@ const StateProvider = ({ children }) => {
     setClientDeposit,
     clientData,
     setClientData,
-    editPendingDeposit,
-    setEditPendingDeposit,
-    editPendingWithdraw,
-    setEditPendingWithdraw,
     showEditPayment,
     setShowEditPayment,
     clientId,

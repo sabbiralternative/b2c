@@ -7,11 +7,13 @@ import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 import useGetSingleWithdraw from "../../../../hooks/Master/Withdraw/useSingleWithdraw";
-import useGetALLWithdraw from "../../../../hooks/Master/Withdraw/useGetAllWithdraw";
 import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 
-const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
+const EditPendingWithdraw = ({
+  setEditPendingWithdraw,
+  refetchAllWithdraw,
+}) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [uploadedImage, setUploadedImage] = useState("");
@@ -31,12 +33,6 @@ const EditPendingWithdraw = ({ setEditPendingWithdraw }) => {
     withdrawId: downLineId,
   };
 
-  const payload = {
-    type: "viewWithdraw",
-    status: "PENDING",
-    pagination: true,
-  };
-  const { refetchAllWithdraw } = useGetALLWithdraw(payload);
   const { singleWithdraw } = useGetSingleWithdraw(SingleWithdrawPayload);
 
   const onSubmit = async ({ remark, status }) => {

@@ -16,8 +16,6 @@ import Withdraw from "../modal/HyperMaster/Branch/Withdraw";
 import ClientDeposit from "../modal/Master/Client/Deposit";
 import ChangeStatus from "../modal/ChangeStatus";
 import ChangePassword from "../modal/ChangePassword";
-import EditPendingDeposit from "../modal/Master/Deposit/EditPendingDeposit";
-import EditPendingWithdraw from "../modal/Master/Withdraw/EditPendingWithdraw";
 import EditPayment from "../modal/Master/Payment/EditPayment";
 import CreditReference from "../modal/CreditReference";
 import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
@@ -51,10 +49,6 @@ const MainLayout = () => {
     clientDeposit,
     payloadRole,
     setClientDeposit,
-    editPendingDeposit,
-    setEditPendingDeposit,
-    editPendingWithdraw,
-    setEditPendingWithdraw,
     showEditPayment,
     setShowEditPayment,
     showCreditRef,
@@ -190,18 +184,6 @@ const MainLayout = () => {
                 role={payloadRole}
                 setDirectDeposit={setDirectDeposit}
                 downlineId={downLineId}
-              />
-            )}
-            {editPendingDeposit && (
-              <EditPendingDeposit
-                editPendingDeposit={editPendingDeposit}
-                setEditPendingDeposit={setEditPendingDeposit}
-              />
-            )}
-            {editPendingWithdraw && (
-              <EditPendingWithdraw
-                editPendingWithdraw={editPendingWithdraw}
-                setEditPendingWithdraw={setEditPendingWithdraw}
               />
             )}
 

@@ -8,16 +8,17 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 import { Pagination } from "rsuite";
+import EditPendingDeposit from "../../../components/modal/Master/Deposit/EditPendingDeposit";
 
 const PendingDeposit = () => {
   const {
-    setEditPendingDeposit,
     setDownLineId,
     setClientId,
     setRefetchViewClient,
     readOnly,
     adminRole,
   } = useContextState();
+  const [showEditPending, setShowEditPending] = useState(false);
   const [amountFrom, setAmountFrom] = useState(null);
   const [amountTo, setAmountTo] = useState(null);
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const PendingDeposit = () => {
   const [message, setMessage] = useState("");
   const location = useLocation();
   const [activePage, setActivePage] = useState(1);
-  const { allUTRs } = useGetALLDeposit(
+  const { allUTRs, refetchAllUTRs } = useGetALLDeposit(
     {
       type: "viewUTR",
       status: "PENDING",
@@ -48,6 +49,13 @@ const PendingDeposit = () => {
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
+      {showEditPending && (
+        <EditPendingDeposit
+          refetchAllUTRs={refetchAllUTRs}
+          editPendingDeposit={showEditPending}
+          setEditPendingDeposit={setShowEditPending}
+        />
+      )}
       <div className="card">
         {showImage && <Slip setShowImage={setShowImage} image={image} />}
         <div
@@ -185,7 +193,7 @@ const PendingDeposit = () => {
                           }}
                           onClick={() => {
                             !readOnly && setDownLineId(item?.id);
-                            !readOnly && setEditPendingDeposit(true);
+                            !readOnly && setShowEditPending(true);
                           }}
                           className="btn btn-icon btn-sm btn-success"
                         >
