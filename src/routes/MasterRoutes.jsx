@@ -16,6 +16,7 @@ import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
 import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway";
 import AddQR from "../pages/Master/Payments/AddQR";
 import AddUPI from "../pages/Master/Payments/AddUPI";
+import AddUSDT from "../pages/Master/Payments/AddUSDT";
 import ViewPaymentMethod from "../pages/Master/Payments/ViewPaymentMethod";
 import DepositStatement from "../pages/Master/Statement/DepositStatement";
 import WithdrawStatement from "../pages/Master/Statement/WithdrawStatement";
@@ -99,6 +100,10 @@ export const MasterRoutes = [
   {
     path: "/add-QR",
     element: <AddQR />,
+  },
+  {
+    path: "/add-USDT",
+    element: <AddUSDT />,
   },
   {
     path: "/add-UPI",
