@@ -34,25 +34,15 @@ const EditPayment = ({ setShowEditPayment }) => {
 
   const onSubmit = async (fieldValues) => {
     const generatedToken = handleRandomToken();
-    let payload;
+    let payload = {
+      type: "updatePayment",
+      paymentId: downLineId,
+      ...fieldValues,
+      status: parseFloat(fieldValues?.status),
+      token: generatedToken,
+    };
     if (currentPayment?.type === "qr") {
-      payload = {
-        type: "updatePayment",
-        paymentId: downLineId,
-        ...fieldValues,
-        status: parseFloat(fieldValues?.status),
-        qr_code,
-        token: generatedToken,
-      };
-    }
-    if (currentPayment?.type === "bank" || currentPayment?.type === "upi") {
-      payload = {
-        type: "updatePayment",
-        paymentId: downLineId,
-        ...fieldValues,
-        status: parseFloat(fieldValues?.status),
-        token: generatedToken,
-      };
+      payload.qr_code = qr_code;
     }
 
     const res = await axios.post(API.payments, payload, {
@@ -120,6 +110,14 @@ const EditPayment = ({ setShowEditPayment }) => {
           max_amount: currentPayment?.max_amount,
         });
       }
+      if (currentPayment?.type === "usdt") {
+        reset({
+          token_address: currentPayment?.token_address,
+          usdt_value: currentPayment?.usdt_value,
+          min_amount: currentPayment?.min_amount,
+          max_amount: currentPayment?.max_amount,
+        });
+      }
     }
   }, [currentPayment, reset]);
 
@@ -162,10 +160,13 @@ const EditPayment = ({ setShowEditPayment }) => {
                         required: true,
                       })}
                       className="form-control"
-                   
                     >
-                      <option selected={ currentPayment?.status === 1} value="1">Active</option>
-                      <option selected={ currentPayment?.status === 2} value="2">Inactive</option>
+                      <option selected={currentPayment?.status === 1} value="1">
+                        Active
+                      </option>
+                      <option selected={currentPayment?.status === 2} value="2">
+                        Inactive
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -479,6 +480,84 @@ const EditPayment = ({ setShowEditPayment }) => {
                         htmlFor="basic-default-company"
                       >
                         Maximum Deposit Amount
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("max_amount", {
+                            required: true,
+                          })}
+                          type="number"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+                {currentPayment?.type === "usdt" && (
+                  <>
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Token Address
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("token_address", {
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        USDT Value
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("usdt_value", {
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row mb-3">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Minimum Amount
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("min_amount", {
+                            required: true,
+                          })}
+                          type="number"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row mb-3">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Maximum Amount
                       </label>
                       <div className="col-sm-10">
                         <input
