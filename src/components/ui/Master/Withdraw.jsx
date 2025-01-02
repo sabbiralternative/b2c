@@ -125,6 +125,7 @@ const Withdraw = ({
               {/* <th>Username</th> */}
               <th>Amount</th>
               {/* <th>Mobile</th> */}
+              <th>UPI ID</th>
               <th>Bank Account Name</th>
               <th>Account Number</th>
               <th>Bank Name</th>
@@ -141,7 +142,7 @@ const Withdraw = ({
           <tbody className="table-border-bottom-0">
             {Array.isArray(data) &&
               data?.map((item, i) => {
-                console.log(data);
+                // console.log(data);
                 return (
                   <tr key={i}>
                     <td
@@ -166,6 +167,7 @@ const Withdraw = ({
                       {handleSplitUserName(item?.loginname)}
                     </td> */}
                     <td>{item?.amount}</td>
+                    <td>{item?.upi_id}</td>
 
                     {/* <td>{item?.mobile}</td> */}
                     <td>
