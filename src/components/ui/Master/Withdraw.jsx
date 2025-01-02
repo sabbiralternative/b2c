@@ -125,12 +125,12 @@ const Withdraw = ({
               {/* <th>Username</th> */}
               <th>Amount</th>
               {/* <th>Mobile</th> */}
-              <th>UPI ID</th>
+
               <th>Bank Account Name</th>
               <th>Account Number</th>
               <th>Bank Name</th>
               <th>IFSC</th>
-
+              <th>UPI ID</th>
               <th>Status</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
@@ -167,7 +167,6 @@ const Withdraw = ({
                       {handleSplitUserName(item?.loginname)}
                     </td> */}
                     <td>{item?.amount}</td>
-                    <td>{item?.upi_id}</td>
 
                     {/* <td>{item?.mobile}</td> */}
                     <td>
@@ -220,6 +219,7 @@ const Withdraw = ({
                         />
                       )}{" "}
                     </td>
+                    <td>{item?.upi_id}</td>
                     <td>
                       <span
                         className={`badge me-1
