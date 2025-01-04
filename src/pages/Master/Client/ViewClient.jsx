@@ -103,7 +103,7 @@ const ViewClient = () => {
                 <thead>
                   <tr>
                     <th>User Id</th>
-                    <th>Username</th>
+                    {adminRole !== "master" && <th>Username</th>}
                     {adminRole !== "master" && <th>Mobile</th>}
                     <th>Balance</th>
                     <th>Total Deposit</th>
@@ -123,11 +123,14 @@ const ViewClient = () => {
                         <td>
                           <strong>{client?.userId}</strong>
                         </td>
-                        <td>
-                          <strong>
-                            {handleSplitUserName(client?.username)}
-                          </strong>
-                        </td>
+                        {adminRole !== "master" && (
+                          <td>
+                            <strong>
+                              {handleSplitUserName(client?.username)}
+                            </strong>
+                          </td>
+                        )}
+
                         {adminRole !== "master" && (
                           <td>
                             <strong>{client?.mobile}</strong>

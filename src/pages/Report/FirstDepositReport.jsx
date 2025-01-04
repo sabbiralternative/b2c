@@ -51,7 +51,14 @@ const FirstDepositReport = () => {
     const data = await getFTDReport();
     if (data?.success) {
       if (data?.result?.length > 0) {
-        const ws = utils.json_to_sheet(data?.result);
+        let firstDepositReports = data?.result;
+        if (adminRole === "master") {
+          firstDepositReports = data?.result.map(
+            // eslint-disable-next-line no-unused-vars
+            ({ loginname, mobile, ...rest }) => rest
+          );
+        }
+        const ws = utils.json_to_sheet(firstDepositReports);
         const wb = utils.book_new();
         utils.book_append_sheet(wb, ws, "Sheet1");
         writeFile(wb, "ftd_data.xlsx");

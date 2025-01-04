@@ -45,7 +45,12 @@ const NoDepositReport = () => {
     const data = await getNoDepositReportReport();
     if (data?.success) {
       if (data?.result?.length > 0) {
-        const ws = utils.json_to_sheet(data?.result);
+        let report = data?.result;
+        if (adminRole === "master") {
+          // eslint-disable-next-line no-unused-vars
+          report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
+        }
+        const ws = utils.json_to_sheet(report);
         const wb = utils.book_new();
         utils.book_append_sheet(wb, ws, "Sheet1");
         writeFile(wb, "no_deposit_report.xlsx");

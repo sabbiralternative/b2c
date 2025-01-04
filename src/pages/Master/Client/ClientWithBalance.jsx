@@ -74,7 +74,8 @@ const ClientWithBalance = () => {
               <thead>
                 <tr>
                   <th>User Id</th>
-                  <th>Username</th>
+                  {adminRole !== "master" && <th>Username</th>}
+
                   {adminRole !== "master" && <th>Mobile</th>}
                   <th>Balance</th>
                   <th>Total Deposit</th>
@@ -100,16 +101,21 @@ const ClientWithBalance = () => {
                       >
                         <strong>{client?.userId}</strong>
                       </td>
-                      <td
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          setClientId(client?.username);
-                          setRefetchViewClient(true);
-                          navigate("/view-client");
-                        }}
-                      >
-                        <strong>{handleSplitUserName(client?.username)}</strong>
-                      </td>
+                      {adminRole !== "master" && (
+                        <td
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            setClientId(client?.username);
+                            setRefetchViewClient(true);
+                            navigate("/view-client");
+                          }}
+                        >
+                          <strong>
+                            {handleSplitUserName(client?.username)}
+                          </strong>
+                        </td>
+                      )}
+
                       {adminRole !== "master" && (
                         <td>
                           <strong>{client?.mobile}</strong>

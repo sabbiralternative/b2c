@@ -49,7 +49,14 @@ const DepositReport = () => {
     const data = await getDepositReport();
     if (data?.success) {
       if (data?.result?.length > 0) {
-        const ws = utils.json_to_sheet(data?.result);
+        let depositReport = data?.result;
+        if (adminRole === "master") {
+          depositReport = data?.result.map(
+            // eslint-disable-next-line no-unused-vars
+            ({ loginname, mobile, ...rest }) => rest
+          );
+        }
+        const ws = utils.json_to_sheet(depositReport);
         const wb = utils.book_new();
         utils.book_append_sheet(wb, ws, "Sheet1");
         writeFile(wb, "deposit_data.xlsx");
@@ -138,8 +145,8 @@ const DepositReport = () => {
                         <th>User Id</th>
                         {adminRole !== "master" && (
                           <>
-                            <th>User Name</th>
                             <th>Mobile</th>
+                            <th>User Name</th>
                           </>
                         )}
                         <th>Amount</th>
@@ -166,8 +173,8 @@ const DepositReport = () => {
                             </td>
                             {adminRole !== "master" && (
                               <>
-                                <td>{data?.loginname}</td>
                                 <td>{data?.mobile}</td>
+                                <td>{data?.loginname}</td>
                               </>
                             )}
                             <td>{data?.amount}</td>

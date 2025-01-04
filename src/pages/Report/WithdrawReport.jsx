@@ -49,7 +49,13 @@ const WithdrawReport = () => {
     const data = await getWithdrawReport();
     if (data?.success) {
       if (data?.result?.length > 0) {
-        const ws = utils.json_to_sheet(data?.result);
+        let report = data?.result;
+        if (adminRole === "master") {
+          // eslint-disable-next-line no-unused-vars
+          report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
+        }
+
+        const ws = utils.json_to_sheet(report);
         const wb = utils.book_new();
         utils.book_append_sheet(wb, ws, "Sheet1");
         writeFile(wb, "withdraw_data.xlsx");
@@ -136,8 +142,8 @@ const WithdrawReport = () => {
                         <th>User Id</th>
                         {adminRole !== "master" && (
                           <>
-                            <th>User Name</th>
                             <th>Mobile</th>
+                            <th>User Name</th>
                           </>
                         )}
 
@@ -170,8 +176,8 @@ const WithdrawReport = () => {
                             </td>
                             {adminRole !== "master" && (
                               <>
-                                <td>{data?.loginname}</td>
                                 <td>{data?.mobile}</td>
+                                <td>{data?.loginname}</td>
                               </>
                             )}
                             <td>{data?.bank_account_name}</td>

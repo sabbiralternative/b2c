@@ -45,7 +45,14 @@ const ClientReport = () => {
     const data = await getClientReport();
     if (data?.success) {
       if (data?.result?.length > 0) {
-        const ws = utils.json_to_sheet(data?.result);
+        let clientReport = data?.result;
+        if (adminRole === "master") {
+          clientReport = data?.result.map(
+            // eslint-disable-next-line no-unused-vars
+            ({ loginname, mobile, ...rest }) => rest
+          );
+        }
+        const ws = utils.json_to_sheet(clientReport);
         const wb = utils.book_new();
         utils.book_append_sheet(wb, ws, "Sheet1");
         writeFile(wb, "customers_data.xlsx");
@@ -119,12 +126,13 @@ const ClientReport = () => {
                   <thead className="table-dark">
                     <tr>
                       <th>User Id</th>
-                      {adminRole !== "master" && (
+                      {adminRole == "master" && (
                         <>
-                          <th>User Name</th>
                           <th>Mobile</th>
+                          <th>User Name</th>
                         </>
                       )}
+
                       <th>Registration Date</th>
                       <th>Credit Limit</th>
                     </tr>
@@ -143,10 +151,10 @@ const ClientReport = () => {
                           >
                             {data?.userId}
                           </td>
-                          {adminRole !== "master" && (
+                          {adminRole == "master" && (
                             <>
-                              <td>{data?.username}</td>
                               <td>{data?.mobile}</td>
+                              <td>{data?.username}</td>
                             </>
                           )}
                           <td>{data?.registrationDate}</td>
