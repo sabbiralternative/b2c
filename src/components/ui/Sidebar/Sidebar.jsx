@@ -118,7 +118,9 @@ const Sidebar = () => {
         {adminRole === "hyper_master" || adminRole === "admin_master" ? (
           <HyperMasterSidebar />
         ) : null}
-        {adminRole === "master" && <MasterSidebar />}
+        {adminRole === "master" || adminRole === "checker" ? (
+          <MasterSidebar />
+        ) : null}
 
         <div className="menu-horizontal-wrapper"></div>
         <a className="menu-horizontal-next d-none"></a>
