@@ -6,6 +6,7 @@ import Slip from "../../../components/modal/Master/Deposit/Slip";
 const UTRSearch = () => {
   const [utr, setUtr] = useState("");
   const [showImage, setShowImage] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [image, setImage] = useState("");
   const [utrData, setUtrData] = useState([]);
 
@@ -19,6 +20,7 @@ const UTRSearch = () => {
     const { data } = await AxiosSecure.post(API.utr, payload);
     if (data?.success) {
       setUtrData(data?.result);
+      setLoading(false);
     }
   };
 
@@ -128,6 +130,13 @@ const UTRSearch = () => {
             </div>
           </div>
         </>
+      )}
+      {!loading && utrData?.length === 0 && (
+        <div className="card">
+          <h5 style={{ fontSize: "18px" }} className="card-header">
+            No UTR found
+          </h5>
+        </div>
       )}
     </div>
   );

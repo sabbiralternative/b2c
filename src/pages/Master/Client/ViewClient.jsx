@@ -177,50 +177,51 @@ const ViewClient = () => {
                         </td>
                         <td>{client?.registrationDate}</td>
                         <td>
-                          {adminRole !== "hyper_master" && (
-                            <>
-                              <a
-                                style={{
-                                  color: "white",
-                                  cursor: `${
-                                    !readOnly ? "pointer" : "not-allowed"
-                                  }`,
-                                }}
-                                onClick={() =>
-                                  handleOpenModal(
-                                    setClientDeposit,
-                                    client?.username,
-                                    client?.role,
-                                    client?.downlineId
-                                  )
-                                }
-                                className="btn btn-icon btn-sm btn-success"
-                              >
-                                D
-                              </a>
-                              &nbsp;
-                              <a
-                                style={{
-                                  color: "white",
-                                  cursor: `${
-                                    !readOnly ? "pointer" : "not-allowed"
-                                  }`,
-                                }}
-                                onClick={() => {
-                                  handleOpenModal(
-                                    setDirectWithdraw,
-                                    client?.username,
-                                    client?.role,
-                                    client?.downlineId
-                                  );
-                                }}
-                                className="btn btn-icon btn-sm btn-danger"
-                              >
-                                W
-                              </a>
-                              &nbsp;
-                            </>
-                          )}
+                          {adminRole !== "hyper_master" &&
+                            adminRole !== "checker" && (
+                              <>
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() =>
+                                    handleOpenModal(
+                                      setClientDeposit,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    )
+                                  }
+                                  className="btn btn-icon btn-sm btn-success"
+                                >
+                                  D
+                                </a>
+                                &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setDirectWithdraw,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-danger"
+                                >
+                                  W
+                                </a>
+                                &nbsp;
+                              </>
+                            )}
                           <a
                             style={{
                               color: "white",
@@ -236,47 +237,8 @@ const ViewClient = () => {
                           >
                             PL
                           </a>
-                          &nbsp;
-                          <a
-                            style={{
-                              color: "white",
-                              cursor: `${
-                                !readOnly ? "pointer" : "not-allowed"
-                              }`,
-                            }}
-                            onClick={() => {
-                              handleOpenModal(
-                                setShowChangePassword,
-                                client?.username,
-                                client?.role,
-                                client?.downlineId
-                              );
-                            }}
-                            className="btn btn-icon btn-sm btn-info"
-                          >
-                            P
-                          </a>
-                          &nbsp;
-                          <a
-                            style={{
-                              color: "white",
-                              cursor: `${
-                                !readOnly ? "pointer" : "not-allowed"
-                              }`,
-                            }}
-                            onClick={() => {
-                              handleOpenModal(
-                                setShowChangeStatus,
-                                client?.username,
-                                client?.role,
-                                client?.downlineId
-                              );
-                            }}
-                            className="btn btn-icon btn-sm btn-dark"
-                          >
-                            S
-                          </a>
-                          {adminRole !== "hyper_master" && (
+
+                          {adminRole !== "checker" && (
                             <>
                               &nbsp;
                               <a
@@ -288,15 +250,15 @@ const ViewClient = () => {
                                 }}
                                 onClick={() => {
                                   handleOpenModal(
-                                    setShowCreditRef,
+                                    setShowChangePassword,
                                     client?.username,
                                     client?.role,
                                     client?.downlineId
                                   );
                                 }}
-                                className="btn btn-icon btn-sm btn-primary"
+                                className="btn btn-icon btn-sm btn-info"
                               >
-                                CR
+                                P
                               </a>
                               &nbsp;
                               <a
@@ -308,18 +270,63 @@ const ViewClient = () => {
                                 }}
                                 onClick={() => {
                                   handleOpenModal(
-                                    setDirectDeposit,
+                                    setShowChangeStatus,
                                     client?.username,
                                     client?.role,
                                     client?.downlineId
                                   );
                                 }}
-                                className="btn btn-icon btn-sm btn-success"
+                                className="btn btn-icon btn-sm btn-dark"
                               >
-                                DD
+                                S
                               </a>
                             </>
                           )}
+                          {adminRole !== "hyper_master" &&
+                            adminRole !== "checker" && (
+                              <>
+                                &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setShowCreditRef,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-primary"
+                                >
+                                  CR
+                                </a>
+                                &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setDirectDeposit,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-success"
+                                >
+                                  DD
+                                </a>
+                              </>
+                            )}
                         </td>
                       </tr>
                     );
