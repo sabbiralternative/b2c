@@ -4,7 +4,7 @@ import useContextState from "../../hooks/useContextState";
 const Home = () => {
   const { adminRole } = useContextState();
   const { balanceData } = useBalance();
-  const defineColorOfUpperLevel = (amount) => {
+  const defineBalanceColor = (amount) => {
     if (amount) {
       const parseAmount = parseFloat(amount);
       if (parseAmount === 0) {
@@ -44,7 +44,7 @@ const Home = () => {
                       <h2
                         className="mb-1"
                         style={{
-                          color: `${defineColorOfUpperLevel(
+                          color: `${defineBalanceColor(
                             balanceData?.upperLevel
                           )}`,
                         }}
@@ -140,7 +140,14 @@ const Home = () => {
               <div className="col-sm-6 col-12 mb-4">
                 <div className="card">
                   <div className="card-body text-center">
-                    <h2 className="mb-1">{balanceData?.pnlToday}</h2>
+                    <h2
+                      style={{
+                        color: `${defineBalanceColor(balanceData?.pnlToday)}`,
+                      }}
+                      className="mb-1"
+                    >
+                      {balanceData?.pnlToday}
+                    </h2>
                     <span className="text-muted">P/L Today</span>
                   </div>
                 </div>
