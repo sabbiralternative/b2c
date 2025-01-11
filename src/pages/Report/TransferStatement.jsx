@@ -13,19 +13,23 @@ const TransferStatement = () => {
   const [viewTransferStatementData, setViewTransferStatementData] =
     useState(false);
   const [transferStatement, setTransferStatement] = useState([]);
-  const [type, setType] = useState("ALL");
-  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
+  // const [type, setType] = useState("ALL");
+  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker(
+    undefined,
+    30
+  );
 
   const onSubmit = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
-      type,
+      type: "viewTransfer",
       fromDate: formattedStartDate,
       toDate: formattedEndDate,
       token: generatedToken,
       pagination: true,
+      transfer_type: "deposit",
     };
-
+    console.log(payload);
     const res = await axios.post(API.transferStatement, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -55,6 +59,7 @@ const TransferStatement = () => {
   const handleViewTransferStatement = async (e) => {
     e.preventDefault();
     const data = await onSubmit();
+    console.log(data);
     setViewTransferStatementData(true);
     if (data?.result?.length > 0) {
       setTransferStatement(data?.result);
@@ -80,13 +85,13 @@ const TransferStatement = () => {
                     editable
                     onChange={onChange}
                     defaultValue={[
-                      new Date(new Date().setDate(new Date().getDate() - 7)),
+                      new Date(new Date().setDate(new Date().getDate() - 30)),
                       new Date(),
                     ]}
                     block
                   />
                 </div>
-                {adminRole !== "master" && (
+                {/* {adminRole !== "master" && (
                   <div className="col-md-6 col-12 mb-4">
                     <label htmlFor="flatpickr-range" className="form-label">
                       Type
@@ -100,7 +105,7 @@ const TransferStatement = () => {
                       <option value="Downline">Downline</option>
                     </select>
                   </div>
-                )}
+                )} */}
 
                 <div className="col-12">
                   <input
