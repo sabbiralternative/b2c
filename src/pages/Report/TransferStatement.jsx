@@ -1,4 +1,4 @@
-import { DateRangePicker } from "rsuite";
+import { DateRangePicker, Pagination } from "rsuite";
 import "rsuite/DateRangePicker/styles/index.css";
 import useDatePicker from "../../hooks/useDatePicker";
 import { writeFile, utils } from "xlsx";
@@ -6,9 +6,10 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const TransferStatement = () => {
+  const [activePage, setActivePage] = useState(1);
   const { token, adminRole } = useContextState();
   const [viewTransferStatementData, setViewTransferStatementData] =
     useState(false);
@@ -27,6 +28,7 @@ const TransferStatement = () => {
       toDate: formattedEndDate,
       token: generatedToken,
       pagination: true,
+      page: activePage,
     };
 
     const res = await axios.post(API.transferStatement, payload, {
@@ -60,9 +62,24 @@ const TransferStatement = () => {
     const data = await onSubmit();
     setViewTransferStatementData(true);
     if (data?.result?.length > 0) {
-      setTransferStatement(data?.result);
+      setTransferStatement(data);
     }
   };
+  const meta = transferStatement?.pagination;
+
+  useEffect(() => {
+    if (viewTransferStatementData) {
+      const refetch = async () => {
+        const data = await onSubmit();
+        setViewTransferStatementData(true);
+
+        if (data?.result?.length > 0) {
+          setTransferStatement(data);
+        }
+      };
+      refetch();
+    }
+  }, [activePage, viewTransferStatementData]);
 
   return (
     <>
@@ -70,6 +87,28 @@ const TransferStatement = () => {
         <div className="col-12">
           <div className="card">
             <div className="card-body">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "end",
+                }}
+              >
+                {meta && (
+                  <Pagination
+                    prev
+                    next
+                    size="md"
+                    total={meta?.totalRecords}
+                    limit={meta?.recordsPerPage}
+                    activePage={activePage}
+                    onChangePage={setActivePage}
+                    maxButtons={5}
+                    ellipsis
+                    boundaryLinks
+                  />
+                )}
+              </div>
               <form
                 id="formValidationExamples"
                 className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
@@ -131,7 +170,7 @@ const TransferStatement = () => {
           <>
             <hr className="my-3" />
 
-            {transferStatement?.length > 0 ? (
+            {transferStatement?.result?.length > 0 ? (
               <div className="card">
                 <h5 className="card-header">Transfer Statement</h5>
                 <div className="table-responsive text-nowrap">
@@ -146,7 +185,7 @@ const TransferStatement = () => {
                       </tr>
                     </thead>
                     <tbody className="table-border-bottom-0">
-                      {transferStatement?.map((data, i) => {
+                      {transferStatement?.result?.map((data, i) => {
                         return (
                           <tr key={i}>
                             <td>{data?.date_added}</td>
@@ -169,6 +208,29 @@ const TransferStatement = () => {
                       })}
                     </tbody>
                   </table>
+                  {meta && (
+                    <div
+                      style={{
+                        marginTop: "20px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "end",
+                      }}
+                    >
+                      <Pagination
+                        prev
+                        next
+                        size="md"
+                        total={meta?.totalRecords}
+                        limit={meta?.recordsPerPage}
+                        activePage={activePage}
+                        onChangePage={setActivePage}
+                        maxButtons={5}
+                        ellipsis
+                        boundaryLinks
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (
