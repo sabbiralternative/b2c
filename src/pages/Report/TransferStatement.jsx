@@ -138,10 +138,10 @@ const TransferStatement = () => {
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
                       <tr>
-                        <th>Amount</th>
                         <th>Date Added</th>
-                        <th>From To</th>
+                        <th>Amount</th>
                         <th>Narration</th>
+                        <th>From To</th>
                         <th>Transfer Type</th>
                       </tr>
                     </thead>
@@ -149,6 +149,7 @@ const TransferStatement = () => {
                       {transferStatement?.map((data, i) => {
                         return (
                           <tr key={i}>
+                            <td>{data?.date_added}</td>
                             <td
                               style={{
                                 color:
@@ -159,9 +160,9 @@ const TransferStatement = () => {
                             >
                               {data?.amount}
                             </td>
-                            <td>{data?.date_added}</td>
-                            <td>{data?.fromTo}</td>
+
                             <td>{data?.narration}</td>
+                            <td>{data?.fromTo}</td>
                             <td>{data?.transfer_type}</td>
                           </tr>
                         );
