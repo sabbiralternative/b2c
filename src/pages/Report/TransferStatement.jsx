@@ -27,9 +27,8 @@ const TransferStatement = () => {
       toDate: formattedEndDate,
       token: generatedToken,
       pagination: true,
-      transfer_type: "deposit",
     };
-    console.log(payload);
+
     const res = await axios.post(API.transferStatement, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -59,7 +58,6 @@ const TransferStatement = () => {
   const handleViewTransferStatement = async (e) => {
     e.preventDefault();
     const data = await onSubmit();
-    console.log(data);
     setViewTransferStatementData(true);
     if (data?.result?.length > 0) {
       setTransferStatement(data?.result);
@@ -140,22 +138,31 @@ const TransferStatement = () => {
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
                       <tr>
-                        <th>Date</th>
-                        <th>Credit</th>
-                        <th>Debit</th>
-                        <th>Remark</th>
-                        <th>FromTo</th>
+                        <th>Amount</th>
+                        <th>Date Added</th>
+                        <th>From To</th>
+                        <th>Narration</th>
+                        <th>Transfer Type</th>
                       </tr>
                     </thead>
                     <tbody className="table-border-bottom-0">
                       {transferStatement?.map((data, i) => {
                         return (
                           <tr key={i}>
-                            <td>{data?.date}</td>
-                            <td>{data?.credit}</td>
-                            <td>{data?.debit}</td>
-                            <td>{data?.remark}</td>
-                            <td>{data?.fromto}</td>
+                            <td
+                              style={{
+                                color:
+                                  data?.transfer_type === "deposit"
+                                    ? "green"
+                                    : "red",
+                              }}
+                            >
+                              {data?.amount}
+                            </td>
+                            <td>{data?.date_added}</td>
+                            <td>{data?.fromTo}</td>
+                            <td>{data?.narration}</td>
+                            <td>{data?.transfer_type}</td>
                           </tr>
                         );
                       })}

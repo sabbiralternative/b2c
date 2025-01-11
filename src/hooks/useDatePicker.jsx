@@ -19,8 +19,10 @@ const useDatePicker = (currentDate, from) => {
   const fromDate = moment(dateRange?.startDate).format("YYYY-MM-DD");
   const toDate = moment(dateRange?.endDate).format("YYYY-MM-DD");
 
-  const formattedStartDate = fromDate.split("-").reverse().join("-");
-  const formattedEndDate = toDate.split("-").reverse().join("-");
+  // const formattedStartDate = fromDate.split("-").reverse().join("-");
+  // const formattedEndDate = toDate.split("-").reverse().join("-");
+  const formattedStartDate = fromDate;
+  const formattedEndDate = toDate;
 
   return {
     onChange,
