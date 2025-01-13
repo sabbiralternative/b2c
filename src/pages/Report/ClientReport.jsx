@@ -7,7 +7,6 @@ import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
-import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
 const ClientReport = () => {
@@ -18,17 +17,13 @@ const ClientReport = () => {
   const navigate = useNavigate();
   const { formattedEndDate, formattedStartDate, onChange } =
     useDatePicker("currentDate");
-  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
-    formattedStartDate,
-    formattedEndDate
-  );
 
   const getClientReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getClients",
-      fromDate: newFormattedStartDate,
-      toDate: newFormattedEndDate,
+      fromDate: formattedStartDate,
+      toDate: formattedEndDate,
       token: generatedToken,
       pagination: true,
     };
@@ -81,7 +76,7 @@ const ClientReport = () => {
                   Client Registration Date
                 </label>
                 <DateRangePicker
-                  format="dd-MM-yyyy"
+                  format="yyyy-MM-dd"
                   editable
                   onChange={onChange}
                   defaultValue={[new Date(), new Date()]}
@@ -126,7 +121,7 @@ const ClientReport = () => {
                   <thead className="table-dark">
                     <tr>
                       <th>User Id</th>
-                      {adminRole == "master" && (
+                      {adminRole !== "master" && (
                         <>
                           <th>Mobile</th>
                           <th>User Name</th>
@@ -151,7 +146,7 @@ const ClientReport = () => {
                           >
                             {data?.userId}
                           </td>
-                          {adminRole == "master" && (
+                          {adminRole !== "master" && (
                             <>
                               <td>{data?.mobile}</td>
                               <td>{data?.username}</td>

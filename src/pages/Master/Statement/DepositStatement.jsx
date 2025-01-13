@@ -35,7 +35,7 @@ const DepositStatement = () => {
                   Range Picker
                 </label>
                 <DateRangePicker
-                  format="dd-MM-yyyy"
+                  format="yyyy-MM-dd"
                   editable
                   onChange={onChange}
                   defaultValue={[

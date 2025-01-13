@@ -4,7 +4,6 @@ import "rsuite/DateRangePicker/styles/index.css";
 import useGetPNL from "../../../hooks/Master/Client/useGetPNL";
 import { useState } from "react";
 import SettleBets from "../../../components/modal/Master/SettleBets";
-import handleFormatDate from "../../../utils/handleFormatDate";
 import useContextState from "../../../hooks/useContextState";
 const PNL = () => {
   const [activePage, setActivePage] = useState(1);
@@ -14,15 +13,11 @@ const PNL = () => {
   const downlineId = localStorage.getItem("downLineId");
 
   const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
-  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
-    formattedStartDate,
-    formattedEndDate
-  );
 
   const { pnl, refetchPNL } = useGetPNL({
     downlineId,
-    fromDate: newFormattedStartDate,
-    toDate: newFormattedEndDate,
+    fromDate: formattedStartDate,
+    toDate: formattedEndDate,
     role: adminRole,
     page: activePage,
   });
@@ -74,7 +69,7 @@ const PNL = () => {
                   Range Picker
                 </label>
                 <DateRangePicker
-                  format="dd-MM-yyyy"
+                  format="yyyy-MM-dd"
                   editable
                   onChange={onChange}
                   defaultValue={[

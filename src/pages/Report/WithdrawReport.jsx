@@ -7,7 +7,6 @@ import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
-import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 
@@ -22,20 +21,17 @@ const WithdrawReport = () => {
   const [totalWithdraw, setTotalWithdraw] = useState(null);
   const { formattedEndDate, formattedStartDate, onChange } =
     useDatePicker("currentDate");
-  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
-    formattedStartDate,
-    formattedEndDate
-  );
 
   const getWithdrawReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getWithdraw",
-      fromDate: newFormattedStartDate,
-      toDate: newFormattedEndDate,
+      fromDate: formattedStartDate,
+      toDate: formattedEndDate,
       token: generatedToken,
       pagination: true,
     };
+    console.log(payload);
     const res = await axios.post(API.export, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -98,7 +94,7 @@ const WithdrawReport = () => {
                     Withdraw Date
                   </label>
                   <DateRangePicker
-                    format="dd-MM-yyyy"
+                    format="yyyy-MM-dd"
                     editable
                     onChange={onChange}
                     defaultValue={[new Date(), new Date()]}

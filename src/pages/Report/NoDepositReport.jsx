@@ -7,7 +7,7 @@ import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
-import handleFormatDate from "../../utils/handleFormatDate";
+// import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
 const NoDepositReport = () => {
@@ -18,17 +18,17 @@ const NoDepositReport = () => {
   const navigate = useNavigate();
   const { formattedEndDate, formattedStartDate, onChange } =
     useDatePicker("currentDate");
-  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
-    formattedStartDate,
-    formattedEndDate
-  );
+  // const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
+  //   formattedStartDate,
+  //   formattedEndDate
+  // );
 
   const getNoDepositReportReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getND",
-      fromDate: newFormattedStartDate,
-      toDate: newFormattedEndDate,
+      fromDate: formattedStartDate,
+      toDate: formattedEndDate,
       token: generatedToken,
       pagination: true,
     };
@@ -79,7 +79,7 @@ const NoDepositReport = () => {
                   No Deposit Report Registration Date
                 </label>
                 <DateRangePicker
-                  format="dd-MM-yyyy"
+                  format="yyyy-MM-dd"
                   editable
                   onChange={onChange}
                   defaultValue={[new Date(), new Date()]}

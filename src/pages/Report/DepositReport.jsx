@@ -8,7 +8,7 @@ import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 import ShowImage from "../../components/modal/ShowImage";
-import handleFormatDate from "../../utils/handleFormatDate";
+// import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 
 const DepositReport = () => {
@@ -22,17 +22,17 @@ const DepositReport = () => {
   const [totalDeposit, setTotalDeposit] = useState(null);
   const { formattedEndDate, formattedStartDate, onChange } =
     useDatePicker("currentDate");
-  const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
-    formattedStartDate,
-    formattedEndDate
-  );
+  // const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
+  //   formattedStartDate,
+  //   formattedEndDate
+  // );
 
   const getDepositReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getDeposit",
-      fromDate: newFormattedStartDate,
-      toDate: newFormattedEndDate,
+      fromDate: formattedStartDate,
+      toDate: formattedEndDate,
       token: generatedToken,
       pagination: true,
     };
@@ -101,7 +101,7 @@ const DepositReport = () => {
                     Deposit Date
                   </label>
                   <DateRangePicker
-                    format="dd-MM-yyyy"
+                    format="yyyy-MM-dd"
                     editable
                     onChange={onChange}
                     defaultValue={[new Date(), new Date()]}
