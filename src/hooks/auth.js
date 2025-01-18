@@ -12,5 +12,6 @@ export const useVerifyUser = () => {
       return data;
     },
     refetchInterval: 10000,
+    gcTime: 0,
   });
 };
