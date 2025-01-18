@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
@@ -8,8 +8,19 @@ import {
   useGetAllChecker,
 } from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
+import useContextState from "../../../../hooks/useContextState";
 
 const AddChecker = ({ setShowAddChecker }) => {
+  const { adminRole } = useContextState();
+  const [selected, setSelected] = useState(null);
+
+  const handleCheckboxChange = (value) => {
+    if (selected === value) {
+      setSelected(null);
+    } else {
+      setSelected(value);
+    }
+  };
   const addCheckerRef = useRef();
   useCloseModalClickOutside(addCheckerRef, () => {
     setShowAddChecker(false);
@@ -23,12 +34,23 @@ const AddChecker = ({ setShowAddChecker }) => {
 
   const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
-    const payload = {
-      ...values,
-      type: "addStaff",
-      role: "checker",
-      token: generatedToken,
-    };
+    let payload;
+    if (adminRole === "master") {
+      payload = {
+        ...values,
+        permissions: values?.permissions?.[0],
+        type: "addStaff",
+        role: "checker",
+        token: generatedToken,
+      };
+    } else {
+      payload = {
+        ...values,
+        type: "addStaff",
+        role: "checker",
+        token: generatedToken,
+      };
+    }
 
     addChecker(payload, {
       onSuccess: (data) => {
@@ -127,6 +149,74 @@ const AddChecker = ({ setShowAddChecker }) => {
                       />
                     </div>
                   </div>
+                  {adminRole === "master" && (
+                    <div className="row mb-3" id="ifsc_div">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Permissions
+                      </label>
+                      <div
+                        className="col-sm-10"
+                        style={{
+                          display: "flex",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            marginRight: "40px",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                            checked={selected === "deposit"}
+                            onChange={() => handleCheckboxChange("deposit")}
+                            value="deposit"
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+                              marginTop: "5px",
+                              height: "100%",
+                            }}
+                          >
+                            Deposit
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="withdraw"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                            checked={selected === "withdraw"}
+                            onChange={() => handleCheckboxChange("withdraw")}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+                              marginTop: "5px",
+                              height: "100%",
+                            }}
+                          >
+                            Withdraw
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="modal-footer">

@@ -10,11 +10,13 @@ const MasterSidebar = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showExposure, setShowExposure] = useState(false);
+  const [showStaff, setShowStaff] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
-  const { setShowSidebar, setShowSocialLink, adminRole } = useContextState();
+  const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker } =
+    useContextState();
 
   const settingsRef = useRef();
   useCloseModalClickOutside(settingsRef, () => {
@@ -46,6 +48,10 @@ const MasterSidebar = () => {
   useCloseModalClickOutside(exposureRef, () => {
     setShowExposure(false);
   });
+  const staffRef = useRef();
+  useCloseModalClickOutside(staffRef, () => {
+    setShowStaff(false);
+  });
 
   const reportRef = useRef();
   useCloseModalClickOutside(reportRef, () => {
@@ -68,6 +74,7 @@ const MasterSidebar = () => {
     setShowReport(false);
     setShowBonus(false);
     setShowSettings(false);
+    setShowStaff(false);
   };
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
@@ -98,6 +105,7 @@ const MasterSidebar = () => {
                 setShowExposure(false);
                 setShowReport(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -183,6 +191,7 @@ const MasterSidebar = () => {
                 setShowExposure(false);
                 setShowReport(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -228,6 +237,7 @@ const MasterSidebar = () => {
                 setShowExposure(false);
                 setShowReport(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -299,6 +309,7 @@ const MasterSidebar = () => {
             setShowExposure(false);
             setShowReport(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -363,6 +374,7 @@ const MasterSidebar = () => {
             setShowExposure(false);
             setShowReport(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -416,6 +428,7 @@ const MasterSidebar = () => {
                 setShowStatement(false);
                 setShowExposure(false);
                 setShowReport(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -469,6 +482,7 @@ const MasterSidebar = () => {
                 setShowWithdraw(false);
                 setShowReport(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -498,6 +512,53 @@ const MasterSidebar = () => {
               </li>
             </ul>
           </li>
+          <li ref={staffRef} className={`menu-item ${showStaff ? "open" : ""}`}>
+            <a
+              style={{}}
+              onClick={() => {
+                setShowStaff((prev) => !prev);
+                setShowExposure(false);
+                setShowClients(false);
+                setShowDeposit(false);
+                setShowSettings(false);
+                setShowPayments(false);
+                setShowStatement(false);
+                setShowWithdraw(false);
+                setShowReport(false);
+                setShowBonus(false);
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Staff</div>
+            </a>
+
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <Link
+                  to="/view-checker"
+                  onClick={() => setShowSidebar(false)}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">View Checker</div>
+                </Link>
+              </li>
+
+              <li className="menu-item">
+                <Link
+                  onClick={() => {
+                    setShowSidebar(false);
+                    setAddChecker(true);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Banner">Add Checker</div>
+                </Link>
+              </li>
+            </ul>
+          </li>
           <li
             ref={reportRef}
             className={`menu-item ${showReport ? "open" : ""}`}
@@ -513,6 +574,7 @@ const MasterSidebar = () => {
                 setShowStatement(false);
                 setShowWithdraw(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -593,6 +655,7 @@ const MasterSidebar = () => {
                 setShowStatement(false);
                 setShowWithdraw(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >

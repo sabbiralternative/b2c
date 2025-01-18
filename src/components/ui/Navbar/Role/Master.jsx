@@ -6,7 +6,8 @@ import notification from "../../../../assets/notification.wav";
 import useContextState from "../../../../hooks/useContextState";
 
 const Master = () => {
-  const { readOnly, setShowSocialLink, adminRole } = useContextState();
+  const { readOnly, setShowSocialLink, adminRole, setAddChecker } =
+    useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
   const [showStatement, setShowStatement] = useState(false);
@@ -16,6 +17,7 @@ const Master = () => {
   const [showExposure, setShowExposure] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
+  const [showStaff, setShowStaff] = useState(false);
 
   const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
@@ -89,6 +91,11 @@ const Master = () => {
     setShowBonus(false);
   });
 
+  const staffRef = useRef();
+  useCloseModalClickOutside(staffRef, () => {
+    setShowStaff(false);
+  });
+
   const handleNavigate = (link) => {
     navigate(`/${link}`);
     setShowClients(false);
@@ -100,6 +107,7 @@ const Master = () => {
     setShowReport(false);
     setShowSettings(false);
     setShowBonus(false);
+    setShowStaff(false);
   };
 
   return (
@@ -127,6 +135,7 @@ const Master = () => {
               setShowExposure(false);
               setShowReport(false);
               setShowBonus(false);
+              setShowStaff(false);
             }}
             className="menu-link menu-toggle"
           >
@@ -254,6 +263,7 @@ const Master = () => {
               setShowExposure(false);
               setShowReport(false);
               setShowBonus(false);
+              setShowStaff(false);
             }}
             className="menu-link menu-toggle"
           >
@@ -339,6 +349,7 @@ const Master = () => {
             setShowExposure(false);
             setShowReport(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -418,6 +429,7 @@ const Master = () => {
             setShowExposure(false);
             setShowReport(false);
             setShowBonus(false);
+            setShowStaff(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -486,6 +498,7 @@ const Master = () => {
                 setShowStatement(false);
                 setShowExposure(false);
                 setShowReport(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -561,6 +574,7 @@ const Master = () => {
                 setShowWithdraw(false);
                 setShowReport(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -590,6 +604,45 @@ const Master = () => {
               </li>
             </ul>
           </li>
+          <li ref={staffRef} className={`menu-item ${showStaff ? "open" : ""}`}>
+            <a
+              onMouseEnter={() => {
+                setShowStaff(true);
+                setShowExposure(false);
+                setShowClients(false);
+                setShowSettings(false);
+                setShowDeposit(false);
+                setShowPayments(false);
+                setShowStatement(false);
+                setShowWithdraw(false);
+                setShowReport(false);
+                setShowBonus(false);
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+
+              <div data-i18n="Withdraw">Staff</div>
+            </a>
+
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("view-checker")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">View Checker</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a onClick={() => setAddChecker(true)} className="menu-link">
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">Add Checker</div>
+                </a>
+              </li>
+            </ul>
+          </li>
           <li
             ref={reportRef}
             className={`menu-item ${showReport ? "open" : ""}`}
@@ -609,6 +662,7 @@ const Master = () => {
                 setShowPayments(false);
                 setShowStatement(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -693,6 +747,7 @@ const Master = () => {
                 setShowPayments(false);
                 setShowStatement(false);
                 setShowBonus(false);
+                setShowStaff(false);
               }}
               className="menu-link menu-toggle"
             >

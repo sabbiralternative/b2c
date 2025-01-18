@@ -6,7 +6,12 @@ const ChangePasswordSuccess = () => {
   const transactionCode = searchParams.get("transactionCode");
   return (
     <div className="cp-success-box">
-      <div className="text-center container">
+      <div
+        className="text-center container"
+        style={{
+          paddingTop: "100px",
+        }}
+      >
         <h1
           style={{
             fontSize: "2.03125rem",
