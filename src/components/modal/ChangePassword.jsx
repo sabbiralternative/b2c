@@ -22,7 +22,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
   const { register, handleSubmit, reset } = useForm();
   const { token, adminRole } = useContextState();
   /* handle change password */
-  const onSubmit = async ({ password, confirmPassword }) => {
+  const onSubmit = async ({ password, confirmPassword, mpassword }) => {
     const generatedToken = handleRandomToken();
     // if (password !== confirmPassword) {
     //   return toast.error("Password did not matched");
@@ -41,8 +41,10 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
       type: "password",
       password,
       confirmPassword,
+      mpassword,
       token: generatedToken,
     };
+
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -116,6 +118,22 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
                       id="nameWithTitle"
                       className="form-control"
                       placeholder="Enter Confirm Password"
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col mb-3">
+                    <label htmlFor="nameWithTitle" className="form-label">
+                      Transaction Code
+                    </label>
+                    <input
+                      {...register("mpassword", {
+                        required: true,
+                      })}
+                      type="text"
+                      id="nameWithTitle"
+                      className="form-control"
+                      placeholder="Enter Transaction Code"
                     />
                   </div>
                 </div>
