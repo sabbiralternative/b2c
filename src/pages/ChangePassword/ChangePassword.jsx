@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import useContextState from "../../hooks/useContextState";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { API } from "../../api";
@@ -51,8 +51,7 @@ const ChangePassword = () => {
     <div className="container-xxl">
       <div className="authentication-wrapper authentication-basic container-p-y">
         <div className="authentication-inner py-4">
-          <Link
-            to="/"
+          <a
             style={{ justifyContent: "center", marginBottom: "10px" }}
             className="app-brand-link gap-2"
           >
@@ -128,7 +127,7 @@ const ChangePassword = () => {
             </span>
 
             <span className="app-brand-text demo h3 mb-0 fw-bold">Panel</span>
-          </Link>
+          </a>
           <div className="card">
             <div className="card-body">
               <div className="app-brand justify-content-center">
@@ -141,20 +140,15 @@ const ChangePassword = () => {
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <div className="mb-3 form-password-toggle">
-                  <label htmlFor="loginname" className="form-label">
-                    Old Password*
-                  </label>
+                  <label className="form-label">Old Password*</label>
                   <div className="input-group input-group-merge">
                     <input
-                      id="password"
                       className="form-control"
                       {...register("oldPassword", {
                         required: true,
                       })}
-                      name="password"
                       type={showOldPassword ? "text" : "password"}
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
                     />
                     <span
                       onClick={() => setShowOldPassword((prev) => !prev)}
@@ -165,20 +159,15 @@ const ChangePassword = () => {
                   </div>
                 </div>
                 <div className="mb-3 form-password-toggle">
-                  <label htmlFor="loginname" className="form-label">
-                    New Password*
-                  </label>
+                  <label className="form-label">New Password*</label>
                   <div className="input-group input-group-merge">
                     <input
-                      id="password"
                       className="form-control"
                       {...register("newPassword", {
                         required: true,
                       })}
-                      name="password"
                       type={showNewPassword ? "text" : "password"}
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
                     />
                     <span
                       onClick={() => setShowNewPassword((prev) => !prev)}
@@ -189,20 +178,15 @@ const ChangePassword = () => {
                   </div>
                 </div>
                 <div className="mb-3 form-password-toggle">
-                  <label htmlFor="loginname" className="form-label">
-                    Confirm Password*
-                  </label>
+                  <label className="form-label">Confirm Password*</label>
                   <div className="input-group input-group-merge">
                     <input
-                      id="password"
                       className="form-control"
                       {...register("confirmPassword", {
                         required: true,
                       })}
-                      name="password"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
                     />
                     <span
                       onClick={() => setShowConfirmPassword((prev) => !prev)}

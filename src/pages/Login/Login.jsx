@@ -47,35 +47,32 @@ const Login = () => {
       .then((data) => {
         setGetToken((prev) => !prev);
         if (data?.success) {
-          localStorage.setItem("readOnly", data?.result?.readOnly);
-          localStorage.setItem("adminToken", data?.result?.token);
-          localStorage.setItem("adminName", data?.result?.loginname);
-          localStorage.setItem("adminRole", data?.result?.role);
-          localStorage.setItem("adminSite", data?.result?.site);
-          const modal = [
-            { banner: data?.result?.banner },
-            { bannerTitle: data?.result?.bannerTitle },
-          ];
-          localStorage.setItem("adminModal", JSON.stringify(modal));
-          if (
-            localStorage.getItem("adminToken") &&
-            localStorage.getItem("adminName") &&
-            data?.result?.changePassword === false
-          ) {
-            // if (data?.result?.authCode) {
-            //   localStorage.setItem("authCode", data?.result?.authCode);
-            //   navigate("/verification-login");
-            // } else {
-            toast.success("Login Success");
-            navigate("/");
-            // }
-          } else if (
-            localStorage.getItem("adminToken") &&
-            localStorage.getItem("adminName") &&
-            data?.result?.changePassword === true
-          ) {
-            // navigate("/change-password-login");
+          if (data?.result?.changePassword) {
             navigate("/change-password");
+          }
+          if (!data?.data?.changePassword) {
+            localStorage.setItem("readOnly", data?.result?.readOnly);
+            localStorage.setItem("adminToken", data?.result?.token);
+            localStorage.setItem("adminName", data?.result?.loginname);
+            localStorage.setItem("adminRole", data?.result?.role);
+            localStorage.setItem("adminSite", data?.result?.site);
+            const modal = [
+              { banner: data?.result?.banner },
+              { bannerTitle: data?.result?.bannerTitle },
+            ];
+            localStorage.setItem("adminModal", JSON.stringify(modal));
+            if (
+              localStorage.getItem("adminToken") &&
+              localStorage.getItem("adminName")
+            ) {
+              // if (data?.result?.authCode) {
+              //   localStorage.setItem("authCode", data?.result?.authCode);
+              //   navigate("/verification-login");
+              // } else {
+              toast.success("Login Success");
+              navigate("/");
+              // }
+            }
           }
         } else {
           setErrorMessage(data?.error?.status?.[0]?.description);
