@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useGetAllChecker } from "../../../hooks/HyperMaster/Staff";
 import UpdateChecker from "../../../components/modal/HyperMaster/Staff/UpdateChecker";
 import UpdatePassword from "../../../components/modal/HyperMaster/Staff/UpdatePassword";
+import useContextState from "../../../hooks/useContextState";
 
 const ViewChecker = () => {
+  const { adminRole } = useContextState();
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
   const { data } = useGetAllChecker();
@@ -24,7 +26,9 @@ const ViewChecker = () => {
       )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
-          <h5 className="card-header">Checkers</h5>
+          <h5 className="card-header">
+            {adminRole === "master" ? "Staff" : "Checkers"}
+          </h5>
           <div className="table-responsive text-nowrap">
             <table className="table table-hover table-sm">
               <thead className="table-dark">
@@ -32,13 +36,15 @@ const ViewChecker = () => {
                   <th>Staff Name</th>
                   <th>Username </th>
                   <th>Status </th>
-                  <th>Role</th>
+                  {adminRole === "master" ? <th>Permission</th> : <th>Role</th>}
                   <th>Reg. Date</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((checker, i) => {
+                  // const permissions = JSON.parse(checker?.permissions);
+                  // console.log(checker);
                   return (
                     <tr key={i}>
                       <td>
@@ -57,8 +63,12 @@ const ViewChecker = () => {
                           {checker?.status === 1 ? "active" : "inactive"}
                         </span>
                       </td>
+                      {adminRole === "master" ? (
+                        <td>N/A</td>
+                      ) : (
+                        <td>{checker?.role}</td>
+                      )}
 
-                      <td>{checker?.role}</td>
                       <td>{checker?.date}</td>
                       <td style={{ display: "flex", color: "white" }}>
                         <a
@@ -72,7 +82,7 @@ const ViewChecker = () => {
                           onClick={() => setUpdatePasswordId(checker?.staff_id)}
                           className="btn btn-icon btn-sm btn-danger"
                         >
-                          p
+                          P
                         </a>
                       </td>
                     </tr>

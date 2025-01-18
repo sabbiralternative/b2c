@@ -6,8 +6,10 @@ import {
 } from "../../../../hooks/HyperMaster/Staff";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import toast from "react-hot-toast";
+import useContextState from "../../../../hooks/useContextState";
 
 const UpdatePassword = ({ updatePasswordId, setUpdatePasswordId }) => {
+  const { adminRole } = useContextState();
   const updatePasswordRef = useRef();
   useCloseModalClickOutside(updatePasswordRef, () => {
     setUpdatePasswordId(null);
@@ -17,15 +19,16 @@ const UpdatePassword = ({ updatePasswordId, setUpdatePasswordId }) => {
   const { mutate: updatePassword } = useUpdateSingleChecker();
   const { refetch } = useGetAllChecker();
 
-  const handleUpdatePassword = ({ password, confirmPassword }) => {
-    if (password !== confirmPassword) {
+  const handleUpdatePassword = (values) => {
+    if (values?.password !== values?.confirmPassword) {
       return toast.error("Password did not matched!");
     }
-    const payload = {
+    let payload = {
+      ...values,
       type: "updateStaffPassword",
       staff_id: updatePasswordId,
-      password,
     };
+
     updatePassword(payload, {
       onSuccess: (data) => {
         if (data?.success) {
@@ -95,6 +98,23 @@ const UpdatePassword = ({ updatePasswordId, setUpdatePasswordId }) => {
                     />
                   </div>
                 </div>
+                {adminRole === "master" && (
+                  <div className="row">
+                    <div className="col mb-3">
+                      <label htmlFor="mpassword" className="form-label">
+                        Transaction Code
+                      </label>
+                      <input
+                        {...register("mpassword", {
+                          required: true,
+                        })}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter Transaction Code"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="modal-footer">
                 <button

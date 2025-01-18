@@ -7,8 +7,10 @@ import {
   useUpdateSingleChecker,
 } from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
+import useContextState from "../../../../hooks/useContextState";
 
 const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
+  const { adminRole } = useContextState();
   const { register, handleSubmit, reset } = useForm();
   const { mutate: updateChecker } = useUpdateSingleChecker();
   const { refetch } = useGetAllChecker();
@@ -64,7 +66,7 @@ const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
           <div className="modal-content" ref={checkerRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Checker Status
+                {adminRole === "master" ? "Staff" : "Checker"} Status
               </h5>
               <button
                 onClick={() => setUpdateStatusId(null)}
@@ -88,7 +90,10 @@ const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
                         <span className="switch-on"></span>
                         <span className="switch-off"></span>
                       </span>
-                      <span className="switch-label">Checker Status</span>
+                      <span className="switch-label">
+                        {" "}
+                        {adminRole === "master" ? "Staff" : "Checker"} Status
+                      </span>
                     </label>
                   </div>
                 </div>
