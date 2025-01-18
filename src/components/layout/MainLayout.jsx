@@ -23,8 +23,10 @@ import toast from "react-hot-toast";
 import DirectDeposit from "../modal/Master/Client/DirectDeposit";
 import AddChecker from "../modal/HyperMaster/Staff/AddChecker";
 import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
+import { useVerifyUser } from "../../hooks/auth";
 
 const MainLayout = () => {
+  const { data: userData } = useVerifyUser();
   const {
     directDeposit,
     setDirectDeposit,
@@ -119,6 +121,16 @@ const MainLayout = () => {
       }
     }
   }, [location, setGetToken]);
+
+  useEffect(() => {
+    if (userData && Object.keys(userData)?.length > 0) {
+      if (userData?.success === false) {
+        toast.error(userData?.message);
+        handleLogOut();
+        navigate("/login");
+      }
+    }
+  }, [userData, navigate]);
   return (
     <div className="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
       <div className="layout-container">

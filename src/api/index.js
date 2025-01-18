@@ -66,6 +66,7 @@ export const API = {
   bonus: "",
   staff: "",
   whitelabel: "",
+  auth: "",
 };
 
 export const Settings = {

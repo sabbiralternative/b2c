@@ -10,6 +10,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
       const data = res.data;
       if (data?.result) {
         API.downineEditForm = data?.result?.endpoint?.downineEditForm;
+        API.auth = data?.result?.endpoint?.auth;
         API.accessToken = data?.result?.endpoint?.accessToken;
         API.whitelabel = data?.result?.endpoint?.whitelabel;
         API.staff = data?.result?.endpoint?.staff;
