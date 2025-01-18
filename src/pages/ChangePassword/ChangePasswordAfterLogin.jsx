@@ -6,8 +6,12 @@ import axios from "axios";
 import { API } from "../../api";
 import { handleLogOut } from "../../utils/handleLogOut";
 import handleRandomToken from "../../utils/handleRandomToken";
+import { useState } from "react";
 
-const ChangePassword = () => {
+const ChangePasswordAfterLogin = () => {
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register, handleSubmit } = useForm();
   const { token } = useContextState();
   const navigate = useNavigate();
@@ -27,6 +31,7 @@ const ChangePassword = () => {
       oldPassword,
       confirmPassword,
       token: generatedToken,
+      changePasswordType: "after_login",
     };
     const res = await axios.post(API.changePassword, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -61,15 +66,30 @@ const ChangePassword = () => {
                   >
                     Old Password *
                   </label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-10" style={{ position: "relative" }}>
                     <input
-                      type="text"
+                      type={showOldPassword ? "text" : "password"}
                       {...register("oldPassword", {
                         required: true,
                       })}
                       className="form-control"
                       id="basic-default-name"
                     />
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "5px",
+                        right: "25px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setShowOldPassword((prev) => !prev)}
+                    >
+                      <i
+                        className={`bx ${
+                          showOldPassword ? "bx-show" : "bx-hide"
+                        }`}
+                      ></i>
+                    </span>
                   </div>
                 </div>
 
@@ -80,15 +100,30 @@ const ChangePassword = () => {
                   >
                     New Password *
                   </label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-10" style={{ position: "relative" }}>
                     <input
                       {...register("newPassword", {
                         required: true,
                       })}
-                      type="text"
+                      type={showNewPassword ? "text" : "password"}
                       className="form-control"
                       id="basic-default-name"
                     />
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "5px",
+                        right: "25px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setShowNewPassword((prev) => !prev)}
+                    >
+                      <i
+                        className={`bx ${
+                          showNewPassword ? "bx-show" : "bx-hide"
+                        }`}
+                      ></i>
+                    </span>
                   </div>
                 </div>
 
@@ -99,15 +134,30 @@ const ChangePassword = () => {
                   >
                     Confirm Password *
                   </label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-10" style={{ position: "relative" }}>
                     <input
                       {...register("confirmPassword", {
                         required: true,
                       })}
-                      type="text"
+                      type={showConfirmPassword ? "text" : "password"}
                       className="form-control"
                       id="basic-default-name"
                     />
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "5px",
+                        right: "25px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setShowConfirmPassword((prev) => !prev)}
+                    >
+                      <i
+                        className={`bx ${
+                          showConfirmPassword ? "bx-show" : "bx-hide"
+                        }`}
+                      ></i>
+                    </span>
                   </div>
                 </div>
 
@@ -130,4 +180,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ChangePasswordAfterLogin;

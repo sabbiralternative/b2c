@@ -48,9 +48,9 @@ const Login = () => {
         setGetToken((prev) => !prev);
         if (data?.success) {
           if (data?.result?.changePassword) {
-            navigate("/change-password");
+            navigate(`/change-password?token=${data?.result?.token}`);
           }
-          if (!data?.data?.changePassword) {
+          if (data?.result?.changePassword === false) {
             localStorage.setItem("readOnly", data?.result?.readOnly);
             localStorage.setItem("adminToken", data?.result?.token);
             localStorage.setItem("adminName", data?.result?.loginname);
@@ -224,7 +224,9 @@ const Login = () => {
                       onClick={() => setShowPassword((prev) => !prev)}
                       className="input-group-text cursor-pointer"
                     >
-                      <i className="bx bx-hide"></i>
+                      <i
+                        className={`bx ${showPassword ? "bx-show" : "bx-hide"}`}
+                      ></i>
                     </span>
                   </div>
                 </div>

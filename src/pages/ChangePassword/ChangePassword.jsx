@@ -1,20 +1,20 @@
 import { useForm } from "react-hook-form";
-import useContextState from "../../hooks/useContextState";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { API } from "../../api";
-import { handleLogOut } from "../../utils/handleLogOut";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ChangePassword = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const token = searchParams.get("token");
+  const navigate = useNavigate();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register, handleSubmit } = useForm();
-  const { token } = useContextState();
-  const navigate = useNavigate();
 
   /* handle change password  */
   const onSubmit = async ({ oldPassword, newPassword, confirmPassword }) => {
@@ -26,23 +26,27 @@ const ChangePassword = () => {
     //     type: "panel",
     //     token: generatedToken,
     //   });
+
     const payload = {
       newPassword,
       oldPassword,
       confirmPassword,
+      changePasswordType: "before_login",
       token: generatedToken,
     };
+
     const res = await axios.post(API.changePassword, payload, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     const data = res.data;
 
     if (data?.success) {
       toast.success(data?.result?.message);
-      setTimeout(() => {
-        handleLogOut();
-        navigate("/login");
-      }, 1000);
+      navigate(
+        `/change-password-success?transactionCode=${data?.result?.transaction_code}`
+      );
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -154,7 +158,11 @@ const ChangePassword = () => {
                       onClick={() => setShowOldPassword((prev) => !prev)}
                       className="input-group-text cursor-pointer"
                     >
-                      <i className="bx bx-hide"></i>
+                      <i
+                        className={`bx ${
+                          showOldPassword ? "bx-show" : "bx-hide"
+                        }`}
+                      ></i>
                     </span>
                   </div>
                 </div>
@@ -173,7 +181,11 @@ const ChangePassword = () => {
                       onClick={() => setShowNewPassword((prev) => !prev)}
                       className="input-group-text cursor-pointer"
                     >
-                      <i className="bx bx-hide"></i>
+                      <i
+                        className={`bx ${
+                          showNewPassword ? "bx-show" : "bx-hide"
+                        }`}
+                      ></i>
                     </span>
                   </div>
                 </div>
@@ -192,7 +204,11 @@ const ChangePassword = () => {
                       onClick={() => setShowConfirmPassword((prev) => !prev)}
                       className="input-group-text cursor-pointer"
                     >
-                      <i className="bx bx-hide"></i>
+                      <i
+                        className={`bx ${
+                          showConfirmPassword ? "bx-show" : "bx-hide"
+                        }`}
+                      ></i>
                     </span>
                   </div>
                 </div>

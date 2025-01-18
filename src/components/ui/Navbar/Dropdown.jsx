@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { handleLogOut } from "../../../utils/handleLogOut";
 import useContextState from "../../../hooks/useContextState";
 
-
 const Dropdown = ({
   showDropdown,
   adminName,
@@ -38,7 +37,7 @@ const Dropdown = ({
       </li>
       <li>
         <Link
-          to="/change-password"
+          to="/change-password-after-login"
           onClick={() => {
             setShowDropdown(false);
           }}

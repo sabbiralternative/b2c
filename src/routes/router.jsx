@@ -12,6 +12,8 @@ import TransferStatement from "../pages/Report/TransferStatement";
 import FirstDepositReport from "../pages/Report/FirstDepositReport";
 import NoDepositReport from "../pages/Report/NoDepositReport";
 import { AdminMasterRoutes } from "./AdminMaster";
+import ChangePasswordSuccess from "../pages/ChangePasswordSuccess/ChangePasswordSuccess";
+import ChangePasswordAfterLogin from "../pages/ChangePassword/ChangePasswordAfterLogin";
 
 export const router = createBrowserRouter(
   [
@@ -48,6 +50,10 @@ export const router = createBrowserRouter(
           path: "/transfer-statement",
           element: <TransferStatement />,
         },
+        {
+          path: "/change-password-after-login",
+          element: <ChangePasswordAfterLogin />,
+        },
         /*Hyper Master Routes */
         ...HyperMasterRoutes,
         /* Master Routes */
@@ -62,6 +68,10 @@ export const router = createBrowserRouter(
     {
       path: "/change-password",
       element: <ChangePassword />,
+    },
+    {
+      path: "/change-password-success",
+      element: <ChangePasswordSuccess />,
     },
   ],
   {
