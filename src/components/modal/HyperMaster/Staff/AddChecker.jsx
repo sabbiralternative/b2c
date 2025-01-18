@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
@@ -12,15 +12,7 @@ import useContextState from "../../../../hooks/useContextState";
 
 const AddChecker = ({ setShowAddChecker }) => {
   const { adminRole } = useContextState();
-  const [selected, setSelected] = useState(null);
 
-  const handleCheckboxChange = (value) => {
-    if (selected === value) {
-      setSelected(null);
-    } else {
-      setSelected(value);
-    }
-  };
   const addCheckerRef = useRef();
   useCloseModalClickOutside(addCheckerRef, () => {
     setShowAddChecker(false);
@@ -38,9 +30,7 @@ const AddChecker = ({ setShowAddChecker }) => {
     if (adminRole === "master") {
       payload = {
         ...values,
-        permissions: values?.permissions?.[0],
         type: "addStaff",
-        role: "checker",
         token: generatedToken,
       };
     } else {
@@ -51,7 +41,7 @@ const AddChecker = ({ setShowAddChecker }) => {
         token: generatedToken,
       };
     }
-
+    console.log(payload);
     addChecker(payload, {
       onSuccess: (data) => {
         if (data?.success) {
@@ -79,7 +69,7 @@ const AddChecker = ({ setShowAddChecker }) => {
           <div className="modal-content" ref={addCheckerRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Add Checker
+                Add {adminRole === "master" ? "Staff" : "Checker"}
               </h5>
               <button
                 onClick={() => setShowAddChecker(false)}
@@ -175,8 +165,6 @@ const AddChecker = ({ setShowAddChecker }) => {
                             style={{ height: "100%" }}
                             type="checkbox"
                             {...register("permissions", { required: true })}
-                            checked={selected === "deposit"}
-                            onChange={() => handleCheckboxChange("deposit")}
                             value="deposit"
                           />
                           <p
@@ -201,8 +189,6 @@ const AddChecker = ({ setShowAddChecker }) => {
                             style={{ height: "100%" }}
                             type="checkbox"
                             {...register("permissions", { required: true })}
-                            checked={selected === "withdraw"}
-                            onChange={() => handleCheckboxChange("withdraw")}
                           />
                           <p
                             style={{

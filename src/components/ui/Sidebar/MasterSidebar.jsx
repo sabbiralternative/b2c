@@ -536,12 +536,12 @@ const MasterSidebar = () => {
             <ul className="menu-sub">
               <li className="menu-item">
                 <Link
-                  to="/view-checker"
+                  to="/view-staff"
                   onClick={() => setShowSidebar(false)}
                   className="menu-link"
                 >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">View Checker</div>
+                  <div data-i18n="View Banners">View Staff</div>
                 </Link>
               </li>
 
@@ -554,7 +554,7 @@ const MasterSidebar = () => {
                   className="menu-link"
                 >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Banner">Add Checker</div>
+                  <div data-i18n="Add Banner">Add Staff</div>
                 </Link>
               </li>
             </ul>

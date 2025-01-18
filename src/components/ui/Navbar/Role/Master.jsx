@@ -628,17 +628,17 @@ const Master = () => {
             <ul className="menu-sub">
               <li className="menu-item">
                 <a
-                  onClick={() => handleNavigate("view-checker")}
+                  onClick={() => handleNavigate("view-staff")}
                   className="menu-link"
                 >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">View Checker</div>
+                  <div data-i18n="Pending Withdraw">View Staff</div>
                 </a>
               </li>
               <li className="menu-item">
                 <a onClick={() => setAddChecker(true)} className="menu-link">
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Add Checker</div>
+                  <div data-i18n="Pending Withdraw">Add Staff</div>
                 </a>
               </li>
             </ul>

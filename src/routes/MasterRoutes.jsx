@@ -1,3 +1,4 @@
+import ViewChecker from "../pages/HyperMaster/Staff/ViewChecker";
 import CompletedBonus from "../pages/Master/Bonus/CompletedBonus/CompletedBonus";
 import PendingBonus from "../pages/Master/Bonus/PendingBonus/PendingBonus";
 import RejectedBonus from "../pages/Master/Bonus/RejectedBonus/RejectedBonus";
@@ -124,5 +125,9 @@ export const MasterRoutes = [
   {
     path: "/withdraw-statement",
     element: <WithdrawStatement />,
+  },
+  {
+    path: "/view-staff",
+    element: <ViewChecker />,
   },
 ];
