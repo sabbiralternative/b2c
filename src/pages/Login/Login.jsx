@@ -47,7 +47,6 @@ const Login = () => {
       .then((data) => {
         setGetToken((prev) => !prev);
         if (data?.success) {
-          console.log(data);
           localStorage.setItem("readOnly", data?.result?.readOnly);
           localStorage.setItem("adminToken", data?.result?.token);
           localStorage.setItem("adminName", data?.result?.loginname);

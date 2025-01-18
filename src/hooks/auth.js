@@ -3,8 +3,10 @@ import { AxiosSecure } from "../lib/AxiosSecure";
 import { API } from "../api";
 
 export const useVerifyUser = () => {
+  const token = localStorage.getItem("adminToken");
   return useQuery({
-    queryKey: ["auth"],
+    queryKey: ["validateUser"],
+    enabled: token ? true : false,
     queryFn: async () => {
       const { data } = await AxiosSecure.get(API.auth);
       return data;

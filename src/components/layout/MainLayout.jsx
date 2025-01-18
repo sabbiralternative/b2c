@@ -24,8 +24,10 @@ import DirectDeposit from "../modal/Master/Client/DirectDeposit";
 import AddChecker from "../modal/HyperMaster/Staff/AddChecker";
 import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
 import { useVerifyUser } from "../../hooks/auth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const MainLayout = () => {
+  const queryClient = useQueryClient();
   const { data: userData } = useVerifyUser();
   const {
     directDeposit,
@@ -83,6 +85,7 @@ const MainLayout = () => {
     } else if (Settings.forceLogin) {
       if (!token) {
         handleLogOut();
+
         navigate("/login");
       }
     }
@@ -127,10 +130,11 @@ const MainLayout = () => {
       if (userData?.success === false) {
         toast.error(userData?.message);
         handleLogOut();
+        queryClient.invalidateQueries({ queryKey: ["validateUser"] });
         navigate("/login");
       }
     }
-  }, [userData, navigate]);
+  }, [userData, navigate, queryClient]);
   return (
     <div className="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
       <div className="layout-container">
