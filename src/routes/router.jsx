@@ -23,10 +23,7 @@ export const router = createBrowserRouter(
           index: true,
           element: <Home />,
         },
-        {
-          path: "/change-password",
-          element: <ChangePassword />,
-        },
+
         {
           path: "/client-report",
           element: <ClientReport />,
@@ -61,6 +58,10 @@ export const router = createBrowserRouter(
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/change-password",
+      element: <ChangePassword />,
     },
   ],
   {

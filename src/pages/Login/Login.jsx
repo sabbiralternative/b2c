@@ -75,7 +75,7 @@ const Login = () => {
             data?.result?.changePassword === true
           ) {
             // navigate("/change-password-login");
-            navigate("/");
+            navigate("/change-password");
           }
         } else {
           setErrorMessage(data?.error?.status?.[0]?.description);
