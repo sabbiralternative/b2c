@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
-const useGetPaymentMethod = (type) => {
+const useGetPaymentMethod = (payload) => {
   const { token, tokenLoading } = useContextState();
   const { data: paymentsMethods = [], refetch: refetchPaymentMethods } =
     useQuery({
@@ -12,11 +12,11 @@ const useGetPaymentMethod = (type) => {
       enabled: !tokenLoading,
       queryFn: async () => {
         const generatedToken = handleRandomToken();
-        const payload = {
-          ...type,
+        const postData = {
+          ...payload,
           token: generatedToken,
         };
-        const res = await axios.post(API.payments, payload, {
+        const res = await axios.post(API.payments, postData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

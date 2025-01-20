@@ -10,9 +10,11 @@ const ActivityLogs = () => {
   const params = new URLSearchParams(location.search);
   const role = params.get("role");
   const id = params.get("id");
+  const idWithOutP = id.split("-")[1];
+
   const { data } = useGetActivityLogs({
     page: activePage,
-    id,
+    id: idWithOutP,
     role,
   });
 

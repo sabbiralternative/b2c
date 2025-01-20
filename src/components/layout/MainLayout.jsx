@@ -13,7 +13,6 @@ import AddBranch from "../modal/HyperMaster/Branch/AddBranch";
 import SocialLink from "../modal/HyperMaster/Settings/SocialLink";
 import Deposit from "../modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../modal/HyperMaster/Branch/Withdraw";
-import ClientDeposit from "../modal/Master/Client/Deposit";
 import ChangeStatus from "../modal/ChangeStatus";
 import ChangePassword from "../modal/ChangePassword";
 import EditPayment from "../modal/Master/Payment/EditPayment";
@@ -50,9 +49,7 @@ const MainLayout = () => {
     setShowChangeStatus,
     showChangeStatus,
     downLineId,
-    clientDeposit,
     payloadRole,
-    setClientDeposit,
     showEditPayment,
     setShowEditPayment,
     showCreditRef,
@@ -186,14 +183,7 @@ const MainLayout = () => {
             )}
             {/* Modals end for Hyper_master*/}
             {/* Modals end for master*/}
-            {clientDeposit && (
-              <ClientDeposit
-                id={id}
-                setClientDeposit={setClientDeposit}
-                downlineId={downLineId}
-                role={payloadRole}
-              />
-            )}
+
             {directDeposit && (
               <DirectDeposit
                 id={id}

@@ -22,7 +22,7 @@ const StateProvider = ({ children }) => {
   const [showChangeStatus, setShowChangeStatus] = useState(false);
   const [downLineId, setDownLineId] = useState("");
   /* Master state */
-  const [clientDeposit, setClientDeposit] = useState(false);
+
   const [clientData, setClientData] = useState([]);
   const [showEditPayment, setShowEditPayment] = useState(false);
   const [clientId, setClientId] = useState("");
@@ -125,8 +125,7 @@ const StateProvider = ({ children }) => {
     setShowChangeStatus,
     downLineId,
     setDownLineId,
-    clientDeposit,
-    setClientDeposit,
+
     clientData,
     setClientData,
     showEditPayment,

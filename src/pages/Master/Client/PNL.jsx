@@ -45,8 +45,6 @@ const PNL = () => {
     }
   };
 
-  console.log(pnl);
-
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       {showBetsModal && (

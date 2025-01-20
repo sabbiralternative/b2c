@@ -17,6 +17,8 @@ const ChangeStatus = ({
   registrationStatus: regiStatus,
   role,
   id,
+  updateRole,
+  updateId,
 }) => {
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
@@ -38,7 +40,15 @@ const ChangeStatus = ({
   const [betStatus, setBetStatus] = useState(false);
   const [userStatus, setUserStatus] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState(false);
-  const { status, refetchStatus } = useGetStatus("getStatus", downlineId);
+  let payload = {
+    downlineId,
+    type: "getStatus",
+  };
+  if (updateId && updateRole) {
+    payload.id = updateId;
+    payload.role = updateRole;
+  }
+  const { status, refetchStatus } = useGetStatus(payload);
 
   /* set check box default value */
   useEffect(() => {

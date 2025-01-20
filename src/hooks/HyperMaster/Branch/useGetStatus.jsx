@@ -4,20 +4,19 @@ import useContextState from "../../useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 
-const useGetStatus = (type, downLineId) => {
+const useGetStatus = (payload) => {
   const { token, tokenLoading, adminRole } = useContextState();
   const { data: status, refetch: refetchStatus } = useQuery({
     queryKey: ["creditRef"],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
-      const payload = {
-        downlineId: downLineId,
-        type,
+      const postData = {
+        ...payload,
         token: generatedToken,
         role: adminRole,
       };
-      const res = await axios.post(API.downLineEdit, payload, {
+      const res = await axios.post(API.downLineEdit, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

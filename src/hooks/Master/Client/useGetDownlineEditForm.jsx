@@ -4,26 +4,23 @@ import { useQuery } from "@tanstack/react-query";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
-const useGetDownlineEditForm = (type, downlineId) => {
+const useGetDownlineEditForm = (payload) => {
   const { token, tokenLoading } = useContextState();
   const { data = {}, refetch } = useQuery({
     queryKey: ["downlone-edit-form"],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
-      const payload = {
-        downlineId,
-        type,
+      const postData = {
+        ...payload,
         token: generatedToken,
       };
-      const res = await axios.post(API.downineEditForm, payload, {
+      const res = await axios.post(API.downineEditForm, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res);
       const data = res.data;
-      console.log(data);
       if (data?.success) {
         return data?.result;
       }

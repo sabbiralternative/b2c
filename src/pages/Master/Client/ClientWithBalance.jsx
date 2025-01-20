@@ -6,27 +6,26 @@ import "rsuite/Pagination/styles/index.css";
 import { useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 import { useClient } from "../../../hooks/Master/Client/useClient";
+import ChangePassword from "../../../components/modal/ChangePassword";
+import ClientDeposit from "../../../components/modal/Master/Client/Deposit";
+import DirectDeposit from "../../../components/modal/Master/Client/DirectDeposit";
+import ChangeStatus from "../../../components/modal/ChangeStatus";
+import CreditReference from "../../../components/modal/CreditReference";
 
 const ClientWithBalance = () => {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState(1);
   const [directWithdraw, setDirectWithdraw] = useState(false);
-  const {
-    downLineId,
-    setDirectDeposit,
-    setClientDeposit,
-    setDownLineId,
-    setShowChangePassword,
-    setShowChangeStatus,
-    setShowCreditRef,
-    adminRole,
-    setRefetchViewClient,
-    setClientId,
-    payloadRole,
-    setPayloadRole,
-    setId,
-    id,
-  } = useContextState();
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [clientDeposit, setClientDeposit] = useState(false);
+  const [directDeposit, setDirectDeposit] = useState(false);
+  const [showChangeStatus, setShowChangeStatus] = useState(false);
+  const [showCreditRef, setShowCreditRef] = useState(false);
+  const [downLineId, setDownLineId] = useState("");
+  const [payloadRole, setPayloadRole] = useState("");
+  const [id, setId] = useState("");
+
+  const { adminRole, setRefetchViewClient, setClientId } = useContextState();
   const { data } = useClient({
     searchId: "userWithCredit",
     page: activePage,
@@ -36,7 +35,6 @@ const ClientWithBalance = () => {
     localStorage.setItem("downLineId", username);
     navigate(`/${link}`);
   };
-
   const meta = data?.pagination;
 
   const handleOpenModal = (setModal, username, role, id) => {
@@ -45,6 +43,57 @@ const ClientWithBalance = () => {
 
   return (
     <>
+      {showChangePassword && (
+        <ChangePassword
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowChangePassword={setShowChangePassword}
+          updateRole={payloadRole}
+          updateId={id}
+        />
+      )}
+      {clientDeposit && (
+        <ClientDeposit
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setClientDeposit={setClientDeposit}
+          updateRole={payloadRole}
+          updateId={id}
+        />
+      )}
+      {directDeposit && (
+        <DirectDeposit
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setDirectDeposit={setDirectDeposit}
+          updateRole={payloadRole}
+          updateId={id}
+        />
+      )}
+      {showChangeStatus && (
+        <ChangeStatus
+          downlineId={downLineId}
+          id={id}
+          registrationStatus={null}
+          role={payloadRole}
+          setShowChangeStatus={setShowChangeStatus}
+          updateRole={payloadRole}
+          updateId={id}
+        />
+      )}
+      {showCreditRef && (
+        <CreditReference
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowCreditRef={setShowCreditRef}
+          updateRole={payloadRole}
+          updateId={id}
+        />
+      )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
           <div
