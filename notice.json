@@ -52,7 +52,7 @@
       "ourCasino": "https://cache7.live/api/exchange/diamond/ourCasino",
       "diamondCasino": "https://cache7.live/api/exchange/diamond/diamondCasino",
       "auraCasino": "https://cache7.live/api/exchange/diamond/auraCasino",
-      "activityLogs": "https://api7.live/api/exchange/diamond/activityLogs",
+
       "ipDetails": "https://api7.live/api/exchange/diamond/ipDetails",
       "exposure": "https://api7.live/api/exchange/diamond/exposure",
       "searchEvent": "https://api7.live/api/exchange/diamond/searchEvent",
@@ -100,7 +100,8 @@
       "bonus": "https://admin.api7.live/api/b2c/bonus",
       "staff": "https://admin.api7.live/api/b2c/staff",
       "whitelabel": "https://admin.api7.live/api/b2c/whitelabel",
-      "auth": "https://admin.api7.live/api/b2c/auth"
+      "auth": "https://admin.api7.live/api/b2c/auth",
+      "activityLogs": "https://admin.api7.live/api/b2c/activityLogs"
     }
   },
   "success": true

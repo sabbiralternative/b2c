@@ -67,6 +67,7 @@ export const API = {
   staff: "",
   whitelabel: "",
   auth: "",
+  activityLogs: "",
 };
 
 export const Settings = {

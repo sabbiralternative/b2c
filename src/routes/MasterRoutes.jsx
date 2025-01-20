@@ -1,4 +1,5 @@
 import ViewChecker from "../pages/HyperMaster/Staff/ViewChecker";
+import ActivityLogs from "../pages/Master/ActivityLogs/ActivityLogs";
 import CompletedBonus from "../pages/Master/Bonus/CompletedBonus/CompletedBonus";
 import PendingBonus from "../pages/Master/Bonus/PendingBonus/PendingBonus";
 import RejectedBonus from "../pages/Master/Bonus/RejectedBonus/RejectedBonus";
@@ -129,5 +130,9 @@ export const MasterRoutes = [
   {
     path: "/view-staff",
     element: <ViewChecker />,
+  },
+  {
+    path: "/activity-logs",
+    element: <ActivityLogs />,
   },
 ];
