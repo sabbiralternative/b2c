@@ -3,10 +3,13 @@ import useContextState from "../../../hooks/useContextState";
 import { useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
+import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
 const ViewClient = () => {
+  const showMoreRef = useRef(null);
+  const [showMore, setShowMore] = useState(null);
   const navigate = useNavigate();
   const [fetchClients, setFetchClients] = useState(false);
   const { handleSubmit } = useForm();
@@ -58,6 +61,18 @@ const ViewClient = () => {
       setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
     }
   };
+
+  const handleShowMore = (i) => {
+    if (i === showMore) {
+      setShowMore(null);
+    } else {
+      setShowMore(i);
+    }
+  };
+
+  useCloseModalClickOutside(showMoreRef, () => {
+    setShowMore(null);
+  });
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -237,7 +252,6 @@ const ViewClient = () => {
                           >
                             PL
                           </a>
-
                           {adminRole !== "checker" && (
                             <>
                               &nbsp;
@@ -327,6 +341,71 @@ const ViewClient = () => {
                                 </a>
                               </>
                             )}
+                          &nbsp;
+                          <div className="btn-group">
+                            <button
+                              onClick={() => handleShowMore(i)}
+                              style={{
+                                height: "auto",
+                                width: "auto",
+                                padding: "0px 2px",
+                              }}
+                              type="button"
+                              className="btn btn-primary btn-icon  dropdown-toggle hide-arrow"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <i className="bx bx-dots-vertical-rounded"></i>
+                            </button>
+
+                            {i === showMore && (
+                              <div
+                                style={{
+                                  height: "100vh",
+                                  width: "100vw",
+                                  position: "fixed",
+                                  top: "0",
+                                  left: "0",
+                                  right: "0",
+                                  bottom: "0",
+                                  zIndex: 999,
+                                }}
+                              />
+                            )}
+                            {i === showMore && (
+                              <ul
+                                ref={showMoreRef}
+                                style={{
+                                  display: "block",
+                                  right: "0px",
+                                  top: "25px",
+                                }}
+                                className="dropdown-menu dropdown-menu-end"
+                              >
+                                <li>
+                                  <a className="dropdown-item">Activity Logs</a>
+                                </li>
+                                <li>
+                                  <a className="dropdown-item">
+                                    Another action
+                                  </a>
+                                </li>
+                                <li>
+                                  <a className="dropdown-item">
+                                    Something else here
+                                  </a>
+                                </li>
+                                <li>
+                                  <hr className="dropdown-divider" />
+                                </li>
+                                <li>
+                                  <a className="dropdown-item">
+                                    Separated link
+                                  </a>
+                                </li>
+                              </ul>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     );

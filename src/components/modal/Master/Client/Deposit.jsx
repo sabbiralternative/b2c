@@ -60,6 +60,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
       token: generatedToken,
       role,
     };
+
     const res = await axios.post(API.depositClient, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
