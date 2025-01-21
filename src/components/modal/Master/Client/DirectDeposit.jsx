@@ -23,11 +23,10 @@ const DirectDeposit = ({
   const payload = {
     type: "balance",
     downlineId,
+    id: updateId,
+    role: updateRole,
   };
-  if (updateId && updateRole) {
-    payload.id = updateId;
-    payload.role = updateRole;
-  }
+
   const { data } = useGetDownlineEditForm(payload);
   const { refetchBalance } = useBalance();
   const [amountTwo, setAmountTwo] = useState(null);

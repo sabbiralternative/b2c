@@ -4,8 +4,8 @@ import handleRandomToken from "../utils/handleRandomToken";
 import { API } from "../api";
 import axios from "axios";
 
-const useGetCurrentRef = (downlineId) => {
-  const { token, tokenLoading, adminRole } = useContextState();
+const useGetCurrentRef = (payload) => {
+  const { token, tokenLoading } = useContextState();
   const {
     data: currentRef = {},
     refetch: refetchRef,
@@ -15,13 +15,12 @@ const useGetCurrentRef = (downlineId) => {
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
-      const payload = {
-        downlineId: downlineId,
+      const postData = {
+        ...payload,
         type: "viewCreditReference",
         token: generatedToken,
-        role: adminRole,
       };
-      const res = await axios.post(API.downLineEdit, payload, {
+      const res = await axios.post(API.downLineEdit, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

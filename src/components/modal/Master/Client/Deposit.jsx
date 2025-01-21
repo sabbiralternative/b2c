@@ -18,11 +18,9 @@ const Deposit = ({
 }) => {
   let payload = {
     type: "getActivePayments",
+    id: updateId,
+    role: updateRole,
   };
-  if (updateId && updateRole) {
-    payload.id = updateId;
-    payload.role = updateRole;
-  }
 
   const { paymentsMethods } = useGetPaymentMethod(payload);
   const depositRef = useRef();

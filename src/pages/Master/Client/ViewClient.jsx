@@ -42,8 +42,6 @@ const ViewClient = () => {
     fetchClients
   );
 
-  console.log(clients);
-
   const onSubmit = async () => {
     setFetchClients(true);
     refetchClients();
@@ -87,22 +85,19 @@ const ViewClient = () => {
           role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}
+          updateRole={payloadRole}
+          updateId={id}
         />
       )}
-      {directWithdraw && (
-        <DirectWithdraw
-          id={id}
-          role={payloadRole}
-          downlineId={downLineId}
-          setDirectWithdraw={setDirectWithdraw}
-        />
-      )}
+
       {showChangePassword && (
         <ChangePassword
           downlineId={downLineId}
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
+          updateRole={payloadRole}
+          updateId={id}
         />
       )}
       {clientDeposit && (
@@ -111,6 +106,8 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setClientDeposit={setClientDeposit}
+          updateRole={payloadRole}
+          updateId={id}
         />
       )}
       {directDeposit && (
@@ -119,6 +116,8 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setDirectDeposit={setDirectDeposit}
+          updateRole={payloadRole}
+          updateId={id}
         />
       )}
       {showChangeStatus && (
@@ -128,6 +127,8 @@ const ViewClient = () => {
           registrationStatus={null}
           role={payloadRole}
           setShowChangeStatus={setShowChangeStatus}
+          updateRole={payloadRole}
+          updateId={id}
         />
       )}
       {showCreditRef && (
@@ -136,6 +137,8 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowCreditRef={setShowCreditRef}
+          updateRole={payloadRole}
+          updateId={id}
         />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">

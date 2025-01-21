@@ -27,11 +27,10 @@ const CreditReference = ({
   const { token } = useContextState();
   let payload = {
     downlineId,
+    id: updateId,
+    role: updateRole,
   };
-  if (updateId && updateRole) {
-    payload.id = updateId;
-    payload.role = updateRole;
-  }
+
   const { currentRef, isSuccess } = useGetCurrentRef(payload);
   const { refetchAllBranch } = useGetAllBranch();
   const { refetchClients } = useGetClient(downlineId);

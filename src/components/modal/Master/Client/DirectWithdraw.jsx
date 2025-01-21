@@ -23,11 +23,9 @@ const DirectWithdraw = ({
   let payload = {
     type: "balance",
     downlineId,
+    role: updateRole,
+    id: updateId,
   };
-  if (updateRole && updateId) {
-    payload.role = updateRole;
-    payload.id = updateId;
-  }
 
   const { data } = useGetDownlineEditForm(payload);
   const { refetchBalance } = useBalance();

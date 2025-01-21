@@ -43,13 +43,9 @@ const ChangeStatus = ({
   let payload = {
     downlineId,
     type: "getStatus",
+    id: updateId,
+    role: updateRole,
   };
-  if (updateId && updateRole) {
-    payload.id = updateId;
-    payload.role = updateRole;
-  } else {
-    payload.role = adminRole;
-  }
 
   console.log(payload);
   const { status, refetchStatus } = useGetStatus(payload);
