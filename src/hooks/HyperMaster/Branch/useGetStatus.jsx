@@ -5,7 +5,7 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 
 const useGetStatus = (payload) => {
-  const { token, tokenLoading, adminRole } = useContextState();
+  const { token, tokenLoading } = useContextState();
   const { data: status, refetch: refetchStatus } = useQuery({
     queryKey: ["creditRef"],
     enabled: !tokenLoading,
@@ -14,7 +14,6 @@ const useGetStatus = (payload) => {
       const postData = {
         ...payload,
         token: generatedToken,
-        role: adminRole,
       };
       const res = await axios.post(API.downLineEdit, postData, {
         headers: {

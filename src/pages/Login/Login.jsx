@@ -45,6 +45,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        // console.log(data);
         setGetToken((prev) => !prev);
         if (data?.success) {
           if (data?.result?.changePassword) {

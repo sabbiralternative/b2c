@@ -47,7 +47,11 @@ const ChangeStatus = ({
   if (updateId && updateRole) {
     payload.id = updateId;
     payload.role = updateRole;
+  } else {
+    payload.role = adminRole;
   }
+
+  console.log(payload);
   const { status, refetchStatus } = useGetStatus(payload);
 
   /* set check box default value */
