@@ -10,21 +10,14 @@ import useGetDownlineEditForm from "../../../../hooks/Master/Client/useGetDownli
 import useBalance from "../../../../hooks/useBalance";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 
-const DirectDeposit = ({
-  setDirectDeposit,
-  downlineId,
-  role,
-  id,
-  updateRole,
-  updateId,
-}) => {
+const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
   const { clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   const payload = {
     type: "balance",
     downlineId,
-    id: updateId,
-    role: updateRole,
+    id,
+    role,
   };
 
   const { data } = useGetDownlineEditForm(payload);

@@ -4,13 +4,17 @@ import "rsuite/DateRangePicker/styles/index.css";
 import useGetPNL from "../../../hooks/Master/Client/useGetPNL";
 import { useState } from "react";
 import SettleBets from "../../../components/modal/Master/SettleBets";
-import useContextState from "../../../hooks/useContextState";
+
+import { useLocation } from "react-router-dom";
 const PNL = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const downlineId = params.get("downlineId");
+  const role = params.get("role");
+  const id = params.get("id");
   const [activePage, setActivePage] = useState(1);
-  const { adminRole } = useContextState();
   const [showBetsModal, setShowBetsModal] = useState(false);
   const [marketId, setMarketId] = useState("");
-  const downlineId = localStorage.getItem("downLineId");
 
   const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
 
@@ -18,7 +22,8 @@ const PNL = () => {
     downlineId,
     fromDate: formattedStartDate,
     toDate: formattedEndDate,
-    role: adminRole,
+    role,
+    id,
     page: activePage,
   });
 

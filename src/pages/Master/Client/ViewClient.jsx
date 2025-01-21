@@ -46,9 +46,13 @@ const ViewClient = () => {
     setFetchClients(true);
     refetchClients();
   };
-  const handleNavigate = (username, link) => {
-    localStorage.setItem("downLineId", username);
-    navigate(`/${link}`);
+  const handleNavigate = (client) => {
+    if (!readOnly) {
+      const formatUserId = client?.userId?.split("-")[1];
+      navigate(
+        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`
+      );
+    }
   };
 
   useEffect(() => {
@@ -79,14 +83,21 @@ const ViewClient = () => {
 
   return (
     <>
+      {clientDeposit && (
+        <ClientDeposit
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setClientDeposit={setClientDeposit}
+        />
+      )}
+
       {directWithdraw && (
         <DirectWithdraw
           id={id}
           role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}
-          updateRole={payloadRole}
-          updateId={id}
         />
       )}
 
@@ -96,28 +107,6 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
-          updateRole={payloadRole}
-          updateId={id}
-        />
-      )}
-      {clientDeposit && (
-        <ClientDeposit
-          downlineId={downLineId}
-          id={id}
-          role={payloadRole}
-          setClientDeposit={setClientDeposit}
-          updateRole={payloadRole}
-          updateId={id}
-        />
-      )}
-      {directDeposit && (
-        <DirectDeposit
-          downlineId={downLineId}
-          id={id}
-          role={payloadRole}
-          setDirectDeposit={setDirectDeposit}
-          updateRole={payloadRole}
-          updateId={id}
         />
       )}
       {showChangeStatus && (
@@ -127,8 +116,6 @@ const ViewClient = () => {
           registrationStatus={null}
           role={payloadRole}
           setShowChangeStatus={setShowChangeStatus}
-          updateRole={payloadRole}
-          updateId={id}
         />
       )}
       {showCreditRef && (
@@ -137,10 +124,17 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowCreditRef={setShowCreditRef}
-          updateRole={payloadRole}
-          updateId={id}
         />
       )}
+      {directDeposit && (
+        <DirectDeposit
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setDirectDeposit={setDirectDeposit}
+        />
+      )}
+
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
           <div className="card">
@@ -315,10 +309,7 @@ const ViewClient = () => {
                                   !readOnly ? "pointer" : "not-allowed"
                                 }`,
                               }}
-                              onClick={() => {
-                                !readOnly &&
-                                  handleNavigate(client?.username, "pnl");
-                              }}
+                              onClick={() => handleNavigate(client)}
                               className="btn btn-icon btn-sm btn-warning"
                             >
                               PL

@@ -23,15 +23,20 @@ const ActiveClient = () => {
   const [downLineId, setDownLineId] = useState("");
   const [payloadRole, setPayloadRole] = useState("");
   const [id, setId] = useState("");
-  const { adminRole, setRefetchViewClient, setClientId } = useContextState();
+  const { adminRole, setRefetchViewClient, setClientId, readOnly } =
+    useContextState();
   const { data } = useClient({
     searchId: "activeUsers",
     page: activePage,
   });
 
-  const handleNavigate = (username, link) => {
-    localStorage.setItem("downLineId", username);
-    navigate(`/${link}`);
+  const handleNavigate = (client) => {
+    if (!readOnly) {
+      const formatUserId = client?.userId?.split("-")[1];
+      navigate(
+        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`
+      );
+    }
   };
   const meta = data?.pagination;
 
@@ -44,44 +49,30 @@ const ActiveClient = () => {
 
   return (
     <>
-      {directWithdraw && (
-        <DirectWithdraw
-          id={id}
-          role={payloadRole}
-          downlineId={downLineId}
-          setDirectWithdraw={setDirectWithdraw}
-          updateRole={payloadRole}
-          updateId={id}
-        />
-      )}
-      {showChangePassword && (
-        <ChangePassword
-          downlineId={downLineId}
-          id={id}
-          role={payloadRole}
-          setShowChangePassword={setShowChangePassword}
-          updateRole={payloadRole}
-          updateId={id}
-        />
-      )}
       {clientDeposit && (
         <ClientDeposit
           downlineId={downLineId}
           id={id}
           role={payloadRole}
           setClientDeposit={setClientDeposit}
-          updateRole={payloadRole}
-          updateId={id}
         />
       )}
-      {directDeposit && (
-        <DirectDeposit
+
+      {directWithdraw && (
+        <DirectWithdraw
+          id={id}
+          role={payloadRole}
+          downlineId={downLineId}
+          setDirectWithdraw={setDirectWithdraw}
+        />
+      )}
+
+      {showChangePassword && (
+        <ChangePassword
           downlineId={downLineId}
           id={id}
           role={payloadRole}
-          setDirectDeposit={setDirectDeposit}
-          updateRole={payloadRole}
-          updateId={id}
+          setShowChangePassword={setShowChangePassword}
         />
       )}
       {showChangeStatus && (
@@ -91,8 +82,6 @@ const ActiveClient = () => {
           registrationStatus={null}
           role={payloadRole}
           setShowChangeStatus={setShowChangeStatus}
-          updateRole={payloadRole}
-          updateId={id}
         />
       )}
       {showCreditRef && (
@@ -101,8 +90,14 @@ const ActiveClient = () => {
           id={id}
           role={payloadRole}
           setShowCreditRef={setShowCreditRef}
-          updateRole={payloadRole}
-          updateId={id}
+        />
+      )}
+      {directDeposit && (
+        <DirectDeposit
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setDirectDeposit={setDirectDeposit}
         />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -252,9 +247,7 @@ const ActiveClient = () => {
                         )}
                         <a
                           style={{ color: "white" }}
-                          onClick={() => {
-                            handleNavigate(client?.username, "pnl");
-                          }}
+                          onClick={() => handleNavigate(client)}
                           className="btn btn-icon btn-sm btn-warning"
                         >
                           PL

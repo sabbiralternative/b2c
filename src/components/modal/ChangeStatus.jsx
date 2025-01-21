@@ -17,8 +17,6 @@ const ChangeStatus = ({
   registrationStatus: regiStatus,
   role,
   id,
-  updateRole,
-  updateId,
 }) => {
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
@@ -43,8 +41,8 @@ const ChangeStatus = ({
   let payload = {
     downlineId,
     type: "getStatus",
-    id: updateId,
-    role: updateRole,
+    id,
+    role,
   };
 
   console.log(payload);

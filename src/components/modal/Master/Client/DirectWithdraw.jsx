@@ -10,21 +10,14 @@ import useGetDownlineEditForm from "../../../../hooks/Master/Client/useGetDownli
 import useBalance from "../../../../hooks/useBalance";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 
-const DirectWithdraw = ({
-  setDirectWithdraw,
-  downlineId,
-  role,
-  id,
-  updateRole,
-  updateId,
-}) => {
+const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   const { clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   let payload = {
     type: "balance",
     downlineId,
-    role: updateRole,
-    id: updateId,
+    role,
+    id,
   };
 
   const { data } = useGetDownlineEditForm(payload);

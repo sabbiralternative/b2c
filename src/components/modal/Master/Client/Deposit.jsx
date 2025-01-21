@@ -8,18 +8,11 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMethod";
 
-const Deposit = ({
-  setClientDeposit,
-  downlineId,
-  role,
-  id,
-  updateRole,
-  updateId,
-}) => {
+const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
   let payload = {
     type: "getActivePayments",
-    id: updateId,
-    role: updateRole,
+    id,
+    role,
   };
 
   const { paymentsMethods } = useGetPaymentMethod(payload);
