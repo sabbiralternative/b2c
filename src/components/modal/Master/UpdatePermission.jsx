@@ -30,6 +30,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
       ...values,
       type: "updateStaffRole",
       token: generatedToken,
+      staff_id: showPermission,
     };
 
     updatePermission(payload, {
