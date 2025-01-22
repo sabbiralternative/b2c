@@ -1,7 +1,7 @@
 import useContextState from "../../../hooks/useContextState";
 import { useNavigate } from "react-router-dom";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 import { useClient } from "../../../hooks/Master/Client/useClient";
 import { Pagination } from "rsuite";
@@ -10,8 +10,11 @@ import ChangePassword from "../../../components/modal/ChangePassword";
 import DirectDeposit from "../../../components/modal/Master/Client/DirectDeposit";
 import ChangeStatus from "../../../components/modal/ChangeStatus";
 import CreditReference from "../../../components/modal/CreditReference";
+import { AdminRole } from "../../../constant/constant";
+import { jwtDecode } from "jwt-decode";
 
 const InActiveClient = () => {
+  const [clientPermission, setClientPermission] = useState(false);
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState(1);
   const [directWithdraw, setDirectWithdraw] = useState(false);
@@ -23,7 +26,7 @@ const InActiveClient = () => {
   const [downLineId, setDownLineId] = useState("");
   const [payloadRole, setPayloadRole] = useState("");
   const [id, setId] = useState("");
-  const { adminRole, setRefetchViewClient, setClientId, readOnly } =
+  const { adminRole, setRefetchViewClient, setClientId, readOnly, token } =
     useContextState();
   const { data } = useClient({
     searchId: "inactiveUsers",
@@ -43,6 +46,20 @@ const InActiveClient = () => {
   const handleOpenModal = (setModal, username, role, id) => {
     setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
   };
+
+  useEffect(() => {
+    if (adminRole) {
+      if (adminRole === "branch_staff") {
+        const decode = jwtDecode(token);
+        const permissions = decode?.permissions;
+        const clientPermission = permissions?.includes("client") ?? false;
+
+        setClientPermission(clientPermission);
+      } else {
+        setClientPermission(true);
+      }
+    }
+  }, [adminRole, token]);
   return (
     <>
       {clientDeposit && (
@@ -208,113 +225,124 @@ const InActiveClient = () => {
                       </td>
                       <td>{client?.registrationDate}</td>
                       <td>
-                        {adminRole !== "hyper_master" && (
+                        {adminRole !== "hyper_master" &&
+                          adminRole !== AdminRole.branch_staff && (
+                            <>
+                              <a
+                                style={{ color: "white" }}
+                                onClick={() =>
+                                  handleOpenModal(
+                                    setClientDeposit,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  )
+                                }
+                                className="btn btn-icon btn-sm btn-success"
+                              >
+                                D
+                              </a>
+                              &nbsp;
+                              <a
+                                style={{ color: "white" }}
+                                onClick={() =>
+                                  handleOpenModal(
+                                    setDirectWithdraw,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  )
+                                }
+                                className="btn btn-icon btn-sm btn-danger"
+                              >
+                                W
+                              </a>
+                              &nbsp;
+                            </>
+                          )}
+                        {adminRole !== AdminRole.branch_staff && (
+                          <>
+                            <a
+                              style={{ color: "white" }}
+                              onClick={() => handleNavigate(client)}
+                              className="btn btn-icon btn-sm btn-warning"
+                            >
+                              PL
+                            </a>
+                            &nbsp;
+                          </>
+                        )}
+                        {clientPermission && (
                           <>
                             <a
                               style={{ color: "white" }}
                               onClick={() =>
                                 handleOpenModal(
-                                  setClientDeposit,
+                                  setShowChangePassword,
                                   client?.username,
                                   client?.role,
                                   client?.downlineId
                                 )
                               }
-                              className="btn btn-icon btn-sm btn-success"
+                              className="btn btn-icon btn-sm btn-info"
                             >
-                              D
+                              P
                             </a>
                             &nbsp;
                             <a
                               style={{ color: "white" }}
                               onClick={() =>
                                 handleOpenModal(
-                                  setDirectWithdraw,
+                                  setShowChangeStatus,
                                   client?.username,
                                   client?.role,
                                   client?.downlineId
                                 )
                               }
-                              className="btn btn-icon btn-sm btn-danger"
+                              className="btn btn-icon btn-sm btn-dark"
                             >
-                              W
-                            </a>
-                            &nbsp;
-                          </>
-                        )}
-                        <a
-                          style={{ color: "white" }}
-                          onClick={() => handleNavigate(client)}
-                          className="btn btn-icon btn-sm btn-warning"
-                        >
-                          PL
-                        </a>
-                        &nbsp;
-                        <a
-                          style={{ color: "white" }}
-                          onClick={() =>
-                            handleOpenModal(
-                              setShowChangePassword,
-                              client?.username,
-                              client?.role,
-                              client?.downlineId
-                            )
-                          }
-                          className="btn btn-icon btn-sm btn-info"
-                        >
-                          P
-                        </a>
-                        &nbsp;
-                        <a
-                          style={{ color: "white" }}
-                          onClick={() =>
-                            handleOpenModal(
-                              setShowChangeStatus,
-                              client?.username,
-                              client?.role,
-                              client?.downlineId
-                            )
-                          }
-                          className="btn btn-icon btn-sm btn-dark"
-                        >
-                          S
-                        </a>
-                        {adminRole !== "hyper_master" && (
-                          <>
-                            &nbsp;
-                            <a
-                              style={{ color: "white" }}
-                              onClick={() =>
-                                handleOpenModal(
-                                  setShowCreditRef,
-                                  client?.username,
-                                  client?.role,
-                                  client?.downlineId
-                                )
-                              }
-                              className="btn btn-icon btn-sm btn-primary"
-                            >
-                              CR
-                            </a>
-                            &nbsp;
-                            <a
-                              style={{
-                                color: "white",
-                              }}
-                              onClick={() => {
-                                handleOpenModal(
-                                  setDirectDeposit,
-                                  client?.username,
-                                  client?.role,
-                                  client?.downlineId
-                                );
-                              }}
-                              className="btn btn-icon btn-sm btn-success"
-                            >
-                              DD
+                              S
                             </a>
                           </>
                         )}
+
+                        {adminRole !== AdminRole.hyper_master &&
+                          adminRole !== AdminRole.branch_staff && (
+                            <>
+                              &nbsp;
+                              <a
+                                style={{ color: "white" }}
+                                onClick={() =>
+                                  handleOpenModal(
+                                    setShowCreditRef,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  )
+                                }
+                                className="btn btn-icon btn-sm btn-primary"
+                              >
+                                CR
+                              </a>
+                              &nbsp;
+                              <a
+                                style={{
+                                  color: "white",
+                                }}
+                                onClick={() => {
+                                  handleOpenModal(
+                                    setDirectDeposit,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  );
+                                }}
+                                className="btn btn-icon btn-sm btn-success"
+                              >
+                                DD
+                              </a>
+                            </>
+                          )}
                       </td>
                     </tr>
                   );

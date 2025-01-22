@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import useContextState from "../../../hooks/useContextState";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useGetClient from "../../../hooks/Master/Client/useGetClient";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { useEffect, useRef, useState } from "react";
@@ -11,9 +11,19 @@ import ChangeStatus from "../../../components/modal/ChangeStatus";
 import CreditReference from "../../../components/modal/CreditReference";
 import DirectDeposit from "../../../components/modal/Master/Client/DirectDeposit";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+import { jwtDecode } from "jwt-decode";
+import { AdminRole } from "../../../constant/constant";
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
 const ViewClient = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const searchBy = params.get("role");
+  const searchHistory = params.get("history");
+
+  const [depositPermission, setDepositPermission] = useState(false);
+  const [withdrawPermission, setWithdrawPermission] = useState(false);
+  const [clientPermission, setClientPermission] = useState(false);
   const showMoreRef = useRef(null);
   const [showMore, setShowMore] = useState(null);
   const navigate = useNavigate();
@@ -35,6 +45,7 @@ const ViewClient = () => {
     adminRole,
     refetchViewClient,
     setRefetchViewClient,
+    token,
   } = useContextState();
   const { clients, refetchClients, isSuccess } = useGetClient(
     clientId,
@@ -80,6 +91,25 @@ const ViewClient = () => {
   useCloseModalClickOutside(showMoreRef, () => {
     setShowMore(null);
   });
+
+  useEffect(() => {
+    if (adminRole) {
+      if (adminRole === "branch_staff") {
+        const decode = jwtDecode(token);
+        const permissions = decode?.permissions;
+        const depositPermission = permissions?.includes("deposit") ?? false;
+        const withdrawPermission = permissions?.includes("withdraw") ?? false;
+        const clientPermission = permissions?.includes("client") ?? false;
+        setDepositPermission(depositPermission);
+        setWithdrawPermission(withdrawPermission);
+        setClientPermission(clientPermission);
+      } else {
+        setDepositPermission(true);
+        setWithdrawPermission(true);
+        setClientPermission(true);
+      }
+    }
+  }, [adminRole, token]);
 
   return (
     <>
@@ -256,10 +286,70 @@ const ViewClient = () => {
                             </span>
                           </td>
                           <td>{client?.registrationDate}</td>
-                          <td>
-                            {adminRole !== "hyper_master" &&
-                              adminRole !== "checker" && (
+
+                          {/* Not for branch_staff */}
+                          {adminRole !== AdminRole.branch_staff && (
+                            <td>
+                              {adminRole !== "hyper_master" &&
+                                adminRole !== "checker" && (
+                                  <>
+                                    <a
+                                      style={{
+                                        color: "white",
+                                        cursor: `${
+                                          !readOnly ? "pointer" : "not-allowed"
+                                        }`,
+                                      }}
+                                      onClick={() =>
+                                        handleOpenModal(
+                                          setClientDeposit,
+                                          client?.username,
+                                          client?.role,
+                                          client?.downlineId
+                                        )
+                                      }
+                                      className="btn btn-icon btn-sm btn-success"
+                                    >
+                                      D
+                                    </a>
+                                    &nbsp;
+                                    <a
+                                      style={{
+                                        color: "white",
+                                        cursor: `${
+                                          !readOnly ? "pointer" : "not-allowed"
+                                        }`,
+                                      }}
+                                      onClick={() => {
+                                        handleOpenModal(
+                                          setDirectWithdraw,
+                                          client?.username,
+                                          client?.role,
+                                          client?.downlineId
+                                        );
+                                      }}
+                                      className="btn btn-icon btn-sm btn-danger"
+                                    >
+                                      W
+                                    </a>
+                                    &nbsp;
+                                  </>
+                                )}
+                              <a
+                                style={{
+                                  color: "white",
+                                  cursor: `${
+                                    !readOnly ? "pointer" : "not-allowed"
+                                  }`,
+                                }}
+                                onClick={() => handleNavigate(client)}
+                                className="btn btn-icon btn-sm btn-warning"
+                              >
+                                PL
+                              </a>
+                              {adminRole !== "checker" && (
                                 <>
+                                  &nbsp;
                                   <a
                                     style={{
                                       color: "white",
@@ -267,17 +357,17 @@ const ViewClient = () => {
                                         !readOnly ? "pointer" : "not-allowed"
                                       }`,
                                     }}
-                                    onClick={() =>
+                                    onClick={() => {
                                       handleOpenModal(
-                                        setClientDeposit,
+                                        setShowChangePassword,
                                         client?.username,
                                         client?.role,
                                         client?.downlineId
-                                      )
-                                    }
-                                    className="btn btn-icon btn-sm btn-success"
+                                      );
+                                    }}
+                                    className="btn btn-icon btn-sm btn-info"
                                   >
-                                    D
+                                    P
                                   </a>
                                   &nbsp;
                                   <a
@@ -289,34 +379,244 @@ const ViewClient = () => {
                                     }}
                                     onClick={() => {
                                       handleOpenModal(
-                                        setDirectWithdraw,
+                                        setShowChangeStatus,
                                         client?.username,
                                         client?.role,
                                         client?.downlineId
                                       );
                                     }}
-                                    className="btn btn-icon btn-sm btn-danger"
+                                    className="btn btn-icon btn-sm btn-dark"
                                   >
-                                    W
+                                    S
                                   </a>
-                                  &nbsp;
                                 </>
                               )}
-                            <a
-                              style={{
-                                color: "white",
-                                cursor: `${
-                                  !readOnly ? "pointer" : "not-allowed"
-                                }`,
-                              }}
-                              onClick={() => handleNavigate(client)}
-                              className="btn btn-icon btn-sm btn-warning"
-                            >
-                              PL
-                            </a>
-                            {adminRole !== "checker" && (
-                              <>
+                              {adminRole !== "hyper_master" &&
+                                adminRole !== "checker" && (
+                                  <>
+                                    &nbsp;
+                                    <a
+                                      style={{
+                                        color: "white",
+                                        cursor: `${
+                                          !readOnly ? "pointer" : "not-allowed"
+                                        }`,
+                                      }}
+                                      onClick={() => {
+                                        handleOpenModal(
+                                          setShowCreditRef,
+                                          client?.username,
+                                          client?.role,
+                                          client?.downlineId
+                                        );
+                                      }}
+                                      className="btn btn-icon btn-sm btn-primary"
+                                    >
+                                      CR
+                                    </a>
+                                    &nbsp;
+                                    <a
+                                      style={{
+                                        color: "white",
+                                        cursor: `${
+                                          !readOnly ? "pointer" : "not-allowed"
+                                        }`,
+                                      }}
+                                      onClick={() => {
+                                        handleOpenModal(
+                                          setDirectDeposit,
+                                          client?.username,
+                                          client?.role,
+                                          client?.downlineId
+                                        );
+                                      }}
+                                      className="btn btn-icon btn-sm btn-success"
+                                    >
+                                      DD
+                                    </a>
+                                  </>
+                                )}
+                              &nbsp;
+                              {adminRole === "master" ||
+                              adminRole === AdminRole.branch_staff ? (
+                                <div className="btn-group">
+                                  <button
+                                    onClick={() => handleShowMore(i)}
+                                    style={{
+                                      height: "auto",
+                                      width: "auto",
+                                      padding: "0px 2px",
+                                    }}
+                                    type="button"
+                                    className="btn btn-primary btn-icon  dropdown-toggle hide-arrow"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="bx bx-dots-vertical-rounded"></i>
+                                  </button>
+
+                                  {i === showMore && (
+                                    <div
+                                      style={{
+                                        height: "100vh",
+                                        width: "100vw",
+                                        position: "fixed",
+                                        top: "0",
+                                        left: "0",
+                                        right: "0",
+                                        bottom: "0",
+                                        zIndex: 999,
+                                      }}
+                                    />
+                                  )}
+                                  {i === showMore && (
+                                    <ul
+                                      ref={showMoreRef}
+                                      style={{
+                                        display: "block",
+                                        right: "0px",
+                                        top: "25px",
+                                        zIndex: 9999,
+                                      }}
+                                      className="dropdown-menu dropdown-menu-end"
+                                    >
+                                      <li>
+                                        <Link
+                                          to={`/activity-logs?role=${client?.role}&id=${client?.userId}`}
+                                          className="dropdown-item"
+                                        >
+                                          Activity Logs
+                                        </Link>
+                                      </li>
+                                      <li>
+                                        <a className="dropdown-item">
+                                          Another action
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  )}
+                                </div>
+                              ) : null}
+                            </td>
+                          )}
+                          {/* For search branch_staff for deposit */}
+                          {searchBy === AdminRole.branch_staff &&
+                            searchHistory === "deposit" &&
+                            depositPermission && (
+                              <td>
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() =>
+                                    handleOpenModal(
+                                      setClientDeposit,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    )
+                                  }
+                                  className="btn btn-icon btn-sm btn-success"
+                                >
+                                  D
+                                </a>
+                                &nbsp;{" "}
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setShowChangeStatus,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-dark"
+                                >
+                                  S
+                                </a>
                                 &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setDirectDeposit,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-success"
+                                >
+                                  DD
+                                </a>
+                              </td>
+                            )}
+                          {/* For search branch_staff for withdraw */}
+                          {searchBy === AdminRole.branch_staff &&
+                            searchHistory === "withdraw" &&
+                            withdrawPermission && (
+                              <td>
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setDirectWithdraw,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-danger"
+                                >
+                                  W
+                                </a>
+                                &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setShowChangeStatus,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-dark"
+                                >
+                                  S
+                                </a>
+                              </td>
+                            )}
+                          {/* For search branch_staff  */}
+                          {adminRole === AdminRole.branch_staff &&
+                            !searchBy &&
+                            !searchHistory &&
+                            clientPermission && (
+                              <td>
                                 <a
                                   style={{
                                     color: "white",
@@ -356,114 +656,69 @@ const ViewClient = () => {
                                 >
                                   S
                                 </a>
-                              </>
-                            )}
-                            {adminRole !== "hyper_master" &&
-                              adminRole !== "checker" && (
-                                <>
-                                  &nbsp;
-                                  <a
-                                    style={{
-                                      color: "white",
-                                      cursor: `${
-                                        !readOnly ? "pointer" : "not-allowed"
-                                      }`,
-                                    }}
-                                    onClick={() => {
-                                      handleOpenModal(
-                                        setShowCreditRef,
-                                        client?.username,
-                                        client?.role,
-                                        client?.downlineId
-                                      );
-                                    }}
-                                    className="btn btn-icon btn-sm btn-primary"
-                                  >
-                                    CR
-                                  </a>
-                                  &nbsp;
-                                  <a
-                                    style={{
-                                      color: "white",
-                                      cursor: `${
-                                        !readOnly ? "pointer" : "not-allowed"
-                                      }`,
-                                    }}
-                                    onClick={() => {
-                                      handleOpenModal(
-                                        setDirectDeposit,
-                                        client?.username,
-                                        client?.role,
-                                        client?.downlineId
-                                      );
-                                    }}
-                                    className="btn btn-icon btn-sm btn-success"
-                                  >
-                                    DD
-                                  </a>
-                                </>
-                              )}
-                            &nbsp;
-                            {adminRole === "master" && (
-                              <div className="btn-group">
-                                <button
-                                  onClick={() => handleShowMore(i)}
-                                  style={{
-                                    height: "auto",
-                                    width: "auto",
-                                    padding: "0px 2px",
-                                  }}
-                                  type="button"
-                                  className="btn btn-primary btn-icon  dropdown-toggle hide-arrow"
-                                  data-bs-toggle="dropdown"
-                                  aria-expanded="false"
-                                >
-                                  <i className="bx bx-dots-vertical-rounded"></i>
-                                </button>
+                                &nbsp;
+                                {adminRole === "master" ||
+                                adminRole === AdminRole.branch_staff ? (
+                                  <div className="btn-group">
+                                    <button
+                                      onClick={() => handleShowMore(i)}
+                                      style={{
+                                        height: "auto",
+                                        width: "auto",
+                                        padding: "0px 2px",
+                                      }}
+                                      type="button"
+                                      className="btn btn-primary btn-icon  dropdown-toggle hide-arrow"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i className="bx bx-dots-vertical-rounded"></i>
+                                    </button>
 
-                                {i === showMore && (
-                                  <div
-                                    style={{
-                                      height: "100vh",
-                                      width: "100vw",
-                                      position: "fixed",
-                                      top: "0",
-                                      left: "0",
-                                      right: "0",
-                                      bottom: "0",
-                                      zIndex: 999,
-                                    }}
-                                  />
-                                )}
-                                {i === showMore && (
-                                  <ul
-                                    ref={showMoreRef}
-                                    style={{
-                                      display: "block",
-                                      right: "0px",
-                                      top: "25px",
-                                      zIndex: 9999,
-                                    }}
-                                    className="dropdown-menu dropdown-menu-end"
-                                  >
-                                    <li>
-                                      <Link
-                                        to={`/activity-logs?role=${client?.role}&id=${client?.userId}`}
-                                        className="dropdown-item"
+                                    {i === showMore && (
+                                      <div
+                                        style={{
+                                          height: "100vh",
+                                          width: "100vw",
+                                          position: "fixed",
+                                          top: "0",
+                                          left: "0",
+                                          right: "0",
+                                          bottom: "0",
+                                          zIndex: 999,
+                                        }}
+                                      />
+                                    )}
+                                    {i === showMore && (
+                                      <ul
+                                        ref={showMoreRef}
+                                        style={{
+                                          display: "block",
+                                          right: "0px",
+                                          top: "25px",
+                                          zIndex: 9999,
+                                        }}
+                                        className="dropdown-menu dropdown-menu-end"
                                       >
-                                        Activity Logs
-                                      </Link>
-                                    </li>
-                                    <li>
-                                      <a className="dropdown-item">
-                                        Another action
-                                      </a>
-                                    </li>
-                                  </ul>
-                                )}
-                              </div>
+                                        <li>
+                                          <Link
+                                            to={`/activity-logs?role=${client?.role}&id=${client?.userId}`}
+                                            className="dropdown-item"
+                                          >
+                                            Activity Logs
+                                          </Link>
+                                        </li>
+                                        <li>
+                                          <a className="dropdown-item">
+                                            Another action
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    )}
+                                  </div>
+                                ) : null}
+                              </td>
                             )}
-                          </td>
                         </tr>
                       );
                     })}

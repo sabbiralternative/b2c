@@ -150,7 +150,9 @@ const Withdraw = ({
                       onClick={() => {
                         setClientId(item?.userId);
                         setRefetchViewClient(true);
-                        navigate("/view-client");
+                        navigate(
+                          `/view-client?role=${adminRole}&history=withdraw`
+                        );
                       }}
                     >
                       {item?.userId}

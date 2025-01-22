@@ -86,7 +86,9 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
                     onClick={() => {
                       setClientId(item?.userId);
                       setRefetchViewClient(true);
-                      navigate("/view-client");
+                      navigate(
+                        `/view-client?role=${adminRole}&history=deposit`
+                      );
                     }}
                   >
                     {item?.userId}
