@@ -32,6 +32,7 @@ export const useGetSingleChecker = (payload) => {
       const { data } = await AxiosSecure.post(API.staff, payload);
       return data;
     },
+    gcTime: 0,
   });
 };
 export const useUpdateSingleChecker = () => {

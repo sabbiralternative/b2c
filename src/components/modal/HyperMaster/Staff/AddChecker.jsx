@@ -41,7 +41,7 @@ const AddChecker = ({ setShowAddChecker }) => {
         token: generatedToken,
       };
     }
-    console.log(payload);
+
     addChecker(payload, {
       onSuccess: (data) => {
         if (data?.success) {
@@ -151,13 +151,14 @@ const AddChecker = ({ setShowAddChecker }) => {
                         className="col-sm-10"
                         style={{
                           display: "flex",
+                          gap: "20px",
                         }}
                       >
                         <div
                           style={{
                             display: "flex",
                             alignItems: "start",
-                            marginRight: "40px",
+
                             gap: "3px",
                           }}
                         >
@@ -198,6 +199,75 @@ const AddChecker = ({ setShowAddChecker }) => {
                             }}
                           >
                             Withdraw
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="client"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+                              marginTop: "5px",
+                              height: "100%",
+                            }}
+                          >
+                            Client
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="payment"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+                              marginTop: "5px",
+                              height: "100%",
+                            }}
+                          >
+                            Payment
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="report"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+                              marginTop: "5px",
+                              height: "100%",
+                            }}
+                          >
+                            Report
                           </p>
                         </div>
                       </div>

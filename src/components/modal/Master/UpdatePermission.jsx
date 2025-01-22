@@ -49,6 +49,9 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
   const staffData = checkerData?.result?.[0]?.permissions;
   const deposit = staffData?.includes("deposit") ?? false;
   const withdraw = staffData?.includes("withdraw") ?? false;
+  const client = staffData?.includes("client") ?? false;
+  const payment = staffData?.includes("payment") ?? false;
+  const report = staffData?.includes("report") ?? false;
 
   if (!checkerData?.success) {
     return null;
@@ -92,13 +95,13 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                       className="col-sm-10"
                       style={{
                         display: "flex",
+                        gap: "20px",
                       }}
                     >
                       <div
                         style={{
                           display: "flex",
                           alignItems: "start",
-                          marginRight: "40px",
                           gap: "3px",
                         }}
                       >
@@ -141,6 +144,78 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                           }}
                         >
                           Withdraw
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "start",
+                          gap: "3px",
+                        }}
+                      >
+                        <input
+                          value="client"
+                          style={{ height: "100%" }}
+                          type="checkbox"
+                          {...register("permissions", { required: true })}
+                          defaultChecked={client}
+                        />
+                        <p
+                          style={{
+                            margin: "0px",
+                            marginTop: "5px",
+                            height: "100%",
+                          }}
+                        >
+                          Client
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "start",
+                          gap: "3px",
+                        }}
+                      >
+                        <input
+                          value="payment"
+                          style={{ height: "100%" }}
+                          type="checkbox"
+                          {...register("permissions", { required: true })}
+                          defaultChecked={payment}
+                        />
+                        <p
+                          style={{
+                            margin: "0px",
+                            marginTop: "5px",
+                            height: "100%",
+                          }}
+                        >
+                          Payment
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "start",
+                          gap: "3px",
+                        }}
+                      >
+                        <input
+                          value="report"
+                          style={{ height: "100%" }}
+                          type="checkbox"
+                          {...register("permissions", { required: true })}
+                          defaultChecked={report}
+                        />
+                        <p
+                          style={{
+                            margin: "0px",
+                            marginTop: "5px",
+                            height: "100%",
+                          }}
+                        >
+                          Report
                         </p>
                       </div>
                     </div>
