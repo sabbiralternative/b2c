@@ -9,6 +9,9 @@ import { jwtDecode } from "jwt-decode";
 const Master = () => {
   const [depositPermission, setDepositPermission] = useState(false);
   const [withdrawPermission, setWithdrawPermission] = useState(false);
+  const [clientPermission, setClientPermission] = useState(false);
+  const [reportPermission, setReportPermission] = useState(false);
+  const [paymentPermission, setPaymentPermission] = useState(false);
   const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
   const { dwCount } = useGetDWCount();
@@ -118,13 +121,23 @@ const Master = () => {
       if (adminRole === "branch_staff") {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
+        console.log(permissions);
         const depositPermission = permissions?.includes("deposit") ?? false;
         const withdrawPermission = permissions?.includes("withdraw") ?? false;
+        const clientPermission = permissions?.includes("client") ?? false;
+        const reportPermission = permissions?.includes("report") ?? false;
+        const paymentPermission = permissions?.includes("payment") ?? false;
         setDepositPermission(depositPermission);
         setWithdrawPermission(withdrawPermission);
+        setClientPermission(clientPermission);
+        setReportPermission(reportPermission);
+        setPaymentPermission(paymentPermission);
       } else {
         setDepositPermission(true);
         setWithdrawPermission(true);
+        setClientPermission(true);
+        setReportPermission(true);
+        setPaymentPermission(true);
       }
     }
   }, [adminRole, token]);
@@ -140,7 +153,8 @@ const Master = () => {
         </li>
       )}
 
-      {adminRole === "master" && (
+      {adminRole === "master" ||
+      (adminRole === "branch_staff" && clientPermission) ? (
         <li
           ref={clientsRef}
           className={`menu-item ${showClients ? "open" : ""}`}
@@ -225,7 +239,7 @@ const Master = () => {
             </li>
           </ul>
         </li>
-      )}
+      ) : null}
 
       {/* <li
         ref={statementRef}
@@ -268,7 +282,8 @@ const Master = () => {
           </li>
         </ul>
       </li> */}
-      {adminRole === "master" && (
+      {adminRole === "master" ||
+      (adminRole === "branch_staff" && paymentPermission) ? (
         <li
           ref={paymentsRef}
           className={`menu-item ${showPayments ? "open" : ""}`}
@@ -356,7 +371,7 @@ const Master = () => {
             )}
           </ul>
         </li>
-      )}
+      ) : null}
       {depositPermission && (
         <li
           ref={depositRef}
@@ -671,134 +686,137 @@ const Master = () => {
               </li>
             </ul>
           </li>
-          <li
-            ref={reportRef}
-            className={`menu-item ${showReport ? "open" : ""}`}
-          >
-            <a
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              onMouseEnter={() => {
-                setShowReport(true);
-                setShowWithdraw(false);
-                setShowExposure(false);
-                setShowClients(false);
-                setShowDeposit(false);
-                setShowPayments(false);
-                setShowStatement(false);
-                setShowBonus(false);
-                setShowStaff(false);
-              }}
-              className="menu-link menu-toggle"
-            >
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Settings">Report</div>
-            </a>
-
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("client-report")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">Client Report</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("deposit-report")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">Deposit Report</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("first-deposit-report")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">First Deposit Report</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("no-deposit-report")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">No Deposit Report</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("withdraw-report")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">Withdraw Report</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("transfer-statement")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">Transfer Statement</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li
-            ref={settingsRef}
-            className={`menu-item ${showSettings ? "open" : ""}`}
-          >
-            <a
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              onMouseEnter={() => {
-                setShowSettings(true);
-                setShowReport(false);
-                setShowWithdraw(false);
-                setShowExposure(false);
-                setShowClients(false);
-                setShowDeposit(false);
-                setShowPayments(false);
-                setShowStatement(false);
-                setShowBonus(false);
-                setShowStaff(false);
-              }}
-              className="menu-link menu-toggle"
-            >
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Settings">Settings</div>
-            </a>
-
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => {
-                    setShowSocialLink(true);
-                    setShowSettings(false);
-                  }}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">Social Links</div>
-                </a>
-              </li>
-            </ul>
-          </li>
         </>
+      )}
+      {adminRole === "master" ||
+      (adminRole === "branch_staff" && reportPermission) ? (
+        <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
+          <a
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onMouseEnter={() => {
+              setShowReport(true);
+              setShowWithdraw(false);
+              setShowExposure(false);
+              setShowClients(false);
+              setShowDeposit(false);
+              setShowPayments(false);
+              setShowStatement(false);
+              setShowBonus(false);
+              setShowStaff(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Settings">Report</div>
+          </a>
+
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("client-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">Client Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">Deposit Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("first-deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">First Deposit Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("no-deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">No Deposit Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("withdraw-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">Withdraw Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("transfer-statement")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">Transfer Statement</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      ) : null}
+
+      {adminRole === "master" && (
+        <li
+          ref={settingsRef}
+          className={`menu-item ${showSettings ? "open" : ""}`}
+        >
+          <a
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onMouseEnter={() => {
+              setShowSettings(true);
+              setShowReport(false);
+              setShowWithdraw(false);
+              setShowExposure(false);
+              setShowClients(false);
+              setShowDeposit(false);
+              setShowPayments(false);
+              setShowStatement(false);
+              setShowBonus(false);
+              setShowStaff(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Settings">Settings</div>
+          </a>
+
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <a
+                onClick={() => {
+                  setShowSocialLink(true);
+                  setShowSettings(false);
+                }}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">Social Links</div>
+              </a>
+            </li>
+          </ul>
+        </li>
       )}
     </ul>
   );
