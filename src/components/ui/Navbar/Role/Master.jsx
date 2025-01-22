@@ -4,9 +4,12 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
 import useContextState from "../../../../hooks/useContextState";
+import { jwtDecode } from "jwt-decode";
 
 const Master = () => {
-  const { readOnly, setShowSocialLink, adminRole, setAddChecker } =
+  const [depositPermission, setDepositPermission] = useState(false);
+  const [withdrawPermission, setWithdrawPermission] = useState(false);
+  const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
@@ -110,14 +113,32 @@ const Master = () => {
     setShowStaff(false);
   };
 
+  useEffect(() => {
+    if (adminRole) {
+      if (adminRole === "branch_staff") {
+        const decode = jwtDecode(token);
+        const permissions = decode?.permissions;
+        const depositPermission = permissions?.includes("deposit") ?? false;
+        const withdrawPermission = permissions?.includes("withdraw") ?? false;
+        setDepositPermission(depositPermission);
+        setWithdrawPermission(withdrawPermission);
+      } else {
+        setDepositPermission(true);
+        setWithdrawPermission(true);
+      }
+    }
+  }, [adminRole, token]);
+
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
-      <li className="menu-item">
-        <Link tp="/" className="menu-link">
-          <i className="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Dashboards">Dashboard</div>
-        </Link>
-      </li>
+      {adminRole !== "branch_staff" && (
+        <li className="menu-item">
+          <Link tp="/" className="menu-link">
+            <i className="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Dashboards">Dashboard</div>
+          </Link>
+        </li>
+      )}
 
       {adminRole === "master" && (
         <li
@@ -336,154 +357,161 @@ const Master = () => {
           </ul>
         </li>
       )}
-
-      <li ref={depositRef} className={`menu-item ${showDeposit ? "open" : ""}`}>
-        <a
-          onMouseEnter={() => {
-            setShowDeposit(true);
-            setShowClients(false);
-            setShowSettings(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowWithdraw(false);
-            setShowExposure(false);
-            setShowReport(false);
-            setShowBonus(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
+      {depositPermission && (
+        <li
+          ref={depositRef}
+          className={`menu-item ${showDeposit ? "open" : ""}`}
         >
-          {depositCount ? (
-            <span
-              style={{
-                borderRadius: "5px",
-                backgroundColor: "#39da8a",
-                marginRight: "5px",
-                padding: "0px 4px",
-                color: "black",
-                fontWeight: "500",
-              }}
-            >
-              {depositCount}
-            </span>
-          ) : (
-            <i className="menu-icon tf-icons bx bx-layout"></i>
-          )}
+          <a
+            onMouseEnter={() => {
+              setShowDeposit(true);
+              setShowClients(false);
+              setShowSettings(false);
+              setShowPayments(false);
+              setShowStatement(false);
+              setShowWithdraw(false);
+              setShowExposure(false);
+              setShowReport(false);
+              setShowBonus(false);
+              setShowStaff(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            {depositCount ? (
+              <span
+                style={{
+                  borderRadius: "5px",
+                  backgroundColor: "#39da8a",
+                  marginRight: "5px",
+                  padding: "0px 4px",
+                  color: "black",
+                  fontWeight: "500",
+                }}
+              >
+                {depositCount}
+              </span>
+            ) : (
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+            )}
 
-          <div data-i18n="Deposit">Deposit</div>
-        </a>
+            <div data-i18n="Deposit">Deposit</div>
+          </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("pending-deposit")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Deposit">Pending Deposit</div>
-            </a>
-          </li>
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("pending-deposit")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Pending Deposit">Pending Deposit</div>
+              </a>
+            </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("completed-deposit")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Completed Deposit">Completed Deposit</div>
-            </a>
-          </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("completed-deposit")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Deposit">Completed Deposit</div>
+              </a>
+            </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("rejected-deposit")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Deposit">Rejected Deposit</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("utr-search")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Deposit"> UTR Search</div>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li
-        ref={withdrawRef}
-        className={`menu-item ${showWithdraw ? "open" : ""}`}
-      >
-        <a
-          onMouseEnter={() => {
-            setShowWithdraw(true);
-            setShowClients(false);
-            setShowDeposit(false);
-            setShowSettings(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowExposure(false);
-            setShowReport(false);
-            setShowBonus(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("rejected-deposit")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Rejected Deposit">Rejected Deposit</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("utr-search")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Rejected Deposit"> UTR Search</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      )}
+      {withdrawPermission && (
+        <li
+          ref={withdrawRef}
+          className={`menu-item ${showWithdraw ? "open" : ""}`}
         >
-          {withdrawCount ? (
-            <span
-              style={{
-                borderRadius: "5px",
-                backgroundColor: "#39da8a",
-                marginRight: "5px",
-                padding: "0px 4px",
-                color: "black",
-                fontWeight: "500",
-              }}
-            >
-              {withdrawCount}
-            </span>
-          ) : (
-            <i className="menu-icon tf-icons bx bx-layout"></i>
-          )}
+          <a
+            onMouseEnter={() => {
+              setShowWithdraw(true);
+              setShowClients(false);
+              setShowDeposit(false);
+              setShowSettings(false);
+              setShowPayments(false);
+              setShowStatement(false);
+              setShowExposure(false);
+              setShowReport(false);
+              setShowBonus(false);
+              setShowStaff(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            {withdrawCount ? (
+              <span
+                style={{
+                  borderRadius: "5px",
+                  backgroundColor: "#39da8a",
+                  marginRight: "5px",
+                  padding: "0px 4px",
+                  color: "black",
+                  fontWeight: "500",
+                }}
+              >
+                {withdrawCount}
+              </span>
+            ) : (
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+            )}
 
-          <div data-i18n="Withdraw">Withdraw</div>
-        </a>
+            <div data-i18n="Withdraw">Withdraw</div>
+          </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("pending-withdraw")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">Pending Withdraw</div>
-            </a>
-          </li>
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("pending-withdraw")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Pending Withdraw">Pending Withdraw</div>
+              </a>
+            </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("completed-withdraw")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Completed Withdraw">Completed Withdraw</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("rejected-withdraw")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("completed-withdraw")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Withdraw">Completed Withdraw</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("rejected-withdraw")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      )}
+
       {adminRole === "master" && (
         <>
           <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>

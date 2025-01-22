@@ -118,7 +118,9 @@ const Sidebar = () => {
         {adminRole === "hyper_master" || adminRole === "admin_master" ? (
           <HyperMasterSidebar />
         ) : null}
-        {adminRole === "master" || adminRole === "checker" ? (
+        {adminRole === "master" ||
+        adminRole === "checker" ||
+        adminRole === "branch_staff" ? (
           <MasterSidebar />
         ) : null}
 

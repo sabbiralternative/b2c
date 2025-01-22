@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      {adminRole && adminRole !== "checker" && (
+      {adminRole && adminRole !== "checker" && adminRole !== "branch_staff" && (
         <div className="row">
           <div className="col-lg-6 col-md-12">
             <div className="row">

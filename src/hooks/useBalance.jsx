@@ -13,8 +13,9 @@ const useBalance = () => {
   const { setGetToken } = useContextState();
   const { data: balanceData, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
+
     queryFn: async () => {
-      if (adminRole == "checker") {
+      if (adminRole == "checker" || adminRole === "branch_staff") {
         return;
       }
       // const generatedToken = handleRandomToken();

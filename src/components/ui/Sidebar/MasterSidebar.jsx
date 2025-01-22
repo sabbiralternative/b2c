@@ -1,9 +1,12 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import useContextState from "../../../hooks/useContextState";
+import { jwtDecode } from "jwt-decode";
 
 const MasterSidebar = () => {
+  const [depositPermission, setDepositPermission] = useState(false);
+  const [withdrawPermission, setWithdrawPermission] = useState(false);
   const [showClients, setShowClients] = useState(false);
   const [showStatement, setShowStatement] = useState(false);
   const [showPayments, setShowPayments] = useState(false);
@@ -15,7 +18,7 @@ const MasterSidebar = () => {
   const [showBonus, setShowBonus] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
-  const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker } =
+  const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
 
   const settingsRef = useRef();
@@ -76,18 +79,37 @@ const MasterSidebar = () => {
     setShowSettings(false);
     setShowStaff(false);
   };
+
+  useEffect(() => {
+    if (adminRole) {
+      if (adminRole === "branch_staff") {
+        const decode = jwtDecode(token);
+        const permissions = decode?.permissions;
+        const depositPermission = permissions?.includes("deposit") ?? false;
+        const withdrawPermission = permissions?.includes("withdraw") ?? false;
+        setDepositPermission(depositPermission);
+        setWithdrawPermission(withdrawPermission);
+      } else {
+        setDepositPermission(true);
+        setWithdrawPermission(true);
+      }
+    }
+  }, [adminRole, token]);
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
-      <li className="menu-item">
-        <Link
-          onClick={() => setShowSidebar(false)}
-          to="/"
-          className="menu-link"
-        >
-          <i className="menu-icon tf-icons bx bx-home-circle"></i>
-          <div data-i18n="Dashboards">Dashboard</div>
-        </Link>
-      </li>
+      {adminRole !== "branch_staff" && (
+        <li className="menu-item">
+          <Link
+            onClick={() => setShowSidebar(false)}
+            to="/"
+            className="menu-link"
+          >
+            <i className="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Dashboards">Dashboard</div>
+          </Link>
+        </li>
+      )}
+
       {adminRole === "master" && (
         <>
           <li
@@ -297,122 +319,129 @@ const MasterSidebar = () => {
         </>
       )}
 
-      <li ref={depositRef} className={`menu-item ${showDeposit ? "open" : ""}`}>
-        <a
-          onClick={() => {
-            setShowDeposit((prev) => !prev);
-            setShowClients(false);
-            setShowSettings(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowWithdraw(false);
-            setShowExposure(false);
-            setShowReport(false);
-            setShowBonus(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
+      {depositPermission && (
+        <li
+          ref={depositRef}
+          className={`menu-item ${showDeposit ? "open" : ""}`}
         >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Deposit">Deposit</div>
-        </a>
+          <a
+            onClick={() => {
+              setShowDeposit((prev) => !prev);
+              setShowClients(false);
+              setShowSettings(false);
+              setShowPayments(false);
+              setShowStatement(false);
+              setShowWithdraw(false);
+              setShowExposure(false);
+              setShowReport(false);
+              setShowBonus(false);
+              setShowStaff(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Deposit">Deposit</div>
+          </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("pending-deposit")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Deposit">Pending Deposit</div>
-            </a>
-          </li>
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("pending-deposit")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Pending Deposit">Pending Deposit</div>
+              </a>
+            </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("completed-deposit")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Completed Deposit">Completed Deposit</div>
-            </a>
-          </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("completed-deposit")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Deposit">Completed Deposit</div>
+              </a>
+            </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("rejected-deposit")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Deposit">Rejected Deposit</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("utr-search")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Deposit">UTR Search</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("rejected-deposit")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Rejected Deposit">Rejected Deposit</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("utr-search")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Rejected Deposit">UTR Search</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      )}
 
-      <li
-        ref={withdrawRef}
-        className={`menu-item ${showWithdraw ? "open" : ""}`}
-      >
-        <a
-          onClick={() => {
-            setShowWithdraw((prev) => !prev);
-            setShowClients(false);
-            setShowDeposit(false);
-            setShowSettings(false);
-            setShowPayments(false);
-            setShowStatement(false);
-            setShowExposure(false);
-            setShowReport(false);
-            setShowBonus(false);
-            setShowStaff(false);
-          }}
-          className="menu-link menu-toggle"
+      {withdrawPermission && (
+        <li
+          ref={withdrawRef}
+          className={`menu-item ${showWithdraw ? "open" : ""}`}
         >
-          <i className="menu-icon tf-icons bx bx-layout"></i>
-          <div data-i18n="Withdraw">Withdraw</div>
-        </a>
+          <a
+            onClick={() => {
+              setShowWithdraw((prev) => !prev);
+              setShowClients(false);
+              setShowDeposit(false);
+              setShowSettings(false);
+              setShowPayments(false);
+              setShowStatement(false);
+              setShowExposure(false);
+              setShowReport(false);
+              setShowBonus(false);
+              setShowStaff(false);
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Withdraw">Withdraw</div>
+          </a>
 
-        <ul className="menu-sub">
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("pending-withdraw")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Pending Withdraw">Pending Withdraw</div>
-            </a>
-          </li>
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("pending-withdraw")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Pending Withdraw">Pending Withdraw</div>
+              </a>
+            </li>
 
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("completed-withdraw")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Completed Withdraw">Completed Withdraw</div>
-            </a>
-          </li>
-          <li className="menu-item">
-            <a
-              onClick={() => handleNavigate("rejected-withdraw")}
-              className="menu-link"
-            >
-              <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("completed-withdraw")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Withdraw">Completed Withdraw</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("rejected-withdraw")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Rejected Withdraw">Rejected Withdraw</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      )}
 
       {adminRole === "master" && (
         <>
