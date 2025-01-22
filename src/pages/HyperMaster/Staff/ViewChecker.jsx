@@ -43,8 +43,8 @@ const ViewChecker = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((checker, i) => {
-                  // const permissions = JSON.parse(checker?.permissions);
-                  // console.log(checker);
+                  console.log(checker);
+
                   return (
                     <tr key={i}>
                       <td>
@@ -64,7 +64,7 @@ const ViewChecker = () => {
                         </span>
                       </td>
                       {adminRole === "master" ? (
-                        <td>N/A</td>
+                        <td>{checker?.permissions}</td>
                       ) : (
                         <td>{checker?.role}</td>
                       )}
