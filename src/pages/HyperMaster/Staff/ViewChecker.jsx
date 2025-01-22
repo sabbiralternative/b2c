@@ -3,11 +3,13 @@ import { useGetAllChecker } from "../../../hooks/HyperMaster/Staff";
 import UpdateChecker from "../../../components/modal/HyperMaster/Staff/UpdateChecker";
 import UpdatePassword from "../../../components/modal/HyperMaster/Staff/UpdatePassword";
 import useContextState from "../../../hooks/useContextState";
+import UpdatePermission from "../../../components/modal/Master/UpdatePermission";
 
 const ViewChecker = () => {
   const { adminRole } = useContextState();
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
+  const [showPermission, setShowPermission] = useState(null);
   const { data } = useGetAllChecker();
 
   return (
@@ -22,6 +24,12 @@ const ViewChecker = () => {
         <UpdatePassword
           setUpdatePasswordId={setUpdatePasswordId}
           updatePasswordId={updatePasswordId}
+        />
+      )}
+      {showPermission && (
+        <UpdatePermission
+          setShowPermission={setShowPermission}
+          showPermission={showPermission}
         />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -43,8 +51,6 @@ const ViewChecker = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((checker, i) => {
-                  console.log(checker);
-
                   return (
                     <tr key={i}>
                       <td>
@@ -83,6 +89,13 @@ const ViewChecker = () => {
                           className="btn btn-icon btn-sm btn-danger"
                         >
                           P
+                        </a>
+                        &nbsp;
+                        <a
+                          onClick={() => setShowPermission(checker?.staff_id)}
+                          className="btn btn-icon btn-sm btn-warning"
+                        >
+                          R
                         </a>
                       </td>
                     </tr>
