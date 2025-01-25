@@ -9,7 +9,8 @@ import AllClient from "../pages/Master/Client/AllClient";
 import ClientWithBalance from "../pages/Master/Client/ClientWithBalance";
 import InActiveClient from "../pages/Master/Client/InActiveClient";
 import PNL from "../pages/Master/Client/PNL";
-import ViewClient from "../pages/Master/Client/ViewClient";
+import ViewClient from "../pages/Master/Client/ViewClient/ViewClient";
+
 import CompletedDeposit from "../pages/Master/Deposit/CompletedDeposit";
 import PendingDeposit from "../pages/Master/Deposit/PendingDeposit";
 import RejectedDeposit from "../pages/Master/Deposit/RejectedDeposit";
