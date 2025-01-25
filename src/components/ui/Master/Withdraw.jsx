@@ -134,9 +134,10 @@ const Withdraw = ({
               <th>Status</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
-              {title === "Pending Withdraw" && adminRole === "master" && (
+              {title === "Pending Withdraw" &&
+              (adminRole === "master" || adminRole === "branch_staff") ? (
                 <th>Actions</th>
-              )}
+              ) : null}
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
@@ -236,7 +237,8 @@ const Withdraw = ({
 
                     <td>{item?.date_added}</td>
                     {time && <td>{item?.date_modified}</td>}
-                    {item?.status === "PENDING" && adminRole === "master" && (
+                    {item?.status === "PENDING" &&
+                    (adminRole === "master" || adminRole === "branch_staff") ? (
                       <>
                         <td>
                           <a
@@ -289,7 +291,7 @@ const Withdraw = ({
                           </a>
                         </td>
                       </>
-                    )}
+                    ) : null}
                   </tr>
                 );
               })}

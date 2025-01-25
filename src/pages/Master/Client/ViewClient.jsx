@@ -97,6 +97,7 @@ const ViewClient = () => {
       if (adminRole === "branch_staff") {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
+        console.log(permissions);
         const depositPermission = permissions?.includes("deposit") ?? false;
         const withdrawPermission = permissions?.includes("withdraw") ?? false;
         const clientPermission = permissions?.includes("client") ?? false;
@@ -523,7 +524,20 @@ const ViewClient = () => {
                                 >
                                   D
                                 </a>
-                                &nbsp;{" "}
+                                &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => handleNavigate(client)}
+                                  className="btn btn-icon btn-sm btn-warning"
+                                >
+                                  PL
+                                </a>
+                                &nbsp;
                                 <a
                                   style={{
                                     color: "white",
@@ -597,6 +611,19 @@ const ViewClient = () => {
                                       !readOnly ? "pointer" : "not-allowed"
                                     }`,
                                   }}
+                                  onClick={() => handleNavigate(client)}
+                                  className="btn btn-icon btn-sm btn-warning"
+                                >
+                                  PL
+                                </a>
+                                &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
                                   onClick={() => {
                                     handleOpenModal(
                                       setShowChangeStatus,
@@ -644,6 +671,19 @@ const ViewClient = () => {
                                       !readOnly ? "pointer" : "not-allowed"
                                     }`,
                                   }}
+                                  onClick={() => handleNavigate(client)}
+                                  className="btn btn-icon btn-sm btn-warning"
+                                >
+                                  PL
+                                </a>
+                                &nbsp;
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
                                   onClick={() => {
                                     handleOpenModal(
                                       setShowChangeStatus,
@@ -657,8 +697,7 @@ const ViewClient = () => {
                                   S
                                 </a>
                                 &nbsp;
-                                {adminRole === "master" ||
-                                adminRole === AdminRole.branch_staff ? (
+                                {adminRole === "master" ? (
                                   <div className="btn-group">
                                     <button
                                       onClick={() => handleShowMore(i)}

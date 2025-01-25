@@ -113,7 +113,9 @@ const PendingDeposit = () => {
                 <th>Remark</th>
                 <th>Request Time</th>
                 {/* {time && <th>{time}</th>} */}
-                {adminRole === "master" && <th>Actions</th>}
+                {adminRole === "master" || adminRole === "branch_staff" ? (
+                  <th>Actions</th>
+                ) : null}
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
@@ -125,7 +127,9 @@ const PendingDeposit = () => {
                       onClick={() => {
                         setClientId(item?.userId);
                         setRefetchViewClient(true);
-                        navigate("/view-client");
+                        navigate(
+                          `/view-client?role=${adminRole}&history=deposit`
+                        );
                       }}
                     >
                       {item?.userId}
@@ -184,7 +188,8 @@ const PendingDeposit = () => {
                     <td>{item?.remark}</td>
                     <td>{item?.date_added}</td>
                     {/* {time && <td>{item?.date_modified}</td>} */}
-                    {item?.status === "PENDING" && adminRole === "master" && (
+                    {item?.status === "PENDING" &&
+                    (adminRole === "master" || adminRole === "branch_staff") ? (
                       <td>
                         <a
                           style={{
@@ -200,7 +205,7 @@ const PendingDeposit = () => {
                           <i className="bx bxs-edit"></i>
                         </a>
                       </td>
-                    )}
+                    ) : null}
                   </tr>
                 );
               })}
