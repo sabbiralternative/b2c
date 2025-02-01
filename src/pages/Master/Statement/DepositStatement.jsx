@@ -39,7 +39,7 @@ const DepositStatement = () => {
                   editable
                   onChange={onChange}
                   defaultValue={[
-                    new Date(new Date().setDate(new Date().getDate() - 7)),
+                    new Date(new Date().setDate(new Date().getDate() - 6)),
                     new Date(),
                   ]}
                   block

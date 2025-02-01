@@ -16,7 +16,10 @@ const PNL = () => {
   const [showBetsModal, setShowBetsModal] = useState(false);
   const [marketId, setMarketId] = useState("");
 
-  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
+  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker(
+    undefined,
+    30
+  );
 
   const { pnl, refetchPNL } = useGetPNL({
     downlineId,
@@ -76,7 +79,7 @@ const PNL = () => {
                   editable
                   onChange={onChange}
                   defaultValue={[
-                    new Date(new Date().setDate(new Date().getDate() - 7)),
+                    new Date(new Date().setDate(new Date().getDate() - 30)),
                     new Date(),
                   ]}
                   block
