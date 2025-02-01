@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import useContextState from "../../../hooks/useContextState";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";

@@ -3,7 +3,7 @@ import { useState } from "react";
 const useDatePicker = (currentDate, from) => {
   const [dateRange, setDateRange] = useState({
     startDate: !currentDate
-      ? new Date(new Date().setDate(new Date().getDate() - from || 7))
+      ? new Date(new Date().setDate(new Date().getDate() - from || -6))
       : new Date(),
     endDate: new Date(),
   });
