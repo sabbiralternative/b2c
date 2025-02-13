@@ -1,12 +1,11 @@
-import { DateRangePicker, Pagination } from "rsuite";
-import "rsuite/DateRangePicker/styles/index.css";
-import useDatePicker from "../../hooks/useDatePicker";
+import { DatePicker, Pagination } from "rsuite";
 import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
+import moment from "moment";
 
 const TransferStatement = () => {
   const [activePage, setActivePage] = useState(1);
@@ -14,18 +13,17 @@ const TransferStatement = () => {
   const [viewTransferStatementData, setViewTransferStatementData] =
     useState(false);
   const [transferStatement, setTransferStatement] = useState([]);
-  // const [type, setType] = useState("ALL");
-  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker(
-    undefined,
-    30
+  const thirtyDayBefore = new Date(
+    new Date().setDate(new Date().getDate() - 30)
   );
-
+  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(thirtyDayBefore);
   const onSubmit = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "viewTransfer",
-      fromDate: formattedStartDate,
-      toDate: formattedEndDate,
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
       page: activePage,
@@ -117,16 +115,24 @@ const TransferStatement = () => {
                   <label htmlFor="flatpickr-range" className="form-label">
                     Transfer Date
                   </label>
-                  <DateRangePicker
-                    format="yyyy-MM-dd"
-                    editable
-                    onChange={onChange}
-                    defaultValue={[
-                      new Date(new Date().setDate(new Date().getDate() - 30)),
-                      new Date(),
-                    ]}
-                    block
-                  />
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      format="yyyy-MM-dd"
+                      editable
+                      onChange={(date) => setStartDate(date)}
+                      defaultValue={thirtyDayBefore}
+                      block
+                    />
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      format="yyyy-MM-dd"
+                      editable
+                      onChange={(date) => setEndDate(date)}
+                      defaultValue={new Date()}
+                      block
+                    />
+                  </div>
                 </div>
                 {/* {adminRole !== "master" && (
                   <div className="col-md-6 col-12 mb-4">

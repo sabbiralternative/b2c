@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
-import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import { API } from "../../../api";
 import axios from "axios";
@@ -17,7 +16,6 @@ const AddUSDT = () => {
   };
   const [qr_code, setQr_code] = useState("");
   const [image, setImage] = useState(null);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
@@ -57,7 +55,7 @@ const AddUSDT = () => {
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(res);
+
     const data = res.data;
     if (data?.success) {
       refetchPaymentMethods();
@@ -226,6 +224,24 @@ const AddUSDT = () => {
                   <div className="col-sm-10">
                     <input
                       {...register("max_amount", {
+                        required: true,
+                      })}
+                      type="number"
+                      className="form-control"
+                      id="basic-default-company"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    Transaction Code
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      {...register("transaction_code", {
                         required: true,
                       })}
                       type="number"

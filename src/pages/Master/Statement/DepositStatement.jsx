@@ -1,15 +1,21 @@
 import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
-import useDatePicker from "../../../hooks/useDatePicker";
-import { DateRangePicker } from "rsuite";
+
 import Deposit from "../../../components/ui/Master/Deposit";
+import { useState } from "react";
+import moment from "moment";
+import { DatePicker } from "rsuite";
 
 const DepositStatement = () => {
-  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
+  const thirtyDayBefore = new Date(
+    new Date().setDate(new Date().getDate() - 30)
+  );
+  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(thirtyDayBefore);
   const payload = {
     type: "viewUTR",
     status: "APPROVED",
-    fromDate: formattedStartDate,
-    toDate: formattedEndDate,
+    fromDate: moment(startDate).format("YYYY-MM-DD"),
+    toDate: moment(endDate).format("YYYY-MM-DD"),
   };
   const {
     allUTRs: depositStatements,
@@ -34,16 +40,24 @@ const DepositStatement = () => {
                 <label htmlFor="flatpickr-range" className="form-label">
                   Range Picker
                 </label>
-                <DateRangePicker
-                  format="yyyy-MM-dd"
-                  editable
-                  onChange={onChange}
-                  defaultValue={[
-                    new Date(new Date().setDate(new Date().getDate() - 6)),
-                    new Date(),
-                  ]}
-                  block
-                />
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setStartDate(date)}
+                    defaultValue={thirtyDayBefore}
+                    block
+                  />
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setEndDate(date)}
+                    defaultValue={new Date()}
+                    block
+                  />
+                </div>
               </div>
 
               <div className="col-12">

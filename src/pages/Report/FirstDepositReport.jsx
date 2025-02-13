@@ -1,16 +1,13 @@
-import { DateRangePicker } from "rsuite";
-import "rsuite/DateRangePicker/styles/index.css";
-import useDatePicker from "../../hooks/useDatePicker";
+import { DatePicker } from "rsuite";
 import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
-
-// import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
+import moment from "moment";
 
 const FirstDepositReport = () => {
   const [showFTDImage, setShowFTDImage] = useState(false);
@@ -21,19 +18,18 @@ const FirstDepositReport = () => {
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
   const [totalFTD, setTotalFTD] = useState(null);
-  const { formattedEndDate, formattedStartDate, onChange } =
-    useDatePicker("currentDate");
-  // const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
-  //   formattedStartDate,
-  //   formattedEndDate
-  // );
+  const thirtyDayBefore = new Date(
+    new Date().setDate(new Date().getDate() - 30)
+  );
+  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(thirtyDayBefore);
 
   const getFTDReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getFTD",
-      fromDate: formattedStartDate,
-      toDate: formattedEndDate,
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
     };
@@ -102,13 +98,24 @@ const FirstDepositReport = () => {
                   <label htmlFor="flatpickr-range" className="form-label">
                     Deposit Date
                   </label>
-                  <DateRangePicker
-                    format="yyyy-MM-dd"
-                    editable
-                    onChange={onChange}
-                    defaultValue={[new Date(), new Date()]}
-                    block
-                  />
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      format="yyyy-MM-dd"
+                      editable
+                      onChange={(date) => setStartDate(date)}
+                      defaultValue={thirtyDayBefore}
+                      block
+                    />
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      format="yyyy-MM-dd"
+                      editable
+                      onChange={(date) => setEndDate(date)}
+                      defaultValue={new Date()}
+                      block
+                    />
+                  </div>
                 </div>
 
                 <div className="col-12">

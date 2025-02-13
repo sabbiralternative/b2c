@@ -1,14 +1,12 @@
-import { DateRangePicker } from "rsuite";
-import "rsuite/DateRangePicker/styles/index.css";
-import useDatePicker from "../../hooks/useDatePicker";
+import { DatePicker } from "rsuite";
 import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
-// import handleFormatDate from "../../utils/handleFormatDate";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const NoDepositReport = () => {
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -16,19 +14,18 @@ const NoDepositReport = () => {
   const [viewNoDepositReportData, setViewNoDepositReportData] = useState(false);
   const [noDepositReport, setNoDepositReportData] = useState([]);
   const navigate = useNavigate();
-  const { formattedEndDate, formattedStartDate, onChange } =
-    useDatePicker("currentDate");
-  // const { newFormattedEndDate, newFormattedStartDate } = handleFormatDate(
-  //   formattedStartDate,
-  //   formattedEndDate
-  // );
+  const thirtyDayBefore = new Date(
+    new Date().setDate(new Date().getDate() - 30)
+  );
+  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(thirtyDayBefore);
 
   const getNoDepositReportReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getND",
-      fromDate: formattedStartDate,
-      toDate: formattedEndDate,
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
     };
@@ -78,13 +75,24 @@ const NoDepositReport = () => {
                 <label htmlFor="flatpickr-range" className="form-label">
                   No Deposit Report Registration Date
                 </label>
-                <DateRangePicker
-                  format="yyyy-MM-dd"
-                  editable
-                  onChange={onChange}
-                  defaultValue={[new Date(), new Date()]}
-                  block
-                />
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setStartDate(date)}
+                    defaultValue={thirtyDayBefore}
+                    block
+                  />
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setEndDate(date)}
+                    defaultValue={new Date()}
+                    block
+                  />
+                </div>
               </div>
 
               <div className="col-12">

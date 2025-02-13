@@ -1,15 +1,20 @@
-import { DateRangePicker } from "rsuite";
 import Withdraw from "../../../components/ui/Master/Withdraw";
 import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw";
-import useDatePicker from "../../../hooks/useDatePicker";
+import { useState } from "react";
+import moment from "moment";
+import { DatePicker } from "rsuite";
 
 const WithdrawStatement = () => {
-  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker();
+  const thirtyDayBefore = new Date(
+    new Date().setDate(new Date().getDate() - 30)
+  );
+  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(thirtyDayBefore);
   const payload = {
     type: "viewWithdraw",
     status: "APPROVED",
-    fromDate: formattedStartDate,
-    toDate: formattedEndDate,
+    fromDate: moment(startDate).format("YYYY-MM-DD"),
+    toDate: moment(endDate).format("YYYY-MM-DD"),
   };
   const { allWithdraw, refetchAllWithdraw } = useGetALLWithdraw(payload);
 
@@ -31,16 +36,24 @@ const WithdrawStatement = () => {
                 <label htmlFor="flatpickr-range" className="form-label">
                   Range Picker
                 </label>
-                <DateRangePicker
-                  format="yyyy-MM-dd"
-                  editable
-                  onChange={onChange}
-                  defaultValue={[
-                    new Date(new Date().setDate(new Date().getDate() - 6)),
-                    new Date(),
-                  ]}
-                  block
-                />
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setStartDate(date)}
+                    defaultValue={thirtyDayBefore}
+                    block
+                  />
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setEndDate(date)}
+                    defaultValue={new Date()}
+                    block
+                  />
+                </div>
               </div>
 
               <div className="col-12">

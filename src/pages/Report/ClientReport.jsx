@@ -1,6 +1,5 @@
-import { DateRangePicker } from "rsuite";
-import "rsuite/DateRangePicker/styles/index.css";
-import useDatePicker from "../../hooks/useDatePicker";
+import moment from "moment/moment";
+import { DatePicker } from "rsuite";
 import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
@@ -15,15 +14,19 @@ const ClientReport = () => {
   const [viewClientData, setViewClientData] = useState(false);
   const [clientData, setClientData] = useState([]);
   const navigate = useNavigate();
-  const { formattedEndDate, formattedStartDate, onChange } =
-    useDatePicker("currentDate");
+
+  const thirtyDayBefore = new Date(
+    new Date().setDate(new Date().getDate() - 30)
+  );
+  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(thirtyDayBefore);
 
   const getClientReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getClients",
-      fromDate: formattedStartDate,
-      toDate: formattedEndDate,
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
     };
@@ -75,13 +78,24 @@ const ClientReport = () => {
                 <label htmlFor="flatpickr-range" className="form-label">
                   Client Registration Date
                 </label>
-                <DateRangePicker
-                  format="yyyy-MM-dd"
-                  editable
-                  onChange={onChange}
-                  defaultValue={[new Date(), new Date()]}
-                  block
-                />
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setStartDate(date)}
+                    defaultValue={thirtyDayBefore}
+                    block
+                  />
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setEndDate(date)}
+                    defaultValue={new Date()}
+                    block
+                  />
+                </div>
               </div>
 
               <div className="col-12">

@@ -1,11 +1,10 @@
-import useDatePicker from "../../../hooks/useDatePicker";
-import { DateRangePicker, Pagination } from "rsuite";
-import "rsuite/DateRangePicker/styles/index.css";
+import { DatePicker, Pagination } from "rsuite";
 import useGetPNL from "../../../hooks/Master/Client/useGetPNL";
 import { useState } from "react";
 import SettleBets from "../../../components/modal/Master/SettleBets";
 
 import { useLocation } from "react-router-dom";
+import moment from "moment";
 const PNL = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -15,16 +14,16 @@ const PNL = () => {
   const [activePage, setActivePage] = useState(1);
   const [showBetsModal, setShowBetsModal] = useState(false);
   const [marketId, setMarketId] = useState("");
-
-  const { formattedEndDate, formattedStartDate, onChange } = useDatePicker(
-    undefined,
-    30
+  const thirtyDayBefore = new Date(
+    new Date().setDate(new Date().getDate() - 30)
   );
+  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(thirtyDayBefore);
 
   const { pnl, refetchPNL } = useGetPNL({
     downlineId,
-    fromDate: formattedStartDate,
-    toDate: formattedEndDate,
+    fromDate: moment(startDate).format("YYYY-MM-DD"),
+    toDate: moment(endDate).format("YYYY-MM-DD"),
     role,
     id,
     page: activePage,
@@ -74,23 +73,24 @@ const PNL = () => {
                 <label htmlFor="flatpickr-range" className="form-label">
                   Range Picker
                 </label>
-                <DateRangePicker
-                  format="yyyy-MM-dd"
-                  editable
-                  onChange={onChange}
-                  defaultValue={[
-                    new Date(new Date().setDate(new Date().getDate() - 30)),
-                    new Date(),
-                  ]}
-                  block
-                />
-                {/* <input
-                  type="text"
-                  name="date"
-                  className="form-control flatpickr-input active"
-                  placeholder="YYYY-MM-DD to YYYY-MM-DD"
-                  id="flatpickr-range"
-                /> */}
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setStartDate(date)}
+                    defaultValue={thirtyDayBefore}
+                    block
+                  />
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setEndDate(date)}
+                    defaultValue={new Date()}
+                    block
+                  />
+                </div>
               </div>
 
               <div className="col-12">
