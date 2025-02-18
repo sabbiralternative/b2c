@@ -5,6 +5,7 @@ import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
 import useContextState from "../../../../hooks/useContextState";
 import { jwtDecode } from "jwt-decode";
+import { AdminRole } from "../../../../constant/constant";
 
 const Master = () => {
   const [depositPermission, setDepositPermission] = useState(false);
@@ -189,7 +190,7 @@ const Master = () => {
                 <div data-i18n="View Clients">View Clients</div>
               </a>
             </li>
-            {!readOnly && (
+            {!readOnly && adminRole !== AdminRole.checker && (
               <li className="menu-item">
                 <a
                   onClick={() => handleNavigate("add-client")}

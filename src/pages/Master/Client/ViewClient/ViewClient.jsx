@@ -220,6 +220,10 @@ const ViewClient = () => {
                   <thead>
                     <tr>
                       <th>User Id</th>
+                      {adminRole == AdminRole.hyper_master ||
+                      adminRole == AdminRole.checker ? (
+                        <th>Branch</th>
+                      ) : null}
                       {adminRole !== "master" && adminRole !== "checker" && (
                         <th>Username</th>
                       )}
@@ -244,6 +248,12 @@ const ViewClient = () => {
                           <td>
                             <strong>{client?.userId}</strong>
                           </td>
+                          {adminRole == AdminRole.hyper_master ||
+                          adminRole == AdminRole.checker ? (
+                            <td>
+                              <strong>{client?.branch}</strong>
+                            </td>
+                          ) : null}
                           {adminRole !== "master" &&
                             adminRole !== "checker" && (
                               <td>

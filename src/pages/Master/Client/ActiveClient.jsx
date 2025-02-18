@@ -145,8 +145,16 @@ const ActiveClient = () => {
               <thead>
                 <tr>
                   <th>User Id</th>
-                  {adminRole !== "master" && <th>Username</th>}
-                  {adminRole !== "master" && <th>Mobile</th>}
+                  {adminRole == AdminRole.hyper_master ||
+                  adminRole == AdminRole.checker ? (
+                    <th>Branch</th>
+                  ) : null}
+                  {adminRole !== "master" && adminRole !== "checker" && (
+                    <th>Username</th>
+                  )}
+                  {adminRole !== "master" && adminRole !== "checker" && (
+                    <th>Mobile</th>
+                  )}
                   <th>Balance</th>
                   <th>Total Deposit</th>
                   <th>Total Withdraw</th>
@@ -171,7 +179,13 @@ const ActiveClient = () => {
                       >
                         <strong>{client?.userId}</strong>
                       </td>
-                      {adminRole !== "master" && (
+                      {adminRole == AdminRole.hyper_master ||
+                      adminRole == AdminRole.checker ? (
+                        <td>
+                          <strong>{client?.branch}</strong>
+                        </td>
+                      ) : null}
+                      {adminRole !== "master" && adminRole !== "checker" && (
                         <td
                           style={{ cursor: "pointer" }}
                           onClick={() => {
@@ -186,7 +200,7 @@ const ActiveClient = () => {
                         </td>
                       )}
 
-                      {adminRole !== "master" && (
+                      {adminRole !== "master" && adminRole !== "checker" && (
                         <td>
                           <strong>{client?.mobile}</strong>
                         </td>
@@ -228,7 +242,8 @@ const ActiveClient = () => {
                       <td>{client?.registrationDate}</td>
                       <td>
                         {adminRole !== "hyper_master" &&
-                          adminRole !== AdminRole.branch_staff && (
+                          adminRole !== AdminRole.branch_staff &&
+                          adminRole !== AdminRole.checker && (
                             <>
                               <a
                                 style={{ color: "white" }}
@@ -274,41 +289,43 @@ const ActiveClient = () => {
                             &nbsp;
                           </>
                         )}
-                        {clientPermission && (
-                          <>
-                            <a
-                              style={{ color: "white" }}
-                              onClick={() =>
-                                handleOpenModal(
-                                  setShowChangePassword,
-                                  client?.username,
-                                  client?.role,
-                                  client?.downlineId
-                                )
-                              }
-                              className="btn btn-icon btn-sm btn-info"
-                            >
-                              P
-                            </a>
-                            &nbsp;
-                            <a
-                              style={{ color: "white" }}
-                              onClick={() =>
-                                handleOpenModal(
-                                  setShowChangeStatus,
-                                  client?.username,
-                                  client?.role,
-                                  client?.downlineId
-                                )
-                              }
-                              className="btn btn-icon btn-sm btn-dark"
-                            >
-                              S
-                            </a>
-                          </>
-                        )}
+                        {clientPermission &&
+                          adminRole !== AdminRole.checker && (
+                            <>
+                              <a
+                                style={{ color: "white" }}
+                                onClick={() =>
+                                  handleOpenModal(
+                                    setShowChangePassword,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  )
+                                }
+                                className="btn btn-icon btn-sm btn-info"
+                              >
+                                P
+                              </a>
+                              &nbsp;
+                              <a
+                                style={{ color: "white" }}
+                                onClick={() =>
+                                  handleOpenModal(
+                                    setShowChangeStatus,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  )
+                                }
+                                className="btn btn-icon btn-sm btn-dark"
+                              >
+                                S
+                              </a>
+                            </>
+                          )}
                         {adminRole !== AdminRole.hyper_master &&
-                          adminRole !== AdminRole.branch_staff && (
+                          adminRole !== AdminRole.branch_staff &&
+                          adminRole !== AdminRole.checker && (
                             <>
                               &nbsp;
                               <a
