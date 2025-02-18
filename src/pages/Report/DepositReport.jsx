@@ -22,7 +22,7 @@ const DepositReport = () => {
     new Date().setDate(new Date().getDate() - 30)
   );
   const [startDate, setStartDate] = useState(thirtyDayBefore);
-  const [endDate, setEndDate] = useState(thirtyDayBefore);
+  const [endDate, setEndDate] = useState(new Date());
 
   const getDepositReport = async () => {
     const generatedToken = handleRandomToken();
@@ -94,26 +94,33 @@ const DepositReport = () => {
                 className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
               >
                 <div className="col-md-6 col-12 mb-4">
-                  <label htmlFor="flatpickr-range" className="form-label">
-                    Deposit Date
-                  </label>
                   <div style={{ display: "flex", gap: "10px" }}>
-                    <DatePicker
-                      style={{ width: "100%" }}
-                      format="yyyy-MM-dd"
-                      editable
-                      onChange={(date) => setStartDate(date)}
-                      defaultValue={thirtyDayBefore}
-                      block
-                    />
-                    <DatePicker
-                      style={{ width: "100%" }}
-                      format="yyyy-MM-dd"
-                      editable
-                      onChange={(date) => setEndDate(date)}
-                      defaultValue={new Date()}
-                      block
-                    />
+                    <div style={{ width: "100%" }}>
+                      <label htmlFor="flatpickr-range" className="form-label">
+                        From Date
+                      </label>
+                      <DatePicker
+                        style={{ width: "100%" }}
+                        format="yyyy-MM-dd"
+                        editable
+                        onChange={(date) => setStartDate(date)}
+                        defaultValue={thirtyDayBefore}
+                        block
+                      />
+                    </div>
+                    <div style={{ width: "100%" }}>
+                      <label htmlFor="flatpickr-range" className="form-label">
+                        To Date
+                      </label>
+                      <DatePicker
+                        style={{ width: "100%" }}
+                        format="yyyy-MM-dd"
+                        editable
+                        onChange={(date) => setEndDate(date)}
+                        defaultValue={new Date()}
+                        block
+                      />
+                    </div>
                   </div>
                 </div>
 

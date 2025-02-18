@@ -154,6 +154,7 @@ const Master = () => {
       )}
 
       {adminRole === "master" ||
+      adminRole === "checker" ||
       (adminRole === "branch_staff" && clientPermission) ? (
         <li
           ref={clientsRef}
@@ -689,6 +690,7 @@ const Master = () => {
         </>
       )}
       {adminRole === "master" ||
+      adminRole === "checker" ||
       (adminRole === "branch_staff" && reportPermission) ? (
         <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
           <a
