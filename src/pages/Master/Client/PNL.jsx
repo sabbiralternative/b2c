@@ -6,6 +6,7 @@ import SettleBets from "../../../components/modal/Master/SettleBets";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 const PNL = () => {
+  const [type, setType] = useState("all");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const downlineId = params.get("downlineId");
@@ -27,6 +28,7 @@ const PNL = () => {
     role,
     id,
     page: activePage,
+    type,
   });
 
   const meta = pnl?.pagination;
@@ -51,7 +53,7 @@ const PNL = () => {
       return "text-danger";
     }
   };
-  console.log(pnl);
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       {showBetsModal && (
@@ -123,7 +125,47 @@ const PNL = () => {
             justifyContent: "space-between",
           }}
         >
-          <h5>Profit & Loss</h5>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <h5 style={{ margin: "0px" }}>Profit & Loss</h5>
+            <div style={{ display: "flex", gap: "20px", marginLeft: "20px" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
+                <p style={{ margin: "0px" }}>All</p>
+                <input
+                  onChange={(e) => setType(e.target.value)}
+                  checked={type === "all"}
+                  name="transaction"
+                  type="radio"
+                  value="all"
+                />
+              </div>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
+                <p style={{ margin: "0px" }}>Deposit</p>
+                <input
+                  onChange={(e) => setType(e.target.value)}
+                  checked={type === "deposit"}
+                  name="transaction"
+                  type="radio"
+                  value="deposit"
+                />
+              </div>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+              >
+                <p style={{ margin: "0px" }}>Withdraw</p>
+                <input
+                  onChange={(e) => setType(e.target.value)}
+                  checked={type === "withdraw"}
+                  name="transaction"
+                  type="radio"
+                  value="withdraw"
+                />
+              </div>
+            </div>
+          </div>
           <Pagination
             prev
             next
