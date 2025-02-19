@@ -7,6 +7,7 @@ import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { defaultDate } from "../../utils/defaultDate";
 
 const ClientReport = () => {
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -15,10 +16,7 @@ const ClientReport = () => {
   const [clientData, setClientData] = useState([]);
   const navigate = useNavigate();
 
-  const thirtyDayBefore = new Date(
-    new Date().setDate(new Date().getDate() - 30)
-  );
-  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [startDate, setStartDate] = useState(defaultDate(30));
   const [endDate, setEndDate] = useState(new Date());
 
   const getClientReport = async () => {
@@ -85,7 +83,7 @@ const ClientReport = () => {
                       format="yyyy-MM-dd"
                       editable
                       onChange={(date) => setStartDate(date)}
-                      defaultValue={thirtyDayBefore}
+                      value={startDate}
                       block
                     />
                   </div>
@@ -98,10 +96,35 @@ const ClientReport = () => {
                       format="yyyy-MM-dd"
                       editable
                       onChange={(date) => setEndDate(date)}
-                      defaultValue={new Date()}
+                      value={endDate}
                       block
                     />
                   </div>
+                </div>
+                <div
+                  style={{ display: "flex", gap: "10px", marginTop: "10px" }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setStartDate(defaultDate(1))}
+                    className="btn btn-primary btn-xs"
+                  >
+                    Today
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStartDate(defaultDate(2))}
+                    className="btn btn-primary btn-xs"
+                  >
+                    Yesterday
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStartDate(defaultDate(7))}
+                    className="btn btn-primary btn-xs"
+                  >
+                    This Week
+                  </button>
                 </div>
               </div>
 
