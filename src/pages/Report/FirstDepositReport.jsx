@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 import moment from "moment";
+import { defaultDate } from "../../utils/defaultDate";
 
 const FirstDepositReport = () => {
   const [showFTDImage, setShowFTDImage] = useState(false);
@@ -18,10 +19,8 @@ const FirstDepositReport = () => {
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
   const [totalFTD, setTotalFTD] = useState(null);
-  const thirtyDayBefore = new Date(
-    new Date().setDate(new Date().getDate() - 30)
-  );
-  const [startDate, setStartDate] = useState(thirtyDayBefore);
+
+  const [startDate, setStartDate] = useState(defaultDate(30));
   const [endDate, setEndDate] = useState(new Date());
 
   const getFTDReport = async () => {
@@ -105,7 +104,7 @@ const FirstDepositReport = () => {
                         format="yyyy-MM-dd"
                         editable
                         onChange={(date) => setStartDate(date)}
-                        defaultValue={thirtyDayBefore}
+                        value={startDate}
                         block
                       />
                     </div>
@@ -118,10 +117,35 @@ const FirstDepositReport = () => {
                         format="yyyy-MM-dd"
                         editable
                         onChange={(date) => setEndDate(date)}
-                        defaultValue={new Date()}
+                        value={endDate}
                         block
                       />
                     </div>
+                  </div>
+                  <div
+                    style={{ display: "flex", gap: "10px", marginTop: "10px" }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setStartDate(defaultDate(1))}
+                      className="btn btn-primary btn-xs"
+                    >
+                      Today
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStartDate(defaultDate(2))}
+                      className="btn btn-primary btn-xs"
+                    >
+                      Yesterday
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStartDate(defaultDate(7))}
+                      className="btn btn-primary btn-xs"
+                    >
+                      This Week
+                    </button>
                   </div>
                 </div>
 
