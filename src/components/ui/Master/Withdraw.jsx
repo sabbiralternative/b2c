@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { FaRegCopy } from "react-icons/fa";
 import { Pagination } from "rsuite";
 import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
+import { clientColor } from "../../../constant/constant";
 
 const Withdraw = ({
   data,
@@ -156,7 +157,17 @@ const Withdraw = ({
                         );
                       }}
                     >
-                      {item?.userId}
+                      <span
+                        style={{
+                          backgroundColor: clientColor?.[item?.color],
+                          width: "8px",
+                          height: "8px",
+                          borderRadius: "50%",
+                          display: "inline-block",
+                          marginRight: "5px",
+                        }}
+                      />
+                      <strong> {item?.userId}</strong>
                     </td>
                     {adminRole === "checker" && <td>{item?.branch}</td>}
                     {/* <td

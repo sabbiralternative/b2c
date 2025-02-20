@@ -8,6 +8,7 @@ import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { defaultDate } from "../../utils/defaultDate";
+import DefaultDateButton from "./DefaultDateButton";
 
 const ClientReport = () => {
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -16,7 +17,7 @@ const ClientReport = () => {
   const [clientData, setClientData] = useState([]);
   const navigate = useNavigate();
 
-  const [startDate, setStartDate] = useState(defaultDate(30));
+  const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
 
   const getClientReport = async () => {
@@ -101,31 +102,11 @@ const ClientReport = () => {
                     />
                   </div>
                 </div>
-                <div
-                  style={{ display: "flex", gap: "10px", marginTop: "10px" }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setStartDate(defaultDate(1))}
-                    className="btn btn-primary btn-xs"
-                  >
-                    Today
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStartDate(defaultDate(2))}
-                    className="btn btn-primary btn-xs"
-                  >
-                    Yesterday
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStartDate(defaultDate(7))}
-                    className="btn btn-primary btn-xs"
-                  >
-                    This Week
-                  </button>
-                </div>
+
+                <DefaultDateButton
+                  setEndDate={setEndDate}
+                  setStartDate={setStartDate}
+                />
               </div>
 
               <div className="col-12">

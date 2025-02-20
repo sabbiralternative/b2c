@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
+import DefaultDateButton from "./DefaultDateButton";
 
 const NoDepositReport = () => {
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -16,7 +17,7 @@ const NoDepositReport = () => {
   const [noDepositReport, setNoDepositReportData] = useState([]);
   const navigate = useNavigate();
 
-  const [startDate, setStartDate] = useState(defaultDate(30));
+  const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
 
   const getNoDepositReportReport = async () => {
@@ -85,19 +86,10 @@ const NoDepositReport = () => {
                       block
                     />
                   </div>
-                  <div style={{ width: "100%" }}>
-                    <label htmlFor="flatpickr-range" className="form-label">
-                      To Date
-                    </label>
-                    <DatePicker
-                      style={{ width: "100%" }}
-                      format="yyyy-MM-dd"
-                      editable
-                      onChange={(date) => setEndDate(date)}
-                      value={endDate}
-                      block
-                    />
-                  </div>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                  />
                 </div>
                 <div
                   style={{ display: "flex", gap: "10px", marginTop: "10px" }}

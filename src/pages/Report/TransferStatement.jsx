@@ -7,6 +7,7 @@ import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
+import DefaultDateButton from "./DefaultDateButton";
 
 const TransferStatement = () => {
   const [activePage, setActivePage] = useState(1);
@@ -15,7 +16,7 @@ const TransferStatement = () => {
     useState(false);
   const [transferStatement, setTransferStatement] = useState([]);
 
-  const [startDate, setStartDate] = useState(defaultDate(30));
+  const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
   const onSubmit = async () => {
     const generatedToken = handleRandomToken();
@@ -139,31 +140,10 @@ const TransferStatement = () => {
                       />
                     </div>
                   </div>
-                  <div
-                    style={{ display: "flex", gap: "10px", marginTop: "10px" }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(1))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Today
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(2))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Yesterday
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(7))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      This Week
-                    </button>
-                  </div>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                  />
                 </div>
                 {/* {adminRole !== "master" && (
                   <div className="col-md-6 col-12 mb-4">

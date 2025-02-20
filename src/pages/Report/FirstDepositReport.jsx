@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
+import DefaultDateButton from "./DefaultDateButton";
 
 const FirstDepositReport = () => {
   const [showFTDImage, setShowFTDImage] = useState(false);
@@ -20,7 +21,7 @@ const FirstDepositReport = () => {
   const [FTDData, setFTDData] = useState([]);
   const [totalFTD, setTotalFTD] = useState(null);
 
-  const [startDate, setStartDate] = useState(defaultDate(30));
+  const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
 
   const getFTDReport = async () => {
@@ -122,31 +123,10 @@ const FirstDepositReport = () => {
                       />
                     </div>
                   </div>
-                  <div
-                    style={{ display: "flex", gap: "10px", marginTop: "10px" }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(1))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Today
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(2))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Yesterday
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(7))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      This Week
-                    </button>
-                  </div>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                  />
                 </div>
 
                 <div className="col-12">

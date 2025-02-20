@@ -12,7 +12,7 @@ import CreditReference from "../../../../components/modal/CreditReference";
 import DirectDeposit from "../../../../components/modal/Master/Client/DirectDeposit";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { jwtDecode } from "jwt-decode";
-import { AdminRole } from "../../../../constant/constant";
+import { AdminRole, clientColor } from "../../../../constant/constant";
 import ClientWithdrawDeposit from "./BranchStaffActionPermission/ClientWithdrawDeposit";
 import DepositPermission from "./BranchStaffActionPermission/DepositPermission";
 import ClientPermission from "./BranchStaffActionPermission/ClientPermission";
@@ -246,6 +246,16 @@ const ViewClient = () => {
                       return (
                         <tr key={i}>
                           <td>
+                            <span
+                              style={{
+                                backgroundColor: clientColor?.[client?.color],
+                                width: "8px",
+                                height: "8px",
+                                borderRadius: "50%",
+                                display: "inline-block",
+                                marginRight: "5px",
+                              }}
+                            ></span>
                             <strong>{client?.userId}</strong>
                           </td>
                           {adminRole == AdminRole.hyper_master ||
@@ -323,7 +333,7 @@ const ViewClient = () => {
                               setShowChangeStatus={setShowChangeStatus}
                               setShowCreditRef={setShowCreditRef}
                               showMore={showMore}
-                              showMoreRef={showCreditRef}
+                              showMoreRef={showMoreRef}
                             />
                           )}
 

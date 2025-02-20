@@ -9,6 +9,7 @@ import ShowImage from "../../components/modal/ShowImage";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
+import DefaultDateButton from "./DefaultDateButton";
 
 const DepositReport = () => {
   const [showDepositImage, setShowDepositImage] = useState(false);
@@ -20,7 +21,7 @@ const DepositReport = () => {
   const [depositData, setDepositData] = useState([]);
   const [totalDeposit, setTotalDeposit] = useState(null);
 
-  const [startDate, setStartDate] = useState(defaultDate(30));
+  const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
 
   const getDepositReport = async () => {
@@ -32,6 +33,7 @@ const DepositReport = () => {
       token: generatedToken,
       pagination: true,
     };
+
     const res = await axios.post(API.export, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,7 +64,9 @@ const DepositReport = () => {
 
   const handleToggleViewDeposit = async (e) => {
     e.preventDefault();
+
     const data = await getDepositReport();
+
     setViewDepositData(true);
     if (data?.result?.length > 0) {
       setDepositData(data?.result);
@@ -121,31 +125,10 @@ const DepositReport = () => {
                       />
                     </div>
                   </div>
-                  <div
-                    style={{ display: "flex", gap: "10px", marginTop: "10px" }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(1))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Today
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(2))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Yesterday
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(7))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      This Week
-                    </button>
-                  </div>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                  />
                 </div>
 
                 <div className="col-12">
@@ -173,7 +156,17 @@ const DepositReport = () => {
         {viewDepositData && (
           <>
             <hr className="my-3" />
-            {totalDeposit && <span> Total Deposit : {totalDeposit}</span>}
+            {totalDeposit && (
+              <p style={{ margin: "0px" }}>
+                Total Deposit :
+                {new Intl.NumberFormat("en-IN").format(totalDeposit)}
+              </p>
+            )}
+            {depositData?.length > 0 && (
+              <p style={{ margin: "0px", marginBottom: "5px" }}>
+                Deposit Count: {depositData?.length}
+              </p>
+            )}
             {depositData?.length > 0 ? (
               <div className="card">
                 <h5 className="card-header">Deposit Report</h5>

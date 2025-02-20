@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
+import DefaultDateButton from "./DefaultDateButton";
 
 const WithdrawReport = () => {
   const [showImage, setShowImage] = useState(false);
@@ -20,7 +21,7 @@ const WithdrawReport = () => {
   const [withdrawData, setWithdrawData] = useState([]);
   const [totalWithdraw, setTotalWithdraw] = useState(null);
 
-  const [startDate, setStartDate] = useState(defaultDate(30));
+  const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
 
   const getWithdrawReport = async () => {
@@ -119,31 +120,10 @@ const WithdrawReport = () => {
                       />
                     </div>
                   </div>
-                  <div
-                    style={{ display: "flex", gap: "10px", marginTop: "10px" }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(1))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Today
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(2))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      Yesterday
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setStartDate(defaultDate(7))}
-                      className="btn btn-primary btn-xs"
-                    >
-                      This Week
-                    </button>
-                  </div>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                  />
                 </div>
 
                 <div className="col-12">
@@ -171,7 +151,17 @@ const WithdrawReport = () => {
         {viewWithdrawData && (
           <>
             <hr className="my-3" />
-            {totalWithdraw && <span> Total Withdraw : {totalWithdraw}</span>}
+            {totalWithdraw && (
+              <p style={{ margin: "0px" }}>
+                Total Withdraw :
+                {new Intl.NumberFormat("en-IN").format(totalWithdraw)}
+              </p>
+            )}
+            {withdrawData?.length > 0 && (
+              <p style={{ margin: "0px", marginBottom: "5px" }}>
+                Withdraw Count: {withdrawData?.length}
+              </p>
+            )}
             {withdrawData?.length > 0 ? (
               <div className="card">
                 <h5 className="card-header">Withdraw Report</h5>

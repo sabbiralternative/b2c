@@ -5,6 +5,8 @@ import SettleBets from "../../../components/modal/Master/SettleBets";
 
 import { useLocation } from "react-router-dom";
 import moment from "moment";
+import DefaultDateButton from "../../Report/DefaultDateButton";
+import { defaultDate } from "../../../utils/defaultDate";
 const PNL = () => {
   const [type, setType] = useState("all");
   const location = useLocation();
@@ -15,10 +17,7 @@ const PNL = () => {
   const [activePage, setActivePage] = useState(1);
   const [showBetsModal, setShowBetsModal] = useState(false);
   const [marketId, setMarketId] = useState("");
-  const thirtyDayBefore = new Date(
-    new Date().setDate(new Date().getDate() - 30)
-  );
-  const [startDate, setStartDate] = useState(thirtyDayBefore);
+  const [startDate, setStartDate] = useState(defaultDate(30));
   const [endDate, setEndDate] = useState(new Date());
 
   const { pnl, refetchPNL } = useGetPNL({
@@ -82,7 +81,7 @@ const PNL = () => {
                       format="yyyy-MM-dd"
                       editable
                       onChange={(date) => setStartDate(date)}
-                      defaultValue={thirtyDayBefore}
+                      value={startDate}
                       block
                     />
                   </div>
@@ -95,11 +94,15 @@ const PNL = () => {
                       format="yyyy-MM-dd"
                       editable
                       onChange={(date) => setEndDate(date)}
-                      defaultValue={new Date()}
+                      value={endDate}
                       block
                     />
                   </div>
                 </div>
+                <DefaultDateButton
+                  setEndDate={setEndDate}
+                  setStartDate={setStartDate}
+                />
               </div>
 
               <div className="col-12">

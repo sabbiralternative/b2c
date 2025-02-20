@@ -7,6 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { Pagination } from "rsuite";
+import { clientColor } from "../../../constant/constant";
 
 const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
   const {
@@ -91,7 +92,17 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
                       );
                     }}
                   >
-                    {item?.userId}
+                    <span
+                      style={{
+                        backgroundColor: clientColor?.[item?.color],
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        display: "inline-block",
+                        marginRight: "5px",
+                      }}
+                    />
+                    <strong> {item?.userId}</strong>
                   </td>
                   {adminRole === "checker" && <td>{item?.branch}</td>}
 

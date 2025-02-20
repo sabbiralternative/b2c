@@ -9,6 +9,7 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 import { Pagination } from "rsuite";
 import EditPendingDeposit from "../../../components/modal/Master/Deposit/EditPendingDeposit";
+import { clientColor } from "../../../constant/constant";
 
 const PendingDeposit = () => {
   const {
@@ -132,7 +133,17 @@ const PendingDeposit = () => {
                         );
                       }}
                     >
-                      {item?.userId}
+                      <span
+                        style={{
+                          backgroundColor: clientColor?.[item?.color],
+                          width: "8px",
+                          height: "8px",
+                          borderRadius: "50%",
+                          display: "inline-block",
+                          marginRight: "5px",
+                        }}
+                      />
+                      <strong>{item?.userId}</strong>
                     </td>
                     {adminRole === "checker" && <td>{item?.branch}</td>}
                     {/* <td

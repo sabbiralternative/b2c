@@ -10,7 +10,7 @@ import ChangePassword from "../../../components/modal/ChangePassword";
 import DirectDeposit from "../../../components/modal/Master/Client/DirectDeposit";
 import ChangeStatus from "../../../components/modal/ChangeStatus";
 import CreditReference from "../../../components/modal/CreditReference";
-import { AdminRole } from "../../../constant/constant";
+import { AdminRole, clientColor } from "../../../constant/constant";
 import { jwtDecode } from "jwt-decode";
 
 const InActiveClient = () => {
@@ -175,6 +175,16 @@ const InActiveClient = () => {
                           navigate("/view-client");
                         }}
                       >
+                        <span
+                          style={{
+                            backgroundColor: clientColor?.[client?.color],
+                            width: "8px",
+                            height: "8px",
+                            borderRadius: "50%",
+                            display: "inline-block",
+                            marginRight: "5px",
+                          }}
+                        ></span>
                         <strong>{client?.userId}</strong>
                       </td>
                       {adminRole == AdminRole.hyper_master ||
