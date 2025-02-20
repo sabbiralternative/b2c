@@ -27,7 +27,7 @@ const DefaultDateButton = ({ setStartDate, setEndDate }) => {
         type="button"
         onClick={() => {
           setStartDate(defaultDate(7));
-          setEndDate(defaultDate(7));
+          setEndDate(new Date());
         }}
         className="btn btn-primary btn-xs"
       >
