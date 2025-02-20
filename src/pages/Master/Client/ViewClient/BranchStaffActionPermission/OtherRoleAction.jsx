@@ -17,6 +17,7 @@ const OtherRoleAction = ({
   i,
   handleShowMore,
   showMoreRef,
+  setShowColor,
 }) => {
   return (
     <td>
@@ -201,8 +202,17 @@ const OtherRoleAction = ({
                   Activity Logs
                 </Link>
               </li>
-              <li>
-                <a className="dropdown-item">Another action</a>
+              <li
+                onClick={() => {
+                  handleOpenModal(
+                    setShowColor,
+                    client?.username,
+                    client?.role,
+                    client?.downlineId
+                  );
+                }}
+              >
+                <a className="dropdown-item">Client Group</a>
               </li>
             </ul>
           )}

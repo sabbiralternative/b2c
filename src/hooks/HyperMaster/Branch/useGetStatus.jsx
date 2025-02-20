@@ -20,6 +20,7 @@ const useGetStatus = (payload) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
       const data = res.data;
       if (data?.success) {
         return data?.result;

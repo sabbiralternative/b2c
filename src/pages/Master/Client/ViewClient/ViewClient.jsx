@@ -21,6 +21,7 @@ import OtherRoleAction from "./BranchStaffActionPermission/OtherRoleAction";
 import DepositClient from "./BranchStaffActionPermission/DepositClient";
 import DepositWithdraw from "./BranchStaffActionPermission/DepositWithdraw";
 import WithdrawClient from "./BranchStaffActionPermission/WithdrawClient";
+import ChangeColor from "../../../../components/modal/ChangeColor";
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
 const ViewClient = () => {
@@ -46,6 +47,7 @@ const ViewClient = () => {
   const [downLineId, setDownLineId] = useState("");
   const [payloadRole, setPayloadRole] = useState("");
   const [id, setId] = useState("");
+  const [showColor, setShowColor] = useState(false);
   const {
     readOnly,
     clientId,
@@ -118,7 +120,10 @@ const ViewClient = () => {
         setClientPermission(true);
       }
     }
-  }, [adminRole, token]);
+    if (showColor) {
+      setShowMore(false);
+    }
+  }, [adminRole, token, showColor]);
 
   return (
     <>
@@ -171,6 +176,14 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setDirectDeposit={setDirectDeposit}
+        />
+      )}
+      {showColor && (
+        <ChangeColor
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowColor={setShowColor}
         />
       )}
 
@@ -334,6 +347,7 @@ const ViewClient = () => {
                               setShowCreditRef={setShowCreditRef}
                               showMore={showMore}
                               showMoreRef={showMoreRef}
+                              setShowColor={setShowColor}
                             />
                           )}
 

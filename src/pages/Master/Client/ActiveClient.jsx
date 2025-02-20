@@ -1,7 +1,7 @@
 import useContextState from "../../../hooks/useContextState";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 import { useClient } from "../../../hooks/Master/Client/useClient";
 import { Pagination } from "rsuite";
@@ -12,8 +12,11 @@ import ChangeStatus from "../../../components/modal/ChangeStatus";
 import CreditReference from "../../../components/modal/CreditReference";
 import { jwtDecode } from "jwt-decode";
 import { AdminRole, clientColor } from "../../../constant/constant";
+import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+import ChangeColor from "../../../components/modal/ChangeColor";
 
 const ActiveClient = () => {
+  const [showColor, setShowColor] = useState(false);
   const [clientPermission, setClientPermission] = useState(false);
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState(1);
@@ -26,8 +29,14 @@ const ActiveClient = () => {
   const [downLineId, setDownLineId] = useState("");
   const [payloadRole, setPayloadRole] = useState("");
   const [id, setId] = useState("");
+  const [showMore, setShowMore] = useState(null);
   const { adminRole, setRefetchViewClient, setClientId, readOnly, token } =
     useContextState();
+  const showMoreRef = useRef();
+  useCloseModalClickOutside(showMoreRef, () => {
+    setShowMore(null);
+  });
+
   const { data } = useClient({
     searchId: "activeUsers",
     page: activePage,
@@ -62,6 +71,14 @@ const ActiveClient = () => {
       }
     }
   }, [adminRole, token]);
+
+  const handleShowMore = (i) => {
+    if (i === showMore) {
+      setShowMore(null);
+    } else {
+      setShowMore(i);
+    }
+  };
 
   return (
     <>
@@ -116,6 +133,15 @@ const ActiveClient = () => {
           setDirectDeposit={setDirectDeposit}
         />
       )}
+      {showColor && (
+        <ChangeColor
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowColor={setShowColor}
+        />
+      )}
+
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
           <div
@@ -371,6 +397,70 @@ const ActiveClient = () => {
                               </a>
                             </>
                           )}
+                        &nbsp;
+                        {adminRole === "master" ||
+                        adminRole === AdminRole.branch_staff ? (
+                          <div className="btn-group">
+                            <button
+                              onClick={() => handleShowMore(i)}
+                              style={{
+                                height: "auto",
+                                width: "auto",
+                                padding: "0px 2px",
+                              }}
+                              type="button"
+                              className="btn btn-primary btn-icon  dropdown-toggle hide-arrow"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              <i className="bx bx-dots-vertical-rounded"></i>
+                            </button>
+
+                            {i === showMore && (
+                              <div
+                                style={{
+                                  height: "100vh",
+                                  width: "100vw",
+                                  position: "fixed",
+                                  top: "0",
+                                  left: "0",
+                                  right: "0",
+                                  bottom: "0",
+                                  zIndex: 999,
+                                }}
+                              />
+                            )}
+                            {i === showMore && (
+                              <ul
+                                ref={showMoreRef}
+                                style={{
+                                  display: "block",
+                                  right: "0px",
+                                  top: "25px",
+                                  zIndex: 9999,
+                                }}
+                                className="dropdown-menu dropdown-menu-end"
+                              >
+                                <li>
+                                  <Link
+                                    to={`/activity-logs?role=${client?.role}&id=${client?.userId}`}
+                                    className="dropdown-item"
+                                  >
+                                    Activity Logs
+                                  </Link>
+                                </li>
+                                <li
+                                  onClick={() => {
+                                    setShowColor(true);
+                                    setShowMore(false);
+                                  }}
+                                >
+                                  <a className="dropdown-item">CLient Group</a>
+                                </li>
+                              </ul>
+                            )}
+                          </div>
+                        ) : null}
                       </td>
                     </tr>
                   );
