@@ -323,59 +323,10 @@ const AllClient = () => {
                             &nbsp;
                           </>
                         )}
-                        {clientPermission &&
-                          adminRole !== AdminRole.checker && (
-                            <>
-                              <a
-                                style={{ color: "white" }}
-                                onClick={() =>
-                                  handleOpenModal(
-                                    setShowChangePassword,
-                                    client?.username,
-                                    client?.role,
-                                    client?.downlineId
-                                  )
-                                }
-                                className="btn btn-icon btn-sm btn-info"
-                              >
-                                P
-                              </a>
-                              &nbsp;
-                              <a
-                                style={{ color: "white" }}
-                                onClick={() =>
-                                  handleOpenModal(
-                                    setShowChangeStatus,
-                                    client?.username,
-                                    client?.role,
-                                    client?.downlineId
-                                  )
-                                }
-                                className="btn btn-icon btn-sm btn-dark"
-                              >
-                                S
-                              </a>
-                            </>
-                          )}
                         {adminRole !== AdminRole.hyper_master &&
                           adminRole !== AdminRole.branch_staff &&
                           adminRole !== AdminRole.checker && (
                             <>
-                              &nbsp;
-                              <a
-                                style={{ color: "white" }}
-                                onClick={() =>
-                                  handleOpenModal(
-                                    setShowCreditRef,
-                                    client?.username,
-                                    client?.role,
-                                    client?.downlineId
-                                  )
-                                }
-                                className="btn btn-icon btn-sm btn-primary"
-                              >
-                                CR
-                              </a>
                               &nbsp;
                               <a
                                 style={{
@@ -460,6 +411,54 @@ const AllClient = () => {
                                 >
                                   <a className="dropdown-item">Client Group</a>
                                 </li>
+                                {clientPermission &&
+                                  adminRole !== AdminRole.checker && (
+                                    <>
+                                      <li
+                                        onClick={() => {
+                                          setShowMore(false);
+                                          handleOpenModal(
+                                            setShowChangePassword,
+                                            client?.username,
+                                            client?.role,
+                                            client?.downlineId
+                                          );
+                                        }}
+                                      >
+                                        <a className="dropdown-item">P</a>
+                                      </li>
+                                      <li
+                                        onClick={() => {
+                                          setShowMore(false);
+                                          handleOpenModal(
+                                            setShowChangeStatus,
+                                            client?.username,
+                                            client?.role,
+                                            client?.downlineId
+                                          );
+                                        }}
+                                      >
+                                        <a className="dropdown-item">S</a>
+                                      </li>
+                                    </>
+                                  )}
+                                {adminRole !== AdminRole.hyper_master &&
+                                  adminRole !== AdminRole.branch_staff &&
+                                  adminRole !== AdminRole.checker && (
+                                    <li
+                                      onClick={() => {
+                                        setShowMore(false);
+                                        handleOpenModal(
+                                          setShowCreditRef,
+                                          client?.username,
+                                          client?.role,
+                                          client?.downlineId
+                                        );
+                                      }}
+                                    >
+                                      <a className="dropdown-item">CR</a>
+                                    </li>
+                                  )}
                               </ul>
                             )}
                           </div>

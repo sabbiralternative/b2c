@@ -71,66 +71,8 @@ const OtherRoleAction = ({
       >
         PL
       </a>
-      {adminRole !== "checker" && (
-        <>
-          &nbsp;
-          <a
-            style={{
-              color: "white",
-              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-            }}
-            onClick={() => {
-              handleOpenModal(
-                setShowChangePassword,
-                client?.username,
-                client?.role,
-                client?.downlineId
-              );
-            }}
-            className="btn btn-icon btn-sm btn-info"
-          >
-            P
-          </a>
-          &nbsp;
-          <a
-            style={{
-              color: "white",
-              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-            }}
-            onClick={() => {
-              handleOpenModal(
-                setShowChangeStatus,
-                client?.username,
-                client?.role,
-                client?.downlineId
-              );
-            }}
-            className="btn btn-icon btn-sm btn-dark"
-          >
-            S
-          </a>
-        </>
-      )}
       {adminRole !== "hyper_master" && adminRole !== "checker" && (
         <>
-          &nbsp;
-          <a
-            style={{
-              color: "white",
-              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-            }}
-            onClick={() => {
-              handleOpenModal(
-                setShowCreditRef,
-                client?.username,
-                client?.role,
-                client?.downlineId
-              );
-            }}
-            className="btn btn-icon btn-sm btn-primary"
-          >
-            CR
-          </a>
           &nbsp;
           <a
             style={{
@@ -214,6 +156,48 @@ const OtherRoleAction = ({
               >
                 <a className="dropdown-item">Client Group</a>
               </li>
+              {adminRole !== "checker" && (
+                <>
+                  <li
+                    onClick={() => {
+                      handleOpenModal(
+                        setShowChangePassword,
+                        client?.username,
+                        client?.role,
+                        client?.downlineId
+                      );
+                    }}
+                  >
+                    <a className="dropdown-item">P</a>
+                  </li>
+                  <li
+                    onClick={() => {
+                      handleOpenModal(
+                        setShowChangeStatus,
+                        client?.username,
+                        client?.role,
+                        client?.downlineId
+                      );
+                    }}
+                  >
+                    <a className="dropdown-item">S</a>
+                  </li>
+                </>
+              )}
+              {adminRole !== "hyper_master" && adminRole !== "checker" && (
+                <li
+                  onClick={() => {
+                    handleOpenModal(
+                      setShowCreditRef,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId
+                    );
+                  }}
+                >
+                  <a className="dropdown-item">CR</a>
+                </li>
+              )}
             </ul>
           )}
         </div>

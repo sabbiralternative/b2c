@@ -120,10 +120,17 @@ const ViewClient = () => {
         setClientPermission(true);
       }
     }
-    if (showColor) {
+    if (showColor || showChangeStatus || showCreditRef || showChangePassword) {
       setShowMore(false);
     }
-  }, [adminRole, token, showColor]);
+  }, [
+    adminRole,
+    token,
+    showColor,
+    showChangePassword,
+    showChangeStatus,
+    showCreditRef,
+  ]);
 
   return (
     <>
