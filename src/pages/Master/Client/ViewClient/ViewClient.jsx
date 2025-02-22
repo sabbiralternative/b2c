@@ -22,6 +22,7 @@ import DepositClient from "./BranchStaffActionPermission/DepositClient";
 import DepositWithdraw from "./BranchStaffActionPermission/DepositWithdraw";
 import WithdrawClient from "./BranchStaffActionPermission/WithdrawClient";
 import ChangeColor from "../../../../components/modal/ChangeColor";
+import ChangeBranch from "../../../../components/modal/HyperMaster/Client/ChangeBranch";
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
 const ViewClient = () => {
@@ -48,6 +49,7 @@ const ViewClient = () => {
   const [payloadRole, setPayloadRole] = useState("");
   const [id, setId] = useState("");
   const [showColor, setShowColor] = useState(false);
+  const [showChangeBranch, setShowChangeBranch] = useState(false);
   const {
     readOnly,
     clientId,
@@ -193,7 +195,15 @@ const ViewClient = () => {
           setShowColor={setShowColor}
         />
       )}
-
+      {showChangeBranch && (
+        <ChangeBranch
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowChangeBranch={setShowChangeBranch}
+          refetchClient={refetchClients}
+        />
+      )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
           <div className="card">
@@ -339,6 +349,7 @@ const ViewClient = () => {
                           {/* Not for branch_staff */}
                           {adminRole !== AdminRole.branch_staff && (
                             <OtherRoleAction
+                              setShowChangeBranch={setShowChangeBranch}
                               adminRole={adminRole}
                               client={client}
                               handleNavigate={handleNavigate}

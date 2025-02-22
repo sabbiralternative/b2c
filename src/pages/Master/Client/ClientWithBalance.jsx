@@ -15,6 +15,7 @@ import { AdminRole, clientColor } from "../../../constant/constant";
 import { jwtDecode } from "jwt-decode";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import ChangeColor from "../../../components/modal/ChangeColor";
+import ChangeBranch from "../../../components/modal/HyperMaster/Client/ChangeBranch";
 
 const ClientWithBalance = () => {
   const [showColor, setShowColor] = useState(false);
@@ -30,6 +31,7 @@ const ClientWithBalance = () => {
   const [downLineId, setDownLineId] = useState("");
   const [payloadRole, setPayloadRole] = useState("");
   const [id, setId] = useState("");
+  const [showChangeBranch, setShowChangeBranch] = useState(false);
 
   const { adminRole, setRefetchViewClient, setClientId, readOnly, token } =
     useContextState();
@@ -46,7 +48,7 @@ const ClientWithBalance = () => {
     }
   };
 
-  const { data } = useClient({
+  const { data, refetch: refetchClient } = useClient({
     searchId: "userWithCredit",
     page: activePage,
   });
@@ -139,7 +141,15 @@ const ClientWithBalance = () => {
           setShowColor={setShowColor}
         />
       )}
-
+      {showChangeBranch && (
+        <ChangeBranch
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowChangeBranch={setShowChangeBranch}
+          refetchClient={refetchClient}
+        />
+      )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
           <div
@@ -322,6 +332,60 @@ const ClientWithBalance = () => {
                             </a>
                             &nbsp;
                           </>
+                        )}
+                        {clientPermission &&
+                          adminRole !== AdminRole.checker &&
+                          adminRole !== AdminRole.master && (
+                            <>
+                              <a
+                                style={{ color: "white" }}
+                                onClick={() => {
+                                  setShowMore(false);
+                                  handleOpenModal(
+                                    setShowChangePassword,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  );
+                                }}
+                                className="btn btn-icon btn-sm btn-success"
+                              >
+                                P
+                              </a>
+                              &nbsp;
+                              <a
+                                style={{ color: "white" }}
+                                onClick={() => {
+                                  setShowMore(false);
+                                  handleOpenModal(
+                                    setShowChangeStatus,
+                                    client?.username,
+                                    client?.role,
+                                    client?.downlineId
+                                  );
+                                }}
+                                className="btn btn-icon btn-sm btn-label-secondary"
+                              >
+                                S
+                              </a>
+                              &nbsp;
+                            </>
+                          )}
+                        {adminRole == AdminRole.hyper_master && (
+                          <a
+                            style={{ color: "white" }}
+                            onClick={() => {
+                              handleOpenModal(
+                                setShowChangeBranch,
+                                client?.username,
+                                client?.role,
+                                client?.downlineId
+                              );
+                            }}
+                            className="btn btn-icon btn-sm btn-danger"
+                          >
+                            M
+                          </a>
                         )}
                         {adminRole !== AdminRole.hyper_master &&
                           adminRole !== AdminRole.branch_staff &&

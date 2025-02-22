@@ -18,6 +18,7 @@ const OtherRoleAction = ({
   handleShowMore,
   showMoreRef,
   setShowColor,
+  setShowChangeBranch,
 }) => {
   return (
     <td>
@@ -71,6 +72,57 @@ const OtherRoleAction = ({
       >
         PL
       </a>
+      {adminRole !== AdminRole.checker && adminRole !== AdminRole.master && (
+        <>
+          &nbsp;
+          <a
+            style={{ color: "white" }}
+            onClick={() => {
+              handleOpenModal(
+                setShowChangePassword,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-success"
+          >
+            P
+          </a>
+          &nbsp;
+          <a
+            style={{ color: "white" }}
+            onClick={() => {
+              handleOpenModal(
+                setShowChangeStatus,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-label-secondary"
+          >
+            S
+          </a>
+          &nbsp;
+        </>
+      )}
+      {adminRole == AdminRole.hyper_master && (
+        <a
+          style={{ color: "white" }}
+          onClick={() => {
+            handleOpenModal(
+              setShowChangeBranch,
+              client?.username,
+              client?.role,
+              client?.downlineId
+            );
+          }}
+          className="btn btn-icon btn-sm btn-danger"
+        >
+          M
+        </a>
+      )}
       {adminRole !== "hyper_master" && adminRole !== "checker" && (
         <>
           &nbsp;
