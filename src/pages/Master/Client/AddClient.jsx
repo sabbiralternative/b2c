@@ -21,6 +21,7 @@ const AddClient = () => {
       remark,
       token: generatedToken,
     };
+
     const res = await axios.post(API.registerPanel, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -70,7 +71,7 @@ const AddClient = () => {
                   >
                     Password *
                   </label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-10" style={{ position: "relative" }}>
                     <input
                       type="text"
                       {...register("password", {
@@ -79,6 +80,18 @@ const AddClient = () => {
                       className="form-control"
                       id="basic-default-name"
                     />
+                    <button
+                      type="button"
+                      onClick={() => reset({ password: "Abcd1234" })}
+                      style={{
+                        position: "absolute",
+                        top: "7px",
+                        right: "20px",
+                      }}
+                      className="btn btn-primary btn-xs"
+                    >
+                      Default Password
+                    </button>
                   </div>
                 </div>
 
@@ -87,14 +100,12 @@ const AddClient = () => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-name"
                   >
-                    Mobile *
+                    Mobile
                   </label>
                   <div className="col-sm-10">
                     <input
                       type="number"
-                      {...register("mobile", {
-                        required: true,
-                      })}
+                      {...register("mobile")}
                       className="form-control"
                       id="basic-default-name"
                     />
@@ -111,9 +122,7 @@ const AddClient = () => {
                   <div className="col-sm-10">
                     <input
                       type="text"
-                      {...register("remark", {
-                        required: true,
-                      })}
+                      {...register("remark")}
                       className="form-control"
                       id="basic-default-name"
                     />
