@@ -30,7 +30,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
       type: "editUTR",
       token: generatedToken,
     };
-    const res = await axios.post(API.utr, payload, {
+    const res = await axios.post(API.detectUtr, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;

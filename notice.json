@@ -85,7 +85,7 @@
       "registerPanel": "https://api7.live/api/exchange/diamond/registerPanel",
       "payments": "https://admin.api7.live/api/b2c/payments",
       "depositClient": "https://admin.api7.live/api/b2c/depositClient",
-      "utr": "https://admin.api7.live/api/b2c/utr",
+      "detectUtr": "https://admin.api7.live/api/b2c/utr",
       "withdraw": "https://admin.api7.live/api/b2c/withdraw",
       "marketAnalysis": "https://admin.api7.live/api/b2c/marketAnalysis",
       "statement": "https://admin.api7.live/api/b2c/statement",
@@ -101,7 +101,8 @@
       "staff": "https://admin.api7.live/api/b2c/staff",
       "whitelabel": "https://admin.api7.live/api/b2c/whitelabel",
       "auth": "https://admin.api7.live/api/b2c/auth",
-      "activityLogs": "https://admin.api7.live/api/b2c/activityLogs"
+      "activityLogs": "https://admin.api7.live/api/b2c/activityLogs",
+      "utr": "https://b2c.bet/deposit/utr"
     }
   },
   "success": true

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMethod";
+import useUTR from "../../../../hooks/utr";
 
 const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
   let payload = {
@@ -14,7 +15,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
     id,
     role,
   };
-
+  const { mutate: getUTR } = useUTR();
   const { paymentsMethods } = useGetPaymentMethod(payload);
   const depositRef = useRef();
   useCloseModalClickOutside(depositRef, () => {
@@ -44,12 +45,19 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
         const data = res.data;
 
         if (data?.success) {
+          getUTR(data?.filePath, {
+            onSuccess: (data) => {
+              if (data?.success) {
+                reset({ utr: data?.utr });
+              }
+            },
+          });
           setFilePath(data?.filePath);
         }
       };
       handleSubmitImage();
     }
-  }, [image, token]);
+  }, [image, token, getUTR, reset]);
 
   const onSubmit = async ({ amount, utr, paymentId }) => {
     const generatedToken = handleRandomToken();
@@ -154,6 +162,24 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
                       />
                     </div>
                   </div>
+
+                  <div className="row mb-3" id="bank_account_name_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      Deposit Slip
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        onChange={(e) => setImage(e.target.files[0])}
+                        type="file"
+                        className="form-control"
+                        id="basic-default-name"
+                        placeholder="Slip"
+                      />
+                    </div>
+                  </div>
                   <div className="row mb-3" id="bank_account_name_div">
                     <label
                       className="col-sm-2 col-form-label"
@@ -170,24 +196,6 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
                         className="form-control"
                         id="basic-default-name"
                         placeholder="UTR Code"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="row mb-3" id="bank_account_name_div">
-                    <label
-                      className="col-sm-2 col-form-label"
-                      htmlFor="basic-default-name"
-                    >
-                      Deposit Slip
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        onChange={(e) => setImage(e.target.files[0])}
-                        type="file"
-                        className="form-control"
-                        id="basic-default-name"
-                        placeholder="Slip"
                       />
                     </div>
                   </div>

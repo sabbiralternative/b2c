@@ -71,6 +71,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         API.registerPanel = data?.result?.endpoint?.registerPanel;
         API.payments = data?.result?.endpoint?.payments;
         API.depositClient = data?.result?.endpoint?.depositClient;
+        API.detectUtr = data?.result?.endpoint?.detectUtr;
         API.utr = data?.result?.endpoint?.utr;
         API.withdraw = data?.result?.endpoint?.withdraw;
         API.statement = data?.result?.endpoint?.statement;

@@ -55,7 +55,7 @@ export const API = {
   registerPanel: "",
   payments: "",
   depositClient: "",
-  utr: "",
+  detectUtr: "",
   withdraw: "",
   statement: "",
   dwCount: "",
@@ -68,6 +68,7 @@ export const API = {
   whitelabel: "",
   auth: "",
   activityLogs: "",
+  utr: "",
 };
 
 export const Settings = {

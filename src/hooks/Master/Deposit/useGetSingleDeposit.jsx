@@ -16,7 +16,7 @@ const useGetSingleDeposit = (args) => {
         ...args,
         token: generatedToken,
       };
-      const res = await axios.post(API.utr, payload, {
+      const res = await axios.post(API.detectUtr, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

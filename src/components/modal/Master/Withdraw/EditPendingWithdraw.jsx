@@ -9,11 +9,13 @@ import useContextState from "../../../../hooks/useContextState";
 import useGetSingleWithdraw from "../../../../hooks/Master/Withdraw/useSingleWithdraw";
 import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
+import useUTR from "../../../../hooks/utr";
 
 const EditPendingWithdraw = ({
   setEditPendingWithdraw,
   refetchAllWithdraw,
 }) => {
+  const { mutate: getUTR } = useUTR();
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [uploadedImage, setUploadedImage] = useState("");
@@ -77,12 +79,19 @@ const EditPendingWithdraw = ({
           },
         });
         const data = res.data;
-        console.log(data);
+
         if (data?.success) {
+          getUTR(data?.filePath, {
+            onSuccess: (data) => {
+              if (data?.success) {
+                setUtr(data?.utr);
+              }
+            },
+          });
           setLoading(false);
           setImage(null);
           setUploadedImage(data?.filePath);
-          setUtr(data?.utr);
+
           setFilename(data?.filePath);
         } else {
           setLoading(false);
@@ -198,7 +207,7 @@ const EditPendingWithdraw = ({
                           type="file"
                           className="form-control"
                           id="basic-default-name"
-                          required={statusField === "APPROVED"}
+                          // required={statusField === "APPROVED"}
                         />
                       </div>
                     </div>
@@ -281,7 +290,7 @@ const EditPendingWithdraw = ({
                           type="text"
                           className="form-control"
                           id="basic-default-name"
-                          required={statusField === "APPROVED"}
+                          // required={statusField === "APPROVED"}
                           // defaultValue={singleWithdraw?.utr}
                           value={utr}
                         />
