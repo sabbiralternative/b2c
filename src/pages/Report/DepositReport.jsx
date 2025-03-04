@@ -12,6 +12,8 @@ import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 
 const DepositReport = () => {
+  const [amountFrom, setAmountFrom] = useState(null);
+  const [amountTo, setAmountTo] = useState(null);
   const [showDepositImage, setShowDepositImage] = useState(false);
   const [image, setImage] = useState("");
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -32,6 +34,8 @@ const DepositReport = () => {
       toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
+      amountFrom: amountFrom ? Number(amountFrom) : null,
+      amountTo: amountTo ? Number(amountTo) : null,
     };
 
     const res = await axios.post(API.export, payload, {
@@ -129,6 +133,42 @@ const DepositReport = () => {
                     setEndDate={setEndDate}
                     setStartDate={setStartDate}
                   />
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                      }}
+                    >
+                      <label className="col-form-label" htmlFor="Amount From">
+                        Amount From
+                      </label>
+                      <input
+                        onChange={(e) => setAmountFrom(e.target.value)}
+                        type="number"
+                        className="form-control"
+                        id="Amount From"
+                      />
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                      }}
+                    >
+                      <label className="col-form-label" htmlFor="Amount To">
+                        Amount To
+                      </label>
+                      <input
+                        onChange={(e) => setAmountTo(e.target.value)}
+                        type="number"
+                        className="form-control"
+                        id="Amount To"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="col-12">
