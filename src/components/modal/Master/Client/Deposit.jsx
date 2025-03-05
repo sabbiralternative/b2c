@@ -37,6 +37,10 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
+        const payload = {
+          type: "utr",
+        };
+        formData.append("data", payload);
         const res = await axios.post(API.uploadScreenshot, formData, {
           headers: {
             Authorization: `Bearer ${token}`,

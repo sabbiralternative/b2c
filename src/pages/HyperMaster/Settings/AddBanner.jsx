@@ -26,6 +26,10 @@ const AddBanner = () => {
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
+        const payload = {
+          type: "banner",
+        };
+        formData.append("data", payload);
         const res = await axios.post(API.uploadScreenshot, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -40,8 +44,6 @@ const AddBanner = () => {
       handleSubmitImage();
     }
   }, [image, token]);
-
-  console.log(filePath);
 
   const onSubmit = async ({ status, priority }) => {
     const generatedToken = handleRandomToken();
