@@ -30,7 +30,7 @@ const AddUSDT = () => {
         const payload = {
           type: "payment",
         };
-        formData.append("data", payload);
+        formData.append("data", JSON.stringify(payload));
         const res = await axios.post(API.uploadScreenshot, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
