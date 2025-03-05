@@ -6,7 +6,7 @@ const useUTR = () => {
   return useMutation({
     mutationKey: ["utr"],
     mutationFn: async (filePath) => {
-      const { data } = await axios.post(`${API.utr}`, { filePath });
+      const { data } = await axios.post(`${API.detectUtr}`, { filePath });
       return data;
     },
     gcTime: 0,

@@ -17,7 +17,7 @@ const UTRSearch = () => {
       utr,
       pagination: true,
     };
-    const { data } = await AxiosSecure.post(API.detectUtr, payload);
+    const { data } = await AxiosSecure.post(API.utr, payload);
     if (data?.success) {
       setUtrData(data?.result);
       setLoading(false);

@@ -16,7 +16,7 @@ const useGetALLDeposit = (args, time) => {
         ...args,
         token: generatedToken,
       };
-      const res = await axios.post(API.detectUtr, payload, {
+      const res = await axios.post(API.utr, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
