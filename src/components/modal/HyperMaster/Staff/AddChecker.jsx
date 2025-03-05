@@ -21,7 +21,7 @@ const AddChecker = ({ setShowAddChecker }) => {
   const { mutate: addChecker } = useAddChecker();
   const { refetch } = useGetAllChecker({
     type: "viewStaff",
-    role: "checker",
+    role: "admin_staff",
   });
 
   const onSubmit = async (values) => {
@@ -37,7 +37,7 @@ const AddChecker = ({ setShowAddChecker }) => {
       payload = {
         ...values,
         type: "addStaff",
-        role: "checker",
+        role: "admin_staff",
         token: generatedToken,
       };
     }
@@ -69,7 +69,7 @@ const AddChecker = ({ setShowAddChecker }) => {
           <div className="modal-content" ref={addCheckerRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Add {adminRole === "master" ? "Staff" : "Checker"}
+                Add {adminRole === "master" ? "Staff" : "admin_staff"}
               </h5>
               <button
                 onClick={() => setShowAddChecker(false)}

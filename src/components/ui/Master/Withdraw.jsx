@@ -122,7 +122,7 @@ const Withdraw = ({
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
-              {adminRole === "checker" && <th>Branch</th>}
+              {adminRole === "admin_staff" && <th>Branch</th>}
               {/* <th>Username</th> */}
               <th>Amount</th>
               {/* <th>Mobile</th> */}
@@ -169,7 +169,7 @@ const Withdraw = ({
                       />
                       <strong> {item?.userId}</strong>
                     </td>
-                    {adminRole === "checker" && <td>{item?.branch}</td>}
+                    {adminRole === "admin_staff" && <td>{item?.branch}</td>}
                     {/* <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {

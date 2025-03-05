@@ -15,7 +15,7 @@ const useBalance = () => {
     queryKey: ["balance"],
 
     queryFn: async () => {
-      if (adminRole == "checker" || adminRole === "branch_staff") {
+      if (adminRole == "admin_staff" || adminRole === "branch_staff") {
         return;
       }
       // const generatedToken = handleRandomToken();

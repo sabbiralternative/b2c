@@ -182,13 +182,13 @@ const ActiveClient = () => {
                 <tr>
                   <th>User Id</th>
                   {adminRole == AdminRole.hyper_master ||
-                  adminRole == AdminRole.checker ? (
+                  adminRole == "admin_staff" ? (
                     <th>Branch</th>
                   ) : null}
-                  {adminRole !== "master" && adminRole !== "checker" && (
+                  {adminRole !== "master" && adminRole !== "admin_staff" && (
                     <th>Username</th>
                   )}
-                  {adminRole !== "master" && adminRole !== "checker" && (
+                  {adminRole !== "master" && adminRole !== "admin_staff" && (
                     <th>Mobile</th>
                   )}
                   <th>Balance</th>
@@ -226,31 +226,33 @@ const ActiveClient = () => {
                         <strong>{client?.userId}</strong>
                       </td>
                       {adminRole == AdminRole.hyper_master ||
-                      adminRole == AdminRole.checker ? (
+                      adminRole == "admin_staff" ? (
                         <td>
                           <strong>{client?.branch}</strong>
                         </td>
                       ) : null}
-                      {adminRole !== "master" && adminRole !== "checker" && (
-                        <td
-                          style={{ cursor: "pointer" }}
-                          onClick={() => {
-                            setClientId(client?.username);
-                            setRefetchViewClient(true);
-                            navigate("/view-client");
-                          }}
-                        >
-                          <strong>
-                            {handleSplitUserName(client?.username)}
-                          </strong>
-                        </td>
-                      )}
+                      {adminRole !== "master" &&
+                        adminRole !== "admin_staff" && (
+                          <td
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setClientId(client?.username);
+                              setRefetchViewClient(true);
+                              navigate("/view-client");
+                            }}
+                          >
+                            <strong>
+                              {handleSplitUserName(client?.username)}
+                            </strong>
+                          </td>
+                        )}
 
-                      {adminRole !== "master" && adminRole !== "checker" && (
-                        <td>
-                          <strong>{client?.mobile}</strong>
-                        </td>
-                      )}
+                      {adminRole !== "master" &&
+                        adminRole !== "admin_staff" && (
+                          <td>
+                            <strong>{client?.mobile}</strong>
+                          </td>
+                        )}
 
                       <td>
                         <strong>{client?.balance}</strong>
@@ -289,7 +291,7 @@ const ActiveClient = () => {
                       <td>
                         {adminRole !== "hyper_master" &&
                           adminRole !== AdminRole.branch_staff &&
-                          adminRole !== AdminRole.checker && (
+                          adminRole !== "admin_staff" && (
                             <>
                               <a
                                 style={{ color: "white" }}
@@ -336,7 +338,7 @@ const ActiveClient = () => {
                           </>
                         )}
                         {clientPermission &&
-                          adminRole !== AdminRole.checker &&
+                          adminRole !== "admin_staff" &&
                           adminRole !== AdminRole.master && (
                             <>
                               <a
@@ -391,7 +393,7 @@ const ActiveClient = () => {
                         )}
                         {adminRole !== AdminRole.hyper_master &&
                           adminRole !== AdminRole.branch_staff &&
-                          adminRole !== AdminRole.checker && (
+                          adminRole !== "admin_staff" && (
                             <>
                               &nbsp;
                               <a
@@ -478,7 +480,7 @@ const ActiveClient = () => {
                                   <a className="dropdown-item">CLient Group</a>
                                 </li>
                                 {clientPermission &&
-                                  adminRole !== AdminRole.checker && (
+                                  adminRole !== "admin_staff" && (
                                     <>
                                       <li
                                         onClick={() => {
@@ -510,7 +512,7 @@ const ActiveClient = () => {
                                   )}
                                 {adminRole !== AdminRole.hyper_master &&
                                   adminRole !== AdminRole.branch_staff &&
-                                  adminRole !== AdminRole.checker && (
+                                  adminRole !== "admin_staff" && (
                                     <li
                                       onClick={() => {
                                         setShowMore(false);

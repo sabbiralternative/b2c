@@ -22,7 +22,7 @@ const OtherRoleAction = ({
 }) => {
   return (
     <td>
-      {adminRole !== "hyper_master" && adminRole !== "checker" && (
+      {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
         <>
           <a
             style={{
@@ -72,7 +72,7 @@ const OtherRoleAction = ({
       >
         PL
       </a>
-      {adminRole !== AdminRole.checker && adminRole !== AdminRole.master && (
+      {adminRole !== "admin_staff" && adminRole !== AdminRole.master && (
         <>
           &nbsp;
           <a
@@ -123,7 +123,7 @@ const OtherRoleAction = ({
           M
         </a>
       )}
-      {adminRole !== "hyper_master" && adminRole !== "checker" && (
+      {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
         <>
           &nbsp;
           <a
@@ -208,7 +208,7 @@ const OtherRoleAction = ({
               >
                 <a className="dropdown-item">Client Group</a>
               </li>
-              {adminRole !== "checker" && (
+              {adminRole !== "admin_staff" && (
                 <>
                   <li
                     onClick={() => {
@@ -236,7 +236,7 @@ const OtherRoleAction = ({
                   </li>
                 </>
               )}
-              {adminRole !== "hyper_master" && adminRole !== "checker" && (
+              {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
                 <li
                   onClick={() => {
                     handleOpenModal(

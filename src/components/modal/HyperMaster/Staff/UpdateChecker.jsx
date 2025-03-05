@@ -66,7 +66,7 @@ const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
           <div className="modal-content" ref={checkerRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                {adminRole === "master" ? "Staff" : "Checker"} Status
+                {adminRole === "master" ? "Staff" : "admin_staff"} Status
               </h5>
               <button
                 onClick={() => setUpdateStatusId(null)}
@@ -92,7 +92,8 @@ const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
                       </span>
                       <span className="switch-label">
                         {" "}
-                        {adminRole === "master" ? "Staff" : "Checker"} Status
+                        {adminRole === "master" ? "Staff" : "admin_staff"}{" "}
+                        Status
                       </span>
                     </label>
                   </div>

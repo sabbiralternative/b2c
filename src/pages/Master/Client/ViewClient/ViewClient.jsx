@@ -251,15 +251,13 @@ const ViewClient = () => {
                     <tr>
                       <th>User Id</th>
                       {adminRole == AdminRole.hyper_master ||
-                      adminRole == AdminRole.checker ? (
+                      adminRole == "admin_staff" ? (
                         <th>Branch</th>
                       ) : null}
-                      {adminRole !== "master" && adminRole !== "checker" && (
-                        <th>Username</th>
-                      )}
-                      {adminRole !== "master" && adminRole !== "checker" && (
-                        <th>Mobile</th>
-                      )}
+                      {adminRole !== "master" &&
+                        adminRole !== "admin_staff" && <th>Username</th>}
+                      {adminRole !== "master" &&
+                        adminRole !== "admin_staff" && <th>Mobile</th>}
                       <th>Balance</th>
                       <th>Total Deposit</th>
                       <th>Total Withdraw</th>
@@ -289,13 +287,13 @@ const ViewClient = () => {
                             <strong>{client?.userId}</strong>
                           </td>
                           {adminRole == AdminRole.hyper_master ||
-                          adminRole == AdminRole.checker ? (
+                          adminRole == "admin_staff" ? (
                             <td>
                               <strong>{client?.branch}</strong>
                             </td>
                           ) : null}
                           {adminRole !== "master" &&
-                            adminRole !== "checker" && (
+                            adminRole !== "admin_staff" && (
                               <td>
                                 <strong>
                                   {handleSplitUserName(client?.username)}
@@ -304,7 +302,7 @@ const ViewClient = () => {
                             )}
 
                           {adminRole !== "master" &&
-                            adminRole !== "checker" && (
+                            adminRole !== "admin_staff" && (
                               <td>
                                 <strong>{client?.mobile}</strong>
                               </td>

@@ -18,7 +18,7 @@ export const useGetAllChecker = () => {
     queryFn: async () => {
       const { data } = await AxiosSecure.post(API.staff, {
         type: "viewStaff",
-        role: "checker",
+        role: "admin_staff",
       });
       return data;
     },

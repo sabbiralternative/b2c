@@ -24,7 +24,7 @@ const NavListItem = () => {
             <HyperMaster />
           ) : null}
           {adminRole === "master" ||
-          adminRole === "checker" ||
+          adminRole === "admin_staff" ||
           adminRole === "branch_staff" ? (
             <Master />
           ) : null}
