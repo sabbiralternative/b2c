@@ -8,11 +8,12 @@ import { API } from "../../../api";
 import toast from "react-hot-toast";
 import UpdateBonus from "../../../components/modal/HyperMaster/Bonus/UpdateBonus";
 import Swal from "sweetalert2";
+import { AdminRole } from "../../../constant/constant";
 
 const ViewBonus = () => {
   const [editBonusId, setEditBonusId] = useState("");
   const { bonus, refetchBonus } = useGetViewBonus();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
 
   const handleDeleteBonus = async (bonus) => {
     Swal.fire({
@@ -63,11 +64,15 @@ const ViewBonus = () => {
                 <tr>
                   <th>Bonus Name</th>
                   <th>Bonus Amount</th>
+                  {adminRole === AdminRole.hyper_master && (
+                    <th>Number Of Usage</th>
+                  )}
 
                   <th>Max Bonus Amount</th>
                   <th>Wagering Multiplier</th>
                   <th>Min. Deposit</th>
                   <th>Bonus Expiry</th>
+
                   <th>Bonus Type</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -75,7 +80,6 @@ const ViewBonus = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {bonus?.map((bonus, i) => {
-                  console.log(bonus);
                   return (
                     <tr key={i}>
                       <td>
@@ -88,7 +92,9 @@ const ViewBonus = () => {
                           ? `${bonus?.bonus_amount}%`
                           : `Rs. ${bonus?.bonus_amount}`}
                       </td>
-
+                      {adminRole === AdminRole.hyper_master && (
+                        <td>{bonus?.no_of_use}</td>
+                      )}
                       <td>{bonus?.bonus_max_amount}</td>
 
                       <td>{bonus?.wagering_multiplier}</td>

@@ -5,11 +5,12 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
+import { AdminRole } from "../../../constant/constant";
 
 const AddBonus = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
 
   /* handle add client */
   const onSubmit = async (value) => {
@@ -94,23 +95,26 @@ const AddBonus = () => {
                         id="basic-default-name"
                       />
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      <span>First Deposit Bonus</span>
-                      <input
-                        type="radio"
-                        {...register("bonus_type")}
-                        value="first_deposit"
-                        className=""
-                        id="basic-default-name"
-                      />
-                    </div>
+                    {adminRole !== AdminRole.hyper_master && (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "5px",
+                        }}
+                      >
+                        <span>First Deposit Bonus</span>
+                        <input
+                          type="radio"
+                          {...register("bonus_type")}
+                          value="first_deposit"
+                          className=""
+                          id="basic-default-name"
+                        />
+                      </div>
+                    )}
+
                     <div
                       style={{
                         display: "flex",
@@ -219,6 +223,27 @@ const AddBonus = () => {
                     />
                   </div>
                 </div>
+                {adminRole === AdminRole.hyper_master && (
+                  <div className="row mb-3" id="bank_account_name_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      Number Of Usage *
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        type="text"
+                        {...register("no_of_use", {
+                          required: true,
+                        })}
+                        className="form-control"
+                        id="basic-default-name"
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div className="row mb-3" id="bank_account_name_div">
                   <label
                     className="col-sm-2 col-form-label"
