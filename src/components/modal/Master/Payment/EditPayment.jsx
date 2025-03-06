@@ -118,6 +118,14 @@ const EditPayment = ({ setShowEditPayment }) => {
           max_amount: currentPayment?.max_amount,
         });
       }
+      if (currentPayment?.type === "whatsapp") {
+        reset({
+          account_number: currentPayment?.account_number,
+          min_amount: currentPayment?.min_amount,
+          max_amount: currentPayment?.max_amount,
+          transaction_code: currentPayment?.transaction_code,
+        });
+      }
     }
   }, [currentPayment, reset]);
 
@@ -562,6 +570,84 @@ const EditPayment = ({ setShowEditPayment }) => {
                       <div className="col-sm-10">
                         <input
                           {...register("max_amount", {
+                            required: true,
+                          })}
+                          type="number"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+                {currentPayment?.type === "whatsapp" && (
+                  <>
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Whatsapp number (with +country code)
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("account_number", {
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Minimum Deposit Amount
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("min_amount", {
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row mb-3">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Maximum Deposit Amount
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("max_amount", {
+                            required: true,
+                          })}
+                          type="number"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="row mb-3">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Transaction Code
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("transaction_code", {
                             required: true,
                           })}
                           type="number"

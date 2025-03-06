@@ -20,6 +20,7 @@ import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway"
 import AddQR from "../pages/Master/Payments/AddQR";
 import AddUPI from "../pages/Master/Payments/AddUPI";
 import AddUSDT from "../pages/Master/Payments/AddUSDT";
+import AddWhatsappDeposit from "../pages/Master/Payments/AddWhatsappDeposit";
 import ViewPaymentMethod from "../pages/Master/Payments/ViewPaymentMethod";
 import DepositStatement from "../pages/Master/Statement/DepositStatement";
 import WithdrawStatement from "../pages/Master/Statement/WithdrawStatement";
@@ -111,6 +112,10 @@ export const MasterRoutes = [
   {
     path: "/add-UPI",
     element: <AddUPI />,
+  },
+  {
+    path: "/add-whatsapp-deposit",
+    element: <AddWhatsappDeposit />,
   },
   {
     path: "/add-payment-gateway",

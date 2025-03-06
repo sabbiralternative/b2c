@@ -233,7 +233,7 @@ const AddBonus = () => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        type="text"
+                        type="number"
                         {...register("no_of_use", {
                           required: true,
                         })}

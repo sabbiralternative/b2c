@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetSingleViewBonus from "../../../../hooks/HyperMaster/Bonus/useGetSingleViewBonus";
+import { AdminRole } from "../../../../constant/constant";
 
 const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   const { singleBonus } = useGetSingleViewBonus(editBonusId);
@@ -16,7 +17,7 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
 
   const handleUpdateBonus = async (value) => {
     const generatedToken = handleRandomToken();
@@ -53,6 +54,7 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
         bonus_expiry_days: singleBonus?.bonus_expiry_days,
         bonus_type: singleBonus?.bonus_type,
         status: singleBonus?.status?.toString(),
+        no_of_use: singleBonus?.no_of_use,
       });
     }
   }, [singleBonus, reset]);
@@ -243,6 +245,27 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
                     />
                   </div>
                 </div>
+                {adminRole === AdminRole.hyper_master && (
+                  <div className="row mb-3" id="bank_account_name_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      Number Of Usage *
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        type="number"
+                        {...register("no_of_use", {
+                          required: true,
+                        })}
+                        className="form-control"
+                        id="basic-default-name"
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div className="row mb-3" id="bank_account_name_div">
                   <label
                     className="col-sm-2 col-form-label"
