@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
+import { AdminRole } from "../../constant/constant";
 
 const DepositReport = () => {
   const [amountFrom, setAmountFrom] = useState(null);
@@ -215,12 +216,14 @@ const DepositReport = () => {
                     <thead className="table-dark">
                       <tr>
                         <th>User Id</th>
-                        {adminRole !== "master" && (
+                        {adminRole === AdminRole.hyper_master ||
+                        adminRole === AdminRole.admin_master ? (
                           <>
                             <th>Mobile</th>
                             <th>User Name</th>
                           </>
-                        )}
+                        ) : null}
+
                         <th>Amount</th>
                         <th>Request Time</th>
                         <th>Approval Time</th>
@@ -243,12 +246,14 @@ const DepositReport = () => {
                             >
                               {data?.userId}
                             </td>
-                            {adminRole !== "master" && (
+                            {adminRole === AdminRole.hyper_master ||
+                            adminRole === AdminRole.admin_master ? (
                               <>
                                 <td>{data?.mobile}</td>
                                 <td>{data?.loginname}</td>
                               </>
-                            )}
+                            ) : null}
+
                             <td>{data?.amount}</td>
                             <td>{data?.deposit_date}</td>
                             <td>{data?.date_modified}</td>

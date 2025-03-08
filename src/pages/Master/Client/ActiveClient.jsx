@@ -185,12 +185,14 @@ const ActiveClient = () => {
                   adminRole == "admin_staff" ? (
                     <th>Branch</th>
                   ) : null}
-                  {adminRole !== "master" && adminRole !== "admin_staff" && (
+                  {adminRole === AdminRole.hyper_master ||
+                  adminRole === AdminRole.admin_master ? (
                     <th>Username</th>
-                  )}
-                  {adminRole !== "master" && adminRole !== "admin_staff" && (
+                  ) : null}
+                  {adminRole === AdminRole.hyper_master ||
+                  adminRole === AdminRole.admin_master ? (
                     <th>Mobile</th>
-                  )}
+                  ) : null}
                   <th>Balance</th>
                   <th>Total Deposit</th>
                   <th>Total Withdraw</th>
@@ -231,28 +233,28 @@ const ActiveClient = () => {
                           <strong>{client?.branch}</strong>
                         </td>
                       ) : null}
-                      {adminRole !== "master" &&
-                        adminRole !== "admin_staff" && (
-                          <td
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                              setClientId(client?.username);
-                              setRefetchViewClient(true);
-                              navigate("/view-client");
-                            }}
-                          >
-                            <strong>
-                              {handleSplitUserName(client?.username)}
-                            </strong>
-                          </td>
-                        )}
+                      {adminRole === AdminRole.hyper_master ||
+                      adminRole === AdminRole.admin_master ? (
+                        <td
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            setClientId(client?.username);
+                            setRefetchViewClient(true);
+                            navigate("/view-client");
+                          }}
+                        >
+                          <strong>
+                            {handleSplitUserName(client?.username)}
+                          </strong>
+                        </td>
+                      ) : null}
 
-                      {adminRole !== "master" &&
-                        adminRole !== "admin_staff" && (
-                          <td>
-                            <strong>{client?.mobile}</strong>
-                          </td>
-                        )}
+                      {adminRole === AdminRole.hyper_master ||
+                      adminRole === AdminRole.admin_master ? (
+                        <td>
+                          <strong>{client?.mobile}</strong>
+                        </td>
+                      ) : null}
 
                       <td>
                         <strong>{client?.balance}</strong>

@@ -10,6 +10,7 @@ import ShowImage from "../../components/modal/ShowImage";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
+import { AdminRole } from "../../constant/constant";
 
 const FirstDepositReport = () => {
   const [showFTDImage, setShowFTDImage] = useState(false);
@@ -163,12 +164,14 @@ const FirstDepositReport = () => {
                     <thead className="table-dark">
                       <tr>
                         <th>User Id</th>
-                        {adminRole !== "master" && (
+                        {adminRole === AdminRole.hyper_master ||
+                        adminRole === AdminRole.admin_master ? (
                           <>
                             <th>User Name</th>
                             <th>Mobile</th>
                           </>
-                        )}
+                        ) : null}
+
                         <th>Amount</th>
                         <th>FRD Date</th>
                         <th>Image</th>
@@ -190,12 +193,13 @@ const FirstDepositReport = () => {
                             >
                               {data?.userId}
                             </td>
-                            {adminRole !== "master" && (
+                            {adminRole === AdminRole.hyper_master ||
+                            adminRole === AdminRole.admin_master ? (
                               <>
                                 <td>{data?.loginname}</td>
                                 <td>{data?.mobile}</td>
                               </>
-                            )}
+                            ) : null}
                             <td>{data?.amount}</td>
                             <td>{data?.withdraw_date}</td>
                             <td>

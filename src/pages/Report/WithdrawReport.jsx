@@ -10,6 +10,7 @@ import ShowImage from "../../components/modal/ShowImage";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
+import { AdminRole } from "../../constant/constant";
 
 const WithdrawReport = () => {
   const [amountFrom, setAmountFrom] = useState(null);
@@ -210,12 +211,13 @@ const WithdrawReport = () => {
                     <thead className="table-dark">
                       <tr>
                         <th>User Id</th>
-                        {adminRole !== "master" && (
+                        {adminRole === AdminRole.hyper_master ||
+                        adminRole === AdminRole.admin_master ? (
                           <>
                             <th>Mobile</th>
                             <th>User Name</th>
                           </>
-                        )}
+                        ) : null}
 
                         <th>Bank A/C</th>
                         <th>Amount</th>
@@ -244,12 +246,13 @@ const WithdrawReport = () => {
                             >
                               {data?.userId}
                             </td>
-                            {adminRole !== "master" && (
+                            {adminRole === AdminRole.hyper_master ||
+                            adminRole === AdminRole.admin_master ? (
                               <>
                                 <td>{data?.mobile}</td>
                                 <td>{data?.loginname}</td>
                               </>
-                            )}
+                            ) : null}
                             <td>{data?.bank_account_name}</td>
                             <td>{data?.amount}</td>
                             <td>{data?.bank_name}</td>

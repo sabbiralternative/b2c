@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
+import { AdminRole } from "../../constant/constant";
 
 const ClientReport = () => {
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -146,12 +147,13 @@ const ClientReport = () => {
                   <thead className="table-dark">
                     <tr>
                       <th>User Id</th>
-                      {adminRole !== "master" && (
+                      {adminRole === AdminRole.hyper_master ||
+                      adminRole === AdminRole.admin_master ? (
                         <>
                           <th>Mobile</th>
                           <th>User Name</th>
                         </>
-                      )}
+                      ) : null}
 
                       <th>Registration Date</th>
                       <th>Credit Limit</th>
@@ -171,12 +173,13 @@ const ClientReport = () => {
                           >
                             {data?.userId}
                           </td>
-                          {adminRole !== "master" && (
+                          {adminRole === AdminRole.hyper_master ||
+                          adminRole === AdminRole.admin_master ? (
                             <>
                               <td>{data?.mobile}</td>
                               <td>{data?.username}</td>
                             </>
-                          )}
+                          ) : null}
                           <td>{data?.registrationDate}</td>
                           <td>{data?.credit_limit}</td>
                         </tr>
