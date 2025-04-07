@@ -71,6 +71,7 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
               <th>Type</th>
               <th>Status</th>
               <th>Remark</th>
+              <th>Site</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
               {title === "Pending Deposit" && adminRole === "master" && (
@@ -157,6 +158,7 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
                     </span>
                   </td>
                   <td>{item?.remark}</td>
+                  <td>{item?.site}</td>
                   <td>{item?.date_added}</td>
                   {time && <td>{item?.date_modified}</td>}
                   {item?.status === "PENDING" && adminRole === "master" && (

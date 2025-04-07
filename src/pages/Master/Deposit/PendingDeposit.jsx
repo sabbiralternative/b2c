@@ -112,6 +112,7 @@ const PendingDeposit = () => {
                 <th>Type</th>
                 <th>Status</th>
                 <th>Remark</th>
+                <th>Site</th>
                 <th>Request Time</th>
                 {/* {time && <th>{time}</th>} */}
                 {adminRole === "master" || adminRole === "branch_staff" ? (
@@ -197,6 +198,7 @@ const PendingDeposit = () => {
                       </span>
                     </td>
                     <td>{item?.remark}</td>
+                    <td>{item?.site}</td>
                     <td>{item?.date_added}</td>
                     {/* {time && <td>{item?.date_modified}</td>} */}
                     {item?.status === "PENDING" &&

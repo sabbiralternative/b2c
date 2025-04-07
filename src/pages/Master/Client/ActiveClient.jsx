@@ -199,7 +199,7 @@ const ActiveClient = () => {
                   <th>Exposure</th>
                   <th>Betting Status</th>
                   <th>Status</th>
-                  <th>Reg. Date</th>
+                  <th>Site</th>s<th>Reg. Date</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -289,6 +289,7 @@ const ActiveClient = () => {
                           {client?.userStatus === 1 ? "Active" : "InActive"}
                         </span>
                       </td>
+                      <td>{client?.site}</td>
                       <td>{client?.registrationDate}</td>
                       <td>
                         {adminRole !== "hyper_master" &&
