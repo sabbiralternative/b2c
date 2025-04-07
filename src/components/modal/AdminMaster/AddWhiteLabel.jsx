@@ -30,12 +30,14 @@ const AddWhiteLabel = ({ setShowAddWhiteLabel }) => {
       site_url: values?.site_url,
       password: values?.password,
       currency: values?.currency,
+      admin_name: values?.admin_name,
       casino_currency: values?.casino_currency,
       minimum_deposit: Number(values?.minimum_deposit),
       minimum_withdraw: Number(values?.minimum_withdraw),
       theme: values?.theme,
       token: generatedToken,
     };
+    console.log(payload);
 
     addWhiteLabel(payload, {
       onSuccess: (data) => {

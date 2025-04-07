@@ -44,7 +44,6 @@ const ViewWhiteLabel = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((whiteLabel, i) => {
-                  console.log(whiteLabel);
                   return (
                     <tr key={i}>
                       <td>{whiteLabel?.site_name}</td>
