@@ -134,6 +134,8 @@ const ViewClient = () => {
     showCreditRef,
   ]);
 
+  console.log(showMore);
+
   return (
     <>
       {clientDeposit && (
@@ -244,7 +246,7 @@ const ViewClient = () => {
               <h5 className="card-header">Clients</h5>
               <div
                 className="table-responsive text-nowrap"
-                style={{ minHeight: "200px" }}
+                style={{ minHeight: showMore !== null ? "300px" : "auto" }}
               >
                 <table className="table table-hover table-sm">
                   <thead>

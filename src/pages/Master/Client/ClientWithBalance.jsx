@@ -492,7 +492,9 @@ const ClientWithBalance = () => {
                                           );
                                         }}
                                       >
-                                        <a className="dropdown-item">P</a>
+                                        <a className="dropdown-item">
+                                          Change Password
+                                        </a>
                                       </li>
                                       <li
                                         onClick={() => {
@@ -505,7 +507,9 @@ const ClientWithBalance = () => {
                                           );
                                         }}
                                       >
-                                        <a className="dropdown-item">S</a>
+                                        <a className="dropdown-item">
+                                          Change Status
+                                        </a>
                                       </li>
                                     </>
                                   )}
@@ -523,7 +527,9 @@ const ClientWithBalance = () => {
                                         );
                                       }}
                                     >
-                                      <a className="dropdown-item">CR</a>
+                                      <a className="dropdown-item">
+                                        Credit Reference
+                                      </a>
                                     </li>
                                   )}
                               </ul>

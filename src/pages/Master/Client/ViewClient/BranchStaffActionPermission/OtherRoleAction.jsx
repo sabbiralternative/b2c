@@ -182,6 +182,7 @@ const OtherRoleAction = ({
               ref={showMoreRef}
               style={{
                 display: "block",
+                position: "absolute",
                 right: "0px",
                 top: "25px",
                 zIndex: 9999,
@@ -220,7 +221,7 @@ const OtherRoleAction = ({
                       );
                     }}
                   >
-                    <a className="dropdown-item">P</a>
+                    <a className="dropdown-item">Change Password</a>
                   </li>
                   <li
                     onClick={() => {
@@ -232,7 +233,7 @@ const OtherRoleAction = ({
                       );
                     }}
                   >
-                    <a className="dropdown-item">S</a>
+                    <a className="dropdown-item">Change Status</a>
                   </li>
                 </>
               )}
@@ -247,7 +248,7 @@ const OtherRoleAction = ({
                     );
                   }}
                 >
-                  <a className="dropdown-item">CR</a>
+                  <a className="dropdown-item">Credit Reference</a>
                 </li>
               )}
             </ul>
