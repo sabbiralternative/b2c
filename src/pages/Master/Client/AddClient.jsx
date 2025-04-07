@@ -5,20 +5,21 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../api";
 import toast from "react-hot-toast";
+import { useWhiteLabel } from "../../../hooks/AdminMaster/whiteLabel";
 
 const AddClient = () => {
+  const { data } = useWhiteLabel({
+    type: "viewWhitelabelByBranch",
+  });
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
 
   /* handle add client */
-  const onSubmit = async ({ username, password, mobile, remark }) => {
+  const onSubmit = async (values) => {
     const generatedToken = handleRandomToken();
     const payload = {
-      username,
-      password,
-      mobile,
-      remark,
+      ...values,
       token: generatedToken,
     };
 
@@ -45,6 +46,34 @@ const AddClient = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
+                {data?.result?.length > 0 && (
+                  <div className="row mb-3" id="bank_account_name_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      Site *
+                    </label>
+                    <div className="col-sm-10">
+                      <select
+                        defaultValue=""
+                        {...register("site", {
+                          required: true,
+                        })}
+                        className="form-control"
+                      >
+                        <option disabled value="">
+                          Select Site
+                        </option>
+                        {data?.result?.map((site) => (
+                          <option key={site?.site_url} value={site?.site_url}>
+                            {site?.site_url}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                )}
                 <div className="row mb-3" id="bank_account_name_div">
                   <label
                     className="col-sm-2 col-form-label"
