@@ -137,7 +137,7 @@ const EditPendingWithdraw = ({
               <div className="modal-body">
                 <div className="row">
                   <div className="row mb-3" id="bank_account_name_div">
-                    <div className="row mb-3" id="bank_account_name_div">
+                    {/*   <div className="row mb-3" id="bank_account_name_div">
                       <label
                         className="col-sm-2 col-form-label"
                         htmlFor="basic-default-name"
@@ -147,7 +147,7 @@ const EditPendingWithdraw = ({
                       <div className="col-sm-10">
                         {singleWithdraw?.loginname}
                       </div>
-                    </div>
+                    </div> */}
                     <div className="row mb-3">
                       <label
                         htmlFor="exampleFormControlSelect1"
