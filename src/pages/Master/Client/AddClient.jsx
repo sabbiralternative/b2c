@@ -11,6 +11,7 @@ const AddClient = () => {
   const { data } = useWhiteLabel({
     type: "viewWhitelabelByBranch",
   });
+
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
@@ -152,6 +153,24 @@ const AddClient = () => {
                     <input
                       type="text"
                       {...register("remark")}
+                      className="form-control"
+                      id="basic-default-name"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3" id="bank_account_name_div">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-name"
+                  >
+                    Transaction Code
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      type="text"
+                      {...register("transaction_code", {
+                        required: true,
+                      })}
                       className="form-control"
                       id="basic-default-name"
                     />

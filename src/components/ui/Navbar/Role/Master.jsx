@@ -121,7 +121,7 @@ const Master = () => {
       if (adminRole === "branch_staff") {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
-        console.log(permissions);
+
         const depositPermission = permissions?.includes("deposit") ?? false;
         const withdrawPermission = permissions?.includes("withdraw") ?? false;
         const clientPermission = permissions?.includes("client") ?? false;
