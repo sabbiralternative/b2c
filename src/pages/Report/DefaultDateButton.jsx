@@ -33,6 +33,16 @@ const DefaultDateButton = ({ setStartDate, setEndDate }) => {
       >
         This Week
       </button>
+      <button
+        type="button"
+        onClick={() => {
+          setStartDate(defaultDate(30));
+          setEndDate(new Date());
+        }}
+        className="btn btn-primary btn-xs"
+      >
+        This Month
+      </button>
     </div>
   );
 };

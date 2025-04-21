@@ -87,35 +87,14 @@ const NoDepositReport = () => {
                       block
                     />
                   </div>
-                  <DefaultDateButton
-                    setEndDate={setEndDate}
-                    setStartDate={setStartDate}
-                  />
                 </div>
                 <div
                   style={{ display: "flex", gap: "10px", marginTop: "10px" }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setStartDate(defaultDate(1))}
-                    className="btn btn-primary btn-xs"
-                  >
-                    Today
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStartDate(defaultDate(2))}
-                    className="btn btn-primary btn-xs"
-                  >
-                    Yesterday
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStartDate(defaultDate(7))}
-                    className="btn btn-primary btn-xs"
-                  >
-                    This Week
-                  </button>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                  />
                 </div>
               </div>
 
