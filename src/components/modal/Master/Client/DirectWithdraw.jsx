@@ -199,7 +199,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                       id="bank_account_name_div"
                     >
                       <label
-                        className=" col-form-label"
+                        className="col-form-label"
                         htmlFor="basic-default-name"
                       >
                         {/* {data?.userName2?.split("_")[0]} */}

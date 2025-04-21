@@ -199,7 +199,8 @@ const ActiveClient = () => {
                   <th>Exposure</th>
                   <th>Betting Status</th>
                   <th>Status</th>
-                  <th>Site</th>s<th>Reg. Date</th>
+                  <th>Site</th>
+                  <th>Reg. Date</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -480,7 +481,7 @@ const ActiveClient = () => {
                                     );
                                   }}
                                 >
-                                  <a className="dropdown-item">CLient Group</a>
+                                  <a className="dropdown-item">Client Group</a>
                                 </li>
                                 {clientPermission &&
                                   adminRole !== "admin_staff" && (
