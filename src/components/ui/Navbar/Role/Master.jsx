@@ -782,6 +782,15 @@ const Master = () => {
                 <div data-i18n="View Banners">Transfer Statement</div>
               </a>
             </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("client-branch-change-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">Client Branch Change Report</div>
+              </a>
+            </li>
           </ul>
         </li>
       ) : null}

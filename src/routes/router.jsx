@@ -14,6 +14,7 @@ import NoDepositReport from "../pages/Report/NoDepositReport";
 import { AdminMasterRoutes } from "./AdminMaster";
 import ChangePasswordSuccess from "../pages/ChangePasswordSuccess/ChangePasswordSuccess";
 import ChangePasswordAfterLogin from "../pages/ChangePassword/ChangePasswordAfterLogin";
+import ClientBranchChangeReport from "../pages/Report/ClientBranchChangeReport";
 
 export const router = createBrowserRouter(
   [
@@ -49,6 +50,10 @@ export const router = createBrowserRouter(
         {
           path: "/transfer-statement",
           element: <TransferStatement />,
+        },
+        {
+          path: "/client-branch-change-report",
+          element: <ClientBranchChangeReport />,
         },
         {
           path: "/change-password-after-login",
