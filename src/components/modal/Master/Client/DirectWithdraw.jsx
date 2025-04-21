@@ -78,7 +78,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
     }
   }, [data, reset]);
 
-  console.log(data);
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -122,7 +121,8 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName} Balance
+                        {/* {data?.userName} */}
+                        Previous Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -144,7 +144,8 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                         className=" col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName} after withdraw
+                        {/* {data?.userName} */}
+                        Balance after withdraw
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -178,7 +179,8 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2?.split("_")[0]} Balance
+                        {/* {data?.userName2?.split("_")[0]} */}
+                        Previous Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -200,7 +202,8 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                         className=" col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2?.split("_")[0]} after withdraw
+                        {/* {data?.userName2?.split("_")[0]} */}
+                        Balance after withdraw
                       </label>
                       <div className="col-sm-10">
                         <input

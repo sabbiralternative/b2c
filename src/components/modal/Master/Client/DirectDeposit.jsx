@@ -121,7 +121,8 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName} Balance
+                        {/* {data?.userName}  */}
+                        Previous Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -143,7 +144,8 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
                         className=" col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName} after deposit
+                        {/* {data?.userName} */}
+                        Balance after deposit
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -177,7 +179,8 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
                         className="col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2?.split("_")[0]} Balance
+                        {/* {data?.userName2?.split("_")[0]} */}
+                        Previous Balance
                       </label>
                       <div className="col-sm-10">
                         <input
@@ -199,7 +202,8 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
                         className=" col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        {data?.userName2?.split("_")[0]} after deposit
+                        {/* {data?.userName2?.split("_")[0]} */}
+                        Balance after deposit
                       </label>
                       <div className="col-sm-10">
                         <input
