@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { FaRegCopy } from "react-icons/fa";
 import { Pagination } from "rsuite";
 import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
-import { clientColor } from "../../../constant/constant";
+import { AdminRole, clientColor } from "../../../constant/constant";
 
 const Withdraw = ({
   data,
@@ -122,7 +122,11 @@ const Withdraw = ({
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
-              {adminRole === "admin_staff" && <th>Branch</th>}
+              {adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master ||
+              adminRole === AdminRole.super_master ? (
+                <th>Branch Name</th>
+              ) : null}
               {/* <th>Username</th> */}
               <th>Amount</th>
               {/* <th>Mobile</th> */}
@@ -146,7 +150,7 @@ const Withdraw = ({
               data?.map((item, i) => {
                 // console.log(data);
                 return (
-                  <tr key={i}>
+                  <tr style={{ background: item?.bgcolor || "none" }} key={i}>
                     <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -169,7 +173,11 @@ const Withdraw = ({
                       />
                       <strong> {item?.userId}</strong>
                     </td>
-                    {adminRole === "admin_staff" && <td>{item?.branch}</td>}
+                    {adminRole === AdminRole.admin_staff ||
+                    adminRole === AdminRole.hyper_master ||
+                    adminRole === AdminRole.super_master ? (
+                      <td>{item?.branch_name}</td>
+                    ) : null}
                     {/* <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {

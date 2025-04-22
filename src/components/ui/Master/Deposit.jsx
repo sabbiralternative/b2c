@@ -7,7 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { Pagination } from "rsuite";
-import { clientColor } from "../../../constant/constant";
+import { AdminRole, clientColor } from "../../../constant/constant";
 
 const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
   const {
@@ -62,7 +62,11 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
-              {adminRole === "admin_staff" && <th>Branch</th>}
+              {adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master ||
+              adminRole === AdminRole.super_master ? (
+                <th>Branch Name</th>
+              ) : null}
 
               {/* <th>Username</th> */}
               <th>Amount</th>
@@ -82,7 +86,7 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
           <tbody className="table-border-bottom-0">
             {data?.map((item, i) => {
               return (
-                <tr key={i}>
+                <tr style={{ background: item?.bgcolor || "none" }} key={i}>
                   <td
                     style={{ cursor: "pointer" }}
                     onClick={() => {
@@ -105,7 +109,11 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
                     />
                     <strong> {item?.userId}</strong>
                   </td>
-                  {adminRole === "admin_staff" && <td>{item?.branch}</td>}
+                  {adminRole === AdminRole.admin_staff ||
+                  adminRole === AdminRole.hyper_master ||
+                  adminRole === AdminRole.super_master ? (
+                    <td>{item?.branch_name}</td>
+                  ) : null}
 
                   {/* <td
                     style={{ cursor: "pointer" }}

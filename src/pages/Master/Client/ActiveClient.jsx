@@ -15,6 +15,7 @@ import { AdminRole, clientColor } from "../../../constant/constant";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import ChangeColor from "../../../components/modal/ChangeColor";
 import ChangeBranch from "../../../components/modal/HyperMaster/Client/ChangeBranch";
+import handleNavigateToWhatsApp from "../../../utils/handleNavigateToWhatsApp";
 
 const ActiveClient = () => {
   const [showColor, setShowColor] = useState(false);
@@ -252,7 +253,17 @@ const ActiveClient = () => {
 
                       {adminRole === AdminRole.hyper_master ||
                       adminRole === AdminRole.admin_master ? (
-                        <td>
+                        <td
+                          style={{
+                            cursor:
+                              adminRole === AdminRole.hyper_master
+                                ? "pointer"
+                                : "auto",
+                          }}
+                          onClick={() =>
+                            handleNavigateToWhatsApp(adminRole, client?.mobile)
+                          }
+                        >
                           <strong>{client?.mobile}</strong>
                         </td>
                       ) : null}

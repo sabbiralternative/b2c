@@ -23,6 +23,7 @@ import DepositWithdraw from "./BranchStaffActionPermission/DepositWithdraw";
 import WithdrawClient from "./BranchStaffActionPermission/WithdrawClient";
 import ChangeColor from "../../../../components/modal/ChangeColor";
 import ChangeBranch from "../../../../components/modal/HyperMaster/Client/ChangeBranch";
+import handleNavigateToWhatsApp from "../../../../utils/handleNavigateToWhatsApp";
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
 const ViewClient = () => {
@@ -306,7 +307,20 @@ const ViewClient = () => {
 
                           {adminRole !== "master" &&
                             adminRole !== "admin_staff" && (
-                              <td>
+                              <td
+                                style={{
+                                  cursor:
+                                    adminRole === AdminRole.hyper_master
+                                      ? "pointer"
+                                      : "auto",
+                                }}
+                                onClick={() =>
+                                  handleNavigateToWhatsApp(
+                                    adminRole,
+                                    client?.mobile
+                                  )
+                                }
+                              >
                                 <strong>{client?.mobile}</strong>
                               </td>
                             )}

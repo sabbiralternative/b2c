@@ -9,7 +9,7 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 import { Pagination } from "rsuite";
 import EditPendingDeposit from "../../../components/modal/Master/Deposit/EditPendingDeposit";
-import { clientColor } from "../../../constant/constant";
+import { AdminRole, clientColor } from "../../../constant/constant";
 
 const PendingDeposit = () => {
   const {
@@ -104,7 +104,11 @@ const PendingDeposit = () => {
             <thead className="table-dark">
               <tr>
                 <th>User Id</th>
-                {adminRole === "admin_staff" && <th>Branch</th>}
+                {adminRole === AdminRole.admin_staff ||
+                adminRole === AdminRole.hyper_master ||
+                adminRole === AdminRole.super_master ? (
+                  <th>Branch Name</th>
+                ) : null}
                 {/* <th>Username</th> */}
                 <th>Amount</th>
                 <th>UTR</th>
@@ -123,9 +127,11 @@ const PendingDeposit = () => {
             <tbody className="table-border-bottom-0">
               {allUTRs?.result?.map((item, i) => {
                 return (
-                  <tr key={i}>
+                  <tr style={{ background: item?.bgcolor || "none" }} key={i}>
                     <td
-                      style={{ cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                      }}
                       onClick={() => {
                         setClientId(item?.userId);
                         setRefetchViewClient(true);
@@ -146,7 +152,11 @@ const PendingDeposit = () => {
                       />
                       <strong>{item?.userId}</strong>
                     </td>
-                    {adminRole === "admin_staff" && <td>{item?.branch}</td>}
+                    {adminRole === AdminRole.admin_staff ||
+                    adminRole === AdminRole.hyper_master ||
+                    adminRole === AdminRole.super_master ? (
+                      <td>{item?.branch_name}</td>
+                    ) : null}
                     {/* <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {

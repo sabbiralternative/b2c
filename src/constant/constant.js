@@ -4,6 +4,7 @@ export const AdminRole = {
   admin_master: "admin_master",
   admin_staff: "admin_staff",
   branch_staff: "branch_staff",
+  super_master: "super_master",
 };
 
 export const clientColor = {

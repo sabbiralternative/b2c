@@ -69,11 +69,8 @@ const ViewChecker = () => {
                           {checker?.status === 1 ? "active" : "inactive"}
                         </span>
                       </td>
-                      {adminRole === "master" ? (
-                        <td>{checker?.permissions}</td>
-                      ) : (
-                        <td>{checker?.role}</td>
-                      )}
+
+                      <td>{checker?.permissions}</td>
 
                       <td>{checker?.date}</td>
                       <td style={{ display: "flex", color: "white" }}>
