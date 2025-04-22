@@ -1,12 +1,16 @@
+import { useEffect, useState } from "react";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
 import useBalance from "../../hooks/useBalance";
 import useContextState from "../../hooks/useContextState";
 import DashboardDW from "./DashboardDW";
+import { jwtDecode } from "jwt-decode";
 
 const Home = () => {
+  const [depositPermission, setDepositPermission] = useState(false);
+  const [withdrawPermission, setWithdrawPermission] = useState(false);
   const { data } = useGetIndex({ type: "getDashboardDW" });
-  const { adminRole } = useContextState();
+  const { adminRole, token } = useContextState();
   const { balanceData } = useBalance();
   const defineBalanceColor = (amount) => {
     if (amount) {
@@ -22,6 +26,23 @@ const Home = () => {
   };
   const deposit = data?.result?.deposit;
   const withdraw = data?.result?.withdraw;
+
+  useEffect(() => {
+    if (adminRole) {
+      if (adminRole === AdminRole.admin_staff) {
+        const decode = jwtDecode(token);
+        const permissions = decode?.permissions;
+        const depositPermission = permissions?.includes("deposit") ?? false;
+        const withdrawPermission = permissions?.includes("withdraw") ?? false;
+        setDepositPermission(depositPermission);
+        setWithdrawPermission(withdrawPermission);
+      }
+      if (adminRole === AdminRole.hyper_master) {
+        setDepositPermission(true);
+        setWithdrawPermission(true);
+      }
+    }
+  }, [adminRole, token]);
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -169,16 +190,20 @@ const Home = () => {
       {adminRole === AdminRole.hyper_master ||
       adminRole === AdminRole.admin_staff ? (
         <div className="d-lg-flex" style={{ gap: "10px" }}>
-          <DashboardDW
-            data={deposit}
-            title="Pending Deposit"
-            emptyMessage="No pending deposit"
-          />
-          <DashboardDW
-            data={withdraw}
-            title="Pending Withdraw"
-            emptyMessage="No pending withdraw"
-          />
+          {depositPermission && (
+            <DashboardDW
+              data={deposit}
+              title="Pending Deposit"
+              emptyMessage="No pending deposit"
+            />
+          )}
+          {withdrawPermission && (
+            <DashboardDW
+              data={withdraw}
+              title="Pending Withdraw"
+              emptyMessage="No pending withdraw"
+            />
+          )}
         </div>
       ) : null}
     </div>
