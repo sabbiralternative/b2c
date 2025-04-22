@@ -103,7 +103,8 @@
       "auth": "https://admin.api7.live/api/b2c/auth",
       "activityLogs": "https://admin.api7.live/api/b2c/activityLogs",
       "utr": "https://admin.api7.live/api/b2c/utr",
-      "detectUtr": "https://b2c.bet/deposit/utr"
+      "detectUtr": "https://b2c.bet/deposit/utr",
+      "index": "https://admin.api7.live/api/b2c/index"
     }
   },
   "success": true

@@ -69,6 +69,7 @@ export const API = {
   auth: "",
   activityLogs: "",
   utr: "",
+  index: "",
 };
 
 export const Settings = {

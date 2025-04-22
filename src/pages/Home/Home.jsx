@@ -1,7 +1,11 @@
+import { AdminRole } from "../../constant/constant";
+import { useGetIndex } from "../../hooks";
 import useBalance from "../../hooks/useBalance";
 import useContextState from "../../hooks/useContextState";
+import DashboardDW from "./DashboardDW";
 
 const Home = () => {
+  const { data } = useGetIndex({ type: "getDashboardDW" });
   const { adminRole } = useContextState();
   const { balanceData } = useBalance();
   const defineBalanceColor = (amount) => {
@@ -16,6 +20,8 @@ const Home = () => {
       }
     }
   };
+  const deposit = data?.result?.deposit;
+  const withdraw = data?.result?.withdraw;
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -160,6 +166,21 @@ const Home = () => {
             </div>
           </div>
         )}
+      {adminRole === AdminRole.hyper_master ||
+      adminRole === AdminRole.admin_staff ? (
+        <div className="d-lg-flex" style={{ gap: "10px" }}>
+          <DashboardDW
+            data={deposit}
+            title="Pending Deposit"
+            emptyMessage="No pending deposit"
+          />
+          <DashboardDW
+            data={withdraw}
+            title="Pending Withdraw"
+            emptyMessage="No pending withdraw"
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
