@@ -5,6 +5,7 @@ import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
 import useContextState from "../../../../hooks/useContextState";
 import { jwtDecode } from "jwt-decode";
+import { AdminRole } from "../../../../constant/constant";
 
 const Master = () => {
   const [depositPermission, setDepositPermission] = useState(false);
@@ -118,7 +119,10 @@ const Master = () => {
 
   useEffect(() => {
     if (adminRole) {
-      if (adminRole === "branch_staff") {
+      if (
+        adminRole === AdminRole.branch_staff ||
+        adminRole === AdminRole.admin_staff
+      ) {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
 
@@ -154,7 +158,7 @@ const Master = () => {
       )}
 
       {adminRole === "master" ||
-      adminRole === "admin_staff" ||
+      (adminRole === "admin_staff" && clientPermission) ||
       (adminRole === "branch_staff" && clientPermission) ? (
         <li
           ref={clientsRef}
@@ -690,7 +694,7 @@ const Master = () => {
         </>
       )}
       {adminRole === "master" ||
-      adminRole === "admin_staff" ||
+      (adminRole === "admin_staff" && reportPermission) ||
       (adminRole === "branch_staff" && reportPermission) ? (
         <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
           <a
