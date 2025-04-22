@@ -6,9 +6,9 @@ const DashboardDW = ({ data, emptyMessage, title }) => {
         <table className="table table-hover table-sm">
           <thead className="table-dark">
             <tr>
-              <th>Amount</th>
               <th>BranchName</th>
               <th>Count</th>
+              <th>Amount</th>
             </tr>
           </thead>
           <tbody className="table-border-bottom-0">
@@ -16,9 +16,9 @@ const DashboardDW = ({ data, emptyMessage, title }) => {
               data?.map((dw, i) => {
                 return (
                   <tr key={i}>
-                    <td>{dw?.amount}</td>
                     <td>{dw?.branchName}</td>
                     <td>{dw?.count}</td>
+                    <td>{dw?.amount}</td>
                   </tr>
                 );
               })
