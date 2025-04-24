@@ -25,7 +25,7 @@ const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
   };
 
   const { currentRef, isSuccess } = useGetCurrentRef(payload);
-  const { refetchAllBranch } = useGetAllBranch();
+  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   const { refetchClients } = useGetClient(downlineId);
 
   /* handle update credit reference */

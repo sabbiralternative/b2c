@@ -24,6 +24,7 @@ import AddChecker from "../modal/HyperMaster/Staff/AddChecker";
 import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
 import { useVerifyUser } from "../../hooks/auth";
 import { useQueryClient } from "@tanstack/react-query";
+import AddSuperBranch from "../modal/HyperMaster/Branch/AddSuperBranch";
 
 const MainLayout = () => {
   const queryClient = useQueryClient();
@@ -38,6 +39,8 @@ const MainLayout = () => {
     showSidebar,
     showAddBranch,
     setShowAddBranch,
+    showAddSuperBranch,
+    setShowAddSuperBranch,
     showSocialLink,
     setShowSocialLink,
     showChangePassword,
@@ -144,6 +147,9 @@ const MainLayout = () => {
             <Outlet />
             {/* Modals start for Hyper_master*/}
             {showAddBranch && <AddBranch setShowAddBranch={setShowAddBranch} />}
+            {showAddSuperBranch && (
+              <AddSuperBranch setShowAddSuperBranch={setShowAddSuperBranch} />
+            )}
             {showSocialLink && (
               <SocialLink setShowSocialLink={setShowSocialLink} />
             )}

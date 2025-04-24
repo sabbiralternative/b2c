@@ -8,11 +8,16 @@ import CurrentBets from "../pages/HyperMaster/Exposure/CurrentBets";
 import AddBonus from "../pages/HyperMaster/Bonus/AddBonus";
 import ViewBonus from "../pages/HyperMaster/Bonus/ViewBonus";
 import ViewChecker from "../pages/HyperMaster/Staff/ViewChecker";
+import ViewSuperBranch from "../pages/HyperMaster/ViewSuperBranch/ViewSuperBranch";
 
 export const HyperMasterRoutes = [
   {
-    path: "/view-branches",
+    path: "/view-branch",
     element: <ViewBranches />,
+  },
+  {
+    path: "/view-super-branch",
+    element: <ViewSuperBranch />,
   },
   {
     path: "/view-banner",

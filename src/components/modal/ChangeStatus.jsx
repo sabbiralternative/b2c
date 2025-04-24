@@ -20,7 +20,7 @@ const ChangeStatus = ({
 }) => {
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
-  const { refetchAllBranch } = useGetAllBranch();
+  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   const { refetchClient } = useRefetchClient(downlineId);
   const { refetchClients } = useGetClient(
     clientId,

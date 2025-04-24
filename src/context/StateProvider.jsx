@@ -15,6 +15,7 @@ const StateProvider = ({ children }) => {
   const [icon, setIcon] = useState("");
   const [showSidebar, setShowSidebar] = useState(false);
   const [showAddBranch, setShowAddBranch] = useState(false);
+  const [showAddSuperBranch, setShowAddSuperBranch] = useState(false);
   const [showSocialLink, setShowSocialLink] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
@@ -152,6 +153,8 @@ const StateProvider = ({ children }) => {
     setAddWhiteLabel,
     id,
     setId,
+    showAddSuperBranch,
+    setShowAddSuperBranch,
   };
   return (
     <StateContext.Provider value={stateInfo}>{children}</StateContext.Provider>

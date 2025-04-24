@@ -10,7 +10,7 @@ import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 
 const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
-  const { refetchAllBranch } = useGetAllBranch();
+  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   const { refetchClient } = useRefetchClient(downlineId);
 
   /* close modal click outside */

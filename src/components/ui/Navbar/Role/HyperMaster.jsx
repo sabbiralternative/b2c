@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
+import { AdminRole } from "../../../../constant/constant";
 const HyperMaster = () => {
   const {
+    setShowAddSuperBranch,
     setShowAddBranch,
     setShowSocialLink,
     setSiteNotification,
@@ -220,11 +222,11 @@ const HyperMaster = () => {
             <ul className="menu-sub">
               <li className="menu-item ">
                 <a
-                  onClick={() => handleNavigate("view-branches")}
+                  onClick={() => handleNavigate("view-branch")}
                   className="menu-link"
                 >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Branches">View Branches</div>
+                  <div data-i18n="View Branches">View Branch</div>
                 </a>
               </li>
 
@@ -240,6 +242,32 @@ const HyperMaster = () => {
                   <div data-i18n="Add Branch">Add Branch</div>
                 </a>
               </li>
+
+              {adminRole === AdminRole.hyper_master && (
+                <>
+                  <li className="menu-item">
+                    <a
+                      onClick={() => handleNavigate("view-super-branch")}
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="Add Branch">View Super Branch</div>
+                    </a>
+                  </li>
+                  <li className="menu-item">
+                    <a
+                      onClick={() => {
+                        setShowAddSuperBranch(true);
+                        setShowBranch(false);
+                      }}
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="Add Branch">Add Super Branch</div>
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
           </li>
           <li

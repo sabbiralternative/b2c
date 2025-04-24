@@ -7,8 +7,8 @@ import axios from "axios";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
-const ViewBranches = () => {
-  const { branches } = useGetAllBranch({ branch_type: "branch" });
+const ViewSuperBranch = () => {
+  const { branches } = useGetAllBranch({ branch_type: "super_branch" });
   const {
     setShowChangePassword,
     setShowChangeStatus,
@@ -60,7 +60,7 @@ const ViewBranches = () => {
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
-        <h5 className="card-header">Branches</h5>
+        <h5 className="card-header">Super Branches</h5>
         <div className="table-responsive text-nowrap">
           <table className="table table-hover table-sm">
             <thead className="table-dark">
@@ -71,7 +71,7 @@ const ViewBranches = () => {
                 <th>P/L</th>
                 <th>Status</th>
                 <th>Betting Status</th>
-                <th>Registration Status</th>
+
                 <th>Reg. Date</th>
                 <th>Actions</th>
               </tr>
@@ -107,19 +107,6 @@ const ViewBranches = () => {
                         }`}
                       >
                         {branch?.bettingStatus === 1 ? "active" : "inactive"}
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        className={`badge  me-1 ${
-                          branch?.registrationStatus === 1
-                            ? "bg-label-primary"
-                            : "bg-label-danger"
-                        }`}
-                      >
-                        {branch?.registrationStatus === 1
-                          ? "active"
-                          : "inactive"}
                       </span>
                     </td>
 
@@ -226,4 +213,4 @@ const ViewBranches = () => {
   );
 };
 
-export default ViewBranches;
+export default ViewSuperBranch;

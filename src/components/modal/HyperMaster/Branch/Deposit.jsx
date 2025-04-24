@@ -9,7 +9,7 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const Deposit = ({ setShowDeposit, downlineId }) => {
-  const { refetchAllBranch } = useGetAllBranch();
+  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   /* close modal click outside */
   const depositRef = useRef();
   useCloseModalClickOutside(depositRef, () => {

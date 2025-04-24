@@ -8,13 +8,13 @@ import { useForm } from "react-hook-form";
 import useContextState from "../../../../hooks/useContextState";
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
-const AddBranch = ({ setShowAddBranch }) => {
+const AddSuperBranch = ({ setShowAddSuperBranch }) => {
   /* close modal click outside */
   const addBranchRef = useRef();
   useCloseModalClickOutside(addBranchRef, () => {
-    setShowAddBranch(false);
+    setShowAddSuperBranch(false);
   });
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
+  const { refetchAllBranch } = useGetAllBranch({ branch_type: "super_branch" });
 
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
@@ -22,19 +22,13 @@ const AddBranch = ({ setShowAddBranch }) => {
   /* add branch submit */
   const onSubmit = async ({ username, password, notes }) => {
     const generatedToken = handleRandomToken();
-    //   const encryptedData = handleEncryptData({
-    //     newPassword: newPassword,
-    //     confirmPassword: newPasswordConfirm,
-    //     mpassword: transactionCode,
-    //     type: "panel",
-    //     token: generatedToken,
-    //   });
+
     const payload = {
       username,
       password,
       notes,
       token: generatedToken,
-      branch_type: "branch",
+      branch_type: "super_branch",
     };
     const res = await axios.post(API.addBranch, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -42,9 +36,9 @@ const AddBranch = ({ setShowAddBranch }) => {
     const data = res.data;
     if (data?.success) {
       refetchAllBranch();
-      toast.success("Branch created successfully");
+      toast.success("Super Branch created successfully");
       reset();
-      setShowAddBranch(false);
+      setShowAddSuperBranch(false);
     } else {
       toast.error(data?.error?.status?.[0]?.description);
     }
@@ -63,10 +57,10 @@ const AddBranch = ({ setShowAddBranch }) => {
           <div className="modal-content" ref={addBranchRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Add Branch
+                Add Super Branch
               </h5>
               <button
-                onClick={() => setShowAddBranch(false)}
+                onClick={() => setShowAddSuperBranch(false)}
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
@@ -119,7 +113,7 @@ const AddBranch = ({ setShowAddBranch }) => {
                       className="col-sm-2 col-form-label"
                       htmlFor="basic-default-company"
                     >
-                      Branch Name
+                      Super Branch Name
                     </label>
                     <div className="col-sm-10">
                       <input
@@ -137,7 +131,7 @@ const AddBranch = ({ setShowAddBranch }) => {
               </div>
               <div className="modal-footer">
                 <button
-                  onClick={() => setShowAddBranch(false)}
+                  onClick={() => setShowAddSuperBranch(false)}
                   type="button"
                   className="btn btn-label-secondary"
                   data-bs-dismiss="modal"
@@ -156,4 +150,4 @@ const AddBranch = ({ setShowAddBranch }) => {
   );
 };
 
-export default AddBranch;
+export default AddSuperBranch;
