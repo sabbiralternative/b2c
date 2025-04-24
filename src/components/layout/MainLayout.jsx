@@ -11,12 +11,7 @@ import NavListItem from "../ui/Navbar/NavListItem";
 import Footer from "../ui/Footer/Footer";
 import AddBranch from "../modal/HyperMaster/Branch/AddBranch";
 import SocialLink from "../modal/HyperMaster/Settings/SocialLink";
-import Deposit from "../modal/HyperMaster/Branch/Deposit";
-import Withdraw from "../modal/HyperMaster/Branch/Withdraw";
-import ChangeStatus from "../modal/ChangeStatus";
-import ChangePassword from "../modal/ChangePassword";
 import EditPayment from "../modal/Master/Payment/EditPayment";
-import CreditReference from "../modal/CreditReference";
 import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
 import toast from "react-hot-toast";
 import DirectDeposit from "../modal/Master/Client/DirectDeposit";
@@ -43,21 +38,12 @@ const MainLayout = () => {
     setShowAddSuperBranch,
     showSocialLink,
     setShowSocialLink,
-    showChangePassword,
-    setShowChangePassword,
-    setShowDeposit,
-    showDeposit,
-    setShowWithdraw,
-    showWithdraw,
-    setShowChangeStatus,
-    showChangeStatus,
+
     downLineId,
     payloadRole,
     showEditPayment,
     setShowEditPayment,
-    showCreditRef,
-    setShowCreditRef,
-    registrationStatus,
+
     showAddChecker,
     setAddChecker,
     addWhiteLabel,
@@ -156,37 +142,11 @@ const MainLayout = () => {
             {siteNotification && (
               <SiteNotification setSiteNotification={setSiteNotification} />
             )}
-            {showDeposit && (
-              <Deposit
-                downlineId={downLineId}
-                setShowDeposit={setShowDeposit}
-              />
-            )}
-            {showWithdraw && (
-              <Withdraw
-                downlineId={downLineId}
-                setShowWithdraw={setShowWithdraw}
-              />
-            )}
+
             {/* Modals end for Hyper_master and master*/}
-            {showChangeStatus && (
-              <ChangeStatus
-                id={id}
-                role={payloadRole}
-                setShowChangeStatus={setShowChangeStatus}
-                downlineId={downLineId}
-                registrationStatus={registrationStatus}
-              />
-            )}
+
             {/* Modals end for Hyper_master and master*/}
-            {showChangePassword && (
-              <ChangePassword
-                id={id}
-                role={payloadRole}
-                setShowChangePassword={setShowChangePassword}
-                downlineId={downLineId}
-              />
-            )}
+
             {/* Modals end for Hyper_master*/}
             {/* Modals end for master*/}
 
@@ -201,14 +161,6 @@ const MainLayout = () => {
 
             {showEditPayment && (
               <EditPayment setShowEditPayment={setShowEditPayment} />
-            )}
-            {showCreditRef && (
-              <CreditReference
-                id={id}
-                role={payloadRole}
-                setShowCreditRef={setShowCreditRef}
-                downlineId={downLineId}
-              />
             )}
 
             {showAddChecker && <AddChecker setShowAddChecker={setAddChecker} />}

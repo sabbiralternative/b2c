@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import { useState } from "react";
+import { AdminRole } from "../../../constant/constant";
 
 const HyperMasterSidebar = () => {
   const [showBranch, setShowBranch] = useState(false);
@@ -14,6 +15,7 @@ const HyperMasterSidebar = () => {
   const [showStaff, setShowStaff] = useState(false);
   const [showWhiteLabel, setShowWhiteLabel] = useState(false);
   const {
+    setShowAddSuperBranch,
     setShowSidebar,
     setShowAddBranch,
     setShowSocialLink,
@@ -109,11 +111,11 @@ const HyperMasterSidebar = () => {
               <li className="menu-item">
                 <Link
                   onClick={() => setShowSidebar(false)}
-                  to="/view-branches"
+                  to="/view-branch"
                   className="menu-link"
                 >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Branches">View Branches</div>
+                  <div data-i18n="View Branches">View Branch</div>
                 </Link>
               </li>
 
@@ -129,6 +131,34 @@ const HyperMasterSidebar = () => {
                   <div data-i18n="Add Branch">Add Branch</div>
                 </a>
               </li>
+              {adminRole === AdminRole.hyper_master &&
+                adminRole !== AdminRole.super_master && (
+                  <>
+                    <li className="menu-item">
+                      <Link
+                        onClick={() => setShowSidebar(false)}
+                        to="/view-super-branch"
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Branches">View Super Branch</div>
+                      </Link>
+                    </li>
+
+                    <li className="menu-item">
+                      <a
+                        onClick={() => {
+                          setShowAddSuperBranch(true);
+                          setShowSidebar(false);
+                        }}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Add Branch">Add Super Branch</div>
+                      </a>
+                    </li>
+                  </>
+                )}
             </ul>
           </li>
           <li className={`menu-item ${showClients ? "open" : ""}`}>
@@ -204,76 +234,78 @@ const HyperMasterSidebar = () => {
               </li>
             </ul>
           </li>
-          <li className={`menu-item ${showSettings ? "open" : ""}`}>
-            <a
-              style={{}}
-              onClick={() => {
-                setShowSettings((prev) => !prev);
-                setShowBranch(false);
-                setShowExposure(false);
-                setShowReport(false);
-                setShowDeposit(false);
-                setShowWithdraw(false);
-                setShowClients(false);
-                setShowBonus(false);
-                setShowStaff(false);
-                setShowWhiteLabel(false);
-              }}
-              className="menu-link menu-toggle"
-            >
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Settings">Settings</div>
-            </a>
+          {adminRole !== AdminRole.super_master && (
+            <li className={`menu-item ${showSettings ? "open" : ""}`}>
+              <a
+                style={{}}
+                onClick={() => {
+                  setShowSettings((prev) => !prev);
+                  setShowBranch(false);
+                  setShowExposure(false);
+                  setShowReport(false);
+                  setShowDeposit(false);
+                  setShowWithdraw(false);
+                  setShowClients(false);
+                  setShowBonus(false);
+                  setShowStaff(false);
+                  setShowWhiteLabel(false);
+                }}
+                className="menu-link menu-toggle"
+              >
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Settings">Settings</div>
+              </a>
 
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <Link
-                  to="/view-banner"
-                  onClick={() => setShowSidebar(false)}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">View Banners</div>
-                </Link>
-              </li>
+              <ul className="menu-sub">
+                <li className="menu-item">
+                  <Link
+                    to="/view-banner"
+                    onClick={() => setShowSidebar(false)}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="View Banners">View Banners</div>
+                  </Link>
+                </li>
 
-              <li className="menu-item">
-                <Link
-                  onClick={() => setShowSidebar(false)}
-                  to="/add-banner"
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Banner">Add Banner</div>
-                </Link>
-              </li>
+                <li className="menu-item">
+                  <Link
+                    onClick={() => setShowSidebar(false)}
+                    to="/add-banner"
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Banner">Add Banner</div>
+                  </Link>
+                </li>
 
-              <li className="menu-item">
-                <a
-                  onClick={() => {
-                    setShowSocialLink(true);
-                    setShowSidebar(false);
-                  }}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Social Links">Social Links</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => {
-                    setSiteNotification(true);
-                    setShowSidebar(false);
-                  }}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Social Links">Site Notification</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => {
+                      setShowSocialLink(true);
+                      setShowSidebar(false);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Social Links">Social Links</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => {
+                      setSiteNotification(true);
+                      setShowSidebar(false);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Social Links">Site Notification</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
         </>
       )}
 
@@ -497,7 +529,7 @@ const HyperMasterSidebar = () => {
           </li>
         </ul>
       </li>
-      {adminRole !== "admin_master" && (
+      {adminRole !== "admin_master" && adminRole !== AdminRole.super_master && (
         <>
           <li className={`menu-item ${showBonus ? "open" : ""}`}>
             <a

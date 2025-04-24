@@ -8,7 +8,7 @@ import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
-const Withdraw = ({ downlineId, setShowWithdraw }) => {
+const Withdraw = ({ downlineId, setShowWithdraw, id, role }) => {
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
 
   /* close modal click outside */
@@ -17,7 +17,7 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
     setShowWithdraw(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+  const { token } = useContextState();
 
   /* handle withdraw submit */
   const onSubmit = async ({ amount, remark }) => {
@@ -35,7 +35,8 @@ const Withdraw = ({ downlineId, setShowWithdraw }) => {
       amount,
       remark,
       token: generatedToken,
-      role: adminRole,
+      id,
+      role,
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },

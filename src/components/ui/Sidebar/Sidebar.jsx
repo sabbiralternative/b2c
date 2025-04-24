@@ -3,6 +3,7 @@ import useContextState from "../../../hooks/useContextState";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import HyperMasterSidebar from "./HyperMasterSidebar";
 import MasterSidebar from "./MasterSidebar";
+import { AdminRole } from "../../../constant/constant";
 
 const Sidebar = () => {
   const { setShowSidebar, showSidebar, adminRole } = useContextState();
@@ -115,7 +116,9 @@ const Sidebar = () => {
             <i className="bx bx-x bx-sm align-middle"></i>
           </a>
         </div>
-        {adminRole === "hyper_master" || adminRole === "admin_master" ? (
+        {adminRole === "hyper_master" ||
+        adminRole === "admin_master" ||
+        adminRole === AdminRole.super_master ? (
           <HyperMasterSidebar />
         ) : null}
         {adminRole === "master" ||

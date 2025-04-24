@@ -1,6 +1,7 @@
 import HyperMaster from "./Role/HyperMaster";
 import Master from "./Role/Master";
 import useContextState from "../../../hooks/useContextState";
+import { AdminRole } from "../../../constant/constant";
 
 const NavListItem = () => {
   const { adminRole } = useContextState();
@@ -20,7 +21,9 @@ const NavListItem = () => {
       <div className="container-xxl d-flex h-100">
         <a className="menu-horizontal-prev d-none"></a>
         <div className="menu-horizontal-wrapper">
-          {adminRole === "hyper_master" || adminRole === "admin_master" ? (
+          {adminRole === "hyper_master" ||
+          adminRole === "admin_master" ||
+          adminRole === AdminRole.super_master ? (
             <HyperMaster />
           ) : null}
           {adminRole === "master" ||

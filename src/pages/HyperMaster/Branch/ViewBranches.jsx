@@ -1,4 +1,3 @@
-import { handleDownLineId } from "../../../utils/handleDownLineId";
 import useContextState from "../../../hooks/useContextState";
 import useGetAllBranch from "../../../hooks/HyperMaster/Branch/useGetAllBranch";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
@@ -6,20 +5,25 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
+import Deposit from "../../../components/modal/HyperMaster/Branch/Deposit";
+import Withdraw from "../../../components/modal/HyperMaster/Branch/Withdraw";
+import ChangePassword from "../../../components/modal/ChangePassword";
+import ChangeStatus from "../../../components/modal/ChangeStatus";
+import CreditReference from "../../../components/modal/CreditReference";
+import { useState } from "react";
 
 const ViewBranches = () => {
+  const [id, setId] = useState("");
+  const [role, setRole] = useState("");
+  const [showWithdraw, setShowWithdraw] = useState(false);
+  const [showCreditRef, setShowCreditRef] = useState(false);
+  const [downLineId, setDownLineId] = useState(false);
+  const [showChangeStatus, setShowChangeStatus] = useState(false);
+  const [registrationStatus, setRegistrationStatus] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showDeposit, setShowDeposit] = useState(false);
   const { branches } = useGetAllBranch({ branch_type: "branch" });
-  const {
-    setShowChangePassword,
-    setShowChangeStatus,
-    setShowDeposit,
-    setShowWithdraw,
-    setDownLineId,
-    setShowCreditRef,
-    setRegistrationStatus,
-    token,
-    adminRole,
-  } = useContextState();
+  const { token, adminRole } = useContextState();
   const navigate = useNavigate();
 
   const handleNavigate = (username, link) => {
@@ -58,171 +62,211 @@ const ViewBranches = () => {
   };
 
   return (
-    <div className="container-xxl flex-grow-1 container-p-y">
-      <div className="card">
-        <h5 className="card-header">Branches</h5>
-        <div className="table-responsive text-nowrap">
-          <table className="table table-hover table-sm">
-            <thead className="table-dark">
-              <tr>
-                <th>Username</th>
-                <th>Credit Reference</th>
-                <th>Balance</th>
-                <th>P/L</th>
-                <th>Status</th>
-                <th>Betting Status</th>
-                <th>Registration Status</th>
-                <th>Reg. Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody className="table-border-bottom-0">
-              {branches?.map((branch, i) => {
-                return (
-                  <tr key={i}>
-                    <td>
-                      <strong>{handleSplitUserName(branch?.username)}</strong>
-                    </td>
-                    <td>{branch?.creditReferance}</td>
-                    <td>{branch?.balance}</td>
-                    <td>{branch?.pnl}</td>
+    <>
+      {showCreditRef && (
+        <CreditReference
+          id={id}
+          role={role}
+          setShowCreditRef={setShowCreditRef}
+          downlineId={downLineId}
+        />
+      )}
+      {showChangeStatus && (
+        <ChangeStatus
+          id={id}
+          role={role}
+          setShowChangeStatus={setShowChangeStatus}
+          downlineId={downLineId}
+          registrationStatus={registrationStatus}
+        />
+      )}
+      {showChangePassword && (
+        <ChangePassword
+          id={id}
+          role={role}
+          setShowChangePassword={setShowChangePassword}
+          downlineId={downLineId}
+        />
+      )}
+      {showDeposit && (
+        <Deposit
+          id={id}
+          role={role}
+          downlineId={downLineId}
+          setShowDeposit={setShowDeposit}
+        />
+      )}
+      {showWithdraw && (
+        <Withdraw
+          id={id}
+          role={role}
+          downlineId={downLineId}
+          setShowWithdraw={setShowWithdraw}
+        />
+      )}
+      <div className="container-xxl flex-grow-1 container-p-y">
+        <div className="card">
+          <h5 className="card-header">Branches</h5>
+          <div className="table-responsive text-nowrap">
+            <table className="table table-hover table-sm">
+              <thead className="table-dark">
+                <tr>
+                  <th>Username</th>
+                  <th>Credit Reference</th>
+                  <th>Balance</th>
+                  <th>P/L</th>
+                  <th>Status</th>
+                  <th>Betting Status</th>
+                  <th>Registration Status</th>
+                  <th>Reg. Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody className="table-border-bottom-0">
+                {branches?.map((branch, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>
+                        <strong>{handleSplitUserName(branch?.username)}</strong>
+                      </td>
+                      <td>{branch?.creditReferance}</td>
+                      <td>{branch?.balance}</td>
+                      <td>{branch?.pnl}</td>
 
-                    <td>
-                      <span
-                        className={`badge  me-1 ${
-                          branch?.userStatus === 1
-                            ? "bg-label-primary"
-                            : "bg-label-danger"
-                        }`}
-                      >
-                        {branch?.userStatus === 1 ? "active" : "inactive"}
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        className={`badge  me-1 ${
-                          branch?.bettingStatus === 1
-                            ? "bg-label-primary"
-                            : "bg-label-danger"
-                        }`}
-                      >
-                        {branch?.bettingStatus === 1 ? "active" : "inactive"}
-                      </span>
-                    </td>
-                    <td>
-                      <span
-                        className={`badge  me-1 ${
-                          branch?.registrationStatus === 1
-                            ? "bg-label-primary"
-                            : "bg-label-danger"
-                        }`}
-                      >
-                        {branch?.registrationStatus === 1
-                          ? "active"
-                          : "inactive"}
-                      </span>
-                    </td>
-
-                    <td>{branch?.registrationDate}</td>
-                    <td style={{ display: "flex", color: "white" }}>
-                      <a
-                        onClick={() =>
-                          handleDownLineId(
-                            setShowDeposit,
-                            branch?.username,
-                            setDownLineId
-                          )
-                        }
-                        className="btn btn-icon btn-sm btn-success"
-                      >
-                        D
-                      </a>
-                      &nbsp;
-                      <a
-                        onClick={() =>
-                          handleDownLineId(
-                            setShowWithdraw,
-                            branch?.username,
-                            setDownLineId
-                          )
-                        }
-                        className="btn btn-icon btn-sm btn-danger"
-                      >
-                        W
-                      </a>
-                      &nbsp;
-                      <a
-                        style={{ color: "white" }}
-                        onClick={() => {
-                          handleNavigate(branch?.username, "pnl");
-                        }}
-                        className="btn btn-icon btn-sm btn-warning"
-                      >
-                        PL
-                      </a>
-                      &nbsp;
-                      <a
-                        onClick={() => {
-                          handleDownLineId(
-                            setShowChangePassword,
-                            branch?.username,
-                            setDownLineId
-                          );
-                        }}
-                        className="btn btn-icon btn-sm btn-info"
-                      >
-                        P
-                      </a>
-                      &nbsp;
-                      <a
-                        onClick={() => {
-                          handleDownLineId(
-                            setShowChangeStatus,
-                            branch?.username,
-                            setDownLineId
-                          );
-                          setRegistrationStatus(branch?.registrationStatus);
-                        }}
-                        className="btn btn-icon btn-sm btn-dark"
-                      >
-                        S
-                      </a>
-                      &nbsp;
-                      <a
-                        style={{ color: "white" }}
-                        onClick={() =>
-                          handleDownLineId(
-                            setShowCreditRef,
-                            branch?.username,
-                            setDownLineId
-                          )
-                        }
-                        className="btn btn-icon btn-sm btn-primary"
-                      >
-                        CR
-                      </a>
-                      &nbsp;
-                      {adminRole === "hyper_master" && (
-                        <a
-                          style={{
-                            color: "white",
-                            backgroundColor: "lightseagreen",
-                          }}
-                          onClick={() => handleLoginReadOnly(branch?.username)}
-                          className="btn btn-icon btn-sm btn-read-only-login"
+                      <td>
+                        <span
+                          className={`badge  me-1 ${
+                            branch?.userStatus === 1
+                              ? "bg-label-primary"
+                              : "bg-label-danger"
+                          }`}
                         >
-                          L
+                          {branch?.userStatus === 1 ? "active" : "inactive"}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={`badge  me-1 ${
+                            branch?.bettingStatus === 1
+                              ? "bg-label-primary"
+                              : "bg-label-danger"
+                          }`}
+                        >
+                          {branch?.bettingStatus === 1 ? "active" : "inactive"}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          className={`badge  me-1 ${
+                            branch?.registrationStatus === 1
+                              ? "bg-label-primary"
+                              : "bg-label-danger"
+                          }`}
+                        >
+                          {branch?.registrationStatus === 1
+                            ? "active"
+                            : "inactive"}
+                        </span>
+                      </td>
+
+                      <td>{branch?.registrationDate}</td>
+                      <td style={{ display: "flex", color: "white" }}>
+                        <a
+                          onClick={() => {
+                            setShowDeposit(true);
+                            setDownLineId(branch?.username);
+                            setRole(branch?.role);
+                            setId(branch?.id);
+                          }}
+                          className="btn btn-icon btn-sm btn-success"
+                        >
+                          D
                         </a>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                        &nbsp;
+                        <a
+                          onClick={() => {
+                            setShowWithdraw(true);
+                            setDownLineId(branch?.username);
+                            setRole(branch?.role);
+                            setId(branch?.id);
+                          }}
+                          className="btn btn-icon btn-sm btn-danger"
+                        >
+                          W
+                        </a>
+                        &nbsp;
+                        <a
+                          style={{ color: "white" }}
+                          onClick={() => {
+                            handleNavigate(branch?.username, "pnl");
+                          }}
+                          className="btn btn-icon btn-sm btn-warning"
+                        >
+                          PL
+                        </a>
+                        &nbsp;
+                        <a
+                          onClick={() => {
+                            setShowChangePassword(true);
+                            setDownLineId(branch?.username);
+                            setRole(branch?.role);
+                            setId(branch?.id);
+                          }}
+                          className="btn btn-icon btn-sm btn-info"
+                        >
+                          P
+                        </a>
+                        &nbsp;
+                        <a
+                          onClick={() => {
+                            setShowChangeStatus(true);
+                            setDownLineId(branch?.username);
+                            setRole(branch?.role);
+                            setId(branch?.id);
+                            setRegistrationStatus(branch?.registrationStatus);
+                          }}
+                          className="btn btn-icon btn-sm btn-dark"
+                        >
+                          S
+                        </a>
+                        &nbsp;
+                        <a
+                          style={{ color: "white" }}
+                          onClick={() => {
+                            setShowCreditRef(true);
+                            setDownLineId(branch?.username);
+                            setRole(branch?.role);
+                            setId(branch?.id);
+                          }}
+                          className="btn btn-icon btn-sm btn-primary"
+                        >
+                          CR
+                        </a>
+                        &nbsp;
+                        {adminRole === "hyper_master" && (
+                          <a
+                            style={{
+                              color: "white",
+                              backgroundColor: "lightseagreen",
+                            }}
+                            onClick={() =>
+                              handleLoginReadOnly(branch?.username)
+                            }
+                            className="btn btn-icon btn-sm btn-read-only-login"
+                          >
+                            L
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ import { useRef } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
-const Deposit = ({ setShowDeposit, downlineId }) => {
+const Deposit = ({ setShowDeposit, downlineId, role, id }) => {
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   /* close modal click outside */
   const depositRef = useRef();
@@ -16,7 +16,7 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
     setShowDeposit(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+  const { token } = useContextState();
   const onSubmit = async ({ amount, remark }) => {
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -32,7 +32,9 @@ const Deposit = ({ setShowDeposit, downlineId }) => {
       amount,
       remark,
       token: generatedToken,
-      role: adminRole,
+
+      role,
+      id,
     };
     const res = await axios.post(API.downLineEdit, payload, {
       headers: { Authorization: `Bearer ${token}` },
