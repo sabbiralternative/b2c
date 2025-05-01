@@ -648,11 +648,47 @@ const MasterSidebar = () => {
             </li>
             <li className="menu-item">
               <a
-                onClick={() => handleNavigate("first-deposit-report")}
+                onClick={() => handleNavigate("1st-deposit-report")}
                 className="menu-link"
               >
                 <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="Completed Withdraw">First Deposit Report</div>
+                <div data-i18n="Completed Withdraw">1st Deposit Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("2nd-deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Withdraw">2nd Deposit Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("3rd-deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Withdraw">3rd Deposit Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("4th-deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Withdraw">4th Deposit Report</div>
+              </a>
+            </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("5th-deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Withdraw">5th Deposit Report</div>
               </a>
             </li>
             <li className="menu-item">

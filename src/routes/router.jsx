@@ -15,6 +15,10 @@ import { AdminMasterRoutes } from "./AdminMaster";
 import ChangePasswordSuccess from "../pages/ChangePasswordSuccess/ChangePasswordSuccess";
 import ChangePasswordAfterLogin from "../pages/ChangePassword/ChangePasswordAfterLogin";
 import ClientBranchChangeReport from "../pages/Report/ClientBranchChangeReport";
+import SecondDepositReport from "../pages/Report/SecondDepositReport";
+import ThirdDepositReport from "../pages/Report/ThirdDepositReport";
+import FourthDepositReport from "../pages/Report/FourthDepositReport";
+import FifthDepositReport from "../pages/Report/FifthDepositReport";
 
 export const router = createBrowserRouter(
   [
@@ -36,8 +40,24 @@ export const router = createBrowserRouter(
           element: <DepositReport />,
         },
         {
-          path: "/first-deposit-report",
+          path: "/1st-deposit-report",
           element: <FirstDepositReport />,
+        },
+        {
+          path: "/2nd-deposit-report",
+          element: <SecondDepositReport />,
+        },
+        {
+          path: "/3rd-deposit-report",
+          element: <ThirdDepositReport />,
+        },
+        {
+          path: "/4th-deposit-report",
+          element: <FourthDepositReport />,
+        },
+        {
+          path: "/5th-deposit-report",
+          element: <FifthDepositReport />,
         },
         {
           path: "/no-deposit-report",
