@@ -25,6 +25,7 @@ const Master = () => {
   const [showReport, setShowReport] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
   const [showStaff, setShowStaff] = useState(false);
+  const [depositReport, setDepositReport] = useState(false);
 
   const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
@@ -733,75 +734,115 @@ const Master = () => {
               </li>
             )}
 
-            {depositPermission && (
-              <>
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("deposit-report")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">Deposit Report</div>
-                  </a>
-                </li>
+            <a
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "start",
+              }}
+              onMouseEnter={() => setDepositReport(true)}
+              onMouseLeave={() => setDepositReport(false)}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Deposit Report</div>
+              <ul
+                className="menu-sub"
+                style={{
+                  display: depositReport ? "block" : "none",
+                  right: "100%",
+                  top: "0px",
+                  left: "-100%",
+                  zIndex: "99999",
+                  background: "#273143",
+                }}
+              >
+                {depositPermission && (
+                  <>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("deposit-report")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">Deposit Report</div>
+                      </a>
+                    </li>
 
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("1st-deposit-report")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">1st Deposit Report</div>
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("2nd-deposit-report")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">2nd Deposit Report</div>
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("3rd-deposit-report")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">3rd Deposit Report</div>
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("4th-deposit-report")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">4th Deposit Report</div>
-                  </a>
-                </li>
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("5th-deposit-report")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">5th Deposit Report</div>
-                  </a>
-                </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("1st-deposit-report")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">1st Deposit Report</div>
+                      </a>
+                    </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("2nd-deposit-report")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">2nd Deposit Report</div>
+                      </a>
+                    </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("3rd-deposit-report")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">3rd Deposit Report</div>
+                      </a>
+                    </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("4th-deposit-report")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">4th Deposit Report</div>
+                      </a>
+                    </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("5th-deposit-report")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">5th Deposit Report</div>
+                      </a>
+                    </li>
 
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("no-deposit-report")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">No Deposit Report</div>
-                  </a>
-                </li>
-              </>
-            )}
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("no-deposit-report")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">No Deposit Report</div>
+                      </a>
+                    </li>
+
+                    <li className="menu-item">
+                      <a
+                        onClick={() =>
+                          handleNavigate("no-deposit-report-last-15-days")
+                        }
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">
+                          No deposit last 15 days
+                        </div>
+                      </a>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </a>
+
             {withdrawPermission && (
               <li className="menu-item">
                 <a

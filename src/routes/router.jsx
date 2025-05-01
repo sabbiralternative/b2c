@@ -19,6 +19,7 @@ import SecondDepositReport from "../pages/Report/SecondDepositReport";
 import ThirdDepositReport from "../pages/Report/ThirdDepositReport";
 import FourthDepositReport from "../pages/Report/FourthDepositReport";
 import FifthDepositReport from "../pages/Report/FifthDepositReport";
+import NoDepositReportLast15Days from "../pages/Report/NoDepositReportLast15Days";
 
 export const router = createBrowserRouter(
   [
@@ -62,6 +63,10 @@ export const router = createBrowserRouter(
         {
           path: "/no-deposit-report",
           element: <NoDepositReport />,
+        },
+        {
+          path: "/no-deposit-report-last-15-days",
+          element: <NoDepositReportLast15Days />,
         },
         {
           path: "/withdraw-report",

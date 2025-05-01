@@ -8,17 +8,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
-import DefaultDateButton from "./DefaultDateButton";
+// import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 
-const NoDepositReport = () => {
+const NoDepositReportLast15Days = () => {
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const [viewNoDepositReportData, setViewNoDepositReportData] = useState(false);
   const [noDepositReport, setNoDepositReportData] = useState([]);
   const navigate = useNavigate();
 
-  const [startDate, setStartDate] = useState(defaultDate(1));
+  const [startDate, setStartDate] = useState(defaultDate(15));
   const [endDate, setEndDate] = useState(new Date());
 
   const getNoDepositReportReport = async () => {
@@ -79,9 +79,9 @@ const NoDepositReport = () => {
                       From Date
                     </label>
                     <DatePicker
+                      readOnly
                       style={{ width: "100%" }}
                       format="yyyy-MM-dd"
-                      editable
                       onChange={(date) => setStartDate(date)}
                       value={startDate}
                       block
@@ -94,21 +94,21 @@ const NoDepositReport = () => {
                     <DatePicker
                       style={{ width: "100%" }}
                       format="yyyy-MM-dd"
-                      editable
+                      readOnly
                       onChange={(date) => setEndDate(date)}
                       value={endDate}
                       block
                     />
                   </div>
                 </div>
-                <div
+                {/* <div
                   style={{ display: "flex", gap: "10px", marginTop: "10px" }}
                 >
                   <DefaultDateButton
                     setEndDate={setEndDate}
                     setStartDate={setStartDate}
                   />
-                </div>
+                </div> */}
               </div>
 
               <div className="col-12">
@@ -203,4 +203,4 @@ const NoDepositReport = () => {
   );
 };
 
-export default NoDepositReport;
+export default NoDepositReportLast15Days;
