@@ -1,87 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import useContextState from "../../../hooks/useContextState";
 import { jwtDecode } from "jwt-decode";
 import { AdminRole } from "../../../constant/constant";
 
 const MasterSidebar = () => {
+  const [sidebarItem, setSidebarItem] = useState(null);
+
   const [depositPermission, setDepositPermission] = useState(false);
   const [withdrawPermission, setWithdrawPermission] = useState(false);
   const [clientPermission, setClientPermission] = useState(false);
   const [reportPermission, setReportPermission] = useState(false);
   const [paymentPermission, setPaymentPermission] = useState(false);
-  const [showClients, setShowClients] = useState(false);
-  const [showStatement, setShowStatement] = useState(false);
-  const [showPayments, setShowPayments] = useState(false);
-  const [showDeposit, setShowDeposit] = useState(false);
-  const [showWithdraw, setShowWithdraw] = useState(false);
-  const [showExposure, setShowExposure] = useState(false);
-  const [showStaff, setShowStaff] = useState(false);
-  const [showReport, setShowReport] = useState(false);
-  const [showBonus, setShowBonus] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
+
   const navigate = useNavigate();
   const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
 
-  const settingsRef = useRef();
-  useCloseModalClickOutside(settingsRef, () => {
-    setShowSettings(false);
-  });
-
-  const clientsRef = useRef();
-  useCloseModalClickOutside(clientsRef, () => {
-    setShowClients(false);
-  });
-
-  const statementRef = useRef();
-  useCloseModalClickOutside(statementRef, () => {
-    setShowStatement(false);
-  });
-  const paymentsRef = useRef();
-  useCloseModalClickOutside(paymentsRef, () => {
-    setShowPayments(false);
-  });
-  const depositRef = useRef();
-  useCloseModalClickOutside(depositRef, () => {
-    setShowDeposit(false);
-  });
-  const withdrawRef = useRef();
-  useCloseModalClickOutside(withdrawRef, () => {
-    setShowWithdraw(false);
-  });
-  const exposureRef = useRef();
-  useCloseModalClickOutside(exposureRef, () => {
-    setShowExposure(false);
-  });
-  const staffRef = useRef();
-  useCloseModalClickOutside(staffRef, () => {
-    setShowStaff(false);
-  });
-
-  const reportRef = useRef();
-  useCloseModalClickOutside(reportRef, () => {
-    setShowReport(false);
-  });
-  const bonusRef = useRef();
-  useCloseModalClickOutside(bonusRef, () => {
-    setShowBonus(false);
-  });
-
   const handleNavigate = (link) => {
     navigate(`/${link}`);
-    setShowClients(false);
-    setShowDeposit(false);
-    setShowPayments(false);
-    setShowStatement(false);
-    setShowWithdraw(false);
     setShowSidebar(false);
-    setShowExposure(false);
-    setShowReport(false);
-    setShowBonus(false);
-    setShowSettings(false);
-    setShowStaff(false);
   };
 
   useEffect(() => {
@@ -89,7 +27,7 @@ const MasterSidebar = () => {
       if (adminRole === "branch_staff") {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
-        console.log(permissions);
+
         const depositPermission = permissions?.includes("deposit") ?? false;
         const withdrawPermission = permissions?.includes("withdraw") ?? false;
         const clientPermission = permissions?.includes("client") ?? false;
@@ -109,6 +47,15 @@ const MasterSidebar = () => {
       }
     }
   }, [adminRole, token]);
+
+  const handleOpenSidebarItem = (item) => {
+    if (sidebarItem === item) {
+      setSidebarItem(null);
+    } else {
+      setSidebarItem(item);
+    }
+  };
+
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
       {adminRole !== "branch_staff" && (
@@ -126,23 +73,9 @@ const MasterSidebar = () => {
 
       {adminRole === "master" ||
       (adminRole === "branch_staff" && clientPermission) ? (
-        <li
-          ref={clientsRef}
-          className={`menu-item ${showClients ? "open" : ""}`}
-        >
+        <li className={`menu-item ${sidebarItem === "client" ? "open" : ""}`}>
           <a
-            onClick={() => {
-              setShowClients((prev) => !prev);
-              setShowDeposit(false);
-              setShowSettings(false);
-              setShowPayments(false);
-              setShowStatement(false);
-              setShowWithdraw(false);
-              setShowExposure(false);
-              setShowReport(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
+            onClick={() => handleOpenSidebarItem("client")}
             className="menu-link menu-toggle"
           >
             <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -214,24 +147,10 @@ const MasterSidebar = () => {
       ) : null}
       {adminRole === "master" && (
         <li
-          ref={statementRef}
-          className={`menu-item ${showStatement ? "open" : ""}`}
+          onClick={() => handleOpenSidebarItem("statement")}
+          className={`menu-item ${sidebarItem === "statement" ? "open" : ""}`}
         >
-          <a
-            onClick={() => {
-              setShowStatement((prev) => !prev);
-              setShowClients(false);
-              setShowSettings(false);
-              setShowDeposit(false);
-              setShowPayments(false);
-              setShowWithdraw(false);
-              setShowExposure(false);
-              setShowReport(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
-            className="menu-link menu-toggle"
-          >
+          <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Statement">Statement</div>
           </a>
@@ -263,24 +182,10 @@ const MasterSidebar = () => {
       {adminRole === "master" ||
       (adminRole === "branch_staff" && paymentPermission) ? (
         <li
-          ref={paymentsRef}
-          className={`menu-item ${showPayments ? "open" : ""}`}
+          onClick={() => handleOpenSidebarItem("payment")}
+          className={`menu-item ${sidebarItem === "payment" ? "open" : ""}`}
         >
-          <a
-            onClick={() => {
-              setShowPayments((prev) => !prev);
-              setShowClients(false);
-              setShowSettings(false);
-              setShowDeposit(false);
-              setShowStatement(false);
-              setShowWithdraw(false);
-              setShowExposure(false);
-              setShowReport(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
-            className="menu-link menu-toggle"
-          >
+          <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Payments">Payments</div>
           </a>
@@ -335,24 +240,10 @@ const MasterSidebar = () => {
 
       {depositPermission && (
         <li
-          ref={depositRef}
-          className={`menu-item ${showDeposit ? "open" : ""}`}
+          onClick={() => handleOpenSidebarItem("deposit")}
+          className={`menu-item ${sidebarItem === "deposit" ? "open" : ""}`}
         >
-          <a
-            onClick={() => {
-              setShowDeposit((prev) => !prev);
-              setShowClients(false);
-              setShowSettings(false);
-              setShowPayments(false);
-              setShowStatement(false);
-              setShowWithdraw(false);
-              setShowExposure(false);
-              setShowReport(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
-            className="menu-link menu-toggle"
-          >
+          <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Deposit">Deposit</div>
           </a>
@@ -402,24 +293,10 @@ const MasterSidebar = () => {
 
       {withdrawPermission && (
         <li
-          ref={withdrawRef}
-          className={`menu-item ${showWithdraw ? "open" : ""}`}
+          onClick={() => handleOpenSidebarItem("withdraw")}
+          className={`menu-item ${sidebarItem === "withdraw" ? "open" : ""}`}
         >
-          <a
-            onClick={() => {
-              setShowWithdraw((prev) => !prev);
-              setShowClients(false);
-              setShowDeposit(false);
-              setShowSettings(false);
-              setShowPayments(false);
-              setShowStatement(false);
-              setShowExposure(false);
-              setShowReport(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
-            className="menu-link menu-toggle"
-          >
+          <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Withdraw">Withdraw</div>
           </a>
@@ -459,22 +336,11 @@ const MasterSidebar = () => {
 
       {adminRole === "master" && (
         <>
-          <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
-            <a
-              onClick={() => {
-                setShowBonus((prev) => !prev);
-                setShowWithdraw(false);
-                setShowSettings(false);
-                setShowClients(false);
-                setShowDeposit(false);
-                setShowPayments(false);
-                setShowStatement(false);
-                setShowExposure(false);
-                setShowReport(false);
-                setShowStaff(false);
-              }}
-              className="menu-link menu-toggle"
-            >
+          <li
+            onClick={() => handleOpenSidebarItem("bonus")}
+            className={`menu-item ${sidebarItem === "bonus" ? "open" : ""}`}
+          >
+            <a className="menu-link menu-toggle">
               <i className="menu-icon tf-icons bx bx-layout"></i>
               <div data-i18n="Withdraw">Bonus</div>
             </a>
@@ -511,24 +377,10 @@ const MasterSidebar = () => {
           </li>
 
           <li
-            ref={exposureRef}
-            className={`menu-item ${showExposure ? "open" : ""}`}
+            onClick={() => handleOpenSidebarItem("exposure")}
+            className={`menu-item ${sidebarItem === "exposure" ? "open" : ""}`}
           >
-            <a
-              onClick={() => {
-                setShowExposure((prev) => !prev);
-                setShowClients(false);
-                setShowDeposit(false);
-                setShowSettings(false);
-                setShowPayments(false);
-                setShowStatement(false);
-                setShowWithdraw(false);
-                setShowReport(false);
-                setShowBonus(false);
-                setShowStaff(false);
-              }}
-              className="menu-link menu-toggle"
-            >
+            <a className="menu-link menu-toggle">
               <i className="menu-icon tf-icons bx bx-layout"></i>
               <div data-i18n="Withdraw">Exposure</div>
             </a>
@@ -555,23 +407,11 @@ const MasterSidebar = () => {
               </li>
             </ul>
           </li>
-          <li ref={staffRef} className={`menu-item ${showStaff ? "open" : ""}`}>
-            <a
-              style={{}}
-              onClick={() => {
-                setShowStaff((prev) => !prev);
-                setShowExposure(false);
-                setShowClients(false);
-                setShowDeposit(false);
-                setShowSettings(false);
-                setShowPayments(false);
-                setShowStatement(false);
-                setShowWithdraw(false);
-                setShowReport(false);
-                setShowBonus(false);
-              }}
-              className="menu-link menu-toggle"
-            >
+          <li
+            onClick={() => handleOpenSidebarItem("staff")}
+            className={`menu-item ${sidebarItem === "staff" ? "open" : ""}`}
+          >
+            <a className="menu-link menu-toggle">
               <i className="menu-icon tf-icons bx bx-layout"></i>
               <div data-i18n="Settings">Staff</div>
             </a>
@@ -608,22 +448,11 @@ const MasterSidebar = () => {
       {adminRole === "master" ||
       (adminRole === "branch_staff" && paymentPermission) ||
       (adminRole === AdminRole.admin_staff && paymentPermission) ? (
-        <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
-          <a
-            onClick={() => {
-              setShowReport((prev) => !prev);
-              setShowExposure(false);
-              setShowClients(false);
-              setShowSettings(false);
-              setShowDeposit(false);
-              setShowPayments(false);
-              setShowStatement(false);
-              setShowWithdraw(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
-            className="menu-link menu-toggle"
-          >
+        <li
+          onClick={() => handleOpenSidebarItem("report")}
+          className={`menu-item ${sidebarItem === "report" ? "open" : ""}`}
+        >
+          <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Withdraw">Report</div>
           </a>
@@ -731,24 +560,10 @@ const MasterSidebar = () => {
       ) : null}
       {adminRole === "master" && (
         <li
-          ref={settingsRef}
-          className={`menu-item ${showSettings ? "open" : ""}`}
+          onClick={() => handleOpenSidebarItem("setting")}
+          className={`menu-item ${sidebarItem === "setting" ? "open" : ""}`}
         >
-          <a
-            onClick={() => {
-              setShowSettings((prev) => !prev);
-              setShowReport(false);
-              setShowExposure(false);
-              setShowClients(false);
-              setShowDeposit(false);
-              setShowPayments(false);
-              setShowStatement(false);
-              setShowWithdraw(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
-            className="menu-link menu-toggle"
-          >
+          <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Withdraw">Settings</div>
           </a>
@@ -758,7 +573,6 @@ const MasterSidebar = () => {
               <a
                 onClick={() => {
                   setShowSocialLink(true);
-                  setShowSettings(false);
                   setShowSidebar(false);
                 }}
                 className="menu-link"

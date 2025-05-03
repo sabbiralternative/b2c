@@ -4,16 +4,8 @@ import { useState } from "react";
 import { AdminRole } from "../../../constant/constant";
 
 const HyperMasterSidebar = () => {
-  const [showBranch, setShowBranch] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [showExposure, setShowExposure] = useState(false);
-  const [showReport, setShowReport] = useState(false);
-  const [showDeposit, setShowDeposit] = useState(false);
-  const [showWithdraw, setShowWithdraw] = useState(false);
-  const [showClients, setShowClients] = useState(false);
-  const [showBonus, setShowBonus] = useState(false);
-  const [showStaff, setShowStaff] = useState(false);
-  const [showWhiteLabel, setShowWhiteLabel] = useState(false);
+  const [sidebarItem, setSidebarItem] = useState(null);
+
   const {
     setShowAddSuperBranch,
     setShowSidebar,
@@ -24,6 +16,14 @@ const HyperMasterSidebar = () => {
     adminRole,
     setAddWhiteLabel,
   } = useContextState();
+
+  const handleOpenSidebarItem = (item) => {
+    if (sidebarItem === item) {
+      setSidebarItem(null);
+    } else {
+      setSidebarItem(item);
+    }
+  };
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>
       <li className="menu-item">
@@ -37,20 +37,11 @@ const HyperMasterSidebar = () => {
         </Link>
       </li>
       {adminRole === "admin_master" && (
-        <li className={`menu-item ${showWhiteLabel ? "open" : ""}`}>
+        <li
+          className={`menu-item ${sidebarItem === "whiteLabel" ? "open" : ""}`}
+        >
           <a
-            onClick={() => {
-              setShowWhiteLabel((prev) => !prev);
-              setShowBranch(false);
-              setShowSettings(false);
-              setShowExposure(false);
-              setShowReport(false);
-              setShowDeposit(false);
-              setShowWithdraw(false);
-              setShowClients(false);
-              setShowBonus(false);
-              setShowStaff(false);
-            }}
+            onClick={() => handleOpenSidebarItem("whiteLabel")}
             className="menu-link menu-toggle"
           >
             <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -87,20 +78,9 @@ const HyperMasterSidebar = () => {
       {adminRole !== "admin_master" && (
         <>
           {" "}
-          <li className={`menu-item ${showBranch ? "open" : ""}`}>
+          <li className={`menu-item ${sidebarItem === "branch" ? "open" : ""}`}>
             <a
-              onClick={() => {
-                setShowBranch((prev) => !prev);
-                setShowSettings(false);
-                setShowExposure(false);
-                setShowReport(false);
-                setShowDeposit(false);
-                setShowWithdraw(false);
-                setShowClients(false);
-                setShowBonus(false);
-                setShowStaff(false);
-                setShowWhiteLabel(false);
-              }}
+              onClick={() => handleOpenSidebarItem("branch")}
               className="menu-link menu-toggle"
             >
               <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -161,20 +141,9 @@ const HyperMasterSidebar = () => {
                 )}
             </ul>
           </li>
-          <li className={`menu-item ${showClients ? "open" : ""}`}>
+          <li className={`menu-item ${sidebarItem === "client" ? "open" : ""}`}>
             <a
-              onClick={() => {
-                setShowClients((prev) => !prev);
-                setShowBranch(false);
-                setShowSettings(false);
-                setShowExposure(false);
-                setShowReport(false);
-                setShowDeposit(false);
-                setShowWithdraw(false);
-                setShowBonus(false);
-                setShowStaff(false);
-                setShowWhiteLabel(false);
-              }}
+              onClick={() => handleOpenSidebarItem("client")}
               className="menu-link menu-toggle"
             >
               <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -235,21 +204,11 @@ const HyperMasterSidebar = () => {
             </ul>
           </li>
           {adminRole !== AdminRole.super_master && (
-            <li className={`menu-item ${showSettings ? "open" : ""}`}>
+            <li
+              className={`menu-item ${sidebarItem === "setting" ? "open" : ""}`}
+            >
               <a
-                style={{}}
-                onClick={() => {
-                  setShowSettings((prev) => !prev);
-                  setShowBranch(false);
-                  setShowExposure(false);
-                  setShowReport(false);
-                  setShowDeposit(false);
-                  setShowWithdraw(false);
-                  setShowClients(false);
-                  setShowBonus(false);
-                  setShowStaff(false);
-                  setShowWhiteLabel(false);
-                }}
+                onClick={() => handleOpenSidebarItem("setting")}
                 className="menu-link menu-toggle"
               >
                 <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -309,21 +268,9 @@ const HyperMasterSidebar = () => {
         </>
       )}
 
-      <li className={`menu-item ${showExposure ? "open" : ""}`}>
+      <li className={`menu-item ${sidebarItem === "exposure" ? "open" : ""}`}>
         <a
-          style={{}}
-          onClick={() => {
-            setShowExposure((prev) => !prev);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowReport(false);
-            setShowDeposit(false);
-            setShowWithdraw(false);
-            setShowClients(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
-          }}
+          onClick={() => handleOpenSidebarItem("exposure")}
           className="menu-link menu-toggle"
         >
           <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -354,21 +301,9 @@ const HyperMasterSidebar = () => {
           </li>
         </ul>
       </li>
-      <li className={`menu-item ${showReport ? "open" : ""}`}>
+      <li className={`menu-item ${sidebarItem === "report" ? "open" : ""}`}>
         <a
-          style={{}}
-          onClick={() => {
-            setShowReport((prev) => !prev);
-            setShowExposure(false);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowDeposit(false);
-            setShowWithdraw(false);
-            setShowClients(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
-          }}
+          onClick={() => handleOpenSidebarItem("report")}
           className="menu-link menu-toggle"
         >
           <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -457,21 +392,9 @@ const HyperMasterSidebar = () => {
           </li>
         </ul>
       </li>
-      <li className={`menu-item ${showDeposit ? "open" : ""}`}>
+      <li className={`menu-item ${sidebarItem === "deposit" ? "open" : ""}`}>
         <a
-          style={{}}
-          onClick={() => {
-            setShowDeposit((prev) => !prev);
-            setShowReport(false);
-            setShowExposure(false);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowClients(false);
-            setShowWithdraw(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
-          }}
+          onClick={() => handleOpenSidebarItem("deposit")}
           className="menu-link menu-toggle"
         >
           <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -522,21 +445,9 @@ const HyperMasterSidebar = () => {
           </li>
         </ul>
       </li>
-      <li className={`menu-item ${showWithdraw ? "open" : ""}`}>
+      <li className={`menu-item ${sidebarItem === "withdraw" ? "open" : ""}`}>
         <a
-          style={{}}
-          onClick={() => {
-            setShowWithdraw((prev) => !prev);
-            setShowDeposit(false);
-            setShowReport(false);
-            setShowExposure(false);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowClients(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
-          }}
+          onClick={() => handleOpenSidebarItem("withdraw")}
           className="menu-link menu-toggle"
         >
           <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -579,22 +490,9 @@ const HyperMasterSidebar = () => {
       </li>
       {adminRole !== "admin_master" && adminRole !== AdminRole.super_master && (
         <>
-          <li className={`menu-item ${showBonus ? "open" : ""}`}>
+          <li className={`menu-item ${sidebarItem === "bonus" ? "open" : ""}`}>
             <a
-              style={{}}
-              onClick={() => {
-                setShowBonus((prev) => !prev);
-                setShowStaff(false);
-                setShowWithdraw(false);
-                setShowDeposit(false);
-                setShowReport(false);
-                setShowExposure(false);
-                setShowSettings(false);
-                setShowBranch(false);
-                setShowClients(false);
-                setShowStaff(false);
-                setShowWhiteLabel(false);
-              }}
+              onClick={() => handleOpenSidebarItem("bonus")}
               className="menu-link menu-toggle"
             >
               <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -655,21 +553,9 @@ const HyperMasterSidebar = () => {
               </li>
             </ul>
           </li>
-          <li className={`menu-item ${showStaff ? "open" : ""}`}>
+          <li className={`menu-item ${sidebarItem === "staff" ? "open" : ""}`}>
             <a
-              style={{}}
-              onClick={() => {
-                setShowStaff((prev) => !prev);
-                setShowWithdraw(false);
-                setShowDeposit(false);
-                setShowReport(false);
-                setShowExposure(false);
-                setShowSettings(false);
-                setShowBranch(false);
-                setShowClients(false);
-                setShowBonus(false);
-                setShowWhiteLabel(false);
-              }}
+              onClick={() => handleOpenSidebarItem("staff")}
               className="menu-link menu-toggle"
             >
               <i className="menu-icon tf-icons bx bx-layout"></i>

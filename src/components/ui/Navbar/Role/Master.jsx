@@ -7,6 +7,8 @@ import { jwtDecode } from "jwt-decode";
 import { AdminRole } from "../../../../constant/constant";
 
 const Master = () => {
+  const [navList, setNavList] = useState(null);
+
   const [depositPermission, setDepositPermission] = useState(false);
   const [withdrawPermission, setWithdrawPermission] = useState(false);
   const [clientPermission, setClientPermission] = useState(false);
@@ -15,17 +17,9 @@ const Master = () => {
   const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
   const { dwCount } = useGetDWCount();
-  const [showClients, setShowClients] = useState(false);
-  const [showPayments, setShowPayments] = useState(false);
-  const [showDeposit, setShowDeposit] = useState(false);
-  const [showWithdraw, setShowWithdraw] = useState(false);
-  const [showExposure, setShowExposure] = useState(false);
-  const [showReport, setShowReport] = useState(false);
-  const [showBonus, setShowBonus] = useState(false);
-  const [showStaff, setShowStaff] = useState(false);
+
   const [depositReport, setDepositReport] = useState(false);
 
-  const [showSettings, setShowSettings] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -60,15 +54,7 @@ const Master = () => {
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
-    setShowClients(false);
-    setShowDeposit(false);
-    setShowPayments(false);
-    setShowWithdraw(false);
-    setShowExposure(false);
-    setShowReport(false);
-    setShowSettings(false);
-    setShowBonus(false);
-    setShowStaff(false);
+    setNavList(null);
   };
 
   useEffect(() => {
@@ -115,9 +101,9 @@ const Master = () => {
       (adminRole === "admin_staff" && clientPermission) ||
       (adminRole === "branch_staff" && clientPermission) ? (
         <li
-          onMouseEnter={() => setShowClients(true)}
-          onMouseLeave={() => setShowClients(false)}
-          className={`menu-item ${showClients ? "open" : ""}`}
+          onMouseEnter={() => setNavList("client")}
+          onMouseLeave={() => setNavList(null)}
+          className={`menu-item ${navList === "client" ? "open" : ""}`}
         >
           <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -190,9 +176,9 @@ const Master = () => {
       {adminRole === "master" ||
       (adminRole === "branch_staff" && paymentPermission) ? (
         <li
-          onMouseEnter={() => setShowPayments(true)}
-          onMouseLeave={() => setShowPayments(false)}
-          className={`menu-item ${showPayments ? "open" : ""}`}
+          onMouseEnter={() => setNavList("payment")}
+          onMouseLeave={() => setNavList(null)}
+          className={`menu-item ${navList === "payment" ? "open" : ""}`}
         >
           <a className="menu-link menu-toggle">
             <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -266,9 +252,9 @@ const Master = () => {
       ) : null}
       {depositPermission && (
         <li
-          onMouseEnter={() => setShowDeposit(true)}
-          onMouseLeave={() => setShowDeposit(false)}
-          className={`menu-item ${showDeposit ? "open" : ""}`}
+          onMouseEnter={() => setNavList("deposit")}
+          onMouseLeave={() => setNavList(null)}
+          className={`menu-item ${navList === "deposit" ? "open" : ""}`}
         >
           <a className="menu-link menu-toggle">
             {depositCount ? (
@@ -335,9 +321,9 @@ const Master = () => {
       )}
       {withdrawPermission && (
         <li
-          onMouseEnter={() => setShowWithdraw(true)}
-          onMouseLeave={() => setShowWithdraw(false)}
-          className={`menu-item ${showWithdraw ? "open" : ""}`}
+          onMouseEnter={() => setNavList("withdraw")}
+          onMouseLeave={() => setNavList(null)}
+          className={`menu-item ${navList === "withdraw" ? "open" : ""}`}
         >
           <a className="menu-link menu-toggle">
             {withdrawCount ? (
@@ -396,9 +382,9 @@ const Master = () => {
       {adminRole === "master" && (
         <>
           <li
-            onMouseEnter={() => setShowBonus(true)}
-            onMouseLeave={() => setShowBonus(false)}
-            className={`menu-item ${showBonus ? "open" : ""}`}
+            onMouseEnter={() => setNavList("bonus")}
+            onMouseLeave={() => setNavList(null)}
+            className={`menu-item ${navList === "bonus" ? "open" : ""}`}
           >
             <a className="menu-link menu-toggle">
               {dwCount?.claimCount !== 0 ? (
@@ -454,9 +440,9 @@ const Master = () => {
           </li>
 
           <li
-            onMouseEnter={() => setShowExposure(true)}
-            onMouseLeave={() => setShowExposure(false)}
-            className={`menu-item ${showExposure ? "open" : ""}`}
+            onMouseEnter={() => setNavList("exposure")}
+            onMouseLeave={() => setNavList(null)}
+            className={`menu-item ${navList === "exposure" ? "open" : ""}`}
           >
             <a
               style={{
@@ -493,9 +479,9 @@ const Master = () => {
             </ul>
           </li>
           <li
-            onMouseEnter={() => setShowStaff(true)}
-            onMouseLeave={() => setShowStaff(false)}
-            className={`menu-item ${showStaff ? "open" : ""}`}
+            onMouseEnter={() => setNavList("staff")}
+            onMouseLeave={() => setNavList(null)}
+            className={`menu-item ${navList === "staff" ? "open" : ""}`}
           >
             <a className="menu-link menu-toggle">
               <i className="menu-icon tf-icons bx bx-layout"></i>
@@ -527,9 +513,9 @@ const Master = () => {
       (adminRole === "admin_staff" && reportPermission) ||
       (adminRole === "branch_staff" && reportPermission) ? (
         <li
-          onMouseEnter={() => setShowReport(true)}
-          onMouseLeave={() => setShowReport(false)}
-          className={`menu-item ${showReport ? "open" : ""}`}
+          onMouseEnter={() => setNavList("report")}
+          onMouseLeave={() => setNavList(null)}
+          className={`menu-item ${navList === "report" ? "open" : ""}`}
         >
           <a
             style={{
@@ -728,9 +714,9 @@ const Master = () => {
 
       {adminRole === "master" && (
         <li
-          onMouseEnter={() => setShowSettings(true)}
-          onMouseLeave={() => setShowSettings(false)}
-          className={`menu-item ${showSettings ? "open" : ""}`}
+          onMouseEnter={() => setNavList("setting")}
+          onMouseLeave={() => setNavList(null)}
+          className={`menu-item ${navList === "setting" ? "open" : ""}`}
         >
           <a
             style={{
@@ -749,7 +735,6 @@ const Master = () => {
               <a
                 onClick={() => {
                   setShowSocialLink(true);
-                  setShowSettings(false);
                 }}
                 className="menu-link"
               >

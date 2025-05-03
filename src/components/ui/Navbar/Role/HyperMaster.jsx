@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import useContextState from "../../../../hooks/useContextState";
 import { Link, useNavigate } from "react-router-dom";
-import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
 import { AdminRole } from "../../../../constant/constant";
@@ -15,6 +14,7 @@ const HyperMaster = () => {
     adminRole,
     setAddWhiteLabel,
   } = useContextState();
+  const [navList, setNavList] = useState(null);
   const [depositReport, setDepositReport] = useState(false);
   const { dwCount } = useGetDWCount();
   const [showClients, setShowClients] = useState(false);
@@ -57,50 +57,6 @@ const HyperMaster = () => {
   }, [depositCount, withdrawCount, playSound, dwCount]);
   /* Sound notification end */
 
-  const clientsRef = useRef();
-  useCloseModalClickOutside(clientsRef, () => {
-    setShowClients(false);
-  });
-
-  const depositRef = useRef();
-  useCloseModalClickOutside(depositRef, () => {
-    setShowDeposit(false);
-  });
-  const withdrawRef = useRef();
-  useCloseModalClickOutside(withdrawRef, () => {
-    setShowWithdraw(false);
-  });
-
-  const settingsRef = useRef();
-  useCloseModalClickOutside(settingsRef, () => {
-    setShowSettings(false);
-  });
-  const branchRef = useRef();
-  useCloseModalClickOutside(branchRef, () => {
-    setShowBranch(false);
-  });
-  const exposureRef = useRef();
-  useCloseModalClickOutside(exposureRef, () => {
-    setShowExposure(false);
-  });
-  const reportRef = useRef();
-  useCloseModalClickOutside(reportRef, () => {
-    setShowReport(false);
-  });
-
-  const bonusRef = useRef();
-  useCloseModalClickOutside(bonusRef, () => {
-    setShowBonus(false);
-  });
-  const staffRef = useRef();
-  useCloseModalClickOutside(staffRef, () => {
-    setShowStaff(false);
-  });
-  const whiteLabelRef = useRef();
-  useCloseModalClickOutside(whiteLabelRef, () => {
-    setShowWhiteLabel(false);
-  });
-
   const handleNavigate = (link) => {
     navigate(`/${link}`);
     setShowBranch(false);
@@ -125,7 +81,8 @@ const HyperMaster = () => {
 
       {adminRole === "admin_master" && (
         <li
-          ref={whiteLabelRef}
+          onMouseEnter={() => setShowWhiteLabel(true)}
+          onMouseLeave={() => setShowWhiteLabel(false)}
           className={`menu-item ${showWhiteLabel ? "open" : ""}`}
         >
           <a
@@ -133,18 +90,6 @@ const HyperMaster = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-            }}
-            onMouseEnter={() => {
-              setShowWhiteLabel(true);
-              setShowBranch(false);
-              setShowWithdraw(false);
-              setShowDeposit(false);
-              setShowExposure(false);
-              setShowSettings(false);
-              setShowReport(false);
-              setShowClients(false);
-              setShowBonus(false);
-              setShowStaff(false);
             }}
             className="menu-link menu-toggle"
           >
@@ -182,7 +127,8 @@ const HyperMaster = () => {
       {adminRole !== "admin_master" && (
         <>
           <li
-            ref={branchRef}
+            onMouseEnter={() => setShowBranch(true)}
+            onMouseLeave={() => setShowBranch(false)}
             className={`menu-item ${showBranch ? "open" : ""}`}
           >
             <a
@@ -190,18 +136,6 @@ const HyperMaster = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}
-              onMouseEnter={() => {
-                setShowBranch(true);
-                setShowWithdraw(false);
-                setShowDeposit(false);
-                setShowExposure(false);
-                setShowSettings(false);
-                setShowReport(false);
-                setShowClients(false);
-                setShowBonus(false);
-                setShowStaff(false);
-                setShowWhiteLabel(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -273,7 +207,8 @@ const HyperMaster = () => {
             </ul>
           </li>
           <li
-            ref={clientsRef}
+            onMouseEnter={() => setShowClients(true)}
+            onMouseLeave={() => setShowClients(false)}
             className={`menu-item ${showClients ? "open" : ""}`}
           >
             <a
@@ -281,19 +216,6 @@ const HyperMaster = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-              }}
-              onMouseEnter={() => {
-                setShowClients(true);
-                setShowBranch(false);
-                setShowWithdraw(false);
-                setShowDeposit(false);
-                setShowExposure(false);
-                setShowSettings(false);
-                setShowReport(false);
-                setShowBonus(false);
-                setShowBonus(false);
-                setShowStaff(false);
-                setShowWhiteLabel(false);
               }}
               className="menu-link menu-toggle"
             >
@@ -363,7 +285,8 @@ const HyperMaster = () => {
           </li>
           {adminRole !== AdminRole.super_master && (
             <li
-              ref={settingsRef}
+              onMouseEnter={() => setShowSettings(true)}
+              onMouseLeave={() => setShowSettings(false)}
               className={`menu-item ${showSettings ? "open" : ""}`}
             >
               <a
@@ -371,18 +294,6 @@ const HyperMaster = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                }}
-                onMouseEnter={() => {
-                  setShowSettings(true);
-                  setShowWithdraw(false);
-                  setShowDeposit(false);
-                  setShowExposure(false);
-                  setShowBranch(false);
-                  setShowReport(false);
-                  setShowClients(false);
-                  setShowBonus(false);
-                  setShowStaff(false);
-                  setShowWhiteLabel(false);
                 }}
                 className="menu-link menu-toggle"
               >
@@ -453,7 +364,8 @@ const HyperMaster = () => {
       )}
 
       <li
-        ref={exposureRef}
+        onMouseEnter={() => setShowExposure(true)}
+        onMouseLeave={() => setShowExposure(false)}
         className={`menu-item ${showExposure ? "open" : ""}`}
       >
         <a
@@ -461,18 +373,6 @@ const HyperMaster = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowExposure(true);
-            setShowSettings(false);
-            setShowWithdraw(false);
-            setShowDeposit(false);
-            setShowBranch(false);
-            setShowReport(false);
-            setShowClients(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -502,24 +402,16 @@ const HyperMaster = () => {
           </li>
         </ul>
       </li>
-      <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
+      <li
+        onMouseEnter={() => setShowReport(true)}
+        onMouseLeave={() => setShowReport(false)}
+        className={`menu-item ${showReport ? "open" : ""}`}
+      >
         <a
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-          }}
-          onMouseEnter={() => {
-            setShowReport(true);
-            setShowExposure(false);
-            setShowWithdraw(false);
-            setShowDeposit(false);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowClients(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
           }}
           className="menu-link menu-toggle"
         >
@@ -683,22 +575,12 @@ const HyperMaster = () => {
           </li>
         </ul>
       </li>
-      <li ref={depositRef} className={`menu-item ${showDeposit ? "open" : ""}`}>
-        <a
-          onMouseEnter={() => {
-            setShowDeposit(true);
-            setShowReport(false);
-            setShowClients(false);
-            setShowExposure(false);
-            setShowWithdraw(false);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
-          }}
-          className="menu-link menu-toggle"
-        >
+      <li
+        onMouseEnter={() => setShowDeposit(true)}
+        onMouseLeave={() => setShowDeposit(false)}
+        className={`menu-item ${showDeposit ? "open" : ""}`}
+      >
+        <a className="menu-link menu-toggle">
           {depositCount ? (
             <span
               style={{
@@ -761,24 +643,11 @@ const HyperMaster = () => {
         </ul>
       </li>
       <li
-        ref={withdrawRef}
+        onMouseEnter={() => setShowWithdraw(true)}
+        onMouseLeave={() => setShowWithdraw(false)}
         className={`menu-item ${showWithdraw ? "open" : ""}`}
       >
-        <a
-          onMouseEnter={() => {
-            setShowWithdraw(true);
-            setShowDeposit(false);
-            setShowReport(false);
-            setShowExposure(false);
-            setShowClients(false);
-            setShowSettings(false);
-            setShowBranch(false);
-            setShowBonus(false);
-            setShowStaff(false);
-            setShowWhiteLabel(false);
-          }}
-          className="menu-link menu-toggle"
-        >
+        <a className="menu-link menu-toggle">
           {withdrawCount ? (
             <span
               style={{
@@ -833,22 +702,12 @@ const HyperMaster = () => {
 
       {adminRole !== "admin_master" && adminRole !== AdminRole.super_master && (
         <>
-          <li ref={bonusRef} className={`menu-item ${showBonus ? "open" : ""}`}>
-            <a
-              onMouseEnter={() => {
-                setShowBonus(true);
-                setShowWithdraw(false);
-                setShowDeposit(false);
-                setShowReport(false);
-                setShowExposure(false);
-                setShowClients(false);
-                setShowSettings(false);
-                setShowBranch(false);
-                setShowStaff(false);
-                setShowWhiteLabel(false);
-              }}
-              className="menu-link menu-toggle"
-            >
+          <li
+            onMouseEnter={() => setShowBonus(true)}
+            onMouseLeave={() => setShowBonus(false)}
+            className={`menu-item ${showBonus ? "open" : ""}`}
+          >
+            <a className="menu-link menu-toggle">
               <i className="menu-icon tf-icons bx bx-layout"></i>
 
               <div data-i18n="Withdraw">Bonus</div>
@@ -903,22 +762,12 @@ const HyperMaster = () => {
               </li>
             </ul>
           </li>
-          <li ref={staffRef} className={`menu-item ${showStaff ? "open" : ""}`}>
-            <a
-              onMouseEnter={() => {
-                setShowStaff(true);
-                setShowBonus(false);
-                setShowWithdraw(false);
-                setShowDeposit(false);
-                setShowReport(false);
-                setShowExposure(false);
-                setShowClients(false);
-                setShowSettings(false);
-                setShowBranch(false);
-                setShowWhiteLabel(false);
-              }}
-              className="menu-link menu-toggle"
-            >
+          <li
+            onMouseEnter={() => setShowStaff(true)}
+            onMouseLeave={() => setShowStaff(false)}
+            className={`menu-item ${showStaff ? "open" : ""}`}
+          >
+            <a className="menu-link menu-toggle">
               <i className="menu-icon tf-icons bx bx-layout"></i>
 
               <div data-i18n="Withdraw">Staff</div>

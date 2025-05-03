@@ -14,10 +14,9 @@ import { AdminRole } from "../../../constant/constant";
 
 const AddBanner = () => {
   const { data } = useWhiteLabel({
-    type: "viewWhitelabelByBranch",
+    type: "viewWhitelabelByAdmin",
   });
 
-  console.log(data);
   const navigate = useNavigate();
   const { refetchAllBanners } = useGetViewAllBanner();
   const { register, handleSubmit, reset } = useForm();
