@@ -7,7 +7,9 @@ import { useLocation } from "react-router-dom";
 import moment from "moment";
 import DefaultDateButton from "../../Report/DefaultDateButton";
 import { defaultDate } from "../../../utils/defaultDate";
+import Slip from "../../../components/modal/Master/Deposit/Slip";
 const PNL = () => {
+  const [image, setImage] = useState("");
   const [type, setType] = useState("all");
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -54,228 +56,258 @@ const PNL = () => {
   };
 
   return (
-    <div className="container-xxl flex-grow-1 container-p-y">
-      {showBetsModal && (
-        <SettleBets
-          setShowBetsModal={setShowBetsModal}
-          marketId={marketId}
-          searchUser={downlineId}
-        />
-      )}
-      <div className="col-12">
-        <div className="card">
-          <div className="card-body">
-            <form
-              id="formValidationExamples"
-              className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
-              onSubmit={handleUserHistory}
-            >
-              <div className="col-md-6 col-12 mb-4">
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <div style={{ width: "100%" }}>
-                    <label htmlFor="flatpickr-range" className="form-label">
-                      From Date
-                    </label>
-                    <DatePicker
-                      style={{ width: "100%" }}
-                      format="yyyy-MM-dd"
-                      editable
-                      onChange={(date) => setStartDate(date)}
-                      value={startDate}
-                      block
-                    />
+    <>
+      {image && <Slip setShowImage={setImage} image={image} />}
+      <div className="container-xxl flex-grow-1 container-p-y">
+        {showBetsModal && (
+          <SettleBets
+            setShowBetsModal={setShowBetsModal}
+            marketId={marketId}
+            searchUser={downlineId}
+          />
+        )}
+        <div className="col-12">
+          <div className="card">
+            <div className="card-body">
+              <form
+                id="formValidationExamples"
+                className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
+                onSubmit={handleUserHistory}
+              >
+                <div className="col-md-6 col-12 mb-4">
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <div style={{ width: "100%" }}>
+                      <label htmlFor="flatpickr-range" className="form-label">
+                        From Date
+                      </label>
+                      <DatePicker
+                        style={{ width: "100%" }}
+                        format="yyyy-MM-dd"
+                        editable
+                        onChange={(date) => setStartDate(date)}
+                        value={startDate}
+                        block
+                      />
+                    </div>
+                    <div style={{ width: "100%" }}>
+                      <label htmlFor="flatpickr-range" className="form-label">
+                        To Date
+                      </label>
+                      <DatePicker
+                        style={{ width: "100%" }}
+                        format="yyyy-MM-dd"
+                        editable
+                        onChange={(date) => setEndDate(date)}
+                        value={endDate}
+                        block
+                      />
+                    </div>
                   </div>
-                  <div style={{ width: "100%" }}>
-                    <label htmlFor="flatpickr-range" className="form-label">
-                      To Date
-                    </label>
-                    <DatePicker
-                      style={{ width: "100%" }}
-                      format="yyyy-MM-dd"
-                      editable
-                      onChange={(date) => setEndDate(date)}
-                      value={endDate}
-                      block
-                    />
-                  </div>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                  />
                 </div>
-                <DefaultDateButton
-                  setEndDate={setEndDate}
-                  setStartDate={setStartDate}
-                />
-              </div>
 
-              <div className="col-12">
-                <input
-                  type="submit"
-                  name="submit"
-                  className="btn btn-primary"
-                  value="Search"
-                />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <hr className="my-3" />
-      <div className="card">
-        <div
-          className="card-header"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <h5 style={{ margin: "0px" }}>Profit & Loss</h5>
-            <div style={{ display: "flex", gap: "20px", marginLeft: "20px" }}>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "10px" }}
-              >
-                <p style={{ margin: "0px" }}>All</p>
-                <input
-                  onChange={(e) => setType(e.target.value)}
-                  checked={type === "all"}
-                  name="transaction"
-                  type="radio"
-                  value="all"
-                />
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "10px" }}
-              >
-                <p style={{ margin: "0px" }}>Deposit</p>
-                <input
-                  onChange={(e) => setType(e.target.value)}
-                  checked={type === "deposit"}
-                  name="transaction"
-                  type="radio"
-                  value="deposit"
-                />
-              </div>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "10px" }}
-              >
-                <p style={{ margin: "0px" }}>Withdraw</p>
-                <input
-                  onChange={(e) => setType(e.target.value)}
-                  checked={type === "withdraw"}
-                  name="transaction"
-                  type="radio"
-                  value="withdraw"
-                />
-              </div>
+                <div className="col-12">
+                  <input
+                    type="submit"
+                    name="submit"
+                    className="btn btn-primary"
+                    value="Search"
+                  />
+                </div>
+              </form>
             </div>
           </div>
-          <Pagination
-            prev
-            next
-            size="md"
-            total={meta?.totalRecords}
-            limit={meta?.recordsPerPage}
-            activePage={activePage}
-            onChangePage={setActivePage}
-            maxButtons={5}
-            ellipsis
-            boundaryLinks
-          />
         </div>
-        <div className="table-responsive text-nowrap">
-          {pnl?.result?.length > 0 && (
-            <table className="table table-hover table-sm">
-              <thead>
-                <tr>
-                  <th style={{ textAlign: "right" }}>PL</th>
-                  <th style={{ textAlign: "right" }}>Balance</th>
-                  <th style={{ textAlign: "left" }}>Date</th>
 
-                  <th style={{ textAlign: "left" }}>Narration</th>
-                  <th style={{ textAlign: "left" }}>Type</th>
-                </tr>
-              </thead>
-              <tbody className="table-border-bottom-0">
-                {pnl?.result?.map((item, i) => {
-                  const handleSettledBets = (statement_type, market_id) => {
-                    if (statement_type === "Betting P&L") {
-                      setMarketId(market_id);
-                      setShowBetsModal(true);
-                    }
-                  };
-                  return (
-                    <tr
-                      key={i}
-                      style={{
-                        cursor: `${
-                          item?.statement_type === "Betting P&L"
-                            ? "pointer"
-                            : ""
-                        }`,
-                      }}
-                      onClick={() =>
-                        handleSettledBets(item?.statement_type, item?.market_id)
+        <hr className="my-3" />
+        <div className="card">
+          <div
+            className="card-header"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <h5 style={{ margin: "0px" }}>Profit & Loss</h5>
+              <div style={{ display: "flex", gap: "20px", marginLeft: "20px" }}>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <p style={{ margin: "0px" }}>All</p>
+                  <input
+                    onChange={(e) => setType(e.target.value)}
+                    checked={type === "all"}
+                    name="transaction"
+                    type="radio"
+                    value="all"
+                  />
+                </div>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <p style={{ margin: "0px" }}>Deposit</p>
+                  <input
+                    onChange={(e) => setType(e.target.value)}
+                    checked={type === "deposit"}
+                    name="transaction"
+                    type="radio"
+                    value="deposit"
+                  />
+                </div>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <p style={{ margin: "0px" }}>Withdraw</p>
+                  <input
+                    onChange={(e) => setType(e.target.value)}
+                    checked={type === "withdraw"}
+                    name="transaction"
+                    type="radio"
+                    value="withdraw"
+                  />
+                </div>
+              </div>
+            </div>
+            <Pagination
+              prev
+              next
+              size="md"
+              total={meta?.totalRecords}
+              limit={meta?.recordsPerPage}
+              activePage={activePage}
+              onChangePage={setActivePage}
+              maxButtons={5}
+              ellipsis
+              boundaryLinks
+            />
+          </div>
+          <div className="table-responsive text-nowrap">
+            {pnl?.result?.length > 0 && (
+              <table className="table table-hover table-sm">
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: "right" }}>PL</th>
+                    <th style={{ textAlign: "right" }}>Balance</th>
+                    {type === "withdraw" || type === "deposit" ? (
+                      <th style={{ textAlign: "left" }}>Slip</th>
+                    ) : null}
+
+                    <th style={{ textAlign: "left" }}>Date</th>
+
+                    <th style={{ textAlign: "left" }}>Narration</th>
+                    <th style={{ textAlign: "left" }}>Type</th>
+                  </tr>
+                </thead>
+                <tbody className="table-border-bottom-0">
+                  {pnl?.result?.map((item, i) => {
+                    const handleSettledBets = (statement_type, market_id) => {
+                      if (statement_type === "Betting P&L") {
+                        setMarketId(market_id);
+                        setShowBetsModal(true);
                       }
-                    >
-                      <td
-                        style={{ textAlign: "right" }}
-                        className={`
+                    };
+                    return (
+                      <tr
+                        key={i}
+                        style={{
+                          cursor: `${
+                            item?.statement_type === "Betting P&L"
+                              ? "pointer"
+                              : ""
+                          }`,
+                        }}
+                      >
+                        <td
+                          onClick={() =>
+                            handleSettledBets(
+                              item?.statement_type,
+                              item?.market_id
+                            )
+                          }
+                          style={{ textAlign: "right" }}
+                          className={`
                         ${defineColor(item?.transfer_type, item?.pl)}
                         `}
-                      >
-                        <strong>{item?.pl}</strong>
-                      </td>
-                      <td style={{ textAlign: "right" }}>{item?.balance}</td>
-                      <td style={{ textAlign: "left" }}>{item?.date_added}</td>
-                      <td style={{ textAlign: "left" }}>{item?.narration}</td>
-                      <td style={{ textAlign: "left" }}>
-                        {item?.transfer_type}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
+                        >
+                          <strong>{item?.pl}</strong>
+                        </td>
+                        <td style={{ textAlign: "right" }}>{item?.balance}</td>
+                        {type === "deposit" || type === "withdraw" ? (
+                          <td>
+                            {item?.image ? (
+                              <span
+                                onClick={() => {
+                                  setImage(item?.image);
+                                }}
+                                style={{ color: "#346cee", cursor: "pointer" }}
+                              >
+                                View
+                              </span>
+                            ) : (
+                              "N/A"
+                            )}
+                          </td>
+                        ) : null}
 
-          {pnl?.result?.length === 0 && (
-            <p
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              No records found for given date
-            </p>
-          )}
+                        <td style={{ textAlign: "left" }}>
+                          {item?.date_added}
+                        </td>
 
-          {meta && (
-            <div
-              style={{
-                marginTop: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "end",
-              }}
-            >
-              <Pagination
-                prev
-                next
-                size="md"
-                total={meta?.totalRecords}
-                limit={meta?.recordsPerPage}
-                activePage={activePage}
-                onChangePage={setActivePage}
-                maxButtons={5}
-                ellipsis
-                boundaryLinks
-              />
-            </div>
-          )}
+                        <td style={{ textAlign: "left" }}>{item?.narration}</td>
+                        <td style={{ textAlign: "left" }}>
+                          {item?.transfer_type}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+
+            {pnl?.result?.length === 0 && (
+              <p
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                No records found for given date
+              </p>
+            )}
+
+            {meta && (
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "end",
+                }}
+              >
+                <Pagination
+                  prev
+                  next
+                  size="md"
+                  total={meta?.totalRecords}
+                  limit={meta?.recordsPerPage}
+                  activePage={activePage}
+                  onChangePage={setActivePage}
+                  maxButtons={5}
+                  ellipsis
+                  boundaryLinks
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
