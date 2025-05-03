@@ -387,7 +387,7 @@ const HyperMasterSidebar = () => {
             </Link>
           </li>
 
-          <li className="menu-item">
+          {/* <li className="menu-item">
             <Link
               onClick={() => setShowSidebar(false)}
               to="/deposit-report"
@@ -395,6 +395,54 @@ const HyperMasterSidebar = () => {
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
               <div data-i18n="Add Banner">Deposit Report</div>
+            </Link>
+          </li> */}
+
+          <li className="menu-item">
+            <Link to="/deposit-report" className="menu-link">
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">Deposit Report</div>
+            </Link>
+          </li>
+          {adminRole === AdminRole.hyper_master && (
+            <>
+              <li className="menu-item">
+                <Link to="/1st-deposit-report" className="menu-link">
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Completed Withdraw">1st Deposit Report</div>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/2nd-deposit-report" className="menu-link">
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Completed Withdraw">2nd Deposit Report</div>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/3rd-deposit-report" className="menu-link">
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Completed Withdraw">3rd Deposit Report</div>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/4th-deposit-report" className="menu-link">
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Completed Withdraw">4th Deposit Report</div>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link to="/5th-deposit-report" className="menu-link">
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Completed Withdraw">5th Deposit Report</div>
+                </Link>
+              </li>
+            </>
+          )}
+
+          <li className="menu-item">
+            <Link to="/no-deposit-report" className="menu-link">
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Completed Withdraw">No Deposit Report</div>
             </Link>
           </li>
           <li className="menu-item">

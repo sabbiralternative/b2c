@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import useContextState from "../../../hooks/useContextState";
 import { jwtDecode } from "jwt-decode";
+import { AdminRole } from "../../../constant/constant";
 
 const MasterSidebar = () => {
   const [depositPermission, setDepositPermission] = useState(false);
@@ -605,7 +606,8 @@ const MasterSidebar = () => {
       )}
 
       {adminRole === "master" ||
-      (adminRole === "branch_staff" && paymentPermission) ? (
+      (adminRole === "branch_staff" && paymentPermission) ||
+      (adminRole === AdminRole.admin_staff && paymentPermission) ? (
         <li ref={reportRef} className={`menu-item ${showReport ? "open" : ""}`}>
           <a
             onClick={() => {
