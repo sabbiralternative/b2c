@@ -9,12 +9,19 @@ import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewA
 import { useNavigate } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
+import { useWhiteLabel } from "../../../hooks/AdminMaster/whiteLabel";
+import { AdminRole } from "../../../constant/constant";
 
 const AddBanner = () => {
+  const { data } = useWhiteLabel({
+    type: "viewWhitelabelByBranch",
+  });
+
+  console.log(data);
   const navigate = useNavigate();
   const { refetchAllBanners } = useGetViewAllBanner();
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -45,13 +52,12 @@ const AddBanner = () => {
     }
   }, [image, token]);
 
-  const onSubmit = async ({ status, priority }) => {
+  const onSubmit = async (fieldValues) => {
     const generatedToken = handleRandomToken();
     const payload = {
+      ...fieldValues,
       type: "addBanner",
-      status,
       banner_link: filePath,
-      priority,
       token: generatedToken,
     };
     const res = await axios.post(API.banner, payload, {
@@ -78,6 +84,35 @@ const AddBanner = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
+                {adminRole === AdminRole.hyper_master &&
+                  data?.result?.length > 0 && (
+                    <div className="row mb-3" id="bank_account_name_div">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-name"
+                      >
+                        Site *
+                      </label>
+                      <div className="col-sm-10">
+                        <select
+                          defaultValue=""
+                          {...register("site", {
+                            required: true,
+                          })}
+                          className="form-control"
+                        >
+                          <option disabled value="">
+                            Select Site
+                          </option>
+                          {data?.result?.map((site) => (
+                            <option key={site?.site_url} value={site?.site_url}>
+                              {site?.site_url}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
                 {!loading && !filePath && (
                   <div className="row mb-3" id="bank_account_name_div">
                     <label
@@ -170,7 +205,7 @@ const AddBanner = () => {
                   >
                     Status
                   </label>
-                  <div className="col-sm-9" data-select2-id="26">
+                  <div className="col-sm-10" data-select2-id="26">
                     <div className="position-relative" data-select2-id="25">
                       <select
                         {...register("status", {

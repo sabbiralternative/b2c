@@ -196,6 +196,9 @@ const PNL = () => {
                     {type === "withdraw" || type === "deposit" ? (
                       <th style={{ textAlign: "left" }}>Slip</th>
                     ) : null}
+                    {type === "withdraw" && (
+                      <th style={{ textAlign: "left" }}>Bank Details</th>
+                    )}
 
                     <th style={{ textAlign: "left" }}>Date</th>
 
@@ -253,6 +256,11 @@ const PNL = () => {
                             )}
                           </td>
                         ) : null}
+                        {type === "withdraw" && (
+                          <td style={{ textAlign: "start" }}>
+                            {item?.bank_details}
+                          </td>
+                        )}
 
                         <td style={{ textAlign: "left" }}>
                           {item?.date_added}
