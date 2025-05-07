@@ -180,6 +180,7 @@ const AllClient = () => {
               <thead>
                 <tr>
                   <th>User Id</th>
+                  {data?.result?.[0]?.username2Visible && <th>Username</th>}
                   {adminRole == AdminRole.hyper_master ||
                   adminRole == AdminRole.admin_staff ? (
                     <th>Branch</th>
@@ -227,6 +228,7 @@ const AllClient = () => {
                         ></span>
                         <strong>{client?.userId}</strong>
                       </td>
+                      {client?.username2Visible && <td>{client?.username2}</td>}
                       {adminRole == AdminRole.hyper_master ||
                       adminRole == "admin_staff" ? (
                         <td>

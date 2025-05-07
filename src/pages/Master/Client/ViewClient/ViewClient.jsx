@@ -253,6 +253,8 @@ const ViewClient = () => {
                   <thead>
                     <tr>
                       <th>User Id</th>
+                      {clients?.[0]?.username2Visible && <th>Username</th>}
+
                       {adminRole == AdminRole.hyper_master ||
                       adminRole == "admin_staff" ? (
                         <th>Branch</th>
@@ -274,7 +276,6 @@ const ViewClient = () => {
                   </thead>
                   <tbody className="table-border-bottom-0">
                     {clients?.map((client, i) => {
-                      // console.log(client);
                       return (
                         <tr key={i}>
                           <td>
@@ -290,6 +291,10 @@ const ViewClient = () => {
                             ></span>
                             <strong>{client?.userId}</strong>
                           </td>
+                          {client?.username2Visible && (
+                            <td>{client?.username2}</td>
+                          )}
+
                           {adminRole == AdminRole.hyper_master ||
                           adminRole == "admin_staff" ? (
                             <td>
