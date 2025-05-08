@@ -285,7 +285,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                             />
                           </div>
                         </div>
-
+                        <div className="row mb-3" id="upi_account_name">
+                          <label
+                            className="col-sm-2 col-form-label"
+                            htmlFor="basic-default-company"
+                          >
+                            Sort
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              {...register("sort", {
+                                required: true,
+                              })}
+                              type="text"
+                              className="form-control"
+                              id="basic-default-company"
+                            />
+                          </div>
+                        </div>
                         <div className="row mb-3">
                           <label
                             className="col-sm-2 col-form-label"
@@ -402,7 +419,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Sort
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("sort", {
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
                     <div className="row mb-3">
                       <label
                         className="col-sm-2 col-form-label"
@@ -481,7 +515,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Sort
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("sort", {
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
                     <div className="row mb-3">
                       <label
                         className="col-sm-2 col-form-label"
@@ -618,7 +669,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Sort
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("sort", {
+                            required: true,
+                          })}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
                     <div className="row mb-3">
                       <label
                         className="col-sm-2 col-form-label"

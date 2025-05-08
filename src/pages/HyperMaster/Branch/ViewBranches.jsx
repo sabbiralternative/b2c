@@ -11,18 +11,23 @@ import ChangePassword from "../../../components/modal/ChangePassword";
 import ChangeStatus from "../../../components/modal/ChangeStatus";
 import CreditReference from "../../../components/modal/CreditReference";
 import { useState } from "react";
+import UpdateWhatsAppNumber from "../../../components/modal/UpdateWhatsAppNumber";
+import { AdminRole } from "../../../constant/constant";
 
 const ViewBranches = () => {
   const [id, setId] = useState("");
   const [role, setRole] = useState("");
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showCreditRef, setShowCreditRef] = useState(false);
+  const [showWhatsApp, setShowWhatsApp] = useState(false);
   const [downLineId, setDownLineId] = useState(false);
   const [showChangeStatus, setShowChangeStatus] = useState(false);
   const [registrationStatus, setRegistrationStatus] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
-  const { branches } = useGetAllBranch({ branch_type: "branch" });
+  const { branches, refetchAllBranch } = useGetAllBranch({
+    branch_type: "branch",
+  });
   const { token, adminRole } = useContextState();
   const navigate = useNavigate();
 
@@ -69,6 +74,15 @@ const ViewBranches = () => {
           role={role}
           setShowCreditRef={setShowCreditRef}
           downlineId={downLineId}
+        />
+      )}
+      {showWhatsApp && (
+        <UpdateWhatsAppNumber
+          id={id}
+          role={role}
+          setShowWhatsApp={setShowWhatsApp}
+          downlineId={downLineId}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showChangeStatus && (
@@ -257,6 +271,25 @@ const ViewBranches = () => {
                             L
                           </a>
                         )}
+                        &nbsp;
+                        {adminRole === AdminRole.hyper_master ||
+                        adminRole === AdminRole.admin_staff ? (
+                          <a
+                            style={{
+                              color: "white",
+                              backgroundColor: "green",
+                            }}
+                            onClick={() => {
+                              setShowWhatsApp(true);
+                              setDownLineId(branch?.username);
+                              setRole(branch?.role);
+                              setId(branch?.id);
+                            }}
+                            className="btn btn-icon btn-sm btn-read-only-login"
+                          >
+                            WA
+                          </a>
+                        ) : null}
                       </td>
                     </tr>
                   );

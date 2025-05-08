@@ -712,39 +712,40 @@ const Master = () => {
         </li>
       ) : null}
 
-      {adminRole === "master" && (
-        <li
-          onMouseEnter={() => setNavList("setting")}
-          onMouseLeave={() => setNavList(null)}
-          className={`menu-item ${navList === "setting" ? "open" : ""}`}
-        >
-          <a
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            className="menu-link menu-toggle"
+      {adminRole != AdminRole.master &&
+        adminRole !== AdminRole.branch_staff && (
+          <li
+            onMouseEnter={() => setNavList("setting")}
+            onMouseLeave={() => setNavList(null)}
+            className={`menu-item ${navList === "setting" ? "open" : ""}`}
           >
-            <i className="menu-icon tf-icons bx bx-layout"></i>
-            <div data-i18n="Settings">Settings</div>
-          </a>
+            <a
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Settings</div>
+            </a>
 
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a
-                onClick={() => {
-                  setShowSocialLink(true);
-                }}
-                className="menu-link"
-              >
-                <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="View Banners">Social Links</div>
-              </a>
-            </li>
-          </ul>
-        </li>
-      )}
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => {
+                    setShowSocialLink(true);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Social Links</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+        )}
     </ul>
   );
 };

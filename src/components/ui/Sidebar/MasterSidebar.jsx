@@ -558,32 +558,33 @@ const MasterSidebar = () => {
           </ul>
         </li>
       ) : null}
-      {adminRole === "master" && (
-        <li
-          onClick={() => handleOpenSidebarItem("setting")}
-          className={`menu-item ${sidebarItem === "setting" ? "open" : ""}`}
-        >
-          <a className="menu-link menu-toggle">
-            <i className="menu-icon tf-icons bx bx-layout"></i>
-            <div data-i18n="Withdraw">Settings</div>
-          </a>
+      {adminRole !== AdminRole.master &&
+        adminRole !== AdminRole.branch_staff && (
+          <li
+            onClick={() => handleOpenSidebarItem("setting")}
+            className={`menu-item ${sidebarItem === "setting" ? "open" : ""}`}
+          >
+            <a className="menu-link menu-toggle">
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Withdraw">Settings</div>
+            </a>
 
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a
-                onClick={() => {
-                  setShowSocialLink(true);
-                  setShowSidebar(false);
-                }}
-                className="menu-link"
-              >
-                <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="Pending Withdraw">Social Links</div>
-              </a>
-            </li>
-          </ul>
-        </li>
-      )}
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => {
+                    setShowSocialLink(true);
+                    setShowSidebar(false);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Pending Withdraw">Social Links</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+        )}
     </ul>
   );
 };

@@ -87,7 +87,24 @@ const AddWhatsappDeposit = () => {
                     />
                   </div>
                 </div>
-
+                <div className="row mb-3">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    Sort
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      {...register("sort", {
+                        required: true,
+                      })}
+                      type="number"
+                      className="form-control"
+                      id="basic-default-company"
+                    />
+                  </div>
+                </div>
                 <div className="row mb-3">
                   <label
                     className="col-sm-2 col-form-label"
