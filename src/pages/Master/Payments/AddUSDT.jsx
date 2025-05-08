@@ -217,16 +217,17 @@ const AddUSDT = () => {
                     />
                   </div>
                 </div>
+
                 <div className="row mb-3">
                   <label
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-company"
                   >
-                    Sort
+                    Maximum Deposit Amount
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("sort", {
+                      {...register("max_amount", {
                         required: true,
                       })}
                       type="number"
@@ -240,11 +241,11 @@ const AddUSDT = () => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-company"
                   >
-                    Maximum Deposit Amount
+                    Sort
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("max_amount", {
+                      {...register("sort", {
                         required: true,
                       })}
                       type="number"

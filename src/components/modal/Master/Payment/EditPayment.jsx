@@ -90,6 +90,7 @@ const EditPayment = ({ setShowEditPayment }) => {
           title: currentPayment?.title,
           max_amount: currentPayment?.max_amount,
           min_amount: currentPayment?.min_amount,
+          sort: currentPayment?.sort,
         });
       }
       if (currentPayment?.type === "bank") {
@@ -100,6 +101,7 @@ const EditPayment = ({ setShowEditPayment }) => {
           max_amount: currentPayment?.max_amount,
           account_number: currentPayment?.account_number,
           bank_account_name: currentPayment?.bank_account_name,
+          sort: currentPayment?.sort,
         });
       }
       if (currentPayment?.type === "upi") {
@@ -108,6 +110,7 @@ const EditPayment = ({ setShowEditPayment }) => {
           upi_account_name: currentPayment?.upi_account_name,
           min_amount: currentPayment?.min_amount,
           max_amount: currentPayment?.max_amount,
+          sort: currentPayment?.sort,
         });
       }
       if (currentPayment?.type === "usdt") {
@@ -116,6 +119,7 @@ const EditPayment = ({ setShowEditPayment }) => {
           usdt_value: currentPayment?.usdt_value,
           min_amount: currentPayment?.min_amount,
           max_amount: currentPayment?.max_amount,
+          sort: currentPayment?.sort,
         });
       }
       if (currentPayment?.type === "whatsapp") {
@@ -124,6 +128,7 @@ const EditPayment = ({ setShowEditPayment }) => {
           min_amount: currentPayment?.min_amount,
           max_amount: currentPayment?.max_amount,
           transaction_code: currentPayment?.transaction_code,
+          sort: currentPayment?.sort,
         });
       }
     }
@@ -285,24 +290,7 @@ const EditPayment = ({ setShowEditPayment }) => {
                             />
                           </div>
                         </div>
-                        <div className="row mb-3" id="upi_account_name">
-                          <label
-                            className="col-sm-2 col-form-label"
-                            htmlFor="basic-default-company"
-                          >
-                            Sort
-                          </label>
-                          <div className="col-sm-10">
-                            <input
-                              {...register("sort", {
-                                required: true,
-                              })}
-                              type="text"
-                              className="form-control"
-                              id="basic-default-company"
-                            />
-                          </div>
-                        </div>
+
                         <div className="row mb-3">
                           <label
                             className="col-sm-2 col-form-label"
@@ -316,6 +304,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                                 required: true,
                               })}
                               type="number"
+                              className="form-control"
+                              id="basic-default-company"
+                            />
+                          </div>
+                        </div>
+                        <div className="row mb-3" id="upi_account_name">
+                          <label
+                            className="col-sm-2 col-form-label"
+                            htmlFor="basic-default-company"
+                          >
+                            Sort
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              {...register("sort", {
+                                required: true,
+                              })}
+                              type="text"
                               className="form-control"
                               id="basic-default-company"
                             />
@@ -419,24 +425,7 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-                    <div className="row mb-3" id="upi_account_name">
-                      <label
-                        className="col-sm-2 col-form-label"
-                        htmlFor="basic-default-company"
-                      >
-                        Sort
-                      </label>
-                      <div className="col-sm-10">
-                        <input
-                          {...register("sort", {
-                            required: true,
-                          })}
-                          type="text"
-                          className="form-control"
-                          id="basic-default-company"
-                        />
-                      </div>
-                    </div>
+
                     <div className="row mb-3">
                       <label
                         className="col-sm-2 col-form-label"
@@ -450,6 +439,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                             required: true,
                           })}
                           type="number"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Sort
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("sort", {
+                            required: true,
+                          })}
+                          type="text"
                           className="form-control"
                           id="basic-default-company"
                         />
@@ -515,24 +522,7 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-                    <div className="row mb-3" id="upi_account_name">
-                      <label
-                        className="col-sm-2 col-form-label"
-                        htmlFor="basic-default-company"
-                      >
-                        Sort
-                      </label>
-                      <div className="col-sm-10">
-                        <input
-                          {...register("sort", {
-                            required: true,
-                          })}
-                          type="text"
-                          className="form-control"
-                          id="basic-default-company"
-                        />
-                      </div>
-                    </div>
+
                     <div className="row mb-3">
                       <label
                         className="col-sm-2 col-form-label"
@@ -546,6 +536,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                             required: true,
                           })}
                           type="number"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Sort
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("sort", {
+                            required: true,
+                          })}
+                          type="text"
                           className="form-control"
                           id="basic-default-company"
                         />
@@ -624,6 +632,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                             required: true,
                           })}
                           type="number"
+                          className="form-control"
+                          id="basic-default-company"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3" id="upi_account_name">
+                      <label
+                        className="col-sm-2 col-form-label"
+                        htmlFor="basic-default-company"
+                      >
+                        Sort
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("sort", {
+                            required: true,
+                          })}
+                          type="text"
                           className="form-control"
                           id="basic-default-company"
                         />
@@ -726,6 +752,24 @@ const EditPayment = ({ setShowEditPayment }) => {
                     </div>
                   </>
                 )}
+                <div className="row mb-3" id="upi_account_name">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    Transaction Code
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      {...register("transaction_code", {
+                        required: true,
+                      })}
+                      type="text"
+                      className="form-control"
+                      id="basic-default-company"
+                    />
+                  </div>
+                </div>
               </div>
               <div className="modal-footer">
                 <button

@@ -112,7 +112,7 @@ const UpdateWhatsAppNumber = ({
                           required: true,
                           value: data?.result?.whatsapp,
                         })}
-                        type="number"
+                        type="text"
                         className="form-control"
                         id="basic-default-name"
                       />
