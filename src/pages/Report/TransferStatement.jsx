@@ -195,6 +195,7 @@ const TransferStatement = () => {
                     <thead className="table-dark">
                       <tr>
                         <th>Date Added</th>
+                        <th>Login Name</th>
                         <th>Amount</th>
                         <th>Narration</th>
                         <th>From To</th>
@@ -216,7 +217,7 @@ const TransferStatement = () => {
                             >
                               {data?.amount}
                             </td>
-
+                            <td>{data?.loginname}</td>
                             <td>{data?.narration}</td>
                             <td>{data?.fromTo}</td>
                             <td>{data?.transfer_type}</td>

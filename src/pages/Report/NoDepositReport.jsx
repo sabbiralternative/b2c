@@ -148,6 +148,7 @@ const NoDepositReport = () => {
                   <thead className="table-dark">
                     <tr>
                       <th>User Id</th>
+                      <th>Login Name</th>
                       {adminRole === AdminRole.hyper_master ||
                       adminRole === AdminRole.admin_master ? (
                         <>
@@ -174,6 +175,7 @@ const NoDepositReport = () => {
                           >
                             {data?.userId}
                           </td>
+                          <td>{data?.loginname}</td>
                           {adminRole === AdminRole.hyper_master ||
                           adminRole === AdminRole.admin_master ? (
                             <>

@@ -104,6 +104,7 @@ const PendingDeposit = () => {
             <thead className="table-dark">
               <tr>
                 <th>User Id</th>
+                <th>Login Name</th>
                 {adminRole === AdminRole.admin_staff ||
                 adminRole === AdminRole.hyper_master ||
                 adminRole === AdminRole.super_master ? (
@@ -152,6 +153,7 @@ const PendingDeposit = () => {
                       />
                       <strong>{item?.userId}</strong>
                     </td>
+                    <td>{item?.loginnameVisible && item?.loginname}</td>
                     {adminRole === AdminRole.admin_staff ||
                     adminRole === AdminRole.hyper_master ||
                     adminRole === AdminRole.super_master ? (
