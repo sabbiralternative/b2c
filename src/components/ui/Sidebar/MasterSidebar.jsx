@@ -225,6 +225,21 @@ const MasterSidebar = () => {
                 <div data-i18n="Add Payment Method">Add UPI</div>
               </a>
             </li>
+            {adminRole !== AdminRole.master &&
+              adminRole !== AdminRole.branch_staff && (
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-whatsapp-deposit")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">
+                      Add Whatsapp Deposit
+                    </div>
+                  </a>
+                </li>
+              )}
+
             <li className="menu-item">
               <a
                 onClick={() => handleNavigate("add-USDT")}
