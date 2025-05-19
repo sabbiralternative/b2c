@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import {
@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 
 const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
+  const [disabled, setDisabled] = useState(false);
   const { adminRole } = useContextState();
   const { register, handleSubmit, reset } = useForm();
   const { mutate: updateChecker } = useUpdateSingleChecker();
@@ -25,6 +26,7 @@ const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
   });
 
   const handleUpdateStatus = ({ status }) => {
+    setDisabled(true);
     const payload = {
       type: "updateStaffStatus",
       staff_id: updateStatusId,
@@ -34,10 +36,12 @@ const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
     updateChecker(payload, {
       onSuccess: (data) => {
         if (data?.status) {
+          setDisabled(false);
           refetch();
           setUpdateStatusId(null);
           toast.success(data?.result);
         } else {
+          setDisabled(false);
           toast.error(data?.error);
         }
       },
@@ -108,7 +112,11 @@ const UpdateChecker = ({ setUpdateStatusId, updateStatusId }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Save changes
                 </button>
               </div>

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import axios from "axios";
 import { API } from "../../../../api";
@@ -9,6 +9,7 @@ import useContextState from "../../../../hooks/useContextState";
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const AddBranch = ({ setShowAddBranch }) => {
+  const [disabled, setDisabled] = useState(false);
   /* close modal click outside */
   const addBranchRef = useRef();
   useCloseModalClickOutside(addBranchRef, () => {
@@ -21,6 +22,7 @@ const AddBranch = ({ setShowAddBranch }) => {
 
   /* add branch submit */
   const onSubmit = async ({ username, password, notes }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -41,11 +43,13 @@ const AddBranch = ({ setShowAddBranch }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchAllBranch();
       toast.success("Branch created successfully");
       reset();
       setShowAddBranch(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -144,7 +148,11 @@ const AddBranch = ({ setShowAddBranch }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Add
                 </button>
               </div>

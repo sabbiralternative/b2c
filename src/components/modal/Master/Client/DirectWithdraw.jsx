@@ -11,6 +11,7 @@ import useBalance from "../../../../hooks/useBalance";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 
 const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
+  const [disabled, setDisabled] = useState(false);
   const { clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   let payload = {
@@ -45,6 +46,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   };
 
   const onSubmit = async (values) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       id,
@@ -60,12 +62,14 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchBalance();
       toast.success(data?.result?.message);
       refetchClients();
       reset();
       setDirectWithdraw(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -310,7 +314,11 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Withdraw
                 </button>
               </div>

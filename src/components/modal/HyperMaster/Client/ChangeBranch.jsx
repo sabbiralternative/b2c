@@ -14,6 +14,7 @@ const ChangeBranch = ({
   id,
   refetchClient,
 }) => {
+  const [disabled, setDisabled] = useState(false);
   const { token } = useContextState();
   const [activeBranchId, setActiveBranchId] = useState(null);
 
@@ -40,6 +41,7 @@ const ChangeBranch = ({
 
   /* handle edit user lock */
   const handleChangeUserColor = async (e) => {
+    setDisabled(true);
     e.preventDefault();
     const generatedToken = handleRandomToken();
     let payload = {
@@ -58,10 +60,12 @@ const ChangeBranch = ({
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       setShowChangeBranch(false);
       refetchClient();
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -122,7 +126,11 @@ const ChangeBranch = ({
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Save changes
                 </button>
               </div>

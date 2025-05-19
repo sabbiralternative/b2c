@@ -4,11 +4,12 @@ import toast from "react-hot-toast";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const Withdraw = ({ downlineId, setShowWithdraw, id, role }) => {
+  const [disabled, setDisabled] = useState(false);
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
 
   /* close modal click outside */
@@ -21,6 +22,7 @@ const Withdraw = ({ downlineId, setShowWithdraw, id, role }) => {
 
   /* handle withdraw submit */
   const onSubmit = async ({ amount, remark }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -43,11 +45,13 @@ const Withdraw = ({ downlineId, setShowWithdraw, id, role }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       reset();
       refetchAllBranch();
       setShowWithdraw(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -127,7 +131,11 @@ const Withdraw = ({ downlineId, setShowWithdraw, id, role }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Withdraw
                 </button>
               </div>

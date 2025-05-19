@@ -18,6 +18,7 @@ const ChangeStatus = ({
   role,
   id,
 }) => {
+  const [disabled, setDisabled] = useState(false);
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
@@ -69,6 +70,7 @@ const ChangeStatus = ({
 
   /* handle edit user lock */
   const handleChangeUserLock = async (e) => {
+    setDisabled(true);
     e.preventDefault();
     const generatedToken = handleRandomToken();
     let payload = {
@@ -95,6 +97,7 @@ const ChangeStatus = ({
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       if (adminRole === "hyper_master") {
         refetchAllBranch();
       } else {
@@ -106,6 +109,7 @@ const ChangeStatus = ({
       setShowChangeStatus(false);
       refetchStatus();
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -205,7 +209,11 @@ const ChangeStatus = ({
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Save changes
                 </button>
               </div>

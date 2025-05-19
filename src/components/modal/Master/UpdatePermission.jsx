@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
@@ -10,6 +10,7 @@ import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside"
 import handleRandomToken from "../../../utils/handleRandomToken";
 
 const UpdatePermission = ({ setShowPermission, showPermission }) => {
+  const [disabled, setDisabled] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const updatePermissionRef = useRef();
   useCloseModalClickOutside(updatePermissionRef, () => {
@@ -25,6 +26,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
   const { refetch } = useGetAllChecker();
 
   const onSubmit = async (values) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       ...values,
@@ -36,11 +38,13 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
     updatePermission(payload, {
       onSuccess: (data) => {
         if (data?.success) {
+          setDisabled(false);
           refetch();
           toast.success(data?.result);
           reset();
           setShowPermission(false);
         } else {
+          setDisabled(false);
           toast.error(data?.error);
         }
       },
@@ -231,7 +235,11 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Update
                 </button>
               </div>

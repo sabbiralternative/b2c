@@ -6,8 +6,10 @@ import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMetho
 import { useForm } from "react-hook-form";
 import useContextState from "../../../hooks/useContextState";
 import handleRandomToken from "../../../utils/handleRandomToken";
+import { useState } from "react";
 
 const AddUPI = () => {
+  const [disabled, setDisabled] = useState(false);
   const payload = {
     type: "viewPaymentMethods",
   };
@@ -18,6 +20,7 @@ const AddUPI = () => {
 
   /* add upi */
   const onSubmit = async (values) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       type: "addPayment",
@@ -30,11 +33,13 @@ const AddUPI = () => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchPaymentMethods();
       toast.success(data?.result?.message);
       reset();
       navigate("/view-payment-method");
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -163,6 +168,7 @@ const AddUPI = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

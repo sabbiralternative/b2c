@@ -8,6 +8,7 @@ import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 
 const Login = () => {
+  const [disabled, setDisabled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { setGetToken } = useContextState();
@@ -25,6 +26,7 @@ const Login = () => {
 
   /* handle login user */
   const onSubmit = async ({ username, password }) => {
+    setDisabled(true);
     /* Random token generator */
     // const generatedToken = handleRandomToken();
     const loginData = {
@@ -48,6 +50,7 @@ const Login = () => {
         console.log(data);
         setGetToken((prev) => !prev);
         if (data?.success) {
+          setDisabled(false);
           if (data?.result?.changePassword) {
             navigate(`/change-password?token=${data?.result?.token}`);
           }
@@ -76,6 +79,7 @@ const Login = () => {
             }
           }
         } else {
+          setDisabled(false);
           setErrorMessage(data?.error?.status?.[0]?.description);
         }
       });
@@ -234,6 +238,7 @@ const Login = () => {
 
                 <div className="mb-3">
                   <input
+                    disabled={disabled}
                     className="btn btn-primary d-grid w-100"
                     name="submit"
                     type="submit"

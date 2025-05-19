@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
@@ -9,6 +9,7 @@ import useContextState from "../../../../hooks/useContextState";
 import useGetSingleDeposit from "../../../../hooks/Master/Deposit/useGetSingleDeposit";
 
 const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
+  const [disabled, setDisabled] = useState(false);
   const editDepositRef = useRef();
   useCloseModalClickOutside(editDepositRef, () => {
     setEditPendingDeposit(false);
@@ -22,6 +23,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
 
   const { singleDeposit } = useGetSingleDeposit(payload);
   const onSubmit = async ({ remark, status }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       depositId: downLineId,
@@ -36,11 +38,13 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
     const data = res.data;
 
     if (data?.success) {
+      setDisabled(false);
       refetchAllUTRs();
       toast.success(data?.result?.message);
       reset();
       setEditPendingDeposit(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -165,7 +169,11 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Update
                 </button>
               </div>

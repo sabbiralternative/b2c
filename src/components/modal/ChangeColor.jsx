@@ -11,6 +11,7 @@ import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 import useGetClient from "../../hooks/Master/Client/useGetClient";
 
 const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
+  const [disabled, setDisabled] = useState(false);
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
@@ -46,6 +47,7 @@ const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
 
   /* handle edit user lock */
   const handleChangeUserColor = async (e) => {
+    setDisabled(true);
     e.preventDefault();
     const generatedToken = handleRandomToken();
     let payload = {
@@ -64,6 +66,7 @@ const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       if (adminRole === "hyper_master") {
         refetchAllBranch();
       } else {
@@ -75,6 +78,7 @@ const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
       setShowColor(false);
       refetchStatus();
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -142,7 +146,11 @@ const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Save changes
                 </button>
               </div>

@@ -5,12 +5,13 @@ import axios from "axios";
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useGetCurrentRef from "../../hooks/useGetCurrentRef";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useGetClient from "../../hooks/Master/Client/useGetClient";
 
 const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
+  const [disabled, setDisabled] = useState(false);
   /* close modal click outside */
   const creditRef = useRef();
   useCloseModalClickOutside(creditRef, () => {
@@ -30,6 +31,7 @@ const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
 
   /* handle update credit reference */
   const onSubmit = async ({ amount }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       id,
@@ -44,12 +46,14 @@ const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchAllBranch();
       refetchClients();
       toast.success(data?.result?.message);
       reset();
       setShowCreditRef(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -125,7 +129,11 @@ const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Update
                 </button>
               </div>

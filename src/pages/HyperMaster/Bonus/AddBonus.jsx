@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import { AdminRole } from "../../../constant/constant";
+import { useState } from "react";
 
 const AddBonus = () => {
+  const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const { token, adminRole } = useContextState();
@@ -20,16 +22,18 @@ const AddBonus = () => {
       ...value,
       token: generatedToken,
     };
-
+    setDisabled(true);
     const res = await axios.post(API.bonus, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       toast.success("Bonus added successfully");
       reset();
       navigate("/view-bonus");
     } else {
+      setDisabled(false);
       toast.error(value?.error?.description);
     }
   };
@@ -354,6 +358,7 @@ const AddBonus = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

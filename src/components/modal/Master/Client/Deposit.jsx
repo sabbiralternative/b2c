@@ -15,6 +15,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
     id,
     role,
   };
+  const [disabled, setDisabled] = useState(false);
   const { mutate: getUTR } = useUTR();
   const { paymentsMethods } = useGetPaymentMethod(payload);
   const depositRef = useRef();
@@ -64,6 +65,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
   }, [image, token, getUTR, reset]);
 
   const onSubmit = async ({ amount, utr, paymentId }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       id,
@@ -81,10 +83,12 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       reset();
       setClientDeposit(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -215,7 +219,9 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
                   Close
                 </button>
                 <button
-                  disabled={!filePath && errors?.utr?.type === "required"}
+                  disabled={
+                    (!filePath && errors?.utr?.type === "required") || disabled
+                  }
                   type="submit"
                   className="btn btn-primary"
                 >

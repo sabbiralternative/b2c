@@ -17,6 +17,7 @@ const AddBanner = () => {
     type: "viewWhitelabelByAdmin",
   });
 
+  const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
   const { refetchAllBanners } = useGetViewAllBanner();
   const { register, handleSubmit, reset } = useForm();
@@ -52,6 +53,7 @@ const AddBanner = () => {
   }, [image, token]);
 
   const onSubmit = async (fieldValues) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       ...fieldValues,
@@ -64,11 +66,13 @@ const AddBanner = () => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchAllBanners();
       toast.success(data?.result?.message);
       reset();
       navigate("/view-banner");
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -225,7 +229,7 @@ const AddBanner = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
-                      disabled={!filePath}
+                      disabled={!filePath || disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

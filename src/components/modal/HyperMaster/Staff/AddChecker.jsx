@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 
 const AddChecker = ({ setShowAddChecker }) => {
+  const [disabled, setDisabled] = useState(false);
   const { adminRole } = useContextState();
 
   const addCheckerRef = useRef();
@@ -25,6 +26,7 @@ const AddChecker = ({ setShowAddChecker }) => {
   });
 
   const onSubmit = async (values) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     let payload;
     if (adminRole === "master") {
@@ -45,11 +47,13 @@ const AddChecker = ({ setShowAddChecker }) => {
     addChecker(payload, {
       onSuccess: (data) => {
         if (data?.success) {
+          setDisabled(false);
           refetch();
           toast.success(data?.result);
           reset();
           setShowAddChecker(false);
         } else {
+          setDisabled(false);
           toast.error(data?.error);
         }
       },
@@ -284,7 +288,11 @@ const AddChecker = ({ setShowAddChecker }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Add
                 </button>
               </div>

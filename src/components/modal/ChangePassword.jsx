@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API } from "../../api";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import useContextState from "../../hooks/useContextState";
@@ -10,6 +10,7 @@ import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 
 const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
+  const [disabled, setDisabled] = useState(false);
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   const { refetchClient } = useRefetchClient(downlineId);
 
@@ -23,6 +24,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
   const { token, adminRole } = useContextState();
   /* handle change password */
   const onSubmit = async ({ password, confirmPassword, mpassword }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     // if (password !== confirmPassword) {
     //   return toast.error("Password did not matched");
@@ -51,6 +53,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
     const data = res.data;
     console.log(data);
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       reset();
       if (adminRole === "hyper_master") {
@@ -60,6 +63,7 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
       }
       setShowChangePassword(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -146,7 +150,11 @@ const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Save changes
                 </button>
               </div>

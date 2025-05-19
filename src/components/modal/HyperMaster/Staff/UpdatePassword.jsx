@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   useGetAllChecker,
@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 
 const UpdatePassword = ({ updatePasswordId, setUpdatePasswordId }) => {
+  const [disabled, setDisabled] = useState(false);
   const { adminRole } = useContextState();
   const updatePasswordRef = useRef();
   useCloseModalClickOutside(updatePasswordRef, () => {
@@ -20,6 +21,7 @@ const UpdatePassword = ({ updatePasswordId, setUpdatePasswordId }) => {
   const { refetch } = useGetAllChecker();
 
   const handleUpdatePassword = (values) => {
+    setDisabled(true);
     if (values?.password !== values?.confirmPassword) {
       return toast.error("Password did not matched!");
     }
@@ -32,11 +34,13 @@ const UpdatePassword = ({ updatePasswordId, setUpdatePasswordId }) => {
     updatePassword(payload, {
       onSuccess: (data) => {
         if (data?.success) {
+          setDisabled(true);
           toast.success(data?.result);
           reset();
           refetch();
           setUpdatePasswordId(null);
         } else {
+          setDisabled(false);
           toast.error(data?.error);
         }
       },
@@ -124,7 +128,11 @@ const UpdatePassword = ({ updatePasswordId, setUpdatePasswordId }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Save changes
                 </button>
               </div>

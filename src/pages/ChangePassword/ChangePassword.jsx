@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ChangePassword = () => {
+  const [disabled, setDisabled] = useState(false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get("token");
@@ -18,6 +19,7 @@ const ChangePassword = () => {
 
   /* handle change password  */
   const onSubmit = async ({ oldPassword, newPassword, confirmPassword }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -43,11 +45,13 @@ const ChangePassword = () => {
     const data = res.data;
 
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       navigate(
         `/change-password-success?transactionCode=${data?.result?.transaction_code}`
       );
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -215,6 +219,7 @@ const ChangePassword = () => {
 
                 <div className="mb-3">
                   <input
+                    disabled={disabled}
                     className="btn btn-primary d-grid w-100"
                     name="submit"
                     type="submit"

@@ -9,6 +9,7 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { useState } from "react";
 
 const ChangePasswordAfterLogin = () => {
+  const [disabled, setDisabled] = useState(false);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -18,6 +19,7 @@ const ChangePasswordAfterLogin = () => {
 
   /* handle change password  */
   const onSubmit = async ({ oldPassword, newPassword, confirmPassword }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -39,12 +41,14 @@ const ChangePasswordAfterLogin = () => {
     const data = res.data;
 
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       setTimeout(() => {
         handleLogOut();
         navigate("/login");
       }, 1000);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -164,6 +168,7 @@ const ChangePasswordAfterLogin = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

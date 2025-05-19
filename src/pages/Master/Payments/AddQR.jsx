@@ -11,6 +11,7 @@ import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 
 const AddQR = () => {
+  const [disabled, setDisabled] = useState(false);
   const { token } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
@@ -49,6 +50,7 @@ const AddQR = () => {
   }, [image, token]);
 
   const onSubmit = async (values) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       type: "addPayment",
@@ -63,11 +65,13 @@ const AddQR = () => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchPaymentMethods();
       toast.success(data?.result?.message);
       reset();
       navigate("/view-payment-method");
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -241,6 +245,7 @@ const AddQR = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

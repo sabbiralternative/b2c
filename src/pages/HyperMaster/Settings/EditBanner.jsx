@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
 import useGetSingleBanner from "../../../hooks/HyperMaster/Settings/useGetSingleBanner";
 import handleRandomToken from "../../../utils/handleRandomToken";
-import { API, Settings } from "../../../api";
+import { API } from "../../../api";
 import axios from "axios";
 import useContextState from "../../../hooks/useContextState";
 import useGetViewAllBanner from "../../../hooks/HyperMaster/Settings/useGetViewAllBanner";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const EditBanner = () => {
+  const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
   const { token } = useContextState();
   const { register, handleSubmit, reset } = useForm();
@@ -18,6 +20,7 @@ const EditBanner = () => {
 
   /* handle edit banner */
   const onSubmit = async ({ status, priority }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       type: "updateBanner",
@@ -31,11 +34,13 @@ const EditBanner = () => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchAllBanners();
       toast.success(data?.result?.message);
       reset();
       navigate("/view-banner");
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -111,6 +116,7 @@ const EditBanner = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

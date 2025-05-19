@@ -6,8 +6,10 @@ import { API } from "../../../api";
 import toast from "react-hot-toast";
 import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const AddBankAccount = () => {
+  const [disabled, setDisabled] = useState(false);
   const { token } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
@@ -18,6 +20,7 @@ const AddBankAccount = () => {
 
   /* handle add bank */
   const onSubmit = async (values) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       type: "addPayment",
@@ -30,11 +33,13 @@ const AddBankAccount = () => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchPaymentMethods();
       toast.success(data?.result?.message);
       reset();
       navigate("/view-payment-method");
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -201,6 +206,7 @@ const AddBankAccount = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

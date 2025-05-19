@@ -6,8 +6,10 @@ import axios from "axios";
 import { API } from "../../../api";
 import toast from "react-hot-toast";
 import { useWhiteLabel } from "../../../hooks/AdminMaster/whiteLabel";
+import { useState } from "react";
 
 const AddClient = () => {
+  const [disabled, setDisabled] = useState(false);
   const { data } = useWhiteLabel({
     type: "viewWhitelabelByBranch",
   });
@@ -18,6 +20,7 @@ const AddClient = () => {
 
   /* handle add client */
   const onSubmit = async (values) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       ...values,
@@ -29,10 +32,12 @@ const AddClient = () => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       toast.success("Client added successfully");
       reset();
       navigate("/view-client");
     } else {
+      setDisabled(false);
       toast.error(data?.error?.description);
     }
   };
@@ -180,6 +185,7 @@ const AddClient = () => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

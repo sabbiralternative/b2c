@@ -4,11 +4,12 @@ import handleRandomToken from "../../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
 const Deposit = ({ setShowDeposit, downlineId, role, id }) => {
+  const [disabled, setDisabled] = useState(false);
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   /* close modal click outside */
   const depositRef = useRef();
@@ -18,6 +19,7 @@ const Deposit = ({ setShowDeposit, downlineId, role, id }) => {
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
   const onSubmit = async ({ amount, remark }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -41,11 +43,13 @@ const Deposit = ({ setShowDeposit, downlineId, role, id }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       reset();
       refetchAllBranch();
       setShowDeposit(false);
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -125,7 +129,11 @@ const Deposit = ({ setShowDeposit, downlineId, role, id }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Deposit
                 </button>
               </div>

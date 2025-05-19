@@ -12,6 +12,7 @@ import { FaSpinner } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 
 const EditPayment = ({ setShowEditPayment }) => {
+  const [disabled, setDisabled] = useState(false);
   const { token, downLineId } = useContextState();
   const { currentPaymentStatus: currentPayment } =
     useGetCurrentPaymentStatus(downLineId);
@@ -33,6 +34,7 @@ const EditPayment = ({ setShowEditPayment }) => {
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
 
   const onSubmit = async (fieldValues) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     let payload = {
       type: "updatePayment",
@@ -50,10 +52,12 @@ const EditPayment = ({ setShowEditPayment }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchPaymentMethods();
       toast.success(data?.result?.message);
       setShowEditPayment();
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -780,7 +784,11 @@ const EditPayment = ({ setShowEditPayment }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Update
                 </button>
               </div>

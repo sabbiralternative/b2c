@@ -4,12 +4,13 @@ import { API } from "../../../../api";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetSingleViewBonus from "../../../../hooks/HyperMaster/Bonus/useGetSingleViewBonus";
 import { AdminRole } from "../../../../constant/constant";
 
 const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
+  const [disabled, setDisabled] = useState(false);
   const { singleBonus } = useGetSingleViewBonus(editBonusId);
   const editBonusRef = useRef();
   useCloseModalClickOutside(editBonusRef, () => {
@@ -20,6 +21,7 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   const { token, adminRole } = useContextState();
 
   const handleUpdateBonus = async (value) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       type: "updateBonus",
@@ -33,11 +35,13 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       refetchBonus();
       reset();
       toast.success("Bonus updated successfully");
       setEditBonusId("");
     } else {
+      setDisabled(false);
       toast.error(value?.error?.description);
     }
   };
@@ -376,6 +380,7 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
+                      disabled={disabled}
                       type="submit"
                       name="submit"
                       value="Submit"

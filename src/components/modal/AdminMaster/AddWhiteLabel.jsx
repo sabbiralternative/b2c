@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
@@ -9,6 +9,7 @@ import {
 } from "../../../hooks/AdminMaster/whiteLabel";
 
 const AddWhiteLabel = ({ setShowAddWhiteLabel }) => {
+  const [disabled, setDisabled] = useState(false);
   const addWhiteLabelRef = useRef();
   useCloseModalClickOutside(addWhiteLabelRef, () => {
     setShowAddWhiteLabel(false);
@@ -20,6 +21,7 @@ const AddWhiteLabel = ({ setShowAddWhiteLabel }) => {
   });
 
   const onSubmit = async (values) => {
+    setDisabled(true);
     if (values?.password !== values?.confirm_password) {
       return toast.error("Password did not matched!");
     }
@@ -42,11 +44,13 @@ const AddWhiteLabel = ({ setShowAddWhiteLabel }) => {
     addWhiteLabel(payload, {
       onSuccess: (data) => {
         if (data?.success) {
+          setDisabled(false);
           refetch();
           toast.success(data?.result);
           reset();
           setShowAddWhiteLabel(false);
         } else {
+          setDisabled(false);
           toast.error(data?.error);
         }
       },
@@ -347,7 +351,11 @@ const AddWhiteLabel = ({ setShowAddWhiteLabel }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Add
                 </button>
               </div>

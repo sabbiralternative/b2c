@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
@@ -9,6 +9,7 @@ import { API } from "../../../../api";
 import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
 
 const SocialLink = ({ setShowSocialLink }) => {
+  const [disabled, setDisabled] = useState(false);
   const { socialLinks, refetchAllSocialLinks, isLoading } =
     useGetAllSocialLink();
 
@@ -23,6 +24,7 @@ const SocialLink = ({ setShowSocialLink }) => {
 
   /* handle edit social link */
   const onSubmit = async ({ whatsapp, instagram, telegram }) => {
+    setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
@@ -54,11 +56,13 @@ const SocialLink = ({ setShowSocialLink }) => {
     });
     const data = res.data;
     if (data?.success) {
+      setDisabled(false);
       toast.success(data?.result?.message);
       reset();
       setShowSocialLink(false);
       refetchAllSocialLinks();
     } else {
+      setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
@@ -165,7 +169,11 @@ const SocialLink = ({ setShowSocialLink }) => {
                 >
                   Close
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  disabled={disabled}
+                  type="submit"
+                  className="btn btn-primary"
+                >
                   Update
                 </button>
               </div>
