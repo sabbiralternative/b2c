@@ -24,7 +24,7 @@ const NoDepositReportLast15Days = () => {
   const getNoDepositReportReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
-      type: "getND",
+      type: "getND15",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
