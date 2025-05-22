@@ -128,6 +128,7 @@ const WithdrawReport = () => {
                   <DefaultDateButton
                     setEndDate={setEndDate}
                     setStartDate={setStartDate}
+                    lastThreeMonth={true}
                   />
                   <div style={{ display: "flex", gap: "10px" }}>
                     <div

@@ -143,6 +143,7 @@ const TransferStatement = () => {
                   <DefaultDateButton
                     setEndDate={setEndDate}
                     setStartDate={setStartDate}
+                    lastThreeMonth={true}
                   />
                 </div>
                 {/* {adminRole !== "master" && (

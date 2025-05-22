@@ -1,16 +1,18 @@
 import moment from "moment/moment";
-import { DatePicker } from "rsuite";
+import { DatePicker, Pagination } from "rsuite";
 import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 
 const ClientBranchChangeReport = () => {
+  const [refetch, setRefetch] = useState(false);
+  const [activePage, setActivePage] = useState(1);
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const [viewClientData, setViewClientData] = useState(false);
@@ -28,6 +30,7 @@ const ClientBranchChangeReport = () => {
       toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
+      page: activePage,
     };
     const res = await axios.post(API.export, payload, {
       headers: {
@@ -57,13 +60,21 @@ const ClientBranchChangeReport = () => {
     }
   };
 
-  const handleToggleViewClient = async (e) => {
-    e.preventDefault();
+  const handleToggleViewClient = async () => {
     const data = await getClientBranchTargetReport();
-    setClientData(data?.result);
+    setClientData(data);
     setViewClientData(true);
   };
-  //   console.log(clientData);
+
+  useEffect(() => {
+    if (refetch) {
+      handleToggleViewClient();
+      setRefetch(false);
+    }
+  }, [activePage, refetch]);
+
+  const meta = clientData?.pagination;
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="col-12">
@@ -106,13 +117,14 @@ const ClientBranchChangeReport = () => {
                 <DefaultDateButton
                   setEndDate={setEndDate}
                   setStartDate={setStartDate}
+                  lastThreeMonth={true}
                 />
               </div>
 
               <div className="col-12">
                 <input
                   onClick={handleToggleViewClient}
-                  type="submit"
+                  type="button"
                   name="submit"
                   className="btn btn-primary"
                   value="View"
@@ -134,13 +146,36 @@ const ClientBranchChangeReport = () => {
       {viewClientData && (
         <>
           <hr className="my-3" />
-          {clientData?.length > 0 && (
-            <span>Number of clients : {clientData?.length}</span>
+          {clientData?.result?.length > 0 && (
+            <span>Number of clients : {meta?.totalRecords}</span>
           )}
 
-          {clientData?.length > 0 ? (
+          {clientData?.result?.length > 0 ? (
             <div className="card">
-              <h5 className="card-header">Client Branch Change Report</h5>
+              <div
+                className="card-header"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h5>Client Branch Change Report</h5>
+                <Pagination
+                  onClick={() => setRefetch(true)}
+                  prev
+                  next
+                  size="md"
+                  total={meta?.totalRecords}
+                  limit={meta?.recordsPerPage}
+                  activePage={activePage}
+                  onChangePage={setActivePage}
+                  maxButtons={5}
+                  ellipsis
+                  boundaryLinks
+                />
+              </div>
+
               <div className="table-responsive text-nowrap">
                 <table className="table table-hover table-sm">
                   <thead className="table-dark">
@@ -153,7 +188,7 @@ const ClientBranchChangeReport = () => {
                     </tr>
                   </thead>
                   <tbody className="table-border-bottom-0">
-                    {clientData?.map((data, i) => {
+                    {clientData?.result?.map((data, i) => {
                       return (
                         <tr key={i}>
                           <td
@@ -175,6 +210,30 @@ const ClientBranchChangeReport = () => {
                     })}
                   </tbody>
                 </table>
+                {meta && (
+                  <div
+                    style={{
+                      marginTop: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "end",
+                    }}
+                  >
+                    <Pagination
+                      onClick={() => setRefetch(true)}
+                      prev
+                      next
+                      size="md"
+                      total={meta?.totalRecords}
+                      limit={meta?.recordsPerPage}
+                      activePage={activePage}
+                      onChangePage={setActivePage}
+                      maxButtons={5}
+                      ellipsis
+                      boundaryLinks
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ) : (

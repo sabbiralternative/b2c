@@ -127,6 +127,7 @@ const ThirdDepositReport = () => {
                   <DefaultDateButton
                     setEndDate={setEndDate}
                     setStartDate={setStartDate}
+                    lastThreeMonth={true}
                   />
                 </div>
 
