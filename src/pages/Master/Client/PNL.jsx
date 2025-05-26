@@ -216,6 +216,12 @@ const PNL = () => {
                     };
                     return (
                       <tr
+                        onClick={() =>
+                          handleSettledBets(
+                            item?.statement_type,
+                            item?.market_id
+                          )
+                        }
                         key={i}
                         style={{
                           cursor: `${
@@ -226,12 +232,6 @@ const PNL = () => {
                         }}
                       >
                         <td
-                          onClick={() =>
-                            handleSettledBets(
-                              item?.statement_type,
-                              item?.market_id
-                            )
-                          }
                           style={{ textAlign: "right" }}
                           className={`
                         ${defineColor(item?.transfer_type, item?.pl)}
@@ -267,6 +267,7 @@ const PNL = () => {
                         </td>
 
                         <td style={{ textAlign: "left" }}>{item?.narration}</td>
+
                         <td style={{ textAlign: "left" }}>
                           {item?.transfer_type}
                         </td>
