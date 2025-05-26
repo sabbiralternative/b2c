@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import useContextState from "../../../../hooks/useContextState";
 import { useLocation, useNavigate } from "react-router-dom";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
-import { handleSplitUserName } from "../../../../utils/handleSplitUserName";
+// import { handleSplitUserName } from "../../../../utils/handleSplitUserName";
 import { useEffect, useRef, useState } from "react";
 import DirectWithdraw from "../../../../components/modal/Master/Client/DirectWithdraw";
 import ChangePassword from "../../../../components/modal/ChangePassword";
@@ -259,8 +259,8 @@ const ViewClient = () => {
                       adminRole == "admin_staff" ? (
                         <th>Branch</th>
                       ) : null}
-                      {adminRole !== "master" &&
-                        adminRole !== "admin_staff" && <th>Username</th>}
+                      {/* {adminRole !== "master" &&
+                        adminRole !== "admin_staff" && <th>Username</th>} */}
                       {adminRole !== "master" &&
                         adminRole !== "admin_staff" && <th>Mobile</th>}
                       <th>Balance</th>
@@ -301,14 +301,14 @@ const ViewClient = () => {
                               <strong>{client?.branch}</strong>
                             </td>
                           ) : null}
-                          {adminRole !== "master" &&
+                          {/* {adminRole !== "master" &&
                             adminRole !== "admin_staff" && (
                               <td>
                                 <strong>
                                   {handleSplitUserName(client?.username)}
                                 </strong>
                               </td>
-                            )}
+                            )} */}
 
                           {adminRole !== "master" &&
                             adminRole !== "admin_staff" && (

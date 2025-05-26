@@ -26,7 +26,12 @@ const EditPayment = ({ setShowEditPayment }) => {
   useCloseModalClickOutside(editPayment, () => {
     setShowEditPayment(false);
   });
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const payload = {
     type: "viewPaymentMethods",
@@ -746,12 +751,17 @@ const EditPayment = ({ setShowEditPayment }) => {
                       <div className="col-sm-10">
                         <input
                           {...register("transaction_code", {
-                            required: true,
+                            required: "Transaction code is required",
                           })}
                           type="number"
                           className="form-control"
                           id="basic-default-company"
                         />
+                        {errors.transaction_code && (
+                          <p className="text-danger">
+                            {errors.transaction_code.message}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </>
@@ -766,12 +776,17 @@ const EditPayment = ({ setShowEditPayment }) => {
                   <div className="col-sm-10">
                     <input
                       {...register("transaction_code", {
-                        required: true,
+                        required: "Transaction code is required",
                       })}
                       type="text"
                       className="form-control"
                       id="basic-default-company"
                     />
+                    {errors.transaction_code && (
+                      <p className="text-danger">
+                        {errors.transaction_code.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

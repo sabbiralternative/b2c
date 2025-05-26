@@ -152,7 +152,7 @@ const NoDepositReportLast15Days = () => {
                       {adminRole === AdminRole.hyper_master ||
                       adminRole === AdminRole.admin_master ? (
                         <>
-                          <th>User Name</th>
+                          {/* <th>User Name</th> */}
                           <th>Mobile</th>
                         </>
                       ) : null}
@@ -179,7 +179,7 @@ const NoDepositReportLast15Days = () => {
                           {adminRole === AdminRole.hyper_master ||
                           adminRole === AdminRole.admin_master ? (
                             <>
-                              <td>{data?.username}</td>
+                              {/* <td>{data?.username}</td> */}
                               <td>{data?.mobile}</td>
                             </>
                           ) : null}

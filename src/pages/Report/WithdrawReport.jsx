@@ -217,7 +217,7 @@ const WithdrawReport = () => {
                         adminRole === AdminRole.admin_master ? (
                           <>
                             <th>Mobile</th>
-                            <th>User Name</th>
+                            {/* <th>User Name</th> */}
                           </>
                         ) : null}
 
@@ -253,7 +253,7 @@ const WithdrawReport = () => {
                             adminRole === AdminRole.admin_master ? (
                               <>
                                 <td>{data?.mobile}</td>
-                                <td>{data?.loginname}</td>
+                                {/* <td>{data?.loginname}</td> */}
                               </>
                             ) : null}
                             <td>{data?.bank_account_name}</td>

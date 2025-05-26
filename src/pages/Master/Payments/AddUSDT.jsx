@@ -19,7 +19,12 @@ const AddUSDT = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   /* Upload image */
   useEffect(() => {
@@ -268,12 +273,17 @@ const AddUSDT = () => {
                   <div className="col-sm-10">
                     <input
                       {...register("transaction_code", {
-                        required: true,
+                        required: "Transaction code is required",
                       })}
                       type="number"
                       className="form-control"
                       id="basic-default-company"
                     />
+                    {errors.transaction_code && (
+                      <p className="text-danger">
+                        {errors.transaction_code.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 

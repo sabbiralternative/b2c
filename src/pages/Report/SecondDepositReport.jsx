@@ -169,7 +169,7 @@ const SecondDepositReport = () => {
                         {adminRole === AdminRole.hyper_master ||
                         adminRole === AdminRole.admin_master ? (
                           <>
-                            <th>User Name</th>
+                            {/* <th>User Name</th> */}
                             <th>Mobile</th>
                           </>
                         ) : null}
@@ -195,11 +195,11 @@ const SecondDepositReport = () => {
                             >
                               {data?.userId}
                             </td>
-                            <td>{data?.loginname}</td>s
+                            <td>{data?.loginname}</td>
                             {adminRole === AdminRole.hyper_master ||
                             adminRole === AdminRole.admin_master ? (
                               <>
-                                <td>{data?.loginname}</td>
+                                {/* <td>{data?.loginname}</td> */}
                                 <td>{data?.mobile}</td>
                               </>
                             ) : null}

@@ -16,7 +16,12 @@ const AddWhatsappDeposit = () => {
   };
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   /* handle add bank */
   const onSubmit = async (values) => {
@@ -139,12 +144,17 @@ const AddWhatsappDeposit = () => {
                   <div className="col-sm-10">
                     <input
                       {...register("transaction_code", {
-                        required: true,
+                        required: "Transaction code is required",
                       })}
                       type="number"
                       className="form-control"
                       id="basic-default-company"
                     />
+                    {errors.transaction_code && (
+                      <p className="text-danger">
+                        {errors.transaction_code.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 

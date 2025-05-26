@@ -1,6 +1,6 @@
 import useContextState from "../../../hooks/useContextState";
 import { Link, useNavigate } from "react-router-dom";
-import { handleSplitUserName } from "../../../utils/handleSplitUserName";
+// import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { useEffect, useRef, useState } from "react";
 import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
 import { Pagination } from "rsuite";
@@ -185,10 +185,10 @@ const AllClient = () => {
                   adminRole == AdminRole.admin_staff ? (
                     <th>Branch</th>
                   ) : null}
-                  {adminRole === AdminRole.hyper_master ||
+                  {/* {adminRole === AdminRole.hyper_master ||
                   adminRole === AdminRole.admin_master ? (
                     <th>Username</th>
-                  ) : null}
+                  ) : null} */}
                   {adminRole === AdminRole.hyper_master ||
                   adminRole === AdminRole.admin_master ? (
                     <th>Mobile</th>
@@ -235,7 +235,7 @@ const AllClient = () => {
                           <strong>{client?.branch}</strong>
                         </td>
                       ) : null}
-                      {adminRole === AdminRole.hyper_master ||
+                      {/* {adminRole === AdminRole.hyper_master ||
                       adminRole === AdminRole.admin_master ? (
                         <td
                           style={{ cursor: "pointer" }}
@@ -249,7 +249,7 @@ const AllClient = () => {
                             {handleSplitUserName(client?.username)}
                           </strong>
                         </td>
-                      ) : null}
+                      ) : null} */}
 
                       {adminRole === AdminRole.hyper_master ||
                       adminRole === AdminRole.admin_master ? (

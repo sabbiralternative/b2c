@@ -153,7 +153,7 @@ const ClientReport = () => {
                       adminRole === AdminRole.admin_master ? (
                         <>
                           <th>Mobile</th>
-                          <th>User Name</th>
+                          {/* <th>User Name</th> */}
                         </>
                       ) : null}
 
@@ -180,7 +180,7 @@ const ClientReport = () => {
                           adminRole === AdminRole.admin_master ? (
                             <>
                               <td>{data?.mobile}</td>
-                              <td>{data?.username}</td>
+                              {/* <td>{data?.username}</td> */}
                             </>
                           ) : null}
                           <td>{data?.registrationDate}</td>

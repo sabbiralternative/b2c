@@ -15,7 +15,12 @@ const AddClient = () => {
   });
 
   const navigate = useNavigate();
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const { token } = useContextState();
 
   /* handle add client */
@@ -41,6 +46,8 @@ const AddClient = () => {
       toast.error(data?.error?.description);
     }
   };
+
+  console.log(errors);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 breadcrumb-wrapper mb-4">
@@ -174,11 +181,16 @@ const AddClient = () => {
                     <input
                       type="text"
                       {...register("transaction_code", {
-                        required: true,
+                        required: "Transaction code is required",
                       })}
                       className="form-control"
                       id="basic-default-name"
                     />
+                    {errors.transaction_code && (
+                      <p className="text-danger">
+                        {errors.transaction_code.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
