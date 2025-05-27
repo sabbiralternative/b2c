@@ -6,12 +6,16 @@ import { useForm } from "react-hook-form";
 import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
 import toast from "react-hot-toast";
-import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 
-const ChangePassword = ({ setShowChangePassword, downlineId, role, id }) => {
+const ChangePassword = ({
+  setShowChangePassword,
+  downlineId,
+  role,
+  id,
+  refetchAllBranch,
+}) => {
   const [disabled, setDisabled] = useState(false);
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   const { refetchClient } = useRefetchClient(downlineId);
 
   /* close modal click outside */

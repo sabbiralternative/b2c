@@ -7,10 +7,16 @@ import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useRef, useState } from "react";
 import useGetCurrentRef from "../../hooks/useGetCurrentRef";
-import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
+
 import useGetClient from "../../hooks/Master/Client/useGetClient";
 
-const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
+const CreditReference = ({
+  downlineId,
+  setShowCreditRef,
+  role,
+  id,
+  refetchAllBranch,
+}) => {
   const [disabled, setDisabled] = useState(false);
   /* close modal click outside */
   const creditRef = useRef();
@@ -26,7 +32,7 @@ const CreditReference = ({ downlineId, setShowCreditRef, role, id }) => {
   };
 
   const { currentRef, isSuccess } = useGetCurrentRef(payload);
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
+
   const { refetchClients } = useGetClient(downlineId);
 
   /* handle update credit reference */

@@ -22,7 +22,9 @@ const ViewSuperBranches = () => {
   const [registrationStatus, setRegistrationStatus] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
-  const { branches } = useGetAllBranch({ branch_type: "super_branch" });
+  const { branches, refetchAllBranch } = useGetAllBranch({
+    branch_type: "super_branch",
+  });
   const { token, adminRole } = useContextState();
   const navigate = useNavigate();
 
@@ -69,6 +71,7 @@ const ViewSuperBranches = () => {
           role={role}
           setShowCreditRef={setShowCreditRef}
           downlineId={downLineId}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showChangeStatus && (
@@ -78,6 +81,7 @@ const ViewSuperBranches = () => {
           setShowChangeStatus={setShowChangeStatus}
           downlineId={downLineId}
           registrationStatus={registrationStatus}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showChangePassword && (
@@ -86,6 +90,7 @@ const ViewSuperBranches = () => {
           role={role}
           setShowChangePassword={setShowChangePassword}
           downlineId={downLineId}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showDeposit && (
@@ -94,6 +99,7 @@ const ViewSuperBranches = () => {
           role={role}
           downlineId={downLineId}
           setShowDeposit={setShowDeposit}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showWithdraw && (
@@ -102,6 +108,7 @@ const ViewSuperBranches = () => {
           role={role}
           downlineId={downLineId}
           setShowWithdraw={setShowWithdraw}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">

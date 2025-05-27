@@ -74,6 +74,7 @@ const ViewBranches = () => {
           role={role}
           setShowCreditRef={setShowCreditRef}
           downlineId={downLineId}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showWhatsApp && (
@@ -92,6 +93,7 @@ const ViewBranches = () => {
           setShowChangeStatus={setShowChangeStatus}
           downlineId={downLineId}
           registrationStatus={registrationStatus}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showChangePassword && (
@@ -100,6 +102,7 @@ const ViewBranches = () => {
           role={role}
           setShowChangePassword={setShowChangePassword}
           downlineId={downLineId}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showDeposit && (
@@ -108,6 +111,7 @@ const ViewBranches = () => {
           role={role}
           downlineId={downLineId}
           setShowDeposit={setShowDeposit}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       {showWithdraw && (
@@ -116,6 +120,7 @@ const ViewBranches = () => {
           role={role}
           downlineId={downLineId}
           setShowWithdraw={setShowWithdraw}
+          refetchAllBranch={refetchAllBranch}
         />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">

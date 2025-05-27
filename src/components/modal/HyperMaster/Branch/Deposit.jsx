@@ -6,11 +6,16 @@ import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
-import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
-const Deposit = ({ setShowDeposit, downlineId, role, id }) => {
+const Deposit = ({
+  setShowDeposit,
+  downlineId,
+  role,
+  id,
+  refetchAllBranch,
+}) => {
   const [disabled, setDisabled] = useState(false);
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
+
   /* close modal click outside */
   const depositRef = useRef();
   useCloseModalClickOutside(depositRef, () => {

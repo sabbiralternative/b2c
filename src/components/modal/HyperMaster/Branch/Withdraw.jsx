@@ -6,11 +6,15 @@ import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
-import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
 
-const Withdraw = ({ downlineId, setShowWithdraw, id, role }) => {
+const Withdraw = ({
+  downlineId,
+  setShowWithdraw,
+  id,
+  role,
+  refetchAllBranch,
+}) => {
   const [disabled, setDisabled] = useState(false);
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
 
   /* close modal click outside */
   const withdrawRef = useRef();

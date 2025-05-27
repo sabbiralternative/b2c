@@ -6,7 +6,6 @@ import axios from "axios";
 import { API } from "../../api";
 import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
-import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 import { useLocation } from "react-router-dom";
 import useGetClient from "../../hooks/Master/Client/useGetClient";
@@ -17,11 +16,11 @@ const ChangeStatus = ({
   registrationStatus: regiStatus,
   role,
   id,
+  refetchAllBranch,
 }) => {
   const [disabled, setDisabled] = useState(false);
   const { token, adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
   const { refetchClient } = useRefetchClient(downlineId);
   const { refetchClients } = useGetClient(
     clientId,
@@ -46,7 +45,6 @@ const ChangeStatus = ({
     role,
   };
 
-  console.log(payload);
   const { status, refetchStatus } = useGetStatus(payload);
 
   /* set check box default value */
