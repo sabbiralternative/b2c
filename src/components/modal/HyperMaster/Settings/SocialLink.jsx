@@ -7,8 +7,14 @@ import useContextState from "../../../../hooks/useContextState";
 import axios from "axios";
 import { API } from "../../../../api";
 import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
+import { useWhiteLabel } from "../../../../hooks/AdminMaster/whiteLabel";
+import { AdminRole } from "../../../../constant/constant";
 
 const SocialLink = ({ setShowSocialLink }) => {
+  const { data } = useWhiteLabel({
+    type: "viewWhitelabelByAdmin",
+  });
+
   const [disabled, setDisabled] = useState(false);
   const { socialLinks, refetchAllSocialLinks, isLoading } =
     useGetAllSocialLink();
@@ -23,7 +29,7 @@ const SocialLink = ({ setShowSocialLink }) => {
   const { token, adminRole } = useContextState();
 
   /* handle edit social link */
-  const onSubmit = async ({ whatsapp, instagram, telegram }) => {
+  const onSubmit = async ({ whatsapp, instagram, telegram, site }) => {
     setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -47,6 +53,7 @@ const SocialLink = ({ setShowSocialLink }) => {
         whatsapp,
         instagram,
         telegram,
+        site,
         token: generatedToken,
       };
     }
@@ -97,6 +104,38 @@ const SocialLink = ({ setShowSocialLink }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="modal-body">
                 <div className="row">
+                  {adminRole === AdminRole.hyper_master &&
+                    data?.result?.length > 0 && (
+                      <div className="row mb-3" id="bank_account_name_div">
+                        <label
+                          className="col-sm-2 col-form-label"
+                          htmlFor="basic-default-name"
+                        >
+                          Site *
+                        </label>
+                        <div className="col-sm-10">
+                          <select
+                            defaultValue=""
+                            {...register("site", {
+                              required: true,
+                            })}
+                            className="form-control"
+                          >
+                            <option disabled value="">
+                              Select Site
+                            </option>
+                            {data?.result?.map((site) => (
+                              <option
+                                key={site?.site_url}
+                                value={site?.site_url}
+                              >
+                                {site?.site_url}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
                   <div className="row mb-3" id="bank_account_name_div">
                     <label
                       className="col-sm-2 col-form-label"
