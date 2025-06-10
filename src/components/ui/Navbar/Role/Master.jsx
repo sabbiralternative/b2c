@@ -71,6 +71,7 @@ const Master = () => {
         const clientPermission = permissions?.includes("client") ?? false;
         const reportPermission = permissions?.includes("report") ?? false;
         const paymentPermission = permissions?.includes("payment") ?? false;
+
         setDepositPermission(depositPermission);
         setWithdrawPermission(withdrawPermission);
         setClientPermission(clientPermission);
@@ -174,7 +175,8 @@ const Master = () => {
       ) : null}
 
       {adminRole === "master" ||
-      (adminRole === "branch_staff" && paymentPermission) ? (
+      (adminRole === "branch_staff" && paymentPermission) ||
+      (adminRole === AdminRole.admin_staff && paymentPermission) ? (
         <li
           onMouseEnter={() => setNavList("payment")}
           onMouseLeave={() => setNavList(null)}
@@ -196,7 +198,7 @@ const Master = () => {
               </a>
             </li>
 
-            {!readOnly && (
+            {!readOnly && adminRole !== AdminRole.admin_staff && (
               <>
                 <li className="menu-item">
                   <a

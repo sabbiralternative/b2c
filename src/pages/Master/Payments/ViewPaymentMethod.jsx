@@ -7,11 +7,12 @@ import useContextState from "../../../hooks/useContextState";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import ShowImage from "../../../components/modal/ShowImage";
+import { AdminRole } from "../../../constant/constant";
 
 const ViewPaymentMethod = () => {
   const [showPaymentImage, setShowPaymentImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setShowEditPayment, setDownLineId, readOnly } =
+  const { token, setShowEditPayment, setDownLineId, readOnly, adminRole } =
     useContextState();
   const payload = {
     type: "viewPaymentMethods",
@@ -69,7 +70,7 @@ const ViewPaymentMethod = () => {
                   <th>Limits</th>
 
                   <th>status</th>
-                  <th>Action</th>
+                  {adminRole !== AdminRole.admin_staff && <th>Action</th>}
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
@@ -113,35 +114,41 @@ const ViewPaymentMethod = () => {
                           {method?.status == 1 ? "Active" : "inactive"}
                         </span>
                       </td>
-
-                      <td>
-                        <a
-                          style={{
-                            color: "white",
-                            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                          }}
-                          onClick={() => {
-                            !readOnly && setDownLineId(method?.id);
-                            !readOnly && setShowEditPayment(true);
-                          }}
-                          className="btn btn-icon btn-sm btn-success"
-                        >
-                          <i className="bx bxs-edit"></i>
-                        </a>
-                        &nbsp;
-                        <a
-                          onClick={() => {
-                            !readOnly && handleDeletePaymentMethod(method?.id);
-                          }}
-                          style={{
-                            color: "white",
-                            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                          }}
-                          className="btn btn-icon btn-sm btn-danger"
-                        >
-                          <i className="bx bxs-checkbox-minus"></i>
-                        </a>
-                      </td>
+                      {adminRole !== AdminRole.admin_staff && (
+                        <td>
+                          <a
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly && setDownLineId(method?.id);
+                              !readOnly && setShowEditPayment(true);
+                            }}
+                            className="btn btn-icon btn-sm btn-success"
+                          >
+                            <i className="bx bxs-edit"></i>
+                          </a>
+                          &nbsp;
+                          <a
+                            onClick={() => {
+                              !readOnly &&
+                                handleDeletePaymentMethod(method?.id);
+                            }}
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            className="btn btn-icon btn-sm btn-danger"
+                          >
+                            <i className="bx bxs-checkbox-minus"></i>
+                          </a>
+                        </td>
+                      )}
                     </tr>
                   );
                 })}
