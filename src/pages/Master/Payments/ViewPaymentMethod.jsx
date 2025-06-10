@@ -65,6 +65,7 @@ const ViewPaymentMethod = () => {
               <thead className="table-dark">
                 <tr>
                   <th>Type</th>
+                  {adminRole === AdminRole.admin_staff && <th>Branch name</th>}
                   <th>Account name</th>
                   <th>Image</th>
                   <th>Limits</th>
@@ -78,6 +79,10 @@ const ViewPaymentMethod = () => {
                   return (
                     <tr key={i}>
                       <td>{method?.type}</td>
+                      {adminRole === AdminRole.admin_staff && (
+                        <td>{method?.branchName}</td>
+                      )}
+
                       <td>{method?.name}</td>
                       <td>
                         {method?.image && (
