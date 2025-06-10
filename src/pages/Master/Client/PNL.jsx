@@ -2,12 +2,14 @@ import { DatePicker, Pagination } from "rsuite";
 import useGetPNL from "../../../hooks/Master/Client/useGetPNL";
 import { useState } from "react";
 import SettleBets from "../../../components/modal/Master/SettleBets";
-
+import { writeFile, utils } from "xlsx";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import DefaultDateButton from "../../Report/DefaultDateButton";
 import { defaultDate } from "../../../utils/defaultDate";
 import Slip from "../../../components/modal/Master/Deposit/Slip";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
+import { API } from "../../../api";
 const PNL = () => {
   const [image, setImage] = useState("");
   const [type, setType] = useState("all");
@@ -53,6 +55,21 @@ const PNL = () => {
     if (pl < 0) {
       return "text-danger";
     }
+  };
+
+  const handleExport = async () => {
+    const payload = {
+      type: "clientPNL",
+      from_date: moment(startDate).format("YYYY-MM-DD"),
+      to_date: moment(endDate).format("YYYY-MM-DD"),
+      method: type,
+    };
+    const { data } = await AxiosSecure.post(API.exportCSV, payload);
+    // const ws = utils.json_to_sheet(data);
+    // const wb = utils.book_new();
+    // utils.book_append_sheet(wb, ws, "Sheet1");
+    // writeFile(wb, "customers_data.xlsx");
+    console.log(data);
   };
 
   return (
@@ -132,9 +149,23 @@ const PNL = () => {
               justifyContent: "space-between",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                flexWrap: "wrap",
+              }}
+            >
               <h5 style={{ margin: "0px" }}>Profit & Loss</h5>
-              <div style={{ display: "flex", gap: "20px", marginLeft: "20px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "20px",
+                  marginLeft: "20px",
+                  flexWrap: "wrap",
+                }}
+              >
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "10px" }}
                 >
@@ -170,6 +201,17 @@ const PNL = () => {
                     type="radio"
                     value="withdraw"
                   />
+                </div>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <button
+                    onClick={() => handleExport()}
+                    type="button"
+                    className="btn btn-primary"
+                  >
+                    Export
+                  </button>
                 </div>
               </div>
             </div>

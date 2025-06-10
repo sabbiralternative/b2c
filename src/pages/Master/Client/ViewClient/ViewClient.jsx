@@ -135,8 +135,6 @@ const ViewClient = () => {
     showCreditRef,
   ]);
 
-  console.log(showMore);
-
   return (
     <>
       {clientDeposit && (

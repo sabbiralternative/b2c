@@ -70,6 +70,7 @@ export const API = {
   activityLogs: "",
   utr: "",
   index: "",
+  exportCSV: "",
 };
 
 export const Settings = {

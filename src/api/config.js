@@ -10,6 +10,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
       const data = res.data;
       if (data?.result) {
         API.downineEditForm = data?.result?.endpoint?.downineEditForm;
+        API.exportCSV = data?.result?.endpoint?.exportCSV;
         API.auth = data?.result?.endpoint?.auth;
         API.index = data?.result?.endpoint?.index;
         API.activityLogs = data?.result?.endpoint?.activityLogs;
