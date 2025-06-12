@@ -2,7 +2,6 @@ import { DatePicker, Pagination } from "rsuite";
 import useGetPNL from "../../../hooks/Master/Client/useGetPNL";
 import { useState } from "react";
 import SettleBets from "../../../components/modal/Master/SettleBets";
-import { writeFile, utils } from "xlsx";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import DefaultDateButton from "../../Report/DefaultDateButton";
@@ -58,18 +57,13 @@ const PNL = () => {
   };
 
   const handleExport = async () => {
-    const payload = {
-      type: "clientPNL",
-      from_date: moment(startDate).format("YYYY-MM-DD"),
-      to_date: moment(endDate).format("YYYY-MM-DD"),
-      method: type,
-    };
-    const { data } = await AxiosSecure.post(API.exportCSV, payload);
-    // const ws = utils.json_to_sheet(data);
-    // const wb = utils.book_new();
-    // utils.book_append_sheet(wb, ws, "Sheet1");
-    // writeFile(wb, "customers_data.xlsx");
-    console.log(data);
+    // const payload = {
+    //   type: "clientPNL",
+    //   from_date: moment(startDate).format("YYYY-MM-DD"),
+    //   to_date: moment(endDate).format("YYYY-MM-DD"),
+    //   method: type,
+    // };
+    await AxiosSecure.get(API.exportCSV);
   };
 
   return (
