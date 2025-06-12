@@ -65,8 +65,7 @@ const PNL = () => {
     };
 
     try {
-      const response = await AxiosSecure.get(API.exportCSV, {
-        params: payload,
+      const response = await AxiosSecure.post(API.exportCSV, payload, {
         responseType: "blob",
       });
 
