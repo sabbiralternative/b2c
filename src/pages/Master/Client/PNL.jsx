@@ -57,13 +57,32 @@ const PNL = () => {
   };
 
   const handleExport = async () => {
-    // const payload = {
-    //   type: "clientPNL",
-    //   from_date: moment(startDate).format("YYYY-MM-DD"),
-    //   to_date: moment(endDate).format("YYYY-MM-DD"),
-    //   method: type,
-    // };
-    await AxiosSecure.get(API.exportCSV);
+    const payload = {
+      type: "clientPNL",
+      from_date: moment(startDate).format("YYYY-MM-DD"),
+      to_date: moment(endDate).format("YYYY-MM-DD"),
+      method: type,
+    };
+
+    try {
+      const response = await AxiosSecure.get(API.exportCSV, {
+        params: payload,
+        responseType: "blob",
+      });
+
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "export.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading CSV:", error);
+    }
   };
 
   return (
