@@ -72,7 +72,7 @@ const OtherRoleAction = ({
       >
         PL
       </a>
-      {adminRole !== "admin_staff" && adminRole !== AdminRole.master && (
+      {adminRole !== AdminRole.master && (
         <>
           &nbsp;
           <a
@@ -90,24 +90,29 @@ const OtherRoleAction = ({
             P
           </a>
           &nbsp;
-          <a
-            style={{ color: "white" }}
-            onClick={() => {
-              handleOpenModal(
-                setShowChangeStatus,
-                client?.username,
-                client?.role,
-                client?.downlineId
-              );
-            }}
-            className="btn btn-icon btn-sm btn-label-secondary"
-          >
-            S
-          </a>
-          &nbsp;
+          {adminRole !== "admin_staff" && (
+            <>
+              <a
+                style={{ color: "white" }}
+                onClick={() => {
+                  handleOpenModal(
+                    setShowChangeStatus,
+                    client?.username,
+                    client?.role,
+                    client?.downlineId
+                  );
+                }}
+                className="btn btn-icon btn-sm btn-label-secondary"
+              >
+                S
+              </a>
+              &nbsp;
+            </>
+          )}
         </>
       )}
-      {adminRole == AdminRole.hyper_master && (
+      {adminRole == AdminRole.hyper_master ||
+      adminRole === AdminRole.admin_staff ? (
         <a
           style={{ color: "white" }}
           onClick={() => {
@@ -122,7 +127,7 @@ const OtherRoleAction = ({
         >
           M
         </a>
-      )}
+      ) : null}
       {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
         <>
           &nbsp;

@@ -84,7 +84,7 @@ const ChangeBranch = ({
           <div className="modal-content" ref={statusRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Change Color
+                Change Branch
               </h5>
               <button
                 onClick={() => setShowChangeBranch(false)}

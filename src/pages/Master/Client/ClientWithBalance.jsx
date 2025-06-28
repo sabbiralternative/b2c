@@ -351,26 +351,25 @@ const ClientWithBalance = () => {
                             &nbsp;
                           </>
                         )}
-                        {clientPermission &&
-                          adminRole !== "admin_staff" &&
-                          adminRole !== AdminRole.master && (
-                            <>
-                              <a
-                                style={{ color: "white" }}
-                                onClick={() => {
-                                  setShowMore(false);
-                                  handleOpenModal(
-                                    setShowChangePassword,
-                                    client?.username,
-                                    client?.role,
-                                    client?.downlineId
-                                  );
-                                }}
-                                className="btn btn-icon btn-sm btn-success"
-                              >
-                                P
-                              </a>
-                              &nbsp;
+                        {clientPermission && adminRole !== AdminRole.master && (
+                          <>
+                            <a
+                              style={{ color: "white" }}
+                              onClick={() => {
+                                setShowMore(false);
+                                handleOpenModal(
+                                  setShowChangePassword,
+                                  client?.username,
+                                  client?.role,
+                                  client?.downlineId
+                                );
+                              }}
+                              className="btn btn-icon btn-sm btn-success"
+                            >
+                              P
+                            </a>
+                            &nbsp;
+                            {adminRole !== "admin_staff" && (
                               <a
                                 style={{ color: "white" }}
                                 onClick={() => {
@@ -386,10 +385,12 @@ const ClientWithBalance = () => {
                               >
                                 S
                               </a>
-                              &nbsp;
-                            </>
-                          )}
-                        {adminRole == AdminRole.hyper_master && (
+                            )}
+                            &nbsp;
+                          </>
+                        )}
+                        {adminRole == AdminRole.hyper_master ||
+                        adminRole === AdminRole.admin_staff ? (
                           <a
                             style={{ color: "white" }}
                             onClick={() => {
@@ -404,7 +405,7 @@ const ClientWithBalance = () => {
                           >
                             M
                           </a>
-                        )}
+                        ) : null}
                         {adminRole !== AdminRole.hyper_master &&
                           adminRole !== AdminRole.branch_staff &&
                           adminRole !== "admin_staff" && (
