@@ -57,6 +57,7 @@ const ViewBanner = () => {
             <thead className="table-dark">
               <tr>
                 <th>Banner</th>
+                <th>Site</th>
 
                 <th>Sort</th>
 
@@ -74,6 +75,7 @@ const ViewBanner = () => {
                         <img src={banner?.banner_link} width="500px" />
                       </a>
                     </td>
+                    <td>{banner?.site}</td>
                     <td>{banner?.priority}</td>
 
                     <td>
