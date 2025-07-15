@@ -91,3 +91,13 @@ div:where(.swal2-container) .swal2-html-container {
 .rs-pagination-btn-active:hover {
   color: gainsboro !important;
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

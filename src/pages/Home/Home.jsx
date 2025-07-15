@@ -5,13 +5,14 @@ import useBalance from "../../hooks/useBalance";
 import useContextState from "../../hooks/useContextState";
 import DashboardDW from "./DashboardDW";
 import { jwtDecode } from "jwt-decode";
+import Loader from "../../components/ui/Loader/Loader";
 
 const Home = () => {
   const [depositPermission, setDepositPermission] = useState(false);
   const [withdrawPermission, setWithdrawPermission] = useState(false);
   const { data } = useGetIndex({ type: "getDashboardDW" });
   const { adminRole, token } = useContextState();
-  const { balanceData } = useBalance();
+  const { balanceData, isLoading, isPending } = useBalance();
   const defineBalanceColor = (amount) => {
     if (amount) {
       const parseAmount = parseFloat(amount);
@@ -78,7 +79,11 @@ const Home = () => {
                             )}`,
                           }}
                         >
-                          {balanceData?.upperLevel}
+                          {isLoading || isPending ? (
+                            <Loader />
+                          ) : (
+                            balanceData?.upperLevel
+                          )}
                         </h2>
                         <span className="text-muted">Upper Level</span>
                       </div>
@@ -90,7 +95,11 @@ const Home = () => {
                   <div className="card">
                     <div className="card-body text-center">
                       <h2 className="mb-1">
-                        {balanceData?.downLevelOccupyBalance}
+                        {isLoading || isPending ? (
+                          <Loader />
+                        ) : (
+                          balanceData?.downLevelOccupyBalance
+                        )}
                       </h2>
                       <span className="text-muted">Total Client Balance</span>
                     </div>
@@ -115,9 +124,13 @@ const Home = () => {
                   <div className="card">
                     <div className="card-body text-center">
                       <h2 className="mb-1">
-                        {balanceData?.availableBalance ||
+                        {isLoading || isPending ? (
+                          <Loader />
+                        ) : (
+                          balanceData?.availableBalance ||
                           (balanceData?.availableBalance == 0 &&
-                            balanceData?.availableBalance?.toFixed(2))}
+                            balanceData?.availableBalance?.toFixed(2))
+                        )}
                       </h2>
                       <span className="text-muted">Available Balance</span>
                     </div>
@@ -128,7 +141,11 @@ const Home = () => {
                   <div className="card">
                     <div className="card-body text-center">
                       <h2 className="mb-1">
-                        {balanceData?.totalMasterBalance}
+                        {isLoading || isPending ? (
+                          <Loader />
+                        ) : (
+                          balanceData?.totalMasterBalance
+                        )}
                       </h2>
                       <span className="text-muted">Total Master Balance</span>
                     </div>
@@ -142,7 +159,13 @@ const Home = () => {
                 <div className="col-sm-6 col-12 mb-4">
                   <div className="card">
                     <div className="card-body text-center">
-                      <h2 className="mb-1">{balanceData?.usersToday}</h2>
+                      <h2 className="mb-1">
+                        {isLoading || isPending ? (
+                          <Loader />
+                        ) : (
+                          balanceData?.usersToday
+                        )}
+                      </h2>
                       <span className="text-muted">New Users Today</span>
                     </div>
                   </div>
@@ -150,7 +173,13 @@ const Home = () => {
                 <div className="col-sm-6 col-12 mb-4">
                   <div className="card">
                     <div className="card-body text-center">
-                      <h2 className="mb-1">{balanceData?.depositToday}</h2>
+                      <h2 className="mb-1">
+                        {isLoading || isPending ? (
+                          <Loader />
+                        ) : (
+                          balanceData?.depositToday
+                        )}
+                      </h2>
                       <span className="text-muted">Total Deposit Today</span>
                     </div>
                   </div>
@@ -163,7 +192,13 @@ const Home = () => {
                 <div className="col-sm-6 col-12 mb-4">
                   <div className="card">
                     <div className="card-body text-center">
-                      <h2 className="mb-1">{balanceData?.withdrawToday}</h2>
+                      <h2 className="mb-1">
+                        {isLoading || isPending ? (
+                          <Loader />
+                        ) : (
+                          balanceData?.withdrawToday
+                        )}
+                      </h2>
                       <span className="text-muted">Total Withdraw Today</span>
                     </div>
                   </div>
@@ -177,7 +212,11 @@ const Home = () => {
                         }}
                         className="mb-1"
                       >
-                        {balanceData?.pnlToday}
+                        {isLoading || isPending ? (
+                          <Loader />
+                        ) : (
+                          balanceData?.pnlToday
+                        )}
                       </h2>
                       <span className="text-muted">P/L Today</span>
                     </div>
