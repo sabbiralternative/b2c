@@ -20,11 +20,13 @@ const AddLoginBanner = () => {
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
   const { refetchAllBanners } = useGetViewAllBanner();
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, watch } = useForm();
   const { token, adminRole } = useContextState();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const site = watch("site");
 
   /* Upload image */
   useEffect(() => {
@@ -70,7 +72,30 @@ const AddLoginBanner = () => {
       refetchAllBanners();
       toast.success(data?.result?.message);
       reset();
-      navigate("/view-banner");
+      navigate("/");
+    } else {
+      setDisabled(false);
+      toast.error(data?.error?.status?.[0]?.description);
+    }
+  };
+
+  const handleDeleteCurrentImage = async () => {
+    setDisabled(true);
+    const generatedToken = handleRandomToken();
+    const payload = {
+      type: "deleteLoginBanner",
+      token: generatedToken,
+      site,
+    };
+    const res = await axios.post(API.banner, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = res.data;
+    if (data?.success) {
+      setDisabled(false);
+      toast.success(data?.result?.message);
+      reset();
+      navigate("/");
     } else {
       setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
@@ -122,7 +147,7 @@ const AddLoginBanner = () => {
                       className="col-sm-2 col-form-label"
                       htmlFor="basic-default-name"
                     >
-                      Banner Image (1350px * 583px)
+                      Banner Image
                     </label>
                     <div className="col-sm-10">
                       <input
@@ -182,28 +207,9 @@ const AddLoginBanner = () => {
                     </div>
                   </div>
                 )}
-                <div className="row mb-3" id="bank_account_number_div">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    htmlFor="basic-default-company"
-                  >
-                    Priority
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      {...register("priority", {
-                        required: true,
-                      })}
-                      type="number"
-                      className="form-control"
-                      id="basic-default-company"
-                      placeholder=""
-                    />
-                  </div>
-                </div>
 
                 <div className="row justify-content-end">
-                  <div className="col-sm-10">
+                  <div className="col-sm-10 ">
                     <input
                       disabled={!filePath || disabled}
                       type="submit"
@@ -211,6 +217,14 @@ const AddLoginBanner = () => {
                       value="Submit"
                       className="btn btn-primary"
                     />
+                    <button
+                      disabled={!filePath || disabled || !site}
+                      onClick={handleDeleteCurrentImage}
+                      className="btn btn-primary responsive-button"
+                      type="button"
+                    >
+                      Delete Current Image
+                    </button>
                   </div>
                 </div>
               </form>

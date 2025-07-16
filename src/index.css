@@ -101,3 +101,19 @@ div:where(.swal2-container) .swal2-html-container {
 .animate-spin {
   animation: spin 1s linear infinite;
 }
+
+@media (max-width: 360px) {
+  /* Mobile styles */
+  .responsive-button {
+    margin-top: 5px;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 361px) {
+  /* Desktop styles */
+  .responsive-button {
+    margin-left: 5px;
+    margin-top: 0;
+  }
+}
