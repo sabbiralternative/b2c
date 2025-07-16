@@ -332,6 +332,17 @@ const HyperMaster = () => {
                     <div data-i18n="Add Banner">Add Banner</div>
                   </a>
                 </li>
+                {adminRole === AdminRole.hyper_master && (
+                  <li className="menu-item">
+                    <a
+                      onClick={() => handleNavigate("add-login-banner")}
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="Add Banner">Add Login Banner</div>
+                    </a>
+                  </li>
+                )}
 
                 <li className="menu-item">
                   <a

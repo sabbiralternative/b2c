@@ -9,6 +9,7 @@ import AddBonus from "../pages/HyperMaster/Bonus/AddBonus";
 import ViewBonus from "../pages/HyperMaster/Bonus/ViewBonus";
 import ViewChecker from "../pages/HyperMaster/Staff/ViewChecker";
 import ViewSuperBranch from "../pages/HyperMaster/ViewSuperBranch/ViewSuperBranch";
+import AddLoginBanner from "../pages/HyperMaster/Settings/AddLoginBanner";
 
 export const HyperMasterRoutes = [
   {
@@ -26,6 +27,10 @@ export const HyperMasterRoutes = [
   {
     path: "/add-banner",
     element: <AddBanner />,
+  },
+  {
+    path: "/add-login-banner",
+    element: <AddLoginBanner />,
   },
   {
     path: "/edit-banner",
