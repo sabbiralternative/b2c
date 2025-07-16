@@ -102,7 +102,7 @@ div:where(.swal2-container) .swal2-html-container {
   animation: spin 1s linear infinite;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 512px) {
   /* Mobile styles */
   .responsive-button {
     margin-top: 5px;
@@ -110,7 +110,7 @@ div:where(.swal2-container) .swal2-html-container {
   }
 }
 
-@media (min-width: 361px) {
+@media (min-width: 513px) {
   /* Desktop styles */
   .responsive-button {
     margin-left: 5px;

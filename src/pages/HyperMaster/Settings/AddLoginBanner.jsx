@@ -213,7 +213,7 @@ const AddLoginBanner = () => {
                       disabled={!filePath || disabled}
                       type="submit"
                       name="submit"
-                      value="Submit"
+                      value="Add New Login Banner"
                       className="btn btn-primary"
                     />
                     <button
@@ -222,7 +222,7 @@ const AddLoginBanner = () => {
                       className="btn btn-primary responsive-button"
                       type="button"
                     >
-                      Delete Current Image
+                      Delete Current Login Banner
                     </button>
                   </div>
                 </div>
