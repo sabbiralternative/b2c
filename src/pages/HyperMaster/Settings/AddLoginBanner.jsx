@@ -85,7 +85,7 @@ const AddLoginBanner = () => {
     const payload = {
       type: "deleteLoginBanner",
       token: generatedToken,
-      site,
+      site: site || null,
     };
     const res = await axios.post(API.banner, payload, {
       headers: { Authorization: `Bearer ${token}` },
@@ -95,7 +95,6 @@ const AddLoginBanner = () => {
       setDisabled(false);
       toast.success(data?.result?.message);
       reset();
-      navigate("/");
     } else {
       setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
@@ -218,7 +217,7 @@ const AddLoginBanner = () => {
                       className="btn btn-primary"
                     />
                     <button
-                      disabled={!filePath || disabled || !site}
+                      disabled={disabled}
                       onClick={handleDeleteCurrentImage}
                       className="btn btn-primary responsive-button"
                       type="button"
