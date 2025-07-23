@@ -137,7 +137,34 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                       </select>
                     </div>
                   </div>
-
+                  <div className="row mb-3">
+                    <label className="col-sm-2 col-form-label">Bank Name</label>
+                    <div className="col-sm-10">
+                      <input
+                        {...register("bank_name", {
+                          value: singleDeposit?.bank_name,
+                          required: true,
+                        })}
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3">
+                    <label className="col-sm-2 col-form-label">
+                      Account Number
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        {...register("account_number", {
+                          value: singleDeposit?.account_number,
+                          required: true,
+                        })}
+                        type="number"
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
                   <div className="row mb-3" id="bank_account_name_div">
                     <label
                       className="col-sm-2 col-form-label"
