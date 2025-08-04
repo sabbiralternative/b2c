@@ -244,11 +244,20 @@ const Master = () => {
 
                 <li className="menu-item">
                   <a
-                    onClick={() => handleNavigate("add-USDT")}
+                    onClick={() => handleNavigate("add-USDT-TRC20")}
                     className="menu-link"
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="Add Payment Method">Add USDT</div>
+                    <div data-i18n="Add Payment Method">Add USDT (TRC20)</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-USDT-BEP20")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">Add USDT (BEP20)</div>
                   </a>
                 </li>
               </>

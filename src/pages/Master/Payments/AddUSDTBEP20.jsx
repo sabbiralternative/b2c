@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 
-const AddUSDT = () => {
+const AddUSDTBEP20 = () => {
   const [disabled, setDisabled] = useState(false);
   const { token } = useContextState();
   const payload = {
@@ -59,7 +59,7 @@ const AddUSDT = () => {
       type: "addPayment",
       qr_code,
       ...values,
-      method: "usdt",
+      method: "usdt_bep20",
       token: generatedToken,
     };
     // console.log(payload);
@@ -83,7 +83,7 @@ const AddUSDT = () => {
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 breadcrumb-wrapper mb-4">
-        <span className="text-muted fw-light">Home /</span> Add New USDT (TRC20)
+        <span className="text-muted fw-light">Home /</span> Add New USDT (BEP20)
       </h4>
 
       <div className="row">
@@ -307,4 +307,4 @@ const AddUSDT = () => {
   );
 };
 
-export default AddUSDT;
+export default AddUSDTBEP20;

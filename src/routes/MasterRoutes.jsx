@@ -20,6 +20,7 @@ import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway"
 import AddQR from "../pages/Master/Payments/AddQR";
 import AddUPI from "../pages/Master/Payments/AddUPI";
 import AddUSDT from "../pages/Master/Payments/AddUSDT";
+import AddUSDTBEP20 from "../pages/Master/Payments/AddUSDTBEP20";
 import AddWhatsappDeposit from "../pages/Master/Payments/AddWhatsappDeposit";
 import ViewPaymentMethod from "../pages/Master/Payments/ViewPaymentMethod";
 import DepositStatement from "../pages/Master/Statement/DepositStatement";
@@ -106,8 +107,12 @@ export const MasterRoutes = [
     element: <AddQR />,
   },
   {
-    path: "/add-USDT",
+    path: "/add-USDT-TRC20",
     element: <AddUSDT />,
+  },
+  {
+    path: "/add-USDT-BEP20",
+    element: <AddUSDTBEP20 />,
   },
   {
     path: "/add-UPI",
