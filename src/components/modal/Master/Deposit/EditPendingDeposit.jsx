@@ -22,13 +22,12 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
   };
 
   const { singleDeposit } = useGetSingleDeposit(payload);
-  const onSubmit = async ({ remark, status }) => {
+  const onSubmit = async (values) => {
     setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
+      ...values,
       depositId: downLineId,
-      remark,
-      status,
       type: "editUTR",
       token: generatedToken,
     };
@@ -143,7 +142,6 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                       <input
                         {...register("bank_name", {
                           value: singleDeposit?.bank_name,
-                          required: true,
                         })}
                         type="text"
                         className="form-control"
@@ -158,7 +156,6 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                       <input
                         {...register("account_number", {
                           value: singleDeposit?.account_number,
-                          required: true,
                         })}
                         type="number"
                         className="form-control"
@@ -176,7 +173,6 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                       <input
                         {...register("remark", {
                           value: singleDeposit?.remark,
-                          required: true,
                         })}
                         type="text"
                         name="remark"
