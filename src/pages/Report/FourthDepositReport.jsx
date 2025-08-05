@@ -1,4 +1,3 @@
-import { DatePicker } from "rsuite";
 import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
@@ -7,9 +6,6 @@ import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
-import moment from "moment";
-import { defaultDate } from "../../utils/defaultDate";
-import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 
 const FourthDepositReport = () => {
@@ -22,15 +18,11 @@ const FourthDepositReport = () => {
   const [FTDData, setFTDData] = useState([]);
   const [totalFTD, setTotalFTD] = useState(null);
 
-  const [startDate, setStartDate] = useState(defaultDate(1));
-  const [endDate, setEndDate] = useState(new Date());
-
   const getFTDReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "get4FTD",
-      fromDate: moment(startDate).format("YYYY-MM-DD"),
-      toDate: moment(endDate).format("YYYY-MM-DD"),
+
       token: generatedToken,
       pagination: true,
     };
@@ -95,42 +87,6 @@ const FourthDepositReport = () => {
                 id="formValidationExamples"
                 className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
               >
-                <div className="col-md-6 col-12 mb-4">
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    <div style={{ width: "100%" }}>
-                      <label htmlFor="flatpickr-range" className="form-label">
-                        From Date
-                      </label>
-                      <DatePicker
-                        style={{ width: "100%" }}
-                        format="yyyy-MM-dd"
-                        editable
-                        onChange={(date) => setStartDate(date)}
-                        value={startDate}
-                        block
-                      />
-                    </div>
-                    <div style={{ width: "100%" }}>
-                      <label htmlFor="flatpickr-range" className="form-label">
-                        To Date
-                      </label>
-                      <DatePicker
-                        style={{ width: "100%" }}
-                        format="yyyy-MM-dd"
-                        editable
-                        onChange={(date) => setEndDate(date)}
-                        value={endDate}
-                        block
-                      />
-                    </div>
-                  </div>
-                  <DefaultDateButton
-                    setEndDate={setEndDate}
-                    setStartDate={setStartDate}
-                    lastThreeMonth={true}
-                  />
-                </div>
-
                 <div className="col-12">
                   <input
                     onClick={handleToggleViewFTD}
