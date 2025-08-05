@@ -185,9 +185,30 @@ const PNL = () => {
                   <input
                     onChange={(e) => setType(e.target.value)}
                     checked={type === "all"}
-                    name="transaction"
                     type="radio"
                     value="all"
+                  />
+                </div>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <p style={{ margin: "0px" }}>Sports </p>
+                  <input
+                    onChange={(e) => setType(e.target.value)}
+                    checked={type === "sports"}
+                    type="radio"
+                    value="sports"
+                  />
+                </div>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <p style={{ margin: "0px" }}>Casino </p>
+                  <input
+                    onChange={(e) => setType(e.target.value)}
+                    checked={type === "casino"}
+                    type="radio"
+                    value="casino"
                   />
                 </div>
                 <div
@@ -197,7 +218,6 @@ const PNL = () => {
                   <input
                     onChange={(e) => setType(e.target.value)}
                     checked={type === "deposit"}
-                    name="transaction"
                     type="radio"
                     value="deposit"
                   />
@@ -209,7 +229,6 @@ const PNL = () => {
                   <input
                     onChange={(e) => setType(e.target.value)}
                     checked={type === "withdraw"}
-                    name="transaction"
                     type="radio"
                     value="withdraw"
                   />
