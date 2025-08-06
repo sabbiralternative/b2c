@@ -21,6 +21,7 @@ import FourthDepositReport from "../pages/Report/FourthDepositReport";
 import FifthDepositReport from "../pages/Report/FifthDepositReport";
 import NoDepositReportLast15Days from "../pages/Report/NoDepositReportLast15Days";
 import AddNotification from "../pages/HyperMaster/Settings/AddNotification";
+import ViewNotification from "../pages/HyperMaster/Settings/ViewNotification";
 
 export const router = createBrowserRouter(
   [
@@ -88,6 +89,10 @@ export const router = createBrowserRouter(
         {
           path: "/add-notification",
           element: <AddNotification />,
+        },
+        {
+          path: "/view-notification",
+          element: <ViewNotification />,
         },
         /*Hyper Master Routes */
         ...HyperMasterRoutes,
