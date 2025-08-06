@@ -12,7 +12,7 @@ import Footer from "../ui/Footer/Footer";
 import AddBranch from "../modal/HyperMaster/Branch/AddBranch";
 import SocialLink from "../modal/HyperMaster/Settings/SocialLink";
 import EditPayment from "../modal/Master/Payment/EditPayment";
-import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
+// import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
 import toast from "react-hot-toast";
 import DirectDeposit from "../modal/Master/Client/DirectDeposit";
 import AddChecker from "../modal/HyperMaster/Staff/AddChecker";
@@ -28,8 +28,8 @@ const MainLayout = () => {
     directDeposit,
     setDirectDeposit,
     setGetToken,
-    siteNotification,
-    setSiteNotification,
+    // siteNotification,
+    // setSiteNotification,
     tokenLoading,
     showSidebar,
     showAddBranch,
@@ -139,9 +139,10 @@ const MainLayout = () => {
             {showSocialLink && (
               <SocialLink setShowSocialLink={setShowSocialLink} />
             )}
-            {siteNotification && (
+
+            {/* {siteNotification && (
               <SiteNotification setSiteNotification={setSiteNotification} />
-            )}
+            )} */}
 
             {/* Modals end for Hyper_master and master*/}
 

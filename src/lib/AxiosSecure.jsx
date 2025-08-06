@@ -1,4 +1,6 @@
 import axios from "axios";
+import handleRandomToken from "../utils/handleRandomToken";
+import { Settings } from "../api";
 
 export const AxiosSecure = axios.create({
   baseURL: "",
@@ -10,6 +12,17 @@ AxiosSecure.interceptors.request.use(
     const token = localStorage.getItem("adminToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+    if (config?.method === "post") {
+      const generatedToken = handleRandomToken();
+
+      let payload = {
+        ...config.data,
+        token: generatedToken,
+        site: Settings.siteUrl,
+      };
+
+      config.data = payload;
     }
     return config;
   },

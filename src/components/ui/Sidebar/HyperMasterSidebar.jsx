@@ -11,7 +11,6 @@ const HyperMasterSidebar = () => {
     setShowSidebar,
     setShowAddBranch,
     setShowSocialLink,
-    setSiteNotification,
     setAddChecker,
     adminRole,
     setAddWhiteLabel,
@@ -251,7 +250,20 @@ const HyperMasterSidebar = () => {
                 )}
 
                 <li className="menu-item">
-                  <a
+                  <Link
+                    to="/view-notification"
+                    onClick={() => {
+                      setShowSidebar(false);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Social Links">View Notifications</div>
+                  </Link>
+                </li>
+                <li className="menu-item">
+                  <Link
+                    to="/add-notification"
                     onClick={() => {
                       setShowSocialLink(true);
                       setShowSidebar(false);
@@ -259,10 +271,10 @@ const HyperMasterSidebar = () => {
                     className="menu-link"
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="Social Links">Social Links</div>
-                  </a>
+                    <div data-i18n="Social Links">Add Notifications</div>
+                  </Link>
                 </li>
-                <li className="menu-item">
+                {/* <li className="menu-item">
                   <a
                     onClick={() => {
                       setSiteNotification(true);
@@ -273,7 +285,7 @@ const HyperMasterSidebar = () => {
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="Social Links">Site Notification</div>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </li>
           )}

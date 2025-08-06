@@ -20,6 +20,7 @@ import ThirdDepositReport from "../pages/Report/ThirdDepositReport";
 import FourthDepositReport from "../pages/Report/FourthDepositReport";
 import FifthDepositReport from "../pages/Report/FifthDepositReport";
 import NoDepositReportLast15Days from "../pages/Report/NoDepositReportLast15Days";
+import AddNotification from "../pages/HyperMaster/Settings/AddNotification";
 
 export const router = createBrowserRouter(
   [
@@ -83,6 +84,10 @@ export const router = createBrowserRouter(
         {
           path: "/change-password-after-login",
           element: <ChangePasswordAfterLogin />,
+        },
+        {
+          path: "/add-notification",
+          element: <AddNotification />,
         },
         /*Hyper Master Routes */
         ...HyperMasterRoutes,
