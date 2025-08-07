@@ -13,22 +13,18 @@ const AddNotification = () => {
   const { data } = useWhiteLabel({
     type: "viewWhitelabelByAdmin",
   });
-  const [status, setStatus] = useState(null);
+
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
   const { adminRole } = useContextState();
 
   const onSubmit = async (fieldValues) => {
-    if (!status) {
-      return toast.error("Status is required!");
-    }
     setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       ...fieldValues,
       type: "addNotification",
-      status,
       token: generatedToken,
     };
     const res = await AxiosSecure.post(API.index, payload);
@@ -102,55 +98,6 @@ const AddNotification = () => {
                       id="basic-default-company"
                       placeholder=""
                     />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    htmlFor="exampleFormControlSelect1"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Status
-                  </label>
-                  <div className="col-sm-10" data-select2-id="26">
-                    <div className="position-relative" data-select2-id="25">
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "20px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                          }}
-                        >
-                          <p style={{ margin: "0px" }}>Active</p>
-                          <input
-                            onChange={(e) => setStatus(e.target.value)}
-                            checked={status === "active"}
-                            type="radio"
-                            value="active"
-                          />
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                          }}
-                        >
-                          <p style={{ margin: "0px" }}>Inactive </p>
-                          <input
-                            onChange={(e) => setStatus(e.target.value)}
-                            checked={status === "inactive"}
-                            type="radio"
-                            value="inactive"
-                          />
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 

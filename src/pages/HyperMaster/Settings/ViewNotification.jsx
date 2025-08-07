@@ -36,7 +36,7 @@ const ViewNotification = () => {
                   <thead>
                     <tr>
                       <th>Notification Text</th>
-                      <th>Status</th>
+
                       <th>Site</th>
                       <th>Date Added</th>
                       <th>Action</th>
@@ -47,17 +47,7 @@ const ViewNotification = () => {
                       return (
                         <tr key={i}>
                           <td>{notification?.notification_text}</td>
-                          <td>
-                            <span
-                              className={`badge  me-1 ${
-                                notification?.status === "Active"
-                                  ? "bg-label-primary"
-                                  : "bg-label-danger"
-                              }`}
-                            >
-                              {notification?.status}
-                            </span>
-                          </td>
+
                           <td>{notification?.site}</td>
 
                           <td>{notification?.date_added}</td>

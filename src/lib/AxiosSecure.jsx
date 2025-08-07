@@ -1,6 +1,5 @@
 import axios from "axios";
 import handleRandomToken from "../utils/handleRandomToken";
-import { Settings } from "../api";
 
 export const AxiosSecure = axios.create({
   baseURL: "",
@@ -19,7 +18,6 @@ AxiosSecure.interceptors.request.use(
       let payload = {
         ...config.data,
         token: generatedToken,
-        site: Settings.siteUrl,
       };
 
       config.data = payload;
