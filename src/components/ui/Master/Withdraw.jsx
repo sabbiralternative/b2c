@@ -9,6 +9,7 @@ import { FaRegCopy } from "react-icons/fa";
 import { Pagination } from "rsuite";
 import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
 import { AdminRole, clientColor } from "../../../constant/constant";
+import Loader from "../Loader/Loader";
 
 const Withdraw = ({
   data,
@@ -20,6 +21,8 @@ const Withdraw = ({
   setAmountFrom,
   setAmountTo,
   refetchAllWithdraw,
+  isLoading,
+  isSuccess,
 }) => {
   const {
     setDownLineId,
@@ -318,6 +321,19 @@ const Withdraw = ({
               })}
           </tbody>
         </table>
+        {isLoading && !isSuccess && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              margin: "20px",
+            }}
+          >
+            <Loader />
+          </div>
+        )}
         {meta && (
           <div
             style={{

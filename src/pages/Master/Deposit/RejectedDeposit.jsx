@@ -10,7 +10,7 @@ const RejectedDeposit = () => {
     pagination: true,
     page: activePage,
   };
-  const { allUTRs } = useGetALLDeposit(payload);
+  const { allUTRs, isLoading, isSuccess } = useGetALLDeposit(payload);
   const meta = allUTRs?.pagination;
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -21,6 +21,8 @@ const RejectedDeposit = () => {
         meta={meta}
         setActivePage={setActivePage}
         title="Rejected Deposit"
+        isLoading={isLoading}
+        isSuccess={isSuccess}
       />
     </div>
   );

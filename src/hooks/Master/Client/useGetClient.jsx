@@ -8,6 +8,9 @@ const useGetClient = (searchId, setFetchClients, fetchClients) => {
     data: clients = [],
     refetch: refetchClients,
     isSuccess,
+    isLoading,
+    isPending,
+    isFetching,
   } = useQuery({
     queryKey: ["viewClient"],
     enabled: searchId?.length === 2 && fetchClients,
@@ -28,7 +31,14 @@ const useGetClient = (searchId, setFetchClients, fetchClients) => {
     },
     gcTime: 0,
   });
-  return { clients, refetchClients, isSuccess };
+  return {
+    clients,
+    refetchClients,
+    isSuccess,
+    isLoading,
+    isPending,
+    isFetching,
+  };
 };
 
 export default useGetClient;

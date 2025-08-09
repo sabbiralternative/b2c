@@ -8,8 +8,18 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { Pagination } from "rsuite";
 import { AdminRole, clientColor } from "../../../constant/constant";
+import Loader from "../Loader/Loader";
 
-const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
+const Deposit = ({
+  data,
+  title,
+  time,
+  setActivePage,
+  meta,
+  activePage,
+  isLoading,
+  isSuccess,
+}) => {
   const {
     setEditPendingDeposit,
     setDownLineId,
@@ -193,6 +203,19 @@ const Deposit = ({ data, title, time, setActivePage, meta, activePage }) => {
             })}
           </tbody>
         </table>
+        {isLoading && !isSuccess && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              margin: "20px",
+            }}
+          >
+            <Loader />
+          </div>
+        )}
         {meta && (
           <div
             style={{

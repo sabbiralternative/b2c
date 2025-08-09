@@ -10,7 +10,7 @@ const CompletedWithdraw = () => {
     pagination: true,
     page: activePage,
   };
-  const { allWithdraw } = useGetALLWithdraw(payload);
+  const { allWithdraw, isLoading, isSuccess } = useGetALLWithdraw(payload);
   const meta = allWithdraw?.pagination;
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -21,6 +21,8 @@ const CompletedWithdraw = () => {
         meta={meta}
         activePage={activePage}
         title="Completed Withdraw"
+        isLoading={isLoading}
+        isSuccess={isSuccess}
       />
     </div>
   );

@@ -24,6 +24,7 @@ import WithdrawClient from "./BranchStaffActionPermission/WithdrawClient";
 import ChangeColor from "../../../../components/modal/ChangeColor";
 import ChangeBranch from "../../../../components/modal/HyperMaster/Client/ChangeBranch";
 import handleNavigateToWhatsApp from "../../../../utils/handleNavigateToWhatsApp";
+import Loader from "../../../../components/ui/Loader/Loader";
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
 const ViewClient = () => {
@@ -60,7 +61,7 @@ const ViewClient = () => {
     setRefetchViewClient,
     token,
   } = useContextState();
-  const { clients, refetchClients, isSuccess } = useGetClient(
+  const { clients, refetchClients, isSuccess, isLoading } = useGetClient(
     clientId,
     setFetchClients,
     fetchClients
@@ -512,6 +513,17 @@ const ViewClient = () => {
           </>
         )}
 
+        {isLoading && !isSuccess && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Loader />
+          </div>
+        )}
         {isSuccess && clients?.length === 0 && (
           <div className="card">
             <h5 style={{ fontSize: "18px" }} className="card-header">

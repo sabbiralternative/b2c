@@ -10,6 +10,7 @@ import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 import { Pagination } from "rsuite";
 import EditPendingDeposit from "../../../components/modal/Master/Deposit/EditPendingDeposit";
 import { AdminRole, clientColor } from "../../../constant/constant";
+import Loader from "../../../components/ui/Loader/Loader";
 
 const PendingDeposit = () => {
   const {
@@ -28,7 +29,7 @@ const PendingDeposit = () => {
   const [message, setMessage] = useState("");
   const location = useLocation();
   const [activePage, setActivePage] = useState(1);
-  const { allUTRs, refetchAllUTRs } = useGetALLDeposit(
+  const { allUTRs, refetchAllUTRs, isLoading, isSuccess } = useGetALLDeposit(
     {
       type: "viewUTR",
       status: "PENDING",
@@ -236,6 +237,19 @@ const PendingDeposit = () => {
               })}
             </tbody>
           </table>
+          {isLoading && !isSuccess && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+                margin: "20px",
+              }}
+            >
+              <Loader />
+            </div>
+          )}
           {meta && (
             <div
               style={{

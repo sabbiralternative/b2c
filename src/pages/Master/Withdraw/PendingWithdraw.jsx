@@ -14,7 +14,8 @@ const PendingWithdraw = () => {
     amountTo,
     page: activePage,
   };
-  const { allWithdraw, refetchAllWithdraw } = useGetALLWithdraw(payload, 30000);
+  const { allWithdraw, refetchAllWithdraw, isLoading, isSuccess } =
+    useGetALLWithdraw(payload, 30000);
   const meta = allWithdraw?.pagination;
 
   return (
@@ -28,6 +29,8 @@ const PendingWithdraw = () => {
         setAmountTo={setAmountTo}
         data={allWithdraw?.result}
         title="Pending Withdraw"
+        isLoading={isLoading}
+        isSuccess={isSuccess}
       />
     </div>
   );

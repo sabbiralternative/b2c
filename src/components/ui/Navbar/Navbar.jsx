@@ -1,16 +1,14 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useContextState from "../../../hooks/useContextState";
 import Dropdown from "./Dropdown";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import { Link } from "react-router-dom";
-import profileImg from '../../../../src/assets/img/avatars/1.png'
+import profileImg from "../../../../src/assets/img/avatars/1.png";
+import moment from "moment";
 
 const Navbar = () => {
-  const {
-    adminName,
-    adminRole,
-    setShowSidebar,
-  } = useContextState();
+  const [time, setTime] = useState();
+  const { adminName, adminRole, setShowSidebar } = useContextState();
   const [showDropdown, setShowDropdown] = useState(false);
 
   /* close modal click outside */
@@ -19,6 +17,12 @@ const Navbar = () => {
     setShowDropdown(false);
   });
 
+  useEffect(() => {
+    setTimeout(() => {
+      setTime(moment().format("h:mm:ss a"));
+    }, 1000);
+  }, [time]);
+
   return (
     <nav
       className="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme"
@@ -26,9 +30,7 @@ const Navbar = () => {
     >
       <div className="container-xxl">
         <div className="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
-          <Link 
-          to='/'
-          className="app-brand-link gap-2">
+          <Link to="/" className="app-brand-link gap-2">
             <span className="app-brand-logo demo">
               <svg
                 width="26px"
@@ -121,15 +123,26 @@ const Navbar = () => {
           className="navbar-nav-right d-flex align-items-center"
           id="navbar-collapse"
         >
-          <ul className="navbar-nav flex-row align-items-center ms-auto">
-            <li className="nav-item navbar-search-wrapper me-2 me-xl-0">
-              <a className="nav-item nav-link search-toggler">
+          <ul
+            className="navbar-nav flex-row align-items-center ms-auto"
+            style={{ width: "100%", justifyContent: "end" }}
+          >
+            <li
+              className="nav-item navbar-search-wrapper me-2 me-xl-0"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* <a className="nav-item nav-link search-toggler">
                 <i className="bx bx-search bx-sm"></i>
-              </a>
+              </a> */}
+              <span> {moment().format("MMMM Do YYYY")}</span>
+              <span> {time}</span>
             </li>
 
-         
             <li
+              style={{ marginLeft: "20px" }}
               ref={dropdownRef}
               className="nav-item navbar-dropdown dropdown-user dropdown"
             >
@@ -139,10 +152,7 @@ const Navbar = () => {
                 data-bs-toggle="dropdown"
               >
                 <div className="avatar avatar-online">
-                  <img
-                    src={profileImg}
-                    className="rounded-circle"
-                  />
+                  <img src={profileImg} className="rounded-circle" />
                 </div>
               </a>
               <Dropdown
@@ -151,7 +161,6 @@ const Navbar = () => {
                 adminName={adminName}
                 adminRole={adminRole}
                 profileImg={profileImg}
-                
               />
             </li>
           </ul>

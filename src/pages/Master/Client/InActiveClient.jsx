@@ -16,6 +16,7 @@ import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside"
 import ChangeColor from "../../../components/modal/ChangeColor";
 import ChangeBranch from "../../../components/modal/HyperMaster/Client/ChangeBranch";
 import handleNavigateToWhatsApp from "../../../utils/handleNavigateToWhatsApp";
+import Loader from "../../../components/ui/Loader/Loader";
 
 const InActiveClient = () => {
   const [showColor, setShowColor] = useState(false);
@@ -47,7 +48,12 @@ const InActiveClient = () => {
     }
   };
 
-  const { data, refetch: refetchClient } = useClient({
+  const {
+    data,
+    refetch: refetchClient,
+    isLoading,
+    isSuccess,
+  } = useClient({
     searchId: "inactiveUsers",
     page: activePage,
   });
@@ -559,6 +565,19 @@ const InActiveClient = () => {
                 })}
               </tbody>
             </table>
+            {isLoading && !isSuccess && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                  margin: "20px",
+                }}
+              >
+                <Loader />
+              </div>
+            )}
             {meta && (
               <div
                 style={{

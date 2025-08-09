@@ -7,7 +7,12 @@ import { API } from "../../../api";
 const useGetALLDeposit = (args, time) => {
   const { token, tokenLoading } = useContextState();
 
-  const { data: allUTRs = [], refetch: refetchAllUTRs } = useQuery({
+  const {
+    data: allUTRs = [],
+    refetch: refetchAllUTRs,
+    isLoading,
+    isSuccess,
+  } = useQuery({
     queryKey: ["pendingUTR", args],
     enabled: !tokenLoading,
     queryFn: async () => {
@@ -31,7 +36,7 @@ const useGetALLDeposit = (args, time) => {
     gcTime: 0,
     refetchInterval: time ? time : null,
   });
-  return { allUTRs, refetchAllUTRs };
+  return { allUTRs, refetchAllUTRs, isLoading, isSuccess };
 };
 
 export default useGetALLDeposit;
