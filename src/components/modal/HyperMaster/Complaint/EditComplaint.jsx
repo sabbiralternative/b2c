@@ -73,7 +73,7 @@ const EditComplaint = ({ setComplaintId, complaintId, refetch }) => {
           <div className="modal-content" ref={complaintRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Change Status
+                Edit Complaint
               </h5>
               <button
                 onClick={closeModal}

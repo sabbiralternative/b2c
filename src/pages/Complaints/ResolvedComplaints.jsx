@@ -44,12 +44,13 @@ const ResolvedComplaints = () => {
           <table className="table table-hover table-sm">
             <thead className="table-dark">
               <tr>
+                <th>Id</th>
                 <th>User Name</th>
                 <th>Mobile</th>
                 <th>Branch Name</th>
                 <th>Message</th>
                 <th>Admin Message</th>
-                <th>Complaint Id</th>
+
                 <th>Status</th>
                 <th>Date Added</th>
                 <th>Statement Type</th>
@@ -61,12 +62,13 @@ const ResolvedComplaints = () => {
                 result?.map((item, i) => {
                   return (
                     <tr key={i}>
+                      <td>{item?.complaint_id}</td>
                       <td>{item?.username}</td>
                       <td>{item?.mobile}</td>
                       <td>{item?.branch_name}</td>
                       <td>{item?.message}</td>
                       <td>{item?.admin_message}</td>
-                      <td>{item?.complaint_id}</td>
+
                       <td
                         className={`badge me-1 bg-label-success
                       
