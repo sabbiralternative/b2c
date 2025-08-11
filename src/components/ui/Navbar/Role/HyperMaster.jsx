@@ -24,6 +24,7 @@ const HyperMaster = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
+  const [showComplaints, setShowComplaints] = useState(false);
   const [showStaff, setShowStaff] = useState(false);
   const [showWhiteLabel, setShowWhiteLabel] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
@@ -754,7 +755,29 @@ const HyperMaster = () => {
           </li>
         </ul>
       </li>
+      <li
+        onMouseEnter={() => setShowComplaints(true)}
+        onMouseLeave={() => setShowComplaints(false)}
+        className={`menu-item ${showComplaints ? "open" : ""}`}
+      >
+        <a className="menu-link menu-toggle">
+          <i className="menu-icon tf-icons bx bx-layout"></i>
 
+          <div data-i18n="Withdraw">Complaints</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <a
+              onClick={() => handleNavigate("view-complaints")}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="Pending Withdraw">View Complaints</div>
+            </a>
+          </li>
+        </ul>
+      </li>
       {adminRole !== "admin_master" && adminRole !== AdminRole.super_master && (
         <>
           <li

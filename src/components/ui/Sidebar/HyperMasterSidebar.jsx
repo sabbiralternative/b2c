@@ -512,6 +512,28 @@ const HyperMasterSidebar = () => {
           </li>
         </ul>
       </li>
+      <li className={`menu-item ${sidebarItem === "complaints" ? "open" : ""}`}>
+        <a
+          onClick={() => handleOpenSidebarItem("complaints")}
+          className="menu-link menu-toggle"
+        >
+          <i className="menu-icon tf-icons bx bx-layout"></i>
+          <div data-i18n="Settings">Complaints</div>
+        </a>
+
+        <ul className="menu-sub">
+          <li className="menu-item">
+            <Link
+              to="/view-complaints"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">View Complaints</div>
+            </Link>
+          </li>
+        </ul>
+      </li>
       {adminRole !== "admin_master" && adminRole !== AdminRole.super_master && (
         <>
           <li className={`menu-item ${sidebarItem === "bonus" ? "open" : ""}`}>
