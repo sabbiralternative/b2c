@@ -274,6 +274,65 @@ const HyperMasterSidebar = () => {
                     <div data-i18n="Social Links">Add Notifications</div>
                   </Link>
                 </li>
+                {adminRole !== "admin_master" &&
+                  adminRole !== AdminRole.super_master && (
+                    <>
+                      <li className="menu-item">
+                        <Link
+                          to="/view-bonus"
+                          onClick={() => setShowSidebar(false)}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="View Banners">View Bonus</div>
+                        </Link>
+                      </li>
+
+                      <li className="menu-item">
+                        <Link
+                          onClick={() => setShowSidebar(false)}
+                          to="/add-bonus"
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Add Banner">Add Bonus</div>
+                        </Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link
+                          onClick={() => setShowSidebar(false)}
+                          to="/pending-bonus"
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                        </Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link
+                          onClick={() => setShowSidebar(false)}
+                          to="/completed-bonus"
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Pending Withdraw">
+                            Completed Bonus
+                          </div>
+                        </Link>
+                      </li>
+                      <li className="menu-item">
+                        <Link
+                          onClick={() => setShowSidebar(false)}
+                          to="/rejected-bonus"
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Pending Withdraw">Rejected Bonus</div>
+                        </Link>
+                      </li>
+                    </>
+                  )}
+
                 {/* <li className="menu-item">
                   <a
                     onClick={() => {
@@ -536,69 +595,6 @@ const HyperMasterSidebar = () => {
       </li>
       {adminRole !== "admin_master" && adminRole !== AdminRole.super_master && (
         <>
-          <li className={`menu-item ${sidebarItem === "bonus" ? "open" : ""}`}>
-            <a
-              onClick={() => handleOpenSidebarItem("bonus")}
-              className="menu-link menu-toggle"
-            >
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Settings">Bonus</div>
-            </a>
-
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <Link
-                  to="/view-bonus"
-                  onClick={() => setShowSidebar(false)}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">View Bonus</div>
-                </Link>
-              </li>
-
-              <li className="menu-item">
-                <Link
-                  onClick={() => setShowSidebar(false)}
-                  to="/add-bonus"
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Banner">Add Bonus</div>
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link
-                  onClick={() => setShowSidebar(false)}
-                  to="/pending-bonus"
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Pending Bonus</div>
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link
-                  onClick={() => setShowSidebar(false)}
-                  to="/completed-bonus"
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Completed Bonus</div>
-                </Link>
-              </li>
-              <li className="menu-item">
-                <Link
-                  onClick={() => setShowSidebar(false)}
-                  to="/rejected-bonus"
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Rejected Bonus</div>
-                </Link>
-              </li>
-            </ul>
-          </li>
           <li className={`menu-item ${sidebarItem === "staff" ? "open" : ""}`}>
             <a
               onClick={() => handleOpenSidebarItem("staff")}

@@ -413,6 +413,86 @@ const HyperMaster = () => {
                     </li>
                   </ul>
                 </a>
+                {adminRole !== "admin_master" &&
+                  adminRole !== AdminRole.super_master && (
+                    <a
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "start",
+                      }}
+                      onMouseEnter={() => setShowBonus(true)}
+                      onMouseLeave={() => setShowBonus(false)}
+                      className="menu-link menu-toggle"
+                    >
+                      <i className="menu-icon tf-icons bx bx-layout"></i>
+                      <div data-i18n="Settings">Bonus</div>
+                      <ul
+                        className="menu-sub"
+                        style={{
+                          display: showBonus ? "block" : "none",
+                          right: "100%",
+                          top: "0px",
+                          left: "-100%",
+                          zIndex: "99999",
+                          background: "#273143",
+                        }}
+                      >
+                        <li className="menu-item">
+                          <a
+                            onClick={() => handleNavigate("view-bonus")}
+                            className="menu-link"
+                          >
+                            <i className="menu-icon tf-icons bx bxs-institution"></i>
+                            <div data-i18n="Pending Withdraw">View Bonus</div>
+                          </a>
+                        </li>
+                        <li className="menu-item">
+                          <a
+                            onClick={() => handleNavigate("add-bonus")}
+                            className="menu-link"
+                          >
+                            <i className="menu-icon tf-icons bx bxs-institution"></i>
+                            <div data-i18n="Pending Withdraw">Add Bonus</div>
+                          </a>
+                        </li>
+                        <li className="menu-item">
+                          <a
+                            onClick={() => handleNavigate("pending-bonus")}
+                            className="menu-link"
+                          >
+                            <i className="menu-icon tf-icons bx bxs-institution"></i>
+                            <div data-i18n="Pending Withdraw">
+                              Pending Bonus
+                            </div>
+                          </a>
+                        </li>
+
+                        <li className="menu-item">
+                          <a
+                            onClick={() => handleNavigate("completed-bonus")}
+                            className="menu-link"
+                          >
+                            <i className="menu-icon tf-icons bx bxs-institution"></i>
+                            <div data-i18n="Completed Withdraw">
+                              Completed Bonus
+                            </div>
+                          </a>
+                        </li>
+                        <li className="menu-item">
+                          <a
+                            onClick={() => handleNavigate("rejected-bonus")}
+                            className="menu-link"
+                          >
+                            <i className="menu-icon tf-icons bx bxs-institution"></i>
+                            <div data-i18n="Rejected Withdraw">
+                              Rejected Bonus
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </a>
+                  )}
               </ul>
             </li>
           )}
@@ -780,66 +860,6 @@ const HyperMaster = () => {
       </li>
       {adminRole !== "admin_master" && adminRole !== AdminRole.super_master && (
         <>
-          <li
-            onMouseEnter={() => setShowBonus(true)}
-            onMouseLeave={() => setShowBonus(false)}
-            className={`menu-item ${showBonus ? "open" : ""}`}
-          >
-            <a className="menu-link menu-toggle">
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-
-              <div data-i18n="Withdraw">Bonus</div>
-            </a>
-
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("view-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">View Bonus</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("add-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Add Bonus</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("pending-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Pending Bonus</div>
-                </a>
-              </li>
-
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("completed-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Completed Withdraw">Completed Bonus</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("rejected-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
-                </a>
-              </li>
-            </ul>
-          </li>
           <li
             onMouseEnter={() => setShowStaff(true)}
             onMouseLeave={() => setShowStaff(false)}
