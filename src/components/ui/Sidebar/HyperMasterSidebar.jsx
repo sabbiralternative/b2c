@@ -583,12 +583,22 @@ const HyperMasterSidebar = () => {
         <ul className="menu-sub">
           <li className="menu-item">
             <Link
-              to="/view-complaints"
+              to="/pending-complaints"
               onClick={() => setShowSidebar(false)}
               className="menu-link"
             >
               <i className="menu-icon tf-icons bx bxs-institution"></i>
-              <div data-i18n="View Banners">View Complaints</div>
+              <div data-i18n="View Banners">Pending Complaints</div>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link
+              to="/resolved-complaints"
+              onClick={() => setShowSidebar(false)}
+              className="menu-link"
+            >
+              <i className="menu-icon tf-icons bx bxs-institution"></i>
+              <div data-i18n="View Banners">Resolved Complaints</div>
             </Link>
           </li>
         </ul>

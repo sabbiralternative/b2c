@@ -22,6 +22,8 @@ import FifthDepositReport from "../pages/Report/FifthDepositReport";
 import NoDepositReportLast15Days from "../pages/Report/NoDepositReportLast15Days";
 import AddNotification from "../pages/HyperMaster/Settings/AddNotification";
 import ViewNotification from "../pages/HyperMaster/Settings/ViewNotification";
+import PendingComplaints from "../pages/Complaints/PendingComplaints";
+import ResolvedComplaints from "../pages/Complaints/ResolvedComplaints";
 
 export const router = createBrowserRouter(
   [
@@ -93,6 +95,14 @@ export const router = createBrowserRouter(
         {
           path: "/view-notification",
           element: <ViewNotification />,
+        },
+        {
+          path: "/pending-complaints",
+          element: <PendingComplaints />,
+        },
+        {
+          path: "/resolved-complaints",
+          element: <ResolvedComplaints />,
         },
         /*Hyper Master Routes */
         ...HyperMasterRoutes,

@@ -71,6 +71,7 @@ export const API = {
   utr: "",
   index: "",
   exportCSV: "",
+  complaint: "",
 };
 
 export const Settings = {
