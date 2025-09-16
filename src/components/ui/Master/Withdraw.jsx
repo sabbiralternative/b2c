@@ -133,7 +133,8 @@ const Withdraw = ({
               ) : null}
               {/* <th>Username</th> */}
               <th>Amount</th>
-              {/* <th>Mobile</th> */}
+              {(title === "Completed Withdraw" ||
+                title === "Rejected Withdraw") && <th>Remark</th>}
 
               <th>Bank Account Name</th>
               <th>Account Number</th>
@@ -194,7 +195,8 @@ const Withdraw = ({
                       {handleSplitUserName(item?.loginname)}
                     </td> */}
                     <td>{item?.amount}</td>
-
+                    {(title === "Completed Withdraw" ||
+                      title === "Rejected Withdraw") && <td>{item.remark}</td>}
                     {/* <td>{item?.mobile}</td> */}
                     <td>
                       {item?.bank_account_name}{" "}
