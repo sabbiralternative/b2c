@@ -11,6 +11,7 @@ import { Pagination } from "rsuite";
 import EditPendingDeposit from "../../../components/modal/Master/Deposit/EditPendingDeposit";
 import { AdminRole, clientColor } from "../../../constant/constant";
 import Loader from "../../../components/ui/Loader/Loader";
+import { useGetIndex } from "../../../hooks";
 
 const PendingDeposit = () => {
   const {
@@ -29,15 +30,26 @@ const PendingDeposit = () => {
   const [message, setMessage] = useState("");
   const location = useLocation();
   const [activePage, setActivePage] = useState(1);
+  const [branchId, setBranchId] = useState(0);
+  const { data } = useGetIndex({
+    type: "getBranches",
+  });
+
+  const payload = {
+    type: "viewUTR",
+    status: "PENDING",
+    amountFrom: amountFrom,
+    amountTo: amountTo,
+    pagination: true,
+    page: activePage,
+  };
+
+  if (adminRole === AdminRole.admin_staff) {
+    payload.branch_id = branchId;
+  }
+
   const { allUTRs, refetchAllUTRs, isLoading, isSuccess } = useGetALLDeposit(
-    {
-      type: "viewUTR",
-      status: "PENDING",
-      amountFrom: amountFrom,
-      amountTo: amountTo,
-      pagination: true,
-      page: activePage,
-    },
+    payload,
     30000
   );
   const meta = allUTRs?.pagination;
@@ -83,6 +95,30 @@ const PendingDeposit = () => {
               className="form-control"
               placeholder="Enter To Amount"
             />
+
+            {adminRole === AdminRole.admin_staff && (
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <div>Branch:</div>
+                <select
+                  style={{ width: "200px" }}
+                  defaultValue="0"
+                  onChange={(e) => setBranchId(e.target.value)}
+                  className="form-control"
+                >
+                  <option disabled value="">
+                    Branch
+                  </option>
+                  <option value="0">All Branch</option>
+                  {data?.result?.map((site) => (
+                    <option key={site?.branch_id} value={site?.branch_id}>
+                      {site?.branch_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
           {meta && (
             <Pagination

@@ -23,6 +23,8 @@ const Withdraw = ({
   refetchAllWithdraw,
   isLoading,
   isSuccess,
+  setBranchId,
+  branches,
 }) => {
   const {
     setDownLineId,
@@ -102,6 +104,29 @@ const Withdraw = ({
                 className="form-control"
                 placeholder="Enter To Amount"
               />
+              {adminRole === AdminRole.admin_staff && (
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  <div>Branch:</div>
+                  <select
+                    style={{ width: "200px" }}
+                    defaultValue="0"
+                    onChange={(e) => setBranchId(e.target.value)}
+                    className="form-control"
+                  >
+                    <option disabled value="">
+                      Branch
+                    </option>
+                    <option value="0">All Branch</option>
+                    {branches?.result?.map((site) => (
+                      <option key={site?.branch_id} value={site?.branch_id}>
+                        {site?.branch_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </>
           )}
         </div>

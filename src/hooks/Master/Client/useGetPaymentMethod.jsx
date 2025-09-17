@@ -8,7 +8,7 @@ const useGetPaymentMethod = (payload) => {
   const { token, tokenLoading } = useContextState();
   const { data: paymentsMethods = [], refetch: refetchPaymentMethods } =
     useQuery({
-      queryKey: ["paymentsMethod"],
+      queryKey: ["paymentsMethod", payload],
       enabled: !tokenLoading,
       queryFn: async () => {
         const generatedToken = handleRandomToken();

@@ -8,8 +8,13 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import ShowImage from "../../../components/modal/ShowImage";
 import { AdminRole } from "../../../constant/constant";
+import { useGetIndex } from "../../../hooks";
 
 const ViewPaymentMethod = () => {
+  const [branchId, setBranchId] = useState(0);
+  const { data } = useGetIndex({
+    type: "getBranches",
+  });
   const [showPaymentImage, setShowPaymentImage] = useState(false);
   const [image, setImage] = useState("");
   const { token, setShowEditPayment, setDownLineId, readOnly, adminRole } =
@@ -17,6 +22,9 @@ const ViewPaymentMethod = () => {
   const payload = {
     type: "viewPaymentMethods",
   };
+  if (adminRole === AdminRole.admin_staff) {
+    payload.branch_id = branchId;
+  }
   const { paymentsMethods, refetchPaymentMethods } =
     useGetPaymentMethod(payload);
 
@@ -59,7 +67,33 @@ const ViewPaymentMethod = () => {
       )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
-          <h5 className="card-header">Payment Methods</h5>
+          <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+            <h5 className="card-header">Payment Methods</h5>
+            {adminRole === AdminRole.admin_staff && (
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <div>Branch:</div>
+                <select
+                  style={{ width: "200px" }}
+                  defaultValue="0"
+                  onChange={(e) => setBranchId(e.target.value)}
+                  className="form-control"
+                >
+                  <option disabled value="">
+                    Branch
+                  </option>
+                  <option value="0">All Branch</option>
+                  {data?.result?.map((site) => (
+                    <option key={site?.branch_id} value={site?.branch_id}>
+                      {site?.branch_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+
           <div className="table-responsive text-nowrap">
             <table className="table table-hover table-sm">
               <thead className="table-dark">
