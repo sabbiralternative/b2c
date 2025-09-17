@@ -128,7 +128,8 @@ const Withdraw = ({
               <th>Login Name</th>
               {adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master ||
-              adminRole === AdminRole.super_master ? (
+              adminRole === AdminRole.super_master ||
+              adminRole === AdminRole.branch_staff ? (
                 <th>Branch Name</th>
               ) : null}
               {/* <th>Username</th> */}
@@ -181,7 +182,8 @@ const Withdraw = ({
                     <td>{item?.loginnameVisible && item?.loginname}</td>
                     {adminRole === AdminRole.admin_staff ||
                     adminRole === AdminRole.hyper_master ||
-                    adminRole === AdminRole.super_master ? (
+                    adminRole === AdminRole.super_master ||
+                    adminRole === AdminRole.branch_staff ? (
                       <td>{item?.branch_name}</td>
                     ) : null}
                     {/* <td
