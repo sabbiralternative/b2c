@@ -38,10 +38,12 @@ const ClientWithBalance = () => {
   const { adminRole, setRefetchViewClient, setClientId, readOnly, token } =
     useContextState();
   const [showMore, setShowMore] = useState(null);
+
   const showMoreRef = useRef();
   useCloseModalClickOutside(showMoreRef, () => {
     setShowMore(null);
   });
+
   const handleShowMore = (i) => {
     if (i === showMore) {
       setShowMore(null);
@@ -470,7 +472,7 @@ const ClientWithBalance = () => {
                             )}
                             {i === showMore && (
                               <ul
-                                ref={showMoreRef}
+                                // ref={showMoreRef}
                                 style={{
                                   display: "block",
                                   right: "0px",
@@ -603,15 +605,6 @@ const ClientWithBalance = () => {
           </div>
         </div>
       </div>
-
-      {directWithdraw && (
-        <DirectWithdraw
-          id={id}
-          role={payloadRole}
-          downlineId={downLineId}
-          setDirectWithdraw={setDirectWithdraw}
-        />
-      )}
     </>
   );
 };

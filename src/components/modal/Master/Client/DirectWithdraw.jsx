@@ -11,6 +11,7 @@ import useBalance from "../../../../hooks/useBalance";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 
 const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
+  const directWithdraw = useRef();
   const [disabled, setDisabled] = useState(false);
   const { clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
@@ -26,10 +27,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   const [amountTwo, setAmountTwo] = useState(null);
   const [amountOne, setAmountOne] = useState(null);
   const [amount, setAmount] = useState(null);
-  const directDepositRef = useRef();
-  useCloseModalClickOutside(directDepositRef, () => {
-    setDirectWithdraw(false);
-  });
+
   const { refetchClients } = useGetClient(
     clientId,
     setFetchClients,
@@ -37,6 +35,10 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   );
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
+
+  useCloseModalClickOutside(directWithdraw, () => {
+    setDirectWithdraw(false);
+  });
 
   const handleAmount = (e) => {
     const userOne = (data?.amount + parseFloat(e)).toFixed(2);
@@ -75,7 +77,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && Object.values(data).length > 0) {
       reset({
         amount: data?.amount?.toFixed(2),
       });
@@ -93,7 +95,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
         style={{ display: "block" }}
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content" ref={directDepositRef}>
+          <div className="modal-content" ref={directWithdraw}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
                 Direct Withdraw
@@ -133,7 +135,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                           defaultValue={data?.amount?.toFixed(2)}
                           type="number"
                           className="form-control"
-                          id="basic-default-name"
                           placeholder="Amount"
                           readOnly
                         />
@@ -160,7 +161,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                           }
                           type="number"
                           className="form-control"
-                          id="basic-default-name"
                           placeholder="Amount"
                           readOnly
                         />
@@ -191,7 +191,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                           defaultValue={data?.amount2?.toFixed(2)}
                           type="number"
                           className="form-control"
-                          id="basic-default-name"
                           placeholder="Amount"
                           readOnly
                         />
@@ -218,7 +217,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                           }
                           type="number"
                           className="form-control"
-                          id="basic-default-name"
                           placeholder="Amount"
                           readOnly
                         />
@@ -251,7 +249,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                           }}
                           type="number"
                           className="form-control"
-                          id="basic-default-name"
                           placeholder="Amount"
                           required
                         />
@@ -273,7 +270,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                           {...register("remark")}
                           type="text"
                           className="form-control"
-                          id="basic-default-name"
                           placeholder="Remark"
                           required
                         />
@@ -297,7 +293,6 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                         {...register("mpassword")}
                         type="text"
                         className="form-control"
-                        id="basic-default-name"
                         placeholder="Transaction Code"
                         required
                       />
