@@ -7,7 +7,7 @@ import useContextState from "./useContextState";
 export const useGetIndex = (payload) => {
   const { adminRole } = useContextState();
   return useQuery({
-    queryKey: ["index"],
+    queryKey: ["index", payload],
     enabled:
       adminRole === AdminRole.hyper_master ||
       adminRole === AdminRole.admin_staff
