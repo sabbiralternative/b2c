@@ -131,13 +131,18 @@ const ViewBranches = () => {
               <thead className="table-dark">
                 <tr>
                   <th>Username</th>
-                  <th>Credit Reference</th>
-                  <th>Balance</th>
-                  <th>P/L</th>
+                  {adminRole == AdminRole.admin_staff && <th>Exposure</th>}
+                  {adminRole !== AdminRole.admin_staff && (
+                    <th>Credit Reference</th>
+                  )}
+                  {adminRole !== AdminRole.admin_staff && <th>Balance</th>}
+                  {adminRole !== AdminRole.admin_staff && <th>P/L</th>}
+
                   <th>Status</th>
                   <th>Betting Status</th>
                   <th>Registration Status</th>
-                  <th>Reg. Date</th>
+                  {adminRole !== AdminRole.admin_staff && <th>Reg. Date</th>}
+
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -148,9 +153,18 @@ const ViewBranches = () => {
                       <td>
                         <strong>{handleSplitUserName(branch?.username)}</strong>
                       </td>
-                      <td>{branch?.creditReferance}</td>
-                      <td>{branch?.balance}</td>
-                      <td>{branch?.pnl}</td>
+                      {adminRole == AdminRole.admin_staff && (
+                        <td>{branch?.exposure}</td>
+                      )}
+                      {adminRole !== AdminRole.admin_staff && (
+                        <td>{branch?.creditReferance}</td>
+                      )}
+                      {adminRole !== AdminRole.admin_staff && (
+                        <td>{branch?.balance}</td>
+                      )}
+                      {adminRole !== AdminRole.admin_staff && (
+                        <td>{branch?.pnl}</td>
+                      )}
 
                       <td>
                         <span
@@ -187,9 +201,19 @@ const ViewBranches = () => {
                             : "inactive"}
                         </span>
                       </td>
+                      {adminRole !== AdminRole.admin_staff && (
+                        <td>{branch?.registrationDate}</td>
+                      )}
 
-                      <td>{branch?.registrationDate}</td>
-                      <td style={{ display: "flex", color: "white" }}>
+                      <td
+                        style={{
+                          display:
+                            adminRole === AdminRole.admin_staff
+                              ? "none"
+                              : "flex",
+                          color: "white",
+                        }}
+                      >
                         <a
                           onClick={() => {
                             setShowDeposit(true);
