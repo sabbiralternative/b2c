@@ -70,7 +70,7 @@ const MasterSidebar = () => {
           </Link>
         </li>
       )}
-      {adminRole === AdminRole.admin_staff && (
+      {/* {adminRole === AdminRole.admin_staff && (
         <li className={`menu-item ${sidebarItem === "branch" ? "open" : ""}`}>
           <a
             onClick={() => handleOpenSidebarItem("branch")}
@@ -89,6 +89,42 @@ const MasterSidebar = () => {
               >
                 <i className="menu-icon tf-icons bx bxs-institution"></i>
                 <div data-i18n="View Branches">View Branch</div>
+              </Link>
+            </li>
+          </ul>
+        </li>
+      )} */}
+
+      {adminRole === AdminRole.admin_staff && (
+        <li className={`menu-item ${sidebarItem === "exposure" ? "open" : ""}`}>
+          <a
+            onClick={() => handleOpenSidebarItem("exposure")}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Settings">Exposure</div>
+          </a>
+
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <Link
+                to="/market-analysis"
+                onClick={() => setShowSidebar(false)}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Banners">Market Analysis</div>
+              </Link>
+            </li>
+
+            <li className="menu-item">
+              <Link
+                onClick={() => setShowSidebar(false)}
+                to="/current-bets"
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Add Banner">Current Bets</div>
               </Link>
             </li>
           </ul>
