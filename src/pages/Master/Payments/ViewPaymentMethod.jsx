@@ -5,7 +5,7 @@ import axios from "axios";
 import { API } from "../../../api";
 import useContextState from "../../../hooks/useContextState";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import ShowImage from "../../../components/modal/ShowImage";
 import { AdminRole } from "../../../constant/constant";
 import { useGetIndex } from "../../../hooks";
@@ -105,7 +105,7 @@ const ViewPaymentMethod = () => {
                   <th>Limits</th>
 
                   <th>status</th>
-                  {adminRole !== AdminRole.admin_staff && <th>Action</th>}
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
@@ -153,14 +153,16 @@ const ViewPaymentMethod = () => {
                           {method?.status == 1 ? "Active" : "inactive"}
                         </span>
                       </td>
-                      {adminRole !== AdminRole.admin_staff && (
-                        <td>
+
+                      <td>
+                        {adminRole === AdminRole.admin_staff && (
                           <a
                             style={{
                               color: "white",
                               cursor: `${
                                 !readOnly ? "pointer" : "not-allowed"
                               }`,
+                              marginRight: "4px",
                             }}
                             onClick={() => {
                               !readOnly && setDownLineId(method?.id);
@@ -168,26 +170,46 @@ const ViewPaymentMethod = () => {
                             }}
                             className="btn btn-icon btn-sm btn-success"
                           >
-                            <i className="bx bxs-edit"></i>
+                            L
                           </a>
-                          &nbsp;
-                          <a
-                            onClick={() => {
-                              !readOnly &&
-                                handleDeletePaymentMethod(method?.id);
-                            }}
-                            style={{
-                              color: "white",
-                              cursor: `${
-                                !readOnly ? "pointer" : "not-allowed"
-                              }`,
-                            }}
-                            className="btn btn-icon btn-sm btn-danger"
-                          >
-                            <i className="bx bxs-checkbox-minus"></i>
-                          </a>
-                        </td>
-                      )}
+                        )}
+                        {adminRole !== AdminRole.admin_staff && (
+                          <Fragment>
+                            <a
+                              style={{
+                                color: "white",
+                                cursor: `${
+                                  !readOnly ? "pointer" : "not-allowed"
+                                }`,
+                                marginRight: "4px",
+                              }}
+                              onClick={() => {
+                                !readOnly && setDownLineId(method?.id);
+                                !readOnly && setShowEditPayment(true);
+                              }}
+                              className="btn btn-icon btn-sm btn-success"
+                            >
+                              <i className="bx bxs-edit"></i>
+                            </a>
+                            <a
+                              onClick={() => {
+                                !readOnly &&
+                                  handleDeletePaymentMethod(method?.id);
+                              }}
+                              style={{
+                                color: "white",
+                                cursor: `${
+                                  !readOnly ? "pointer" : "not-allowed"
+                                }`,
+                                marginRight: "4px",
+                              }}
+                              className="btn btn-icon btn-sm btn-danger"
+                            >
+                              <i className="bx bxs-checkbox-minus"></i>
+                            </a>
+                          </Fragment>
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
