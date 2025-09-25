@@ -9,6 +9,7 @@ import {
 } from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
+import { AdminRole } from "../../../../constant/constant";
 
 const AddChecker = ({ setShowAddChecker }) => {
   const [disabled, setDisabled] = useState(false);
@@ -143,9 +144,11 @@ const AddChecker = ({ setShowAddChecker }) => {
                       />
                     </div>
                   </div>
-                  {adminRole === "master" && (
+                  {(adminRole === "master" ||
+                    adminRole === AdminRole.hyper_master) && (
                     <div className="row mb-3" id="ifsc_div">
                       <label
+                        style={{ paddingTop: "0px" }}
                         className="col-sm-2 col-form-label"
                         htmlFor="basic-default-company"
                       >
@@ -155,7 +158,9 @@ const AddChecker = ({ setShowAddChecker }) => {
                         className="col-sm-10"
                         style={{
                           display: "flex",
-                          gap: "20px",
+
+                          gap: "15px",
+                          flexWrap: "wrap",
                         }}
                       >
                         <div
@@ -175,7 +180,7 @@ const AddChecker = ({ setShowAddChecker }) => {
                           <p
                             style={{
                               margin: "0px",
-                              marginTop: "5px",
+
                               height: "100%",
                             }}
                           >
@@ -198,7 +203,7 @@ const AddChecker = ({ setShowAddChecker }) => {
                           <p
                             style={{
                               margin: "0px",
-                              marginTop: "5px",
+
                               height: "100%",
                             }}
                           >
@@ -221,7 +226,7 @@ const AddChecker = ({ setShowAddChecker }) => {
                           <p
                             style={{
                               margin: "0px",
-                              marginTop: "5px",
+
                               height: "100%",
                             }}
                           >
@@ -244,7 +249,7 @@ const AddChecker = ({ setShowAddChecker }) => {
                           <p
                             style={{
                               margin: "0px",
-                              marginTop: "5px",
+
                               height: "100%",
                             }}
                           >
@@ -267,13 +272,38 @@ const AddChecker = ({ setShowAddChecker }) => {
                           <p
                             style={{
                               margin: "0px",
-                              marginTop: "5px",
+
                               height: "100%",
                             }}
                           >
                             Report
                           </p>
                         </div>
+                        {adminRole === AdminRole.hyper_master && (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "start",
+                              gap: "3px",
+                            }}
+                          >
+                            <input
+                              value="exposure"
+                              style={{ height: "100%" }}
+                              type="checkbox"
+                              {...register("permissions", { required: true })}
+                            />
+                            <p
+                              style={{
+                                margin: "0px",
+
+                                height: "100%",
+                              }}
+                            >
+                              Exposure
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}

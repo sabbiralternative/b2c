@@ -8,8 +8,11 @@ import {
 } from "../../../hooks/HyperMaster/Staff";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../utils/handleRandomToken";
+import useContextState from "../../../hooks/useContextState";
+import { AdminRole } from "../../../constant/constant";
 
 const UpdatePermission = ({ setShowPermission, showPermission }) => {
+  const { adminRole } = useContextState();
   const [disabled, setDisabled] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const updatePermissionRef = useRef();
@@ -56,6 +59,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
   const client = staffData?.includes("client") ?? false;
   const payment = staffData?.includes("payment") ?? false;
   const report = staffData?.includes("report") ?? false;
+  const exposure = staffData?.includes("exposure") ?? false;
 
   if (!checkerData?.success) {
     return null;
@@ -90,6 +94,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                 <div className="row">
                   <div className="row mb-3" id="ifsc_div">
                     <label
+                      style={{ paddingTop: "0px" }}
                       className="col-sm-2 col-form-label"
                       htmlFor="basic-default-company"
                     >
@@ -99,7 +104,8 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                       className="col-sm-10"
                       style={{
                         display: "flex",
-                        gap: "20px",
+                        flexWrap: "wrap",
+                        gap: "15px",
                       }}
                     >
                       <div
@@ -119,7 +125,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                         <p
                           style={{
                             margin: "0px",
-                            marginTop: "5px",
+
                             height: "100%",
                           }}
                         >
@@ -143,7 +149,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                         <p
                           style={{
                             margin: "0px",
-                            marginTop: "5px",
+
                             height: "100%",
                           }}
                         >
@@ -167,7 +173,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                         <p
                           style={{
                             margin: "0px",
-                            marginTop: "5px",
+
                             height: "100%",
                           }}
                         >
@@ -191,7 +197,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                         <p
                           style={{
                             margin: "0px",
-                            marginTop: "5px",
+
                             height: "100%",
                           }}
                         >
@@ -215,13 +221,39 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                         <p
                           style={{
                             margin: "0px",
-                            marginTop: "5px",
+
                             height: "100%",
                           }}
                         >
                           Report
                         </p>
                       </div>
+                      {adminRole === AdminRole.hyper_master && (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="exposure"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                            defaultChecked={exposure}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+
+                              height: "100%",
+                            }}
+                          >
+                            Exposure
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

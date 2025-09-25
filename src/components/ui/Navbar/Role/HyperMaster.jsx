@@ -282,6 +282,15 @@ const HyperMaster = () => {
                   <div data-i18n="Add Client">Inactive Clients</div>
                 </a>
               </li>
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("suspended-client")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                  <div data-i18n="Add Client">Suspended Clients</div>
+                </a>
+              </li>
             </ul>
           </li>
           {adminRole !== AdminRole.super_master && (

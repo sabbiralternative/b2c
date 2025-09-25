@@ -200,6 +200,16 @@ const HyperMasterSidebar = () => {
                   <div data-i18n="View Branches">Inactive Client</div>
                 </Link>
               </li>
+              <li className="menu-item">
+                <Link
+                  onClick={() => setShowSidebar(false)}
+                  to="/suspended-client"
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Branches">Suspended Client</div>
+                </Link>
+              </li>
             </ul>
           </li>
           {adminRole !== AdminRole.super_master && (

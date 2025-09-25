@@ -11,8 +11,13 @@ import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
+import { useGetIndex } from "../../hooks";
 
 const DepositReport = () => {
+  const [branchId, setBranchId] = useState(0);
+  const { data: branches } = useGetIndex({
+    type: "getBranches",
+  });
   const [amountFrom, setAmountFrom] = useState(null);
   const [amountTo, setAmountTo] = useState(null);
   const [showDepositImage, setShowDepositImage] = useState(false);
@@ -38,6 +43,9 @@ const DepositReport = () => {
       amountFrom: amountFrom ? Number(amountFrom) : null,
       amountTo: amountTo ? Number(amountTo) : null,
     };
+    if (adminRole === AdminRole.admin_staff) {
+      payload.branch_id = branchId;
+    }
 
     const res = await axios.post(API.export, payload, {
       headers: {
@@ -136,6 +144,38 @@ const DepositReport = () => {
                     lastThreeMonth={true}
                   />
                   <div style={{ display: "flex", gap: "10px" }}>
+                    {adminRole === AdminRole.admin_staff && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        <label className="col-form-label" htmlFor="Amount From">
+                          Branch
+                        </label>
+                        <select
+                          style={{ width: "200px" }}
+                          defaultValue="0"
+                          onChange={(e) => setBranchId(e.target.value)}
+                          className="form-control"
+                        >
+                          <option disabled value="">
+                            Branch
+                          </option>
+                          <option value="0">All Branch</option>
+                          {branches?.result?.map((site) => (
+                            <option
+                              key={site?.branch_id}
+                              value={site?.branch_id}
+                            >
+                              {site?.branch_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                     <div
                       style={{
                         display: "flex",
