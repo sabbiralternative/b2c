@@ -269,6 +269,7 @@ const DepositReport = () => {
                         ) : null}
 
                         <th>Amount</th>
+                        <th>Utr</th>
                         <th>Request Time</th>
                         <th>Approval Time</th>
                         <th>Image</th>
@@ -302,6 +303,7 @@ const DepositReport = () => {
                             ) : null}
 
                             <td>{data?.amount}</td>
+                            <td>{data?.utr}</td>
                             <td>{data?.deposit_date}</td>
                             <td>{data?.date_modified}</td>
                             <td>

@@ -66,7 +66,7 @@
       "checkUsername": "https://admin.api7.live/api/checkUsername",
       "accountStatement": "https://admin.api7.live/api/accountStatement",
       "partyWinLoss": "https://admin.api7.live/api/partyWinLoss",
-      "currentBets": "https://admin.api7.live/api/currentBets",
+      "currentBets": "https://admin.api7.live/api/b2c/currentBets",
       "userHistory": "https://admin.api7.live/api/userHistory",
       "userAuthentication": "https://admin.api7.live/api/userAuthentication",
       "searchUser": "https://admin.api7.live/api/searchUser",

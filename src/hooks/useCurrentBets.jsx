@@ -5,14 +5,15 @@ import handleEncryptData from "../utils/handleEncryptData";
 import { API } from "../api";
 import axios from "axios";
 
-const useCurrentBets = () => {
+const useCurrentBets = (payload) => {
   const { token, tokenLoading } = useContextState();
   const { data: currentBets } = useQuery({
-    queryKey: ["currentBets"],
+    queryKey: ["currentBets", payload],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
       const encryptedData = handleEncryptData({
+        ...payload,
         type: "sports",
         token: generatedToken,
       });
