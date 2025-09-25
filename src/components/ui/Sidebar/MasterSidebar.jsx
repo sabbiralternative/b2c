@@ -70,8 +70,33 @@ const MasterSidebar = () => {
           </Link>
         </li>
       )}
+      {adminRole === AdminRole.admin_staff && (
+        <li className={`menu-item ${sidebarItem === "branch" ? "open" : ""}`}>
+          <a
+            onClick={() => handleOpenSidebarItem("branch")}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Branch">Branch</div>
+          </a>
+
+          <ul className="menu-sub">
+            <li className="menu-item">
+              <Link
+                onClick={() => setShowSidebar(false)}
+                to="/view-branch"
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Branches">View Branch</div>
+              </Link>
+            </li>
+          </ul>
+        </li>
+      )}
 
       {adminRole === "master" ||
+      (adminRole === "admin_staff" && clientPermission) ||
       (adminRole === "branch_staff" && clientPermission) ? (
         <li className={`menu-item ${sidebarItem === "client" ? "open" : ""}`}>
           <a
@@ -180,6 +205,7 @@ const MasterSidebar = () => {
       )}
 
       {adminRole === "master" ||
+      (adminRole === AdminRole.admin_staff && paymentPermission) ||
       (adminRole === "branch_staff" && paymentPermission) ? (
         <li
           onClick={() => handleOpenSidebarItem("payment")}

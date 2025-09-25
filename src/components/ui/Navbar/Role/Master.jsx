@@ -98,6 +98,38 @@ const Master = () => {
         </li>
       )}
 
+      {adminRole === AdminRole.admin_staff && (
+        <li
+          onMouseEnter={() => setNavList("branch")}
+          onMouseLeave={() => setNavList(null)}
+          className={`menu-item ${navList === "branch" ? "open" : ""}`}
+        >
+          <a
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            className="menu-link menu-toggle"
+          >
+            <i className="menu-icon tf-icons bx bx-layout"></i>
+            <div data-i18n="Branch">Branch</div>
+          </a>
+
+          <ul className="menu-sub">
+            <li className="menu-item ">
+              <a
+                onClick={() => handleNavigate("view-branch")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="View Branches">View Branch</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      )}
+
       {adminRole === "master" ||
       (adminRole === "admin_staff" && clientPermission) ||
       (adminRole === "branch_staff" && clientPermission) ? (
