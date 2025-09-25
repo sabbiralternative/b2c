@@ -3,16 +3,17 @@ import axios from "axios";
 import useContextState from "../../useContextState";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
+import { AdminRole } from "../../../constant/constant";
 
 const useGetAllBranch = (postData) => {
   const { token, tokenLoading, adminRole } = useContextState();
   const { data: branches = [], refetch: refetchAllBranch } = useQuery({
     queryKey: ["branch", postData],
-    enabled: !tokenLoading,
+    enabled:
+      !tokenLoading &&
+      (adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.admin_staff),
     queryFn: async () => {
-      if (adminRole != "hyper_master") {
-        return;
-      }
       const generatedToken = handleRandomToken();
 
       const payload = { token: generatedToken, ...postData };
