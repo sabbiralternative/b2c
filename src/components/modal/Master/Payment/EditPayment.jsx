@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import useContextState from "../../../../hooks/useContextState";
@@ -122,7 +122,10 @@ const EditPayment = ({ setShowEditPayment }) => {
           sort: currentPayment?.sort,
         });
       }
-      if (currentPayment?.type === "usdt") {
+      if (
+        currentPayment?.type === "usdt" ||
+        currentPayment?.type === "usdt_bep20"
+      ) {
         reset({
           token_address: currentPayment?.token_address,
           usdt_value: currentPayment?.usdt_value,
@@ -144,7 +147,7 @@ const EditPayment = ({ setShowEditPayment }) => {
   }, [currentPayment, reset]);
 
   return (
-    <>
+    <Fragment>
       <div className="content-backdrop fade show"></div>
       <div
         className="modal fade show"
@@ -341,7 +344,7 @@ const EditPayment = ({ setShowEditPayment }) => {
                   </div>
                 )}
                 {currentPayment?.type === "bank" && (
-                  <>
+                  <Fragment>
                     <div className="row mb-3" id="bank_account_name_div">
                       <label
                         className="col-sm-2 col-form-label"
@@ -471,10 +474,10 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-                  </>
+                  </Fragment>
                 )}
                 {currentPayment?.type === "upi" && (
-                  <>
+                  <Fragment>
                     <div className="row mb-3" id="upi_id">
                       <label
                         className="col-sm-2 col-form-label"
@@ -568,10 +571,11 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-                  </>
+                  </Fragment>
                 )}
-                {currentPayment?.type === "usdt" && (
-                  <>
+                {(currentPayment?.type === "usdt" ||
+                  currentPayment?.type === "usdt_bep20") && (
+                  <Fragment>
                     <div className="row mb-3" id="upi_account_name">
                       <label
                         className="col-sm-2 col-form-label"
@@ -664,10 +668,10 @@ const EditPayment = ({ setShowEditPayment }) => {
                         />
                       </div>
                     </div>
-                  </>
+                  </Fragment>
                 )}
                 {currentPayment?.type === "whatsapp" && (
-                  <>
+                  <Fragment>
                     <div className="row mb-3" id="upi_account_name">
                       <label
                         className="col-sm-2 col-form-label"
@@ -764,7 +768,7 @@ const EditPayment = ({ setShowEditPayment }) => {
                         )}
                       </div>
                     </div>
-                  </>
+                  </Fragment>
                 )}
                 <div className="row mb-3" id="upi_account_name">
                   <label
@@ -811,7 +815,7 @@ const EditPayment = ({ setShowEditPayment }) => {
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 
