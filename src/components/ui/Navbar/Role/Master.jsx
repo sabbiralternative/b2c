@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useGetDWCount from "../../../../hooks/Master/useGetDWCount";
 import notification from "../../../../assets/notification.wav";
@@ -786,6 +786,29 @@ const Master = () => {
                   <div data-i18n="View Banners">Withdraw Report</div>
                 </a>
               </li>
+            )}
+
+            {adminRole === AdminRole.admin_staff && (
+              <Fragment>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("direct-deposit-report")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="View Banners">Direct Deposit Report</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("direct-withdraw-report")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="View Banners">Direct Withdraw Report</div>
+                  </a>
+                </li>
+              </Fragment>
             )}
 
             <li className="menu-item">

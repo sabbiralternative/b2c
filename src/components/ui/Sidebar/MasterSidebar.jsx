@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import { jwtDecode } from "jwt-decode";
@@ -642,6 +642,34 @@ const MasterSidebar = () => {
                 <div data-i18n="Completed Withdraw">Withdraw Report</div>
               </a>
             </li>
+
+            {adminRole === AdminRole.admin_staff && (
+              <Fragment>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("direct-deposit-report")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Completed Withdraw">
+                      Direct Deposit Report
+                    </div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("direct-withdraw-report")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Completed Withdraw">
+                      Direct Withdraw Report
+                    </div>
+                  </a>
+                </li>
+              </Fragment>
+            )}
+
             <li className="menu-item">
               <a
                 onClick={() => handleNavigate("transfer-statement")}

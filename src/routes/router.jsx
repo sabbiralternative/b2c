@@ -24,6 +24,8 @@ import AddNotification from "../pages/HyperMaster/Settings/AddNotification";
 import ViewNotification from "../pages/HyperMaster/Settings/ViewNotification";
 import PendingComplaints from "../pages/Complaints/PendingComplaints";
 import ResolvedComplaints from "../pages/Complaints/ResolvedComplaints";
+import DirectDepositReport from "../pages/Report/DirectDepositReport";
+import DirectWithdrawReport from "../pages/Report/DirectWithdrawReport";
 
 export const router = createBrowserRouter(
   [
@@ -43,6 +45,10 @@ export const router = createBrowserRouter(
         {
           path: "/deposit-report",
           element: <DepositReport />,
+        },
+        {
+          path: "/direct-deposit-report",
+          element: <DirectDepositReport />,
         },
         {
           path: "/1st-deposit-report",
@@ -75,6 +81,10 @@ export const router = createBrowserRouter(
         {
           path: "/withdraw-report",
           element: <WithdrawReport />,
+        },
+        {
+          path: "/direct-withdraw-report",
+          element: <DirectWithdrawReport />,
         },
         {
           path: "/transfer-statement",
