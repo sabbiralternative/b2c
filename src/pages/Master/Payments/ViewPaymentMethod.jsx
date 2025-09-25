@@ -9,6 +9,7 @@ import { Fragment, useState } from "react";
 import ShowImage from "../../../components/modal/ShowImage";
 import { AdminRole } from "../../../constant/constant";
 import { useGetIndex } from "../../../hooks";
+import { Link } from "react-router-dom";
 
 const ViewPaymentMethod = () => {
   const [branchId, setBranchId] = useState(0);
@@ -156,7 +157,8 @@ const ViewPaymentMethod = () => {
 
                       <td>
                         {adminRole === AdminRole.admin_staff && (
-                          <a
+                          <Link
+                            to={`/view-payment-logs/${method?.id}`}
                             style={{
                               color: "white",
                               cursor: `${
@@ -164,14 +166,10 @@ const ViewPaymentMethod = () => {
                               }`,
                               marginRight: "4px",
                             }}
-                            onClick={() => {
-                              !readOnly && setDownLineId(method?.id);
-                              !readOnly && setShowEditPayment(true);
-                            }}
                             className="btn btn-icon btn-sm btn-success"
                           >
                             L
-                          </a>
+                          </Link>
                         )}
                         {adminRole !== AdminRole.admin_staff && (
                           <Fragment>

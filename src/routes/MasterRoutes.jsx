@@ -23,6 +23,7 @@ import AddUPI from "../pages/Master/Payments/AddUPI";
 import AddUSDT from "../pages/Master/Payments/AddUSDT";
 import AddUSDTBEP20 from "../pages/Master/Payments/AddUSDTBEP20";
 import AddWhatsappDeposit from "../pages/Master/Payments/AddWhatsappDeposit";
+import ViewPaymentLogs from "../pages/Master/Payments/ViewPaymentLogs";
 import ViewPaymentMethod from "../pages/Master/Payments/ViewPaymentMethod";
 import DepositStatement from "../pages/Master/Statement/DepositStatement";
 import WithdrawStatement from "../pages/Master/Statement/WithdrawStatement";
@@ -102,6 +103,10 @@ export const MasterRoutes = [
   {
     path: "/view-payment-method",
     element: <ViewPaymentMethod />,
+  },
+  {
+    path: "/view-payment-logs/:paymentId",
+    element: <ViewPaymentLogs />,
   },
   {
     path: "/add-bank-account",
