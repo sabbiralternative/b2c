@@ -63,6 +63,8 @@ const MarketAnalysis = () => {
                 <th style={{ width: "200px" }}>Event Id</th>
                 <th>Event Name</th>
                 <th>Market Name</th>
+                <th>Runner Name</th>
+                <th>Exposure</th>
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
@@ -74,34 +76,85 @@ const MarketAnalysis = () => {
                   const events = marketAnalysis?.filter(
                     (item) => item?.event_name === eventName
                   );
-                  const uniqueEventName = Array.from(
-                    new Set(events?.map((item) => item?.market_name))
+
+                  // Unique market names under this event
+                  const uniqueMarketNames = Array.from(
+                    new Set(events.map((item) => item?.market_name))
                   );
 
-                  return uniqueEventName.map((marketName, j) => (
-                    <tr
-                      key={`${i}-${j}`}
-                      style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        navigate(
-                          `/game-details/${event?.event_type_id}/${event?.event_id}`
-                        )
-                      }
-                    >
-                      {/* show event id and name only for the first row of each event */}
-                      {j === 0 ? (
-                        <>
-                          <td rowSpan={uniqueEventName.length}>
-                            {event?.event_id}
-                          </td>
-                          <td rowSpan={uniqueEventName.length}>{eventName}</td>
-                          <td>{marketName}</td>
-                        </>
-                      ) : (
-                        <td>{marketName}</td>
-                      )}
-                    </tr>
-                  ));
+                  return uniqueMarketNames.map((marketName, j) => {
+                    const marketItems = events.filter(
+                      (item) => item?.market_name === marketName
+                    );
+
+                    // Unique runner names for this market
+                    const uniqueRunners = Array.from(
+                      new Set(marketItems.map((item) => item?.runner_name))
+                    );
+
+                    return uniqueRunners.map((runnerName, k) => {
+                      const runnerData = marketItems.find(
+                        (item) => item?.runner_name === runnerName
+                      );
+
+                      return (
+                        <tr
+                          key={`${i}-${j}-${k}`}
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            navigate(
+                              `/game-details/${event?.event_type_id}/${event?.event_id}`
+                            )
+                          }
+                        >
+                          {/* show event id and name only for the first market and first runner */}
+                          {j === 0 && k === 0 && (
+                            <>
+                              <td
+                                rowSpan={uniqueMarketNames.reduce(
+                                  (acc, mName) =>
+                                    acc +
+                                    new Set(
+                                      events
+                                        .filter(
+                                          (item) => item.market_name === mName
+                                        )
+                                        .map((item) => item.runner_name)
+                                    ).size,
+                                  0
+                                )}
+                              >
+                                {event?.event_id}
+                              </td>
+                              <td
+                                rowSpan={uniqueMarketNames.reduce(
+                                  (acc, mName) =>
+                                    acc +
+                                    new Set(
+                                      events
+                                        .filter(
+                                          (item) => item.market_name === mName
+                                        )
+                                        .map((item) => item.runner_name)
+                                    ).size,
+                                  0
+                                )}
+                              >
+                                {eventName}
+                              </td>
+                            </>
+                          )}
+
+                          {/* show market name only for first runner of each market */}
+                          {k === 0 ? <td>{marketName}</td> : null}
+
+                          {/* runner name and exposure */}
+                          <td>{runnerName}</td>
+                          <td>{runnerData?.exposure ?? "-"}</td>
+                        </tr>
+                      );
+                    });
+                  });
                 })}
             </tbody>
           </table>
