@@ -60,31 +60,48 @@ const MarketAnalysis = () => {
           <table className="table table-hover table-sm">
             <thead className="table-dark">
               <tr>
-                <th style={{ width: "200px" }}>Date</th>
+                <th style={{ width: "200px" }}>Event Id</th>
                 <th>Event Name</th>
+                <th>Market Name</th>
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
               {uniqueEvent?.length > 0 &&
-                uniqueEvent?.map((eventName, i) => {
+                uniqueEvent.map((eventName, i) => {
                   const event = marketAnalysis?.find(
                     (item) => item?.event_name === eventName
                   );
+                  const events = marketAnalysis?.filter(
+                    (item) => item?.event_name === eventName
+                  );
+                  const uniqueEventName = Array.from(
+                    new Set(events?.map((item) => item?.market_name))
+                  );
 
-                  return (
+                  return uniqueEventName.map((marketName, j) => (
                     <tr
-                      onClick={() => {
+                      key={`${i}-${j}`}
+                      style={{ cursor: "pointer" }}
+                      onClick={() =>
                         navigate(
                           `/game-details/${event?.event_type_id}/${event?.event_id}`
-                        );
-                      }}
-                      style={{ cursor: "pointer" }}
-                      key={i}
+                        )
+                      }
                     >
-                      <td>{event?.eventDate}</td>
-                      <td>{eventName}</td>
+                      {/* show event id and name only for the first row of each event */}
+                      {j === 0 ? (
+                        <>
+                          <td rowSpan={uniqueEventName.length}>
+                            {event?.event_id}
+                          </td>
+                          <td rowSpan={uniqueEventName.length}>{eventName}</td>
+                          <td>{marketName}</td>
+                        </>
+                      ) : (
+                        <td>{marketName}</td>
+                      )}
                     </tr>
-                  );
+                  ));
                 })}
             </tbody>
           </table>
