@@ -13,7 +13,6 @@ const Toss = () => {
           </span>
         </div>
         <div className="float-right">
-          <a className="btn btn-back">Bet Lock</a>
           <a className="btn btn-back">User Book</a>
         </div>
       </div>

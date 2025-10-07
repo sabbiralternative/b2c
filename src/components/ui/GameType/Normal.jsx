@@ -1,6 +1,5 @@
 import Exposure from "./Exposure";
 
-
 const Normal = ({ normal, exposer }) => {
   return (
     <div className="market-6">
@@ -17,10 +16,7 @@ const Normal = ({ normal, exposer }) => {
               {normal?.[0]?.btype == "FANCY" ? "FANCY" : normal?.[0]?.name}
             </span>
           </div>
-          <div className="float-right">
-                  <a className="user-lock-book">Bet Lock</a>
-              
-                </div>
+          <div className="float-right"></div>
         </div>
         <div
           id="market2"
@@ -45,7 +41,7 @@ const Normal = ({ normal, exposer }) => {
                 <div className="bet-table-row" data-title="ACTIVATE">
                   <div className="nation-name d-none-mobile">
                     <p> {games?.name}</p>
-                     <Exposure pnl={pnl} />
+                    <Exposure pnl={pnl} />
                   </div>
                   <div className="bl-box lay">
                     <span className="d-block odds">

@@ -1,6 +1,5 @@
 import Exposure from "./Exposure";
 
-
 const Bookmaker = ({ bookmarker, exposer }) => {
   return (
     <>
@@ -15,13 +14,12 @@ const Bookmaker = ({ bookmarker, exposer }) => {
                 className="nation-name"
               >
                 <span title="Bookmaker">
-                  <a title=""></a> {games?.name}
+                  <a title=""></a> {games?.name?.toUpperCase()}
                 </span>
               </div>
               <div className="float-right">
-                  <a className="user-lock-book">Bet Lock</a>
-                  <a className="user-lock-book">User Book</a>
-                </div>
+                <a className="user-lock-book">User Book</a>
+              </div>
             </div>
             <div
               id="market1"

@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom";
+import useContextState from "../../../hooks/useContextState";
+
 const MyBets = ({ myBets }) => {
+  const navigate = useNavigate();
+  const { setRefetchViewClient, setClientId } = useContextState();
   return (
     <div className="simplebar-wrapper" style={{ margin: "0px" }}>
       <div className="simplebar-height-auto-observer-wrapper">
@@ -24,7 +29,7 @@ const MyBets = ({ myBets }) => {
                 <div className="card-body">
                   <div className="tabs" id="__BVID__1619">
                     <div
-                    style={{padding:'0px'}}
+                      style={{ padding: "0px" }}
                       className="tab-content"
                       id="__BVID__1619__BV_tab_container_"
                     >
@@ -45,7 +50,7 @@ const MyBets = ({ myBets }) => {
                                       minWidth: "90px",
                                     }}
                                   >
-                                    UserName
+                                    UserId
                                   </th>
                                   <th
                                     style={{
@@ -103,8 +108,16 @@ const MyBets = ({ myBets }) => {
                                             : "lay-border"
                                         }`}
                                       >
-                                        <td className="bt0">
-                                          {bets?.username}
+                                        <td
+                                          onClick={() => {
+                                            setClientId(`P-${bets?.userId}`);
+                                            setRefetchViewClient(true);
+                                            navigate("/view-client");
+                                          }}
+                                          style={{ cursor: "pointer" }}
+                                          className="bt0"
+                                        >
+                                          {bets?.userId}
                                         </td>
                                         <td className="bt0">{bets?.nation}</td>
                                         <td className="text-right bt0">

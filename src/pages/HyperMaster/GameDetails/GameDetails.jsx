@@ -28,7 +28,8 @@ const GameDetails = () => {
   /* Filtered all the game  */
   useEffect(() => {
     const filterMatch_odds = data?.filter(
-      (match_odd) => match_odd.btype === "MATCH_ODDS"
+      (match_odd) =>
+        match_odd.btype === "MATCH_ODDS" && match_odd?.name !== "tied match"
     );
     setMatch_odds(filterMatch_odds);
 
@@ -59,6 +60,10 @@ const GameDetails = () => {
     // );
     // setOverByOver(overByOverFilter);
   }, [data]);
+
+  const tiedMatch = data?.filter(
+    (game) => game.btype === "MATCH_ODDS" && game?.name === "tied match"
+  );
 
   if (!data) {
     return;
@@ -95,6 +100,10 @@ const GameDetails = () => {
                             {/* <Toss /> */}
                           </div>
                           <Normal normal={normal} exposer={pnlBySelection} />
+                          <MatchOdds
+                            match_odds={tiedMatch}
+                            exposer={pnlBySelection}
+                          />
                         </div>
                       </div>
                       <div data-simplebar="init" className="right-sidebar">

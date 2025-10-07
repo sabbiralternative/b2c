@@ -15,12 +15,10 @@ const MatchOdds = ({ match_odds, exposer }) => {
                   className="nation-name collapsed"
                 >
                   <span title="MATCH_ODDS">
-                    <a title=""></a>{" "}
-                    {games?.eventTypeId == 4 ? games?.btype : games?.name}
+                    <a title=""></a> {games?.name?.toUpperCase()}
                   </span>
                 </div>
                 <div className="float-right">
-                  <a className="user-lock-book">Bet Lock</a>
                   <a className="user-lock-book">User Book</a>
                 </div>
               </div>
