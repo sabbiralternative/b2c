@@ -61,8 +61,6 @@ const PendingDeposit = () => {
     }
   }, [message]);
 
-  console.log(data);
-
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       {showEditPending && (

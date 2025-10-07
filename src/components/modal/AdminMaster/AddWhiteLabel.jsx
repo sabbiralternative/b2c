@@ -39,7 +39,6 @@ const AddWhiteLabel = ({ setShowAddWhiteLabel }) => {
       theme: values?.theme,
       token: generatedToken,
     };
-    console.log(payload);
 
     addWhiteLabel(payload, {
       onSuccess: (data) => {

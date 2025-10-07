@@ -3,9 +3,11 @@ import useContextState from "../../../hooks/useContextState";
 import useCurrentBets from "../../../hooks/useCurrentBets";
 import { useGetIndex } from "../../../hooks";
 import { AdminRole } from "../../../constant/constant";
+import { useNavigate } from "react-router-dom";
 
 const CurrentBets = () => {
-  const { adminRole } = useContextState();
+  const navigate = useNavigate();
+  const { adminRole, setClientId, setRefetchViewClient } = useContextState();
   const [branchId, setBranchId] = useState(0);
   const { data: branches } = useGetIndex({
     type: "getBranches",
@@ -20,7 +22,6 @@ const CurrentBets = () => {
 
   const { currentBets } = useCurrentBets(payload);
 
-  console.log(currentBets);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
@@ -59,7 +60,7 @@ const CurrentBets = () => {
                   <tr>
                     <th scope="col">Event Type</th>
                     <th scope="col">Event Name</th>
-                    <th scope="col">User Name</th>
+                    <th scope="col">User Id</th>
                     <th scope="col">M Name</th>
                     <th scope="col">Nation</th>
                     <th scope="col">U Rate</th>
@@ -85,7 +86,17 @@ const CurrentBets = () => {
                           {" "}
                           {betData?.eventName}
                         </td>
-                        <td style={{ color: "black" }}> {betData?.username}</td>
+                        <td
+                          onClick={() => {
+                            setClientId(`P-${betData?.userId}`);
+                            setRefetchViewClient(true);
+                            navigate("/view-client");
+                          }}
+                          style={{ color: "black", cursor: "pointer" }}
+                        >
+                          <span>P-</span>
+                          <span> {betData?.userId}</span>
+                        </td>
                         <td style={{ color: "black" }}>
                           {" "}
                           {betData?.marketName}

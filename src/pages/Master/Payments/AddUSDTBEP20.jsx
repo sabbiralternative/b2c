@@ -62,7 +62,7 @@ const AddUSDTBEP20 = () => {
       method: "usdt_bep20",
       token: generatedToken,
     };
-    // console.log(payload);
+
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });

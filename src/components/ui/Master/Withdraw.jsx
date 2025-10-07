@@ -179,7 +179,6 @@ const Withdraw = ({
           <tbody className="table-border-bottom-0">
             {Array.isArray(data) &&
               data?.map((item, i) => {
-                // console.log(data);
                 return (
                   <tr style={{ background: item?.bgcolor || "none" }} key={i}>
                     <td

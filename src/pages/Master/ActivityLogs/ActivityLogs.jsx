@@ -58,7 +58,6 @@ const ActivityLogs = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((client, i) => {
-                  // console.log(client);
                   return (
                     <tr key={i}>
                       <td

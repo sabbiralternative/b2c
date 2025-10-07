@@ -55,7 +55,7 @@ const ChangePassword = ({
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = res.data;
-    console.log(data);
+
     if (data?.success) {
       setDisabled(false);
       toast.success(data?.result?.message);

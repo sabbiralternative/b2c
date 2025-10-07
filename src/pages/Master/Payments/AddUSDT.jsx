@@ -62,7 +62,7 @@ const AddUSDT = () => {
       method: "usdt",
       token: generatedToken,
     };
-    // console.log(payload);
+
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
