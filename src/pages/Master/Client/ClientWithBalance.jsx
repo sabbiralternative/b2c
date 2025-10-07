@@ -18,6 +18,7 @@ import ChangeColor from "../../../components/modal/ChangeColor";
 import ChangeBranch from "../../../components/modal/HyperMaster/Client/ChangeBranch";
 import handleNavigateToWhatsApp from "../../../utils/handleNavigateToWhatsApp";
 import Loader from "../../../components/ui/Loader/Loader";
+import { Fragment } from "react";
 
 const ClientWithBalance = () => {
   const [showColor, setShowColor] = useState(false);
@@ -399,20 +400,33 @@ const ClientWithBalance = () => {
                         )}
                         {adminRole == AdminRole.hyper_master ||
                         adminRole === AdminRole.admin_staff ? (
-                          <a
-                            style={{ color: "white" }}
-                            onClick={() => {
-                              handleOpenModal(
-                                setShowChangeBranch,
-                                client?.username,
-                                client?.role,
-                                client?.downlineId
-                              );
-                            }}
-                            className="btn btn-icon btn-sm btn-danger"
-                          >
-                            M
-                          </a>
+                          <Fragment>
+                            <a
+                              style={{ color: "white" }}
+                              onClick={() => {
+                                handleOpenModal(
+                                  setShowChangeBranch,
+                                  client?.username,
+                                  client?.role,
+                                  client?.downlineId
+                                );
+                              }}
+                              className="btn btn-icon btn-sm btn-danger"
+                            >
+                              M
+                            </a>
+                            <a
+                              style={{ color: "white", marginLeft: "3px" }}
+                              onClick={() =>
+                                navigate(
+                                  `/change-branch-report/${client?.userId}`
+                                )
+                              }
+                              className="btn btn-icon btn-sm btn-success"
+                            >
+                              B
+                            </a>
+                          </Fragment>
                         ) : null}
                         {adminRole !== AdminRole.hyper_master &&
                           adminRole !== AdminRole.branch_staff &&

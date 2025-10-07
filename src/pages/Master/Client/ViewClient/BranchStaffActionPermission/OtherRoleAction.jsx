@@ -1,5 +1,6 @@
+import { Fragment } from "react";
 import { AdminRole } from "../../../../../constant/constant";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const OtherRoleAction = ({
   adminRole,
@@ -20,6 +21,7 @@ const OtherRoleAction = ({
   setShowColor,
   setShowChangeBranch,
 }) => {
+  const navigate = useNavigate();
   return (
     <td>
       {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
@@ -113,20 +115,30 @@ const OtherRoleAction = ({
       )}
       {adminRole == AdminRole.hyper_master ||
       adminRole === AdminRole.admin_staff ? (
-        <a
-          style={{ color: "white" }}
-          onClick={() => {
-            handleOpenModal(
-              setShowChangeBranch,
-              client?.username,
-              client?.role,
-              client?.downlineId
-            );
-          }}
-          className="btn btn-icon btn-sm btn-danger"
-        >
-          M
-        </a>
+        <Fragment>
+          <a
+            style={{ color: "white" }}
+            onClick={() => {
+              handleOpenModal(
+                setShowChangeBranch,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-danger"
+          >
+            M
+          </a>
+
+          <a
+            style={{ color: "white", marginLeft: "3px" }}
+            onClick={() => navigate(`/change-branch-report/${client?.userId}`)}
+            className="btn btn-icon btn-sm btn-success"
+          >
+            B
+          </a>
+        </Fragment>
       ) : null}
       {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
         <>
