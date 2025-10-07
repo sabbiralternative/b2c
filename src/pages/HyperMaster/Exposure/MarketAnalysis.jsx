@@ -6,6 +6,7 @@ import { AdminRole } from "../../../constant/constant";
 import useContextState from "../../../hooks/useContextState";
 
 const MarketAnalysis = () => {
+  const navigate = useNavigate();
   const { adminRole } = useContextState();
   const [branchId, setBranchId] = useState(0);
   const { data: branches } = useGetIndex({
@@ -20,7 +21,10 @@ const MarketAnalysis = () => {
   }
 
   const { marketAnalysis } = useGetMarketAnalysis(payload);
-  const navigate = useNavigate();
+
+  const uniqueEvent =
+    marketAnalysis?.length > 0 &&
+    Array.from(new Set(marketAnalysis?.map((market) => market?.event_name)));
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -61,22 +65,27 @@ const MarketAnalysis = () => {
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
-              {marketAnalysis?.map((market, i) => {
-                return (
-                  <tr
-                    onClick={() => {
-                      navigate(
-                        `/game-details/${market?.eventTypeId}/${market?.eventId}`
-                      );
-                    }}
-                    style={{ cursor: "pointer" }}
-                    key={i}
-                  >
-                    <td>{market?.eventDate}</td>
-                    <td>{market?.eventName}</td>
-                  </tr>
-                );
-              })}
+              {uniqueEvent?.length > 0 &&
+                uniqueEvent?.map((eventName, i) => {
+                  const event = marketAnalysis?.find(
+                    (item) => item?.event_name === eventName
+                  );
+
+                  return (
+                    <tr
+                      onClick={() => {
+                        navigate(
+                          `/game-details/${event?.event_type_id}/${event?.event_id}`
+                        );
+                      }}
+                      style={{ cursor: "pointer" }}
+                      key={i}
+                    >
+                      <td>{event?.eventDate}</td>
+                      <td>{eventName}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>
