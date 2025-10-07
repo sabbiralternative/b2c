@@ -25,7 +25,7 @@ const MarketAnalysis = () => {
   const uniqueEvent =
     marketAnalysis?.length > 0 &&
     Array.from(new Set(marketAnalysis?.map((market) => market?.event_name)));
-
+  // console.log(marketAnalysis);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
@@ -146,11 +146,27 @@ const MarketAnalysis = () => {
                           )}
 
                           {/* show market name only for first runner of each market */}
-                          {k === 0 ? <td>{marketName}</td> : null}
+                          {k === 0 && (
+                            <td
+                              rowSpan={uniqueRunners.length}
+                              style={{ verticalAlign: "middle" }}
+                            >
+                              {marketName}
+                            </td>
+                          )}
 
                           {/* runner name and exposure */}
                           <td>{runnerName}</td>
-                          <td>{runnerData?.exposure ?? "-"}</td>
+
+                          <td
+                            className={`${
+                              Number(runnerData?.exposure) > 0
+                                ? "text-success"
+                                : "text-danger"
+                            }`}
+                          >
+                            {runnerData?.exposure}
+                          </td>
                         </tr>
                       );
                     });
