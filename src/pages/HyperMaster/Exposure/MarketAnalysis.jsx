@@ -60,7 +60,7 @@ const MarketAnalysis = () => {
           <table className="table table-hover table-sm">
             <thead className="table-dark">
               <tr>
-                <th style={{ width: "200px" }}>Event Id</th>
+                <th>Event Id</th>
                 <th>Event Name</th>
                 <th>Market Name</th>
                 <th>Runner Name</th>
