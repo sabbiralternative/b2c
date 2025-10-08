@@ -28,6 +28,7 @@ const useCurrentBets = (payload) => {
         return data?.result;
       }
     },
+    refetchInterval: 1000 * 15,
   });
   return { currentBets };
 };
