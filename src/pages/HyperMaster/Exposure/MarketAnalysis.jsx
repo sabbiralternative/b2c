@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useGetMarketAnalysis from "../../../hooks/HyperMaster/Exposure/useGetMarketAnalysis";
-import { useState, useMemo } from "react";
+import { useState, useMemo, Fragment } from "react";
 import { useGetIndex } from "../../../hooks";
 import { AdminRole } from "../../../constant/constant";
 import useContextState from "../../../hooks/useContextState";
@@ -80,7 +80,8 @@ const MarketAnalysis = () => {
         >
           <h5 className="card-header"> Market Analysis</h5>
 
-          {adminRole === AdminRole.admin_staff && (
+          {(adminRole === AdminRole.admin_staff ||
+            adminRole === AdminRole.hyper_master) && (
             <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
               <div>Branch:</div>
               <select
@@ -104,17 +105,14 @@ const MarketAnalysis = () => {
         </div>
 
         <div className="table-responsive text-nowrap">
-          <table
-            style={{ width: "auto" }}
-            className="table table-hover table-sm"
-          >
+          <table className="table table-hover table-sm">
             <thead className="table-dark">
               <tr>
-                <th>Event Id</th>
+                {/* <th>Event Id</th>
                 <th>Event Name</th>
                 <th>Market Name</th>
                 <th>Runner Name</th>
-                <th>Exposure</th>
+                <th>Exposure</th> */}
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
@@ -124,52 +122,69 @@ const MarketAnalysis = () => {
                   0
                 );
 
-                return event.markets.map((market, j) =>
-                  market.runners.map((runner, k) => {
-                    const exposure = runner?.exposure?.split(",").join("");
-                    return (
-                      <tr
-                        key={`${i}-${j}-${k}`}
-                        style={{
-                          cursor: "pointer",
-                          borderTop:
-                            j === 0 && k === 0 ? "2px solid #000" : "none",
-                        }}
-                        onClick={() =>
-                          navigate(
-                            `/game-details/${event.event_type_id}/${event.event_id}`
-                          )
-                        }
-                      >
-                        {/* show event id & name once */}
-                        {j === 0 && k === 0 && (
-                          <>
-                            <td rowSpan={totalRows}>{event.event_id}</td>
-                            <td rowSpan={totalRows}>{event.event_name}</td>
-                          </>
-                        )}
-
-                        {/* show market name once per group */}
-                        {k === 0 && (
-                          <td rowSpan={market.runners.length}>
-                            {market.market_name}
-                          </td>
-                        )}
-
-                        {/* show runner info */}
-                        <td>{runner.runner_name}</td>
-                        <td
-                          className={
-                            Number(exposure) > 0
-                              ? "text-success"
-                              : "text-danger"
-                          }
-                        >
-                          {runner.exposure}
-                        </td>
-                      </tr>
-                    );
-                  })
+                return (
+                  <Fragment key={i}>
+                    <tr
+                      style={{
+                        cursor: "pointer",
+                        borderStyle: "inherit",
+                      }}
+                      onClick={() =>
+                        navigate(
+                          `/game-details/${event.event_type_id}/${event.event_id}`
+                        )
+                      }
+                    >
+                      <td>
+                        {event.event_id} {event.event_name}
+                      </td>
+                    </tr>
+                    {event?.markets?.map((market, i) => {
+                      return (
+                        <Fragment key={i}>
+                          <tr
+                            style={{
+                              cursor: "pointer",
+                            }}
+                            onClick={() =>
+                              navigate(
+                                `/game-details/${event.event_type_id}/${event.event_id}`
+                              )
+                            }
+                          >
+                            <td>{market.market_name}</td>
+                          </tr>
+                          <tr
+                            onClick={() =>
+                              navigate(
+                                `/game-details/${event.event_type_id}/${event.event_id}`
+                              )
+                            }
+                          >
+                            {market?.runners?.map((runner, i) => {
+                              const exposure = runner?.exposure
+                                ?.split(",")
+                                .join("");
+                              return (
+                                <td key={i}>
+                                  <span> {runner.runner_name}</span>
+                                  <span
+                                    className={
+                                      Number(exposure) > 0
+                                        ? "text-success"
+                                        : "text-danger"
+                                    }
+                                  >
+                                    {runner.exposure}
+                                  </span>
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        </Fragment>
+                      );
+                    })}
+                  </Fragment>
                 );
               })}
             </tbody>
