@@ -163,7 +163,7 @@ const MarketAnalysis = () => {
                                 .join("");
                               return (
                                 <td key={i}>
-                                  <span> {runner.runner_name}</span>
+                                  <span> {runner.runner_name}</span>{" "}
                                   <span
                                     className={
                                       Number(exposure) > 0
