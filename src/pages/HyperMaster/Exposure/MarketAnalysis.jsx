@@ -125,7 +125,9 @@ const MarketAnalysis = () => {
                         )
                       }
                     >
-                      <td colSpan="100%">{event.event_name}</td>
+                      <td colSpan="100%" style={{ fontWeight: "bold" }}>
+                        {event.event_name}
+                      </td>
                     </tr>
                     {event?.markets?.map((market, i) => {
                       console.log(event?.market);
