@@ -117,11 +117,6 @@ const MarketAnalysis = () => {
             </thead>
             <tbody className="table-border-bottom-0">
               {structuredData.map((event, i) => {
-                const totalRows = event.markets.reduce(
-                  (acc, m) => acc + m.runners.length,
-                  0
-                );
-
                 return (
                   <Fragment key={i}>
                     <tr
@@ -155,6 +150,7 @@ const MarketAnalysis = () => {
                             <td>{market.market_name}</td>
                           </tr>
                           <tr
+                            style={{ borderBottom: "2px solid #000" }}
                             onClick={() =>
                               navigate(
                                 `/game-details/${event.event_type_id}/${event.event_id}`
