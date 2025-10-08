@@ -128,12 +128,17 @@ const MarketAnalysis = () => {
                       <td colSpan="100%">{event.event_name}</td>
                     </tr>
                     {event?.markets?.map((market, i) => {
+                      console.log(event?.market);
                       return (
                         <tr
                           key={i}
                           style={{
                             cursor: "pointer",
-                            borderBottom: "1px solid var(--bs-table-bg)",
+                            borderBottom:
+                              event?.markets?.length > 1 &&
+                              i !== event?.markets?.length - 1
+                                ? "1px solid #090c10"
+                                : "1px solid transparent",
                           }}
                           onClick={() =>
                             navigate(
@@ -152,11 +157,12 @@ const MarketAnalysis = () => {
                                   style={{
                                     display: "flex",
                                     flexDirection: "column",
-                                    alignItems: "start",
+                                    alignItems: "center",
                                   }}
                                 >
                                   <span> {runner.runner_name}</span>{" "}
                                   <span
+                                    style={{ fontSize: "11px" }}
                                     className={
                                       Number(exposure) > 0
                                         ? "text-success"
