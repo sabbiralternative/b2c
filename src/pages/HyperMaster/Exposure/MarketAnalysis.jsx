@@ -122,7 +122,7 @@ const MarketAnalysis = () => {
                     <tr
                       style={{
                         cursor: "pointer",
-                        borderStyle: "inherit",
+                        borderBottom: "1px solid var(--bs-table-bg)",
                       }}
                       onClick={() =>
                         navigate(
@@ -140,6 +140,7 @@ const MarketAnalysis = () => {
                           <tr
                             style={{
                               cursor: "pointer",
+                              borderBottom: "1px solid var(--bs-table-bg)",
                             }}
                             onClick={() =>
                               navigate(
