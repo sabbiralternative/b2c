@@ -107,13 +107,7 @@ const MarketAnalysis = () => {
         <div className="table-responsive text-nowrap">
           <table className="table table-hover table-sm">
             <thead className="table-dark">
-              <tr>
-                {/* <th>Event Id</th>
-                <th>Event Name</th>
-                <th>Market Name</th>
-                <th>Runner Name</th>
-                <th>Exposure</th> */}
-              </tr>
+              <tr></tr>
             </thead>
             <tbody className="table-border-bottom-0">
               {structuredData.map((event, i) => {
@@ -123,6 +117,7 @@ const MarketAnalysis = () => {
                       style={{
                         cursor: "pointer",
                         borderBottom: "1px solid var(--bs-table-bg)",
+                        background: "#323e4f",
                       }}
                       onClick={() =>
                         navigate(
@@ -130,43 +125,36 @@ const MarketAnalysis = () => {
                         )
                       }
                     >
-                      <td>
-                        {event.event_id} {event.event_name}
-                      </td>
+                      <td colSpan="100%">{event.event_name}</td>
                     </tr>
                     {event?.markets?.map((market, i) => {
                       return (
-                        <Fragment key={i}>
-                          <tr
-                            style={{
-                              cursor: "pointer",
-                              borderBottom: "1px solid var(--bs-table-bg)",
-                            }}
-                            onClick={() =>
-                              navigate(
-                                `/game-details/${event.event_type_id}/${event.event_id}`
-                              )
-                            }
-                          >
-                            <td>{market.market_name}</td>
-                          </tr>
-                          <tr
-                            style={{
-                              cursor: "pointer",
-                              borderBottom: "1px solid #000",
-                            }}
-                            onClick={() =>
-                              navigate(
-                                `/game-details/${event.event_type_id}/${event.event_id}`
-                              )
-                            }
-                          >
-                            {market?.runners?.map((runner, i) => {
-                              const exposure = runner?.exposure
-                                ?.split(",")
-                                .join("");
-                              return (
-                                <td key={i}>
+                        <tr
+                          key={i}
+                          style={{
+                            cursor: "pointer",
+                            borderBottom: "1px solid var(--bs-table-bg)",
+                          }}
+                          onClick={() =>
+                            navigate(
+                              `/game-details/${event.event_type_id}/${event.event_id}`
+                            )
+                          }
+                        >
+                          <td>{market.market_name}</td>
+                          {market?.runners?.map((runner, i) => {
+                            const exposure = runner?.exposure
+                              ?.split(",")
+                              .join("");
+                            return (
+                              <td key={i}>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "start",
+                                  }}
+                                >
                                   <span> {runner.runner_name}</span>{" "}
                                   <span
                                     className={
@@ -177,11 +165,11 @@ const MarketAnalysis = () => {
                                   >
                                     {runner.exposure}
                                   </span>
-                                </td>
-                              );
-                            })}
-                          </tr>
-                        </Fragment>
+                                </div>
+                              </td>
+                            );
+                          })}
+                        </tr>
                       );
                     })}
                   </Fragment>
