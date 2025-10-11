@@ -1,7 +1,7 @@
 import { FaSpinner } from "react-icons/fa";
 
-const Loader = () => {
-  return <FaSpinner className="animate-spin" size={30} color="white" />;
+const Loader = ({ size = 30 }) => {
+  return <FaSpinner className="animate-spin" size={size} color="white" />;
 };
 
 export default Loader;

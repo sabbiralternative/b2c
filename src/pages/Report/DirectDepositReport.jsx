@@ -4,7 +4,7 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ShowImage from "../../components/modal/ShowImage";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -27,7 +27,7 @@ const DirectDepositReport = () => {
   const navigate = useNavigate();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
-  const [totalDeposit, setTotalDeposit] = useState(null);
+  // const [totalDeposit, setTotalDeposit] = useState(null);
 
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
@@ -81,20 +81,25 @@ const DirectDepositReport = () => {
     const data = await getDepositReport();
 
     setViewDepositData(true);
-    if (data?.result?.length > 0) {
+    if (data?.success) {
       setDepositData(data?.result);
     }
   };
 
-  useEffect(() => {
-    if (depositData?.length > 0) {
-      let totalDeposit = 0;
-      for (let data of depositData) {
-        totalDeposit += parseFloat(data?.amount);
-      }
-      setTotalDeposit(totalDeposit?.toFixed(2));
-    }
-  }, [depositData]);
+  let totalDeposit = 0;
+  for (let data of depositData) {
+    totalDeposit += parseFloat(data?.amount);
+  }
+
+  // useEffect(() => {
+  //   if (depositData?.length > 0) {
+  //     let totalDeposit = 0;
+  //     for (let data of depositData) {
+  //       totalDeposit += parseFloat(data?.amount);
+  //     }
+  //     setTotalDeposit(totalDeposit?.toFixed(2));
+  //   }
+  // }, [depositData]);
 
   return (
     <>

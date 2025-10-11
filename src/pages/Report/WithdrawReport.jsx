@@ -4,7 +4,7 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 import moment from "moment";
@@ -27,7 +27,7 @@ const WithdrawReport = () => {
   const navigate = useNavigate();
   const [viewWithdrawData, setViewWithdrawData] = useState(false);
   const [withdrawData, setWithdrawData] = useState([]);
-  const [totalWithdraw, setTotalWithdraw] = useState(null);
+  // const [totalWithdraw, setTotalWithdraw] = useState(null);
 
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
@@ -78,20 +78,23 @@ const WithdrawReport = () => {
     e.preventDefault();
     const data = await getWithdrawReport();
     setViewWithdrawData(true);
-    if (data?.result?.length > 0) {
+    if (data?.success) {
       setWithdrawData(data?.result);
     }
   };
-
-  useEffect(() => {
-    if (withdrawData?.length > 0) {
-      let totalWithdraw = 0;
-      for (let data of withdrawData) {
-        totalWithdraw += parseFloat(data?.amount);
-      }
-      setTotalWithdraw(totalWithdraw?.toFixed(2));
-    }
-  }, [withdrawData]);
+  let totalWithdraw = 0;
+  for (let data of withdrawData) {
+    totalWithdraw += parseFloat(data?.amount);
+  }
+  // useEffect(() => {
+  //   if (withdrawData?.length > 0) {
+  //     let totalWithdraw = 0;
+  //     for (let data of withdrawData) {
+  //       totalWithdraw += parseFloat(data?.amount);
+  //     }
+  //     setTotalWithdraw(totalWithdraw?.toFixed(2));
+  //   }
+  // }, [withdrawData]);
 
   return (
     <>

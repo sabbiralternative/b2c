@@ -3,7 +3,7 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 import { AdminRole } from "../../constant/constant";
@@ -16,7 +16,7 @@ const SecondDepositReport = () => {
   const navigate = useNavigate();
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
-  const [totalFTD, setTotalFTD] = useState(null);
+  // const [totalFTD, setTotalFTD] = useState(null);
 
   const getFTDReport = async () => {
     const generatedToken = handleRandomToken();
@@ -59,20 +59,24 @@ const SecondDepositReport = () => {
     e.preventDefault();
     const data = await getFTDReport();
     setViewFTDData(true);
-    if (data?.result?.length > 0) {
+    if (data?.success) {
       setFTDData(data?.result);
     }
   };
 
-  useEffect(() => {
-    if (FTDData?.length > 0) {
-      let totalFTD = 0;
-      for (let data of FTDData) {
-        totalFTD += parseFloat(data?.amount);
-      }
-      setTotalFTD(totalFTD?.toFixed(2));
-    }
-  }, [FTDData]);
+  let totalFTD = 0;
+  for (let data of FTDData) {
+    totalFTD += parseFloat(data?.amount);
+  }
+  // useEffect(() => {
+  //   if (FTDData?.length > 0) {
+  //     let totalFTD = 0;
+  //     for (let data of FTDData) {
+  //       totalFTD += parseFloat(data?.amount);
+  //     }
+  //     setTotalFTD(totalFTD?.toFixed(2));
+  //   }
+  // }, [FTDData]);
 
   return (
     <>

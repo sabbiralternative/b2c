@@ -4,7 +4,7 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ShowImage from "../../components/modal/ShowImage";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -12,6 +12,7 @@ import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
+import Loader from "../../components/ui/Loader/Loader";
 
 const DepositReport = () => {
   const [branchId, setBranchId] = useState(0);
@@ -27,10 +28,11 @@ const DepositReport = () => {
   const navigate = useNavigate();
   const [viewDepositData, setViewDepositData] = useState(false);
   const [depositData, setDepositData] = useState([]);
-  const [totalDeposit, setTotalDeposit] = useState(null);
 
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const getDepositReport = async () => {
     const generatedToken = handleRandomToken();
@@ -57,7 +59,9 @@ const DepositReport = () => {
 
   const exportToExcel = async (e) => {
     e.preventDefault();
+    setIsLoadingExport(true);
     const data = await getDepositReport();
+    setIsLoadingExport(false);
     if (data?.success) {
       if (data?.result?.length > 0) {
         let depositReport = data?.result;
@@ -77,24 +81,19 @@ const DepositReport = () => {
 
   const handleToggleViewDeposit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const data = await getDepositReport();
-
+    setIsLoading(false);
     setViewDepositData(true);
-    if (data?.result?.length > 0) {
+    if (data?.success) {
       setDepositData(data?.result);
     }
   };
 
-  useEffect(() => {
-    if (depositData?.length > 0) {
-      let totalDeposit = 0;
-      for (let data of depositData) {
-        totalDeposit += parseFloat(data?.amount);
-      }
-      setTotalDeposit(totalDeposit?.toFixed(2));
-    }
-  }, [depositData]);
+  let totalDeposit = 0;
+  for (let data of depositData) {
+    totalDeposit += parseFloat(data?.amount);
+  }
 
   return (
     <>
@@ -216,21 +215,33 @@ const DepositReport = () => {
                 </div>
 
                 <div className="col-12">
-                  <input
+                  <button
+                    disabled={isLoading || isLoadingExport}
                     onClick={handleToggleViewDeposit}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
-                    value="View"
-                  />
-                  <input
-                    style={{ marginLeft: "10px" }}
+                  >
+                    {isLoading && <Loader size={15} />}{" "}
+                    <span style={{ marginLeft: isLoading ? "8px" : "0px" }}>
+                      View
+                    </span>
+                  </button>
+                  <button
+                    disabled={isLoading || isLoadingExport}
                     onClick={exportToExcel}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
-                    value="Export"
-                  />
+                    style={{ marginLeft: "10px" }}
+                  >
+                    {isLoadingExport && <Loader size={15} />}{" "}
+                    <span
+                      style={{ marginLeft: isLoadingExport ? "8px" : "0px" }}
+                    >
+                      Export
+                    </span>
+                  </button>
                 </div>
               </form>
             </div>

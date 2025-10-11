@@ -3,7 +3,7 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 import { AdminRole } from "../../constant/constant";
@@ -12,6 +12,7 @@ import { DatePicker } from "rsuite";
 import DefaultDateButton from "./DefaultDateButton";
 import { useGetIndex } from "../../hooks";
 import moment from "moment";
+import Loader from "../../components/ui/Loader/Loader";
 
 const FirstDepositReport = () => {
   const [branchId, setBranchId] = useState(0);
@@ -25,11 +26,13 @@ const FirstDepositReport = () => {
   const navigate = useNavigate();
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
-  const [totalFTD, setTotalFTD] = useState(null);
+  // const [totalFTD, setTotalFTD] = useState(null);
   const [amountFrom, setAmountFrom] = useState(null);
   const [amountTo, setAmountTo] = useState(null);
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const getFTDReport = async () => {
     const generatedToken = handleRandomToken();
@@ -57,7 +60,9 @@ const FirstDepositReport = () => {
 
   const exportToExcel = async (e) => {
     e.preventDefault();
+    setIsLoadingExport(true);
     const data = await getFTDReport();
+    setIsLoadingExport(false);
     if (data?.success) {
       if (data?.result?.length > 0) {
         let firstDepositReports = data?.result;
@@ -77,22 +82,28 @@ const FirstDepositReport = () => {
 
   const handleToggleViewFTD = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const data = await getFTDReport();
     setViewFTDData(true);
-    if (data?.result?.length > 0) {
+    setIsLoading(false);
+    if (data?.success) {
       setFTDData(data?.result);
     }
   };
 
-  useEffect(() => {
-    if (FTDData?.length > 0) {
-      let totalFTD = 0;
-      for (let data of FTDData) {
-        totalFTD += parseFloat(data?.amount);
-      }
-      setTotalFTD(totalFTD?.toFixed(2));
-    }
-  }, [FTDData]);
+  let totalFTD = 0;
+  for (let data of FTDData) {
+    totalFTD += parseFloat(data?.amount);
+  }
+  // useEffect(() => {
+  //   if (FTDData?.length > 0) {
+  //     let totalFTD = 0;
+  //     for (let data of FTDData) {
+  //       totalFTD += parseFloat(data?.amount);
+  //     }
+  //     setTotalFTD(totalFTD?.toFixed(2));
+  //   }
+  // }, [FTDData]);
 
   return (
     <>
@@ -214,21 +225,33 @@ const FirstDepositReport = () => {
                 </div>
 
                 <div className="col-12">
-                  <input
+                  <button
+                    disabled={isLoading || isLoadingExport}
                     onClick={handleToggleViewFTD}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
-                    value="View"
-                  />
-                  <input
-                    style={{ marginLeft: "10px" }}
+                  >
+                    {isLoading && <Loader size={15} />}{" "}
+                    <span style={{ marginLeft: isLoading ? "8px" : "0px" }}>
+                      View
+                    </span>
+                  </button>
+                  <button
+                    disabled={isLoading || isLoadingExport}
                     onClick={exportToExcel}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
-                    value="Export"
-                  />
+                    style={{ marginLeft: "10px" }}
+                  >
+                    {isLoadingExport && <Loader size={15} />}{" "}
+                    <span
+                      style={{ marginLeft: isLoadingExport ? "8px" : "0px" }}
+                    >
+                      Export
+                    </span>
+                  </button>
                 </div>
               </form>
             </div>
