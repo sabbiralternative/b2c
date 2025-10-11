@@ -440,7 +440,7 @@ const HyperMasterSidebar = () => {
                   <div data-i18n="Completed Withdraw">1st Deposit Report</div>
                 </Link>
               </li>
-              <li className="menu-item">
+              {/* <li className="menu-item">
                 <Link to="/2nd-deposit-report" className="menu-link">
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
                   <div data-i18n="Completed Withdraw">2nd Deposit Report</div>
@@ -463,7 +463,7 @@ const HyperMasterSidebar = () => {
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
                   <div data-i18n="Completed Withdraw">5th Deposit Report</div>
                 </Link>
-              </li>
+              </li> */}
             </>
           )}
 

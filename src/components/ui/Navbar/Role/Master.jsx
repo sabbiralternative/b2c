@@ -710,7 +710,7 @@ const Master = () => {
                         </a>
                       </li>
 
-                      <li className="menu-item">
+                      {/* <li className="menu-item">
                         <a
                           onClick={() => handleNavigate("2nd-deposit-report")}
                           className="menu-link"
@@ -745,7 +745,7 @@ const Master = () => {
                           <i className="menu-icon tf-icons bx bxs-institution"></i>
                           <div data-i18n="View Banners">5th Deposit Report</div>
                         </a>
-                      </li>
+                      </li> */}
 
                       <li className="menu-item">
                         <a
