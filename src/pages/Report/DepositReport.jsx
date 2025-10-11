@@ -142,6 +142,8 @@ const DepositReport = () => {
                     setEndDate={setEndDate}
                     setStartDate={setStartDate}
                     lastThreeMonth={true}
+                    lastSixMonth={true}
+                    lastOneYear={true}
                   />
                   <div style={{ display: "flex", gap: "10px" }}>
                     {adminRole === AdminRole.admin_staff && (

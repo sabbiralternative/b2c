@@ -7,8 +7,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 import { AdminRole } from "../../constant/constant";
+import { defaultDate } from "../../utils/defaultDate";
+import { DatePicker } from "rsuite";
+import DefaultDateButton from "./DefaultDateButton";
+import { useGetIndex } from "../../hooks";
+import moment from "moment";
 
 const FirstDepositReport = () => {
+  const [branchId, setBranchId] = useState(0);
+  const { data: branches } = useGetIndex({
+    type: "getBranches",
+  });
   const [showFTDImage, setShowFTDImage] = useState(false);
   const [image, setImage] = useState("");
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -17,15 +26,26 @@ const FirstDepositReport = () => {
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
   const [totalFTD, setTotalFTD] = useState(null);
+  const [amountFrom, setAmountFrom] = useState(null);
+  const [amountTo, setAmountTo] = useState(null);
+  const [startDate, setStartDate] = useState(defaultDate(1));
+  const [endDate, setEndDate] = useState(new Date());
 
   const getFTDReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
       type: "getFTD",
-
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
+      amountFrom: amountFrom ? Number(amountFrom) : null,
+      amountTo: amountTo ? Number(amountTo) : null,
     };
+
+    if (adminRole === AdminRole.admin_staff) {
+      payload.branch_id = branchId;
+    }
     const res = await axios.post(API.export, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -87,6 +107,112 @@ const FirstDepositReport = () => {
                 id="formValidationExamples"
                 className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
               >
+                <div className="col-md-6 col-12 mb-4">
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <div style={{ width: "100%" }}>
+                      <label htmlFor="flatpickr-range" className="form-label">
+                        From Date
+                      </label>
+                      <DatePicker
+                        style={{ width: "100%" }}
+                        format="yyyy-MM-dd"
+                        editable
+                        onChange={(date) => setStartDate(date)}
+                        value={startDate}
+                        block
+                      />
+                    </div>
+                    <div style={{ width: "100%" }}>
+                      <label htmlFor="flatpickr-range" className="form-label">
+                        To Date
+                      </label>
+                      <DatePicker
+                        style={{ width: "100%" }}
+                        format="yyyy-MM-dd"
+                        editable
+                        onChange={(date) => setEndDate(date)}
+                        value={endDate}
+                        block
+                      />
+                    </div>
+                  </div>
+                  <DefaultDateButton
+                    setEndDate={setEndDate}
+                    setStartDate={setStartDate}
+                    lastThreeMonth={true}
+                    lastSixMonth={true}
+                    lastOneYear={true}
+                  />
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    {adminRole === AdminRole.admin_staff && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                        }}
+                      >
+                        <label className="col-form-label" htmlFor="Amount From">
+                          Branch
+                        </label>
+                        <select
+                          style={{ width: "200px" }}
+                          defaultValue="0"
+                          onChange={(e) => setBranchId(e.target.value)}
+                          className="form-control"
+                        >
+                          <option disabled value="">
+                            Branch
+                          </option>
+                          <option value="0">All Branch</option>
+                          {branches?.result?.map((site) => (
+                            <option
+                              key={site?.branch_id}
+                              value={site?.branch_id}
+                            >
+                              {site?.branch_name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                      }}
+                    >
+                      <label className="col-form-label" htmlFor="Amount From">
+                        Amount From
+                      </label>
+                      <input
+                        onChange={(e) => setAmountFrom(e.target.value)}
+                        type="number"
+                        className="form-control"
+                        id="Amount From"
+                      />
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                      }}
+                    >
+                      <label className="col-form-label" htmlFor="Amount To">
+                        Amount To
+                      </label>
+                      <input
+                        onChange={(e) => setAmountTo(e.target.value)}
+                        type="number"
+                        className="form-control"
+                        id="Amount To"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="col-12">
                   <input
                     onClick={handleToggleViewFTD}

@@ -1,8 +1,21 @@
 import { defaultDate } from "../../utils/defaultDate";
 
-const DefaultDateButton = ({ setStartDate, setEndDate, lastThreeMonth }) => {
+const DefaultDateButton = ({
+  setStartDate,
+  setEndDate,
+  lastThreeMonth = true,
+  lastSixMonth = true,
+  lastOneYear = true,
+}) => {
   return (
-    <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+    <div
+      style={{
+        display: "flex",
+        gap: "10px",
+        marginTop: "10px",
+        flexWrap: "wrap",
+      }}
+    >
       <button
         type="button"
         onClick={() => {
@@ -53,6 +66,30 @@ const DefaultDateButton = ({ setStartDate, setEndDate, lastThreeMonth }) => {
           className="btn btn-primary btn-xs"
         >
           Last Three Month
+        </button>
+      )}
+      {lastSixMonth && (
+        <button
+          type="button"
+          onClick={() => {
+            setStartDate(defaultDate(182));
+            setEndDate(new Date());
+          }}
+          className="btn btn-primary btn-xs"
+        >
+          Last Six Month
+        </button>
+      )}
+      {lastOneYear && (
+        <button
+          type="button"
+          onClick={() => {
+            setStartDate(defaultDate(365));
+            setEndDate(new Date());
+          }}
+          className="btn btn-primary btn-xs"
+        >
+          Last One Year
         </button>
       )}
     </div>
