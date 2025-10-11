@@ -261,7 +261,9 @@ const FirstDepositReport = () => {
         {viewFRDData && (
           <>
             <hr className="my-3" />
-            {totalFTD && <span> Total FRD : {totalFTD}</span>}
+            {totalFTD && viewFRDData?.length > 0 ? (
+              <span> Total FRD : {totalFTD}</span>
+            ) : null}
             {FTDData?.length > 0 ? (
               <div className="card">
                 <h5 className="card-header">FRD Report</h5>

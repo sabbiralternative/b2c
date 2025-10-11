@@ -251,17 +251,17 @@ const DepositReport = () => {
         {viewDepositData && (
           <>
             <hr className="my-3" />
-            {totalDeposit && (
+            {totalDeposit ? (
               <p style={{ margin: "0px" }}>
                 Total Deposit :
                 {new Intl.NumberFormat("en-IN").format(totalDeposit)}
               </p>
-            )}
-            {depositData?.length > 0 && (
+            ) : null}
+            {depositData?.length > 0 ? (
               <p style={{ margin: "0px", marginBottom: "5px" }}>
                 Deposit Count: {depositData?.length}
               </p>
-            )}
+            ) : null}
             {depositData?.length > 0 ? (
               <div className="card">
                 <h5 className="card-header">Deposit Report</h5>

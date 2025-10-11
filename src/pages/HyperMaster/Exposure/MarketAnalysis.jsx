@@ -105,7 +105,10 @@ const MarketAnalysis = () => {
         </div>
 
         <div className="table-responsive text-nowrap">
-          <table className="table table-hover table-sm">
+          <table
+            style={{ width: "auto" }}
+            className="table table-hover table-sm"
+          >
             <thead className="table-dark">
               <tr></tr>
             </thead>

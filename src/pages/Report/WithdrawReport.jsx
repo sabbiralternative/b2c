@@ -236,17 +236,17 @@ const WithdrawReport = () => {
         {viewWithdrawData && (
           <>
             <hr className="my-3" />
-            {totalWithdraw && (
+            {totalWithdraw ? (
               <p style={{ margin: "0px" }}>
                 Total Withdraw :
                 {new Intl.NumberFormat("en-IN").format(totalWithdraw)}
               </p>
-            )}
-            {withdrawData?.length > 0 && (
+            ) : null}
+            {withdrawData?.length > 0 ? (
               <p style={{ margin: "0px", marginBottom: "5px" }}>
                 Withdraw Count: {withdrawData?.length}
               </p>
-            )}
+            ) : null}
             {withdrawData?.length > 0 ? (
               <div className="card">
                 <h5 className="card-header">Withdraw Report</h5>
