@@ -5,30 +5,19 @@ import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ShowImage from "../../components/modal/ShowImage";
 import { AdminRole } from "../../constant/constant";
 import { defaultDate } from "../../utils/defaultDate";
 import { DatePicker } from "rsuite";
 import DefaultDateButton from "./DefaultDateButton";
-import { useGetIndex } from "../../hooks";
 import moment from "moment";
 import Loader from "../../components/ui/Loader/Loader";
 
-const FirstDepositReport = () => {
-  const [branchId, setBranchId] = useState(0);
-  const { data: branches } = useGetIndex({
-    type: "getBranches",
-  });
-  const [showFTDImage, setShowFTDImage] = useState(false);
-  const [image, setImage] = useState("");
+const LastDepositReport = () => {
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const navigate = useNavigate();
-  const [viewFRDData, setViewFTDData] = useState(false);
-  const [FTDData, setFTDData] = useState([]);
-  // const [totalFTD, setTotalFTD] = useState(null);
-  const [amountFrom, setAmountFrom] = useState(null);
-  const [amountTo, setAmountTo] = useState(null);
+  const [showViewReport, setShowViewReport] = useState(false);
+  const [reportData, setReportData] = useState([]);
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
@@ -37,18 +26,13 @@ const FirstDepositReport = () => {
   const getFTDReport = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
-      type: "getFTD",
+      type: "getLDT",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
-      amountFrom: amountFrom ? Number(amountFrom) : null,
-      amountTo: amountTo ? Number(amountTo) : null,
     };
 
-    if (adminRole === AdminRole.admin_staff) {
-      payload.branch_id = branchId;
-    }
     const res = await axios.post(API.export, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -80,36 +64,19 @@ const FirstDepositReport = () => {
     }
   };
 
-  const handleToggleViewFTD = async (e) => {
+  const handleViewReport = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     const data = await getFTDReport();
-    setViewFTDData(true);
+    setShowViewReport(true);
     setIsLoading(false);
     if (data?.success) {
-      setFTDData(data?.result);
+      setReportData(data?.result);
     }
   };
 
-  let totalFTD = 0;
-  for (let data of FTDData) {
-    totalFTD += parseFloat(data?.amount);
-  }
-  // useEffect(() => {
-  //   if (FTDData?.length > 0) {
-  //     let totalFTD = 0;
-  //     for (let data of FTDData) {
-  //       totalFTD += parseFloat(data?.amount);
-  //     }
-  //     setTotalFTD(totalFTD?.toFixed(2));
-  //   }
-  // }, [FTDData]);
-
   return (
     <>
-      {showFTDImage && (
-        <ShowImage image={image} setShowImage={setShowFTDImage} />
-      )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
           <div className="card">
@@ -150,84 +117,15 @@ const FirstDepositReport = () => {
                   <DefaultDateButton
                     setEndDate={setEndDate}
                     setStartDate={setStartDate}
-                    lastThreeMonth={true}
-                    lastSixMonth={true}
-                    lastOneYear={true}
+                    lastTwoYear
+                    lastThreeYear
                   />
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    {adminRole === AdminRole.admin_staff && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          width: "100%",
-                        }}
-                      >
-                        <label className="col-form-label" htmlFor="Amount From">
-                          Branch
-                        </label>
-                        <select
-                          style={{ width: "200px" }}
-                          defaultValue="0"
-                          onChange={(e) => setBranchId(e.target.value)}
-                          className="form-control"
-                        >
-                          <option disabled value="">
-                            Branch
-                          </option>
-                          <option value="0">All Branch</option>
-                          {branches?.result?.map((site) => (
-                            <option
-                              key={site?.branch_id}
-                              value={site?.branch_id}
-                            >
-                              {site?.branch_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                      }}
-                    >
-                      <label className="col-form-label" htmlFor="Amount From">
-                        Amount From
-                      </label>
-                      <input
-                        onChange={(e) => setAmountFrom(e.target.value)}
-                        type="number"
-                        className="form-control"
-                        id="Amount From"
-                      />
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                      }}
-                    >
-                      <label className="col-form-label" htmlFor="Amount To">
-                        Amount To
-                      </label>
-                      <input
-                        onChange={(e) => setAmountTo(e.target.value)}
-                        type="number"
-                        className="form-control"
-                        id="Amount To"
-                      />
-                    </div>
-                  </div>
                 </div>
 
                 <div className="col-12">
                   <button
                     disabled={isLoading || isLoadingExport}
-                    onClick={handleToggleViewFTD}
+                    onClick={handleViewReport}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
@@ -258,15 +156,13 @@ const FirstDepositReport = () => {
           </div>
         </div>
 
-        {viewFRDData && (
+        {showViewReport && (
           <>
             <hr className="my-3" />
-            {totalFTD && FTDData?.length > 0 ? (
-              <span> Total FRD : {totalFTD}</span>
-            ) : null}
-            {FTDData?.length > 0 ? (
+
+            {reportData?.length > 0 ? (
               <div className="card">
-                <h5 className="card-header">FRD Report</h5>
+                <h5 className="card-header">LDT Report</h5>
                 <div className="table-responsive text-nowrap">
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
@@ -281,15 +177,12 @@ const FirstDepositReport = () => {
                           </>
                         ) : null}
 
-                        <th>Amount</th>
-                        <th>FRD Date</th>
-                        <th>Image</th>
-                        <th>Remark</th>
-                        <th>Status</th>
+                        <th>Last Deposit Date</th>
+                        <th>Day Since Last Deposit</th>
                       </tr>
                     </thead>
                     <tbody className="table-border-bottom-0">
-                      {FTDData?.map((data, i) => {
+                      {reportData?.map((data, i) => {
                         return (
                           <tr key={i}>
                             <td
@@ -310,39 +203,8 @@ const FirstDepositReport = () => {
                                 <td>{data?.mobile}</td>
                               </>
                             ) : null}
-                            <td>{data?.amount}</td>
-                            <td>{data?.withdraw_date}</td>
-                            <td>
-                              {data?.image && (
-                                <img
-                                  onClick={() => {
-                                    setImage("");
-                                    setShowFTDImage(true);
-                                    setImage(data?.image);
-                                  }}
-                                  style={{
-                                    height: "40px",
-                                    width: "40px",
-                                    objectFit: "contain",
-                                    cursor: "pointer",
-                                  }}
-                                  src={data?.image}
-                                  alt=""
-                                />
-                              )}
-                            </td>
-                            <td>{data?.remark}</td>
-                            <td>
-                              <span
-                                className={`badge ${
-                                  data?.status == "APPROVED"
-                                    ? "bg-label-primary"
-                                    : "bg-label-warning"
-                                } me-1`}
-                              >
-                                {data?.status}
-                              </span>
-                            </td>
+                            <td>{data?.last_deposit_date}</td>
+                            <td>{data?.days_since_last_deposit}</td>
                           </tr>
                         );
                       })}
@@ -364,4 +226,4 @@ const FirstDepositReport = () => {
   );
 };
 
-export default FirstDepositReport;
+export default LastDepositReport;

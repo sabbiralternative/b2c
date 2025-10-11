@@ -582,6 +582,15 @@ const MasterSidebar = () => {
                 <div data-i18n="Completed Withdraw">1st Deposit Report</div>
               </a>
             </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("last-deposit-report")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Completed Withdraw">Last Deposit Report</div>
+              </a>
+            </li>
 
             {adminRole === AdminRole.admin_staff && (
               <>

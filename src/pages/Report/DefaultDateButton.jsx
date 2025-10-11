@@ -6,6 +6,8 @@ const DefaultDateButton = ({
   lastThreeMonth = true,
   lastSixMonth = true,
   lastOneYear = true,
+  lastTwoYear = false,
+  lastThreeYear = false,
 }) => {
   return (
     <div
@@ -90,6 +92,30 @@ const DefaultDateButton = ({
           className="btn btn-primary btn-xs"
         >
           Last One Year
+        </button>
+      )}
+      {lastTwoYear && (
+        <button
+          type="button"
+          onClick={() => {
+            setStartDate(defaultDate(730));
+            setEndDate(new Date());
+          }}
+          className="btn btn-primary btn-xs"
+        >
+          Last Two Year
+        </button>
+      )}
+      {lastThreeYear && (
+        <button
+          type="button"
+          onClick={() => {
+            setStartDate(defaultDate(1095));
+            setEndDate(new Date());
+          }}
+          className="btn btn-primary btn-xs"
+        >
+          Last Three Year
         </button>
       )}
     </div>

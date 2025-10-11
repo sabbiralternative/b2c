@@ -4,8 +4,12 @@ import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw"
 import { useGetIndex } from "../../../hooks";
 import { AdminRole } from "../../../constant/constant";
 import useContextState from "../../../hooks/useContextState";
+import { defaultDate } from "../../../utils/defaultDate";
+import moment from "moment";
 
 const PendingWithdraw = () => {
+  const [startDate, setStartDate] = useState(defaultDate(1));
+  const [endDate, setEndDate] = useState(new Date());
   const { adminRole } = useContextState();
   const [branchId, setBranchId] = useState(0);
   const [activePage, setActivePage] = useState(1);
@@ -22,6 +26,8 @@ const PendingWithdraw = () => {
     amountFrom,
     amountTo,
     page: activePage,
+    fromDate: moment(startDate).format("YYYY-MM-DD"),
+    toDate: moment(endDate).format("YYYY-MM-DD"),
   };
   if (adminRole === AdminRole.admin_staff) {
     payload.branch_id = branchId;
@@ -47,6 +53,10 @@ const PendingWithdraw = () => {
         branchId={branchId}
         setBranchId={setBranchId}
         branches={data}
+        endDate={endDate}
+        setEndDate={setEndDate}
+        setStartDate={setStartDate}
+        startDate={startDate}
       />
     </div>
   );

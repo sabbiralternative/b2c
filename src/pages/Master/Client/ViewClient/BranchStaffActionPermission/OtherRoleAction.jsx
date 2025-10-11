@@ -23,7 +23,7 @@ const OtherRoleAction = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <td>
+    <td style={{ display: "flex", gap: "3px" }}>
       {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
         <>
           <a
@@ -43,7 +43,7 @@ const OtherRoleAction = ({
           >
             D
           </a>
-          &nbsp;
+
           <a
             style={{
               color: "white",
@@ -61,7 +61,6 @@ const OtherRoleAction = ({
           >
             W
           </a>
-          &nbsp;
         </>
       )}
       <a
@@ -76,7 +75,6 @@ const OtherRoleAction = ({
       </a>
       {adminRole !== AdminRole.master && (
         <>
-          &nbsp;
           <a
             style={{ color: "white" }}
             onClick={() => {
@@ -91,7 +89,7 @@ const OtherRoleAction = ({
           >
             P
           </a>
-          &nbsp;
+
           {adminRole !== "admin_staff" && (
             <>
               <a
@@ -108,7 +106,6 @@ const OtherRoleAction = ({
               >
                 S
               </a>
-              &nbsp;
             </>
           )}
         </>
@@ -116,6 +113,13 @@ const OtherRoleAction = ({
       {adminRole == AdminRole.hyper_master ||
       adminRole === AdminRole.admin_staff ? (
         <Fragment>
+          <a
+            style={{ color: "white" }}
+            onClick={() => navigate(`/change-branch-report/${client?.userId}`)}
+            className="btn btn-icon btn-sm btn-info"
+          >
+            B
+          </a>
           <a
             style={{ color: "white" }}
             onClick={() => {
@@ -130,19 +134,10 @@ const OtherRoleAction = ({
           >
             M
           </a>
-
-          <a
-            style={{ color: "white", marginLeft: "3px" }}
-            onClick={() => navigate(`/change-branch-report/${client?.userId}`)}
-            className="btn btn-icon btn-sm btn-success"
-          >
-            B
-          </a>
         </Fragment>
       ) : null}
       {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
         <>
-          &nbsp;
           <a
             style={{
               color: "white",
@@ -162,7 +157,7 @@ const OtherRoleAction = ({
           </a>
         </>
       )}
-      &nbsp;
+
       {adminRole === "master" || adminRole === AdminRole.branch_staff ? (
         <div className="btn-group">
           <button

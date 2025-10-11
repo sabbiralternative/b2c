@@ -661,6 +661,15 @@ const Master = () => {
                     <div data-i18n="View Banners">1st Deposit Report</div>
                   </a>
                 </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("last-deposit-report")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="View Banners">Last Deposit Report</div>
+                  </a>
+                </li>
               </>
             ) : null}
 
@@ -707,6 +716,17 @@ const Master = () => {
                         >
                           <i className="menu-icon tf-icons bx bxs-institution"></i>
                           <div data-i18n="View Banners">1st Deposit Report</div>
+                        </a>
+                      </li>
+                      <li className="menu-item">
+                        <a
+                          onClick={() => handleNavigate("last-deposit-report")}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="View Banners">
+                            Last Deposit Report
+                          </div>
                         </a>
                       </li>
 

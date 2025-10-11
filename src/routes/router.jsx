@@ -26,6 +26,7 @@ import PendingComplaints from "../pages/Complaints/PendingComplaints";
 import ResolvedComplaints from "../pages/Complaints/ResolvedComplaints";
 import DirectDepositReport from "../pages/Report/DirectDepositReport";
 import DirectWithdrawReport from "../pages/Report/DirectWithdrawReport";
+import LastDepositReport from "../pages/Report/LastDepositReport";
 
 export const router = createBrowserRouter(
   [
@@ -53,6 +54,10 @@ export const router = createBrowserRouter(
         {
           path: "/1st-deposit-report",
           element: <FirstDepositReport />,
+        },
+        {
+          path: "/last-deposit-report",
+          element: <LastDepositReport />,
         },
         {
           path: "/2nd-deposit-report",

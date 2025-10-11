@@ -309,7 +309,7 @@ const AllClient = () => {
                       </td>
                       <td>{client?.site}</td>
                       <td>{client?.registrationDate}</td>
-                      <td>
+                      <td style={{ display: "flex", gap: "3px" }}>
                         {adminRole !== "hyper_master" &&
                           adminRole !== AdminRole.branch_staff &&
                           adminRole !== "admin_staff" && (
@@ -328,7 +328,7 @@ const AllClient = () => {
                               >
                                 D
                               </a>
-                              &nbsp;
+
                               <a
                                 style={{ color: "white" }}
                                 onClick={() =>
@@ -343,7 +343,6 @@ const AllClient = () => {
                               >
                                 W
                               </a>
-                              &nbsp;
                             </>
                           )}
                         {adminRole !== AdminRole.branch_staff && (
@@ -355,7 +354,6 @@ const AllClient = () => {
                             >
                               PL
                             </a>
-                            &nbsp;
                           </>
                         )}
                         {clientPermission && adminRole !== AdminRole.master && (
@@ -375,7 +373,6 @@ const AllClient = () => {
                             >
                               P
                             </a>
-                            &nbsp;
                             {adminRole !== "admin_staff" && (
                               <a
                                 style={{ color: "white" }}
@@ -393,12 +390,22 @@ const AllClient = () => {
                                 S
                               </a>
                             )}
-                            &nbsp;
                           </>
                         )}
                         {adminRole == AdminRole.hyper_master ||
                         adminRole === AdminRole.admin_staff ? (
                           <Fragment>
+                            <a
+                              style={{ color: "white" }}
+                              onClick={() =>
+                                navigate(
+                                  `/change-branch-report/${client?.userId}`
+                                )
+                              }
+                              className="btn btn-icon btn-sm btn-info"
+                            >
+                              B
+                            </a>
                             <a
                               style={{ color: "white" }}
                               onClick={() => {
@@ -413,24 +420,12 @@ const AllClient = () => {
                             >
                               M
                             </a>
-                            <a
-                              style={{ color: "white", marginLeft: "3px" }}
-                              onClick={() =>
-                                navigate(
-                                  `/change-branch-report/${client?.userId}`
-                                )
-                              }
-                              className="btn btn-icon btn-sm btn-success"
-                            >
-                              B
-                            </a>
                           </Fragment>
                         ) : null}
                         {adminRole !== AdminRole.hyper_master &&
                           adminRole !== AdminRole.branch_staff &&
                           adminRole !== "admin_staff" && (
                             <>
-                              &nbsp;
                               <a
                                 style={{
                                   color: "white",
@@ -449,7 +444,7 @@ const AllClient = () => {
                               </a>
                             </>
                           )}
-                        &nbsp;
+
                         {adminRole === "master" ||
                         adminRole === AdminRole.branch_staff ? (
                           <div className="btn-group">

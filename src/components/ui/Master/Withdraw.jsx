@@ -6,10 +6,11 @@ import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import toast from "react-hot-toast";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { FaRegCopy } from "react-icons/fa";
-import { Pagination } from "rsuite";
+import { DatePicker, Pagination } from "rsuite";
 import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
 import { AdminRole, clientColor } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
+import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 
 const Withdraw = ({
   data,
@@ -25,6 +26,10 @@ const Withdraw = ({
   isSuccess,
   setBranchId,
   branches,
+  startDate,
+  setStartDate,
+  endDate,
+  setEndDate,
 }) => {
   const {
     setDownLineId,
@@ -80,14 +85,55 @@ const Withdraw = ({
         />
       )}
       <div
+        className="card-header"
         style={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "start",
           justifyContent: "space-between",
         }}
       >
+        {title !== "Pending Withdraw" && (
+          <div className="col-md-6 col-12 mb-4 ">
+            <h5>{title}</h5>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <div style={{ width: "100%" }}>
+                <label htmlFor="flatpickr-range" className="form-label">
+                  From Date
+                </label>
+                <DatePicker
+                  style={{ width: "100%" }}
+                  format="yyyy-MM-dd"
+                  editable
+                  onChange={(date) => setStartDate(date)}
+                  value={startDate}
+                  block
+                />
+              </div>
+              <div style={{ width: "100%" }}>
+                <label htmlFor="flatpickr-range" className="form-label">
+                  To Date
+                </label>
+                <DatePicker
+                  style={{ width: "100%" }}
+                  format="yyyy-MM-dd"
+                  editable
+                  onChange={(date) => setEndDate(date)}
+                  value={endDate}
+                  block
+                />
+              </div>
+            </div>
+            <DefaultDateButton
+              setEndDate={setEndDate}
+              setStartDate={setStartDate}
+              lastThreeMonth={true}
+              lastSixMonth={true}
+              lastOneYear={true}
+            />
+          </div>
+        )}
+
         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-          <h5 className="card-header">{title}</h5>
           {title === "Pending Withdraw" && (
             <>
               <input
