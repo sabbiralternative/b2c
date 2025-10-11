@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
@@ -60,6 +60,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
   const payment = staffData?.includes("payment") ?? false;
   const report = staffData?.includes("report") ?? false;
   const exposure = staffData?.includes("exposure") ?? false;
+  const settings = staffData?.includes("settings") ?? false;
 
   if (!checkerData?.success) {
     return null;
@@ -229,30 +230,56 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                         </p>
                       </div>
                       {adminRole === AdminRole.hyper_master && (
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="exposure"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                            defaultChecked={exposure}
-                          />
-                          <p
+                        <Fragment>
+                          <div
                             style={{
-                              margin: "0px",
-
-                              height: "100%",
+                              display: "flex",
+                              alignItems: "start",
+                              gap: "3px",
                             }}
                           >
-                            Exposure
-                          </p>
-                        </div>
+                            <input
+                              value="exposure"
+                              style={{ height: "100%" }}
+                              type="checkbox"
+                              {...register("permissions", { required: true })}
+                              defaultChecked={exposure}
+                            />
+                            <p
+                              style={{
+                                margin: "0px",
+
+                                height: "100%",
+                              }}
+                            >
+                              Exposure
+                            </p>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "start",
+                              gap: "3px",
+                            }}
+                          >
+                            <input
+                              value="settings"
+                              style={{ height: "100%" }}
+                              type="checkbox"
+                              {...register("permissions", { required: true })}
+                              defaultChecked={settings}
+                            />
+                            <p
+                              style={{
+                                margin: "0px",
+
+                                height: "100%",
+                              }}
+                            >
+                              Settings
+                            </p>
+                          </div>
+                        </Fragment>
                       )}
                     </div>
                   </div>
