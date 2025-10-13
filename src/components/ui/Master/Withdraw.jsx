@@ -284,11 +284,11 @@ const Withdraw = ({
                       <Fragment>
                         <td>{item.remark}</td>
                         <td>
-                          {item?.image ? (
+                          {item?.withdraw_slip ? (
                             <span
                               onClick={() => {
                                 setShowImage(true);
-                                setImage(item?.image);
+                                setImage(item?.withdraw_slip);
                               }}
                               style={{ color: "#346cee", cursor: "pointer" }}
                             >
