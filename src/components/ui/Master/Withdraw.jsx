@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import useContextState from "../../../hooks/useContextState";
 import { MdOutlineContentCopy } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 import toast from "react-hot-toast";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
@@ -11,6 +11,7 @@ import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw
 import { AdminRole, clientColor } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
+import Slip from "../../modal/Master/Deposit/Slip";
 
 const Withdraw = ({
   data,
@@ -42,6 +43,8 @@ const Withdraw = ({
   const [message, setMessage] = useState("");
   const location = useLocation();
   const [showPendingWithdraw, setShowPendingWithdraw] = useState(false);
+  const [showImage, setShowImage] = useState(false);
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     if (message) {
@@ -81,6 +84,7 @@ const Withdraw = ({
 
   return (
     <div className="card">
+      {showImage && <Slip setShowImage={setShowImage} image={image} />}
       {showPendingWithdraw && (
         <EditPendingWithdraw
           refetchAllWithdraw={refetchAllWithdraw}
@@ -210,7 +214,11 @@ const Withdraw = ({
               {/* <th>Username</th> */}
               <th>Amount</th>
               {(title === "Completed Withdraw" ||
-                title === "Rejected Withdraw") && <th>Remark</th>}
+                title === "Rejected Withdraw") && (
+                <Fragment>
+                  <th>Remark</th> <th>Slip</th>
+                </Fragment>
+              )}
 
               <th>Bank Account Name</th>
               <th>Account Number</th>
@@ -272,7 +280,26 @@ const Withdraw = ({
                     </td> */}
                     <td>{item?.amount}</td>
                     {(title === "Completed Withdraw" ||
-                      title === "Rejected Withdraw") && <td>{item.remark}</td>}
+                      title === "Rejected Withdraw") && (
+                      <Fragment>
+                        <td>{item.remark}</td>
+                        <td>
+                          {item?.image ? (
+                            <span
+                              onClick={() => {
+                                setShowImage(true);
+                                setImage(item?.image);
+                              }}
+                              style={{ color: "#346cee", cursor: "pointer" }}
+                            >
+                              View
+                            </span>
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
+                      </Fragment>
+                    )}
                     {/* <td>{item?.mobile}</td> */}
                     <td>
                       {item?.bank_account_name}{" "}
