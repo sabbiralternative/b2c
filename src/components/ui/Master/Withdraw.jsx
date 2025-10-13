@@ -70,9 +70,13 @@ const Withdraw = ({
       });
   };
 
-  const handleNavigate = (username, link) => {
-    localStorage.setItem("downLineId", username);
-    navigate(`/${link}`);
+  const handleNavigate = (client) => {
+    if (!readOnly) {
+      const formatUserId = client?.userId?.split("-")[1];
+      navigate(
+        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`
+      );
+    }
   };
 
   return (
@@ -379,10 +383,7 @@ const Withdraw = ({
                                 !readOnly ? "pointer" : "not-allowed"
                               }`,
                             }}
-                            onClick={() => {
-                              !readOnly &&
-                                handleNavigate(item?.loginname, "pnl");
-                            }}
+                            onClick={() => handleNavigate(item)}
                             className="btn btn-icon btn-sm btn-warning"
                           >
                             PL

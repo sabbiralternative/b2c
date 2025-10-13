@@ -62,6 +62,7 @@ const PNL = () => {
       from_date: moment(startDate).format("YYYY-MM-DD"),
       to_date: moment(endDate).format("YYYY-MM-DD"),
       method: type,
+      downlineId,
     };
 
     try {
