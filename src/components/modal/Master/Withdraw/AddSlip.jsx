@@ -132,6 +132,7 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
                       </label>
                       <div className="col-sm-10">
                         <input
+                          required
                           onChange={(e) => handleImageChange(e)}
                           type="file"
                           className="form-control"
@@ -215,6 +216,7 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
+                        required
                         onChange={(e) => setUtr(e.target.value)}
                         type="text"
                         className="form-control"
