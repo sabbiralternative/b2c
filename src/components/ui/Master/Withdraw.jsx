@@ -305,7 +305,7 @@ const Withdraw = ({
                             </span>
                           ) : (
                             <div
-                              onClick={() => setAddSlipId(item?.downlineId)}
+                              onClick={() => setAddSlipId(item?.withdraw_id)}
                               style={{ cursor: "pointer" }}
                               className="text-danger"
                             >
