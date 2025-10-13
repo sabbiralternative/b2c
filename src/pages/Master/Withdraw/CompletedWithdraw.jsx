@@ -16,7 +16,8 @@ const CompletedWithdraw = () => {
     fromDate: moment(startDate).format("YYYY-MM-DD"),
     toDate: moment(endDate).format("YYYY-MM-DD"),
   };
-  const { allWithdraw, isLoading, isSuccess } = useGetALLWithdraw(payload);
+  const { allWithdraw, isLoading, isSuccess, refetchAllWithdraw } =
+    useGetALLWithdraw(payload);
   const meta = allWithdraw?.pagination;
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -33,6 +34,7 @@ const CompletedWithdraw = () => {
         setEndDate={setEndDate}
         setStartDate={setStartDate}
         startDate={startDate}
+        refetchAllWithdraw={refetchAllWithdraw}
       />
     </div>
   );

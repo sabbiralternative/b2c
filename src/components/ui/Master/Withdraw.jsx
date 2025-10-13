@@ -12,6 +12,7 @@ import { AdminRole, clientColor } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import Slip from "../../modal/Master/Deposit/Slip";
+import AddSlip from "../../modal/Master/Withdraw/AddSlip";
 
 const Withdraw = ({
   data,
@@ -45,6 +46,7 @@ const Withdraw = ({
   const [showPendingWithdraw, setShowPendingWithdraw] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [image, setImage] = useState("");
+  const [addSlipId, setAddSlipId] = useState(null);
 
   useEffect(() => {
     if (message) {
@@ -85,6 +87,13 @@ const Withdraw = ({
   return (
     <div className="card">
       {showImage && <Slip setShowImage={setShowImage} image={image} />}
+      {addSlipId && (
+        <AddSlip
+          addSlipId={addSlipId}
+          setAddSlipId={setAddSlipId}
+          refetchAllWithdraw={refetchAllWithdraw}
+        />
+      )}
       {showPendingWithdraw && (
         <EditPendingWithdraw
           refetchAllWithdraw={refetchAllWithdraw}
@@ -295,7 +304,13 @@ const Withdraw = ({
                               View
                             </span>
                           ) : (
-                            "N/A"
+                            <div
+                              onClick={() => setAddSlipId(item?.downlineId)}
+                              style={{ cursor: "pointer" }}
+                              className="text-danger"
+                            >
+                              Add
+                            </div>
                           )}
                         </td>
                       </Fragment>
