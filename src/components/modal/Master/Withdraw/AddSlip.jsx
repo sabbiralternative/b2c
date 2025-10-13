@@ -212,11 +212,10 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
                       className="col-sm-2 col-form-label"
                       htmlFor="basic-default-name"
                     >
-                      UTR
+                      UTR (Optional)
                     </label>
                     <div className="col-sm-10">
                       <input
-                        required
                         onChange={(e) => setUtr(e.target.value)}
                         type="text"
                         className="form-control"
