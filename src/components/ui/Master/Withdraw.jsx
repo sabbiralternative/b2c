@@ -21,8 +21,8 @@ const Withdraw = ({
   meta,
   activePage,
   setActivePage,
-  setAmountFrom,
-  setAmountTo,
+  // setAmountFrom,
+  // setAmountTo,
   refetchAllWithdraw,
   isLoading,
   isSuccess,
@@ -153,7 +153,7 @@ const Withdraw = ({
         <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
           {title === "Pending Withdraw" && (
             <>
-              <input
+              {/* <input
                 style={{ width: "200px" }}
                 onChange={(e) => setAmountFrom(e.target.value)}
                 type="text"
@@ -166,8 +166,9 @@ const Withdraw = ({
                 type="text"
                 className="form-control"
                 placeholder="Enter To Amount"
-              />
-              {adminRole === AdminRole.admin_staff && (
+              /> */}
+              {(adminRole === AdminRole.admin_staff ||
+                adminRole === AdminRole.hyper_master) && (
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "5px" }}
                 >
