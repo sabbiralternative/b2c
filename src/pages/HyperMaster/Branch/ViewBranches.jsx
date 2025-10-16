@@ -137,6 +137,7 @@ const ViewBranches = () => {
                   )}
                   {adminRole !== AdminRole.admin_staff && <th>Balance</th>}
                   {adminRole !== AdminRole.admin_staff && <th>P/L</th>}
+                  <th>Client Balance</th>
 
                   <th>Status</th>
                   <th>Betting Status</th>
@@ -165,6 +166,7 @@ const ViewBranches = () => {
                       {adminRole !== AdminRole.admin_staff && (
                         <td>{branch?.pnl}</td>
                       )}
+                      <td>{branch?.balance}</td>
 
                       <td>
                         <span
