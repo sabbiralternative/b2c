@@ -44,7 +44,10 @@ const PendingDeposit = () => {
     page: activePage,
   };
 
-  if (adminRole === AdminRole.admin_staff) {
+  if (
+    adminRole === AdminRole.admin_staff ||
+    adminRole === AdminRole.hyper_master
+  ) {
     payload.branch_id = branchId;
   }
 
@@ -106,7 +109,8 @@ const PendingDeposit = () => {
               placeholder="Enter To Amount"
             />
 
-            {adminRole === AdminRole.admin_staff && (
+            {(adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master) && (
               <div
                 style={{ display: "flex", alignItems: "center", gap: "5px" }}
               >

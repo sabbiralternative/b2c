@@ -25,7 +25,10 @@ const CompletedDeposit = () => {
     toDate: moment(endDate).format("YYYY-MM-DD"),
   };
 
-  if (adminRole === AdminRole.admin_staff) {
+  if (
+    adminRole === AdminRole.admin_staff ||
+    adminRole === AdminRole.hyper_master
+  ) {
     payload.branch_id = branchId;
   }
   const { allUTRs, isLoading, isSuccess } = useGetALLDeposit(payload);

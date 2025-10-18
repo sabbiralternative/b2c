@@ -29,7 +29,10 @@ const PendingWithdraw = () => {
     fromDate: moment(startDate).format("YYYY-MM-DD"),
     toDate: moment(endDate).format("YYYY-MM-DD"),
   };
-  if (adminRole === AdminRole.admin_staff) {
+  if (
+    adminRole === AdminRole.admin_staff ||
+    adminRole === AdminRole.hyper_master
+  ) {
     payload.branch_id = branchId;
   }
 
