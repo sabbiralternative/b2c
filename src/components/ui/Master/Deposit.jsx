@@ -24,6 +24,8 @@ const Deposit = ({
   setStartDate,
   endDate,
   setEndDate,
+  setBranchId,
+  branches,
 }) => {
   const {
     setEditPendingDeposit,
@@ -56,12 +58,13 @@ const Deposit = ({
           display: "flex",
           alignItems: "start",
           justifyContent: "space-between",
+          flexWrap: "wrap",
         }}
       >
-        <div className="col-md-6 col-12 mb-4 ">
+        <div className="col-md-8 col-12 mb-4 ">
           <h5>{title}</h5>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <div style={{ width: "100%" }}>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <div style={{ width: "100%", maxWidth: "250px" }}>
               <label htmlFor="flatpickr-range" className="form-label">
                 From Date
               </label>
@@ -74,7 +77,7 @@ const Deposit = ({
                 block
               />
             </div>
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%", maxWidth: "250px" }}>
               <label htmlFor="flatpickr-range" className="form-label">
                 To Date
               </label>
@@ -87,6 +90,35 @@ const Deposit = ({
                 block
               />
             </div>
+            {(adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master) && (
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: "250px",
+                }}
+              >
+                <label htmlFor="flatpickr-range" className="form-label">
+                  Branch
+                </label>
+                <select
+                  style={{ width: "200px" }}
+                  defaultValue="0"
+                  onChange={(e) => setBranchId(e.target.value)}
+                  className="form-control"
+                >
+                  <option disabled value="">
+                    Branch
+                  </option>
+                  <option value="0">All Branch</option>
+                  {branches?.result?.map((site) => (
+                    <option key={site?.branch_id} value={site?.branch_id}>
+                      {site?.branch_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
           <DefaultDateButton
             setEndDate={setEndDate}

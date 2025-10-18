@@ -73,14 +73,24 @@ const PendingDeposit = () => {
       <div className="card">
         {showImage && <Slip setShowImage={setShowImage} image={image} />}
         <div
+          className="card-header"
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "10px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-            <h5 className="card-header">Pending Deposit</h5>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "15px",
+              flexWrap: "wrap",
+            }}
+          >
+            <h5>Pending Deposit</h5>
             <input
               style={{ width: "200px" }}
               onChange={(e) => setAmountFrom(e.target.value)}

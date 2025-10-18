@@ -107,39 +107,75 @@ const Withdraw = ({
           display: "flex",
           alignItems: "start",
           justifyContent: "space-between",
+          flexWrap: "wrap",
         }}
       >
-        {title !== "Pending Withdraw" && (
-          <div className="col-md-6 col-12 mb-4 ">
-            <h5>{title}</h5>
-            <div style={{ display: "flex", gap: "10px" }}>
-              <div style={{ width: "100%" }}>
+        <div className="col-md-8 col-12 mb-4 ">
+          <h5>{title}</h5>
+
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            {title !== "Pending Withdraw" && (
+              <Fragment>
+                <div style={{ width: "100%", maxWidth: "250px" }}>
+                  <label htmlFor="flatpickr-range" className="form-label">
+                    From Date
+                  </label>
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setStartDate(date)}
+                    value={startDate}
+                    block
+                  />
+                </div>
+                <div style={{ width: "100%", maxWidth: "250px" }}>
+                  <label htmlFor="flatpickr-range" className="form-label">
+                    To Date
+                  </label>
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    format="yyyy-MM-dd"
+                    editable
+                    onChange={(date) => setEndDate(date)}
+                    value={endDate}
+                    block
+                  />
+                </div>
+              </Fragment>
+            )}
+
+            {(adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master) && (
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: "250px",
+                }}
+              >
                 <label htmlFor="flatpickr-range" className="form-label">
-                  From Date
+                  Branch
                 </label>
-                <DatePicker
-                  style={{ width: "100%" }}
-                  format="yyyy-MM-dd"
-                  editable
-                  onChange={(date) => setStartDate(date)}
-                  value={startDate}
-                  block
-                />
+                <select
+                  style={{ width: "200px" }}
+                  defaultValue="0"
+                  onChange={(e) => setBranchId(e.target.value)}
+                  className="form-control"
+                >
+                  <option disabled value="">
+                    Branch
+                  </option>
+                  <option value="0">All Branch</option>
+                  {branches?.result?.map((site) => (
+                    <option key={site?.branch_id} value={site?.branch_id}>
+                      {site?.branch_name}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div style={{ width: "100%" }}>
-                <label htmlFor="flatpickr-range" className="form-label">
-                  To Date
-                </label>
-                <DatePicker
-                  style={{ width: "100%" }}
-                  format="yyyy-MM-dd"
-                  editable
-                  onChange={(date) => setEndDate(date)}
-                  value={endDate}
-                  block
-                />
-              </div>
-            </div>
+            )}
+          </div>
+          {title !== "Pending Withdraw" && (
             <DefaultDateButton
               setEndDate={setEndDate}
               setStartDate={setStartDate}
@@ -147,53 +183,25 @@ const Withdraw = ({
               lastSixMonth={true}
               lastOneYear={true}
             />
-          </div>
-        )}
-
-        <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-          {title === "Pending Withdraw" && (
-            <>
-              {/* <input
-                style={{ width: "200px" }}
-                onChange={(e) => setAmountFrom(e.target.value)}
-                type="text"
-                className="form-control"
-                placeholder="Enter From Amount"
-              />
-              <input
-                style={{ width: "200px" }}
-                onChange={(e) => setAmountTo(e.target.value)}
-                type="text"
-                className="form-control"
-                placeholder="Enter To Amount"
-              /> */}
-              {(adminRole === AdminRole.admin_staff ||
-                adminRole === AdminRole.hyper_master) && (
-                <div
-                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
-                >
-                  <div>Branch:</div>
-                  <select
-                    style={{ width: "200px" }}
-                    defaultValue="0"
-                    onChange={(e) => setBranchId(e.target.value)}
-                    className="form-control"
-                  >
-                    <option disabled value="">
-                      Branch
-                    </option>
-                    <option value="0">All Branch</option>
-                    {branches?.result?.map((site) => (
-                      <option key={site?.branch_id} value={site?.branch_id}>
-                        {site?.branch_name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-            </>
           )}
         </div>
+
+        {/* <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
+          <input
+            style={{ width: "200px" }}
+            onChange={(e) => setAmountFrom(e.target.value)}
+            type="text"
+            className="form-control"
+            placeholder="Enter From Amount"
+          />
+          <input
+            style={{ width: "200px" }}
+            onChange={(e) => setAmountTo(e.target.value)}
+            type="text"
+            className="form-control"
+            placeholder="Enter To Amount"
+          />
+        </div> */}
         {meta && (
           <Pagination
             prev

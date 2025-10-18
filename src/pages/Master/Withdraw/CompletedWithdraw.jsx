@@ -3,8 +3,16 @@ import Withdraw from "../../../components/ui/Master/Withdraw";
 import useGetALLWithdraw from "../../../hooks/Master/Withdraw/useGetAllWithdraw";
 import { defaultDate } from "../../../utils/defaultDate";
 import moment from "moment";
+import { useGetIndex } from "../../../hooks";
+import useContextState from "../../../hooks/useContextState";
+import { AdminRole } from "../../../constant/constant";
 
 const CompletedWithdraw = () => {
+  const { data } = useGetIndex({
+    type: "getBranches",
+  });
+  const { adminRole } = useContextState();
+  const [branchId, setBranchId] = useState(0);
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
   const [activePage, setActivePage] = useState(1);
@@ -16,6 +24,9 @@ const CompletedWithdraw = () => {
     fromDate: moment(startDate).format("YYYY-MM-DD"),
     toDate: moment(endDate).format("YYYY-MM-DD"),
   };
+  if (adminRole === AdminRole.admin_staff) {
+    payload.branch_id = branchId;
+  }
   const { allWithdraw, isLoading, isSuccess, refetchAllWithdraw } =
     useGetALLWithdraw(payload);
   const meta = allWithdraw?.pagination;
@@ -35,6 +46,8 @@ const CompletedWithdraw = () => {
         setStartDate={setStartDate}
         startDate={startDate}
         refetchAllWithdraw={refetchAllWithdraw}
+        setBranchId={setBranchId}
+        branches={data}
       />
     </div>
   );

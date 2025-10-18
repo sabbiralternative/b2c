@@ -3,8 +3,16 @@ import Deposit from "../../../components/ui/Master/Deposit";
 import useGetALLDeposit from "../../../hooks/Master/Deposit/useGetALLDeposit";
 import { defaultDate } from "../../../utils/defaultDate";
 import moment from "moment";
+import { useGetIndex } from "../../../hooks";
+import useContextState from "../../../hooks/useContextState";
+import { AdminRole } from "../../../constant/constant";
 
 const RejectedDeposit = () => {
+  const { data } = useGetIndex({
+    type: "getBranches",
+  });
+  const { adminRole } = useContextState();
+  const [branchId, setBranchId] = useState(0);
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
   const [activePage, setActivePage] = useState(1);
@@ -16,6 +24,9 @@ const RejectedDeposit = () => {
     fromDate: moment(startDate).format("YYYY-MM-DD"),
     toDate: moment(endDate).format("YYYY-MM-DD"),
   };
+  if (adminRole === AdminRole.admin_staff) {
+    payload.branch_id = branchId;
+  }
   const { allUTRs, isLoading, isSuccess } = useGetALLDeposit(payload);
   const meta = allUTRs?.pagination;
   return (
@@ -33,6 +44,8 @@ const RejectedDeposit = () => {
         setEndDate={setEndDate}
         setStartDate={setStartDate}
         startDate={startDate}
+        branches={data}
+        setBranchId={setBranchId}
       />
     </div>
   );
