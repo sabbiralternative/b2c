@@ -166,7 +166,7 @@ const ViewBranches = () => {
                       {adminRole !== AdminRole.admin_staff && (
                         <td>{branch?.pnl}</td>
                       )}
-                      <td>{branch?.balance}</td>
+                      <td>{branch?.clientBalance}</td>
 
                       <td>
                         <span
