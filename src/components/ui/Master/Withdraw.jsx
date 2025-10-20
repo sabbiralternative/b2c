@@ -111,7 +111,48 @@ const Withdraw = ({
         }}
       >
         <div className="col-md-8 col-12 mb-4 ">
-          <h5>{title}</h5>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "20px 60px",
+              flexWrap: "wrap",
+            }}
+          >
+            <h5 style={{ marginBottom: "0px" }}>{title}</h5>
+
+            {(adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master) &&
+              title === "Pending Withdraw" && (
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "250px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "5px",
+                  }}
+                >
+                  <div style={{ fontSize: "15px" }}>Branch:</div>
+                  <select
+                    style={{ width: "200px" }}
+                    defaultValue="0"
+                    onChange={(e) => setBranchId(e.target.value)}
+                    className="form-control"
+                  >
+                    <option disabled value="">
+                      Branch
+                    </option>
+                    <option value="0">All Branch</option>
+                    {branches?.result?.map((site) => (
+                      <option key={site?.branch_id} value={site?.branch_id}>
+                        {site?.branch_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+          </div>
 
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
             {title !== "Pending Withdraw" && (
@@ -146,34 +187,35 @@ const Withdraw = ({
             )}
 
             {(adminRole === AdminRole.admin_staff ||
-              adminRole === AdminRole.hyper_master) && (
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "250px",
-                }}
-              >
-                <label htmlFor="flatpickr-range" className="form-label">
-                  Branch
-                </label>
-                <select
-                  style={{ width: "200px" }}
-                  defaultValue="0"
-                  onChange={(e) => setBranchId(e.target.value)}
-                  className="form-control"
+              adminRole === AdminRole.hyper_master) &&
+              title !== "Pending Withdraw" && (
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "250px",
+                  }}
                 >
-                  <option disabled value="">
+                  <label htmlFor="flatpickr-range" className="form-label">
                     Branch
-                  </option>
-                  <option value="0">All Branch</option>
-                  {branches?.result?.map((site) => (
-                    <option key={site?.branch_id} value={site?.branch_id}>
-                      {site?.branch_name}
+                  </label>
+                  <select
+                    style={{ width: "200px" }}
+                    defaultValue="0"
+                    onChange={(e) => setBranchId(e.target.value)}
+                    className="form-control"
+                  >
+                    <option disabled value="">
+                      Branch
                     </option>
-                  ))}
-                </select>
-              </div>
-            )}
+                    <option value="0">All Branch</option>
+                    {branches?.result?.map((site) => (
+                      <option key={site?.branch_id} value={site?.branch_id}>
+                        {site?.branch_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
           </div>
           {title !== "Pending Withdraw" && (
             <DefaultDateButton
