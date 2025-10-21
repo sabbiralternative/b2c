@@ -13,6 +13,7 @@ import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import Slip from "../../modal/Master/Deposit/Slip";
 import AddSlip from "../../modal/Master/Withdraw/AddSlip";
+import DepositReport from "../../modal/Master/Deposit/DepositReport";
 
 const Withdraw = ({
   data,
@@ -47,6 +48,7 @@ const Withdraw = ({
   const [showImage, setShowImage] = useState(false);
   const [image, setImage] = useState("");
   const [addSlipId, setAddSlipId] = useState(null);
+  const [depositReport, setDepositReport] = useState(null);
 
   useEffect(() => {
     if (message) {
@@ -87,6 +89,12 @@ const Withdraw = ({
   return (
     <div className="card">
       {showImage && <Slip setShowImage={setShowImage} image={image} />}
+      {depositReport && (
+        <DepositReport
+          setDepositReport={setDepositReport}
+          depositReport={depositReport}
+        />
+      )}
       {addSlipId && (
         <AddSlip
           addSlipId={addSlipId}
@@ -481,6 +489,22 @@ const Withdraw = ({
                           >
                             PL
                           </a>
+                          &nbsp;
+                          {(adminRole === AdminRole.master ||
+                            adminRole === AdminRole.branch_staff) && (
+                            <a
+                              style={{
+                                color: "white",
+                                cursor: `${
+                                  !readOnly ? "pointer" : "not-allowed"
+                                }`,
+                              }}
+                              onClick={() => setDepositReport(item?.downlineId)}
+                              className="btn btn-icon btn-sm btn-info"
+                            >
+                              DR
+                            </a>
+                          )}
                         </td>
                       </>
                     ) : null}
