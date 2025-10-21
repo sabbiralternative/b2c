@@ -10,6 +10,7 @@ import { DatePicker, Pagination } from "rsuite";
 import { AdminRole, clientColor } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
+import EditDepositFromBank from "../../modal/Master/Deposit/EditDepositFromBank";
 
 const Deposit = ({
   data,
@@ -26,6 +27,7 @@ const Deposit = ({
   setEndDate,
   setBranchId,
   branches,
+  refetch,
 }) => {
   const {
     setEditPendingDeposit,
@@ -35,6 +37,7 @@ const Deposit = ({
     readOnly,
     adminRole,
   } = useContextState();
+  const [editDepositFromBankId, setEditDepositFromBankId] = useState(null);
   const navigate = useNavigate();
   const [showImage, setShowImage] = useState(false);
   const [image, setImage] = useState("");
@@ -50,6 +53,13 @@ const Deposit = ({
 
   return (
     <div className="card">
+      {editDepositFromBankId && (
+        <EditDepositFromBank
+          editDepositFromBankId={editDepositFromBankId}
+          setEditDepositFromBankId={setEditDepositFromBankId}
+          refetch={refetch}
+        />
+      )}
       {showImage && <Slip setShowImage={setShowImage} image={image} />}
 
       <div
@@ -161,6 +171,10 @@ const Deposit = ({
               <th>Slip</th>
               <th>Type</th>
               <th>Status</th>
+              {(adminRole === AdminRole.master ||
+                adminRole === AdminRole.admin_staff) &&
+                title === "Completed Deposit" && <th>Deposited From</th>}
+
               <th>Remark</th>
               <th>Site</th>
               <th>Request Time</th>
@@ -253,6 +267,23 @@ const Deposit = ({
                       {item?.status}
                     </span>
                   </td>
+                  {(adminRole === AdminRole.master ||
+                    adminRole === AdminRole.admin_staff) &&
+                    title === "Completed Deposit" && (
+                      <td>
+                        {item?.depositedFrom ? (
+                          <span>{item?.depositedFrom}</span>
+                        ) : (
+                          <div
+                            onClick={() => setEditDepositFromBankId(item?.id)}
+                            style={{ cursor: "pointer" }}
+                            className="text-danger"
+                          >
+                            Add
+                          </div>
+                        )}
+                      </td>
+                    )}
                   <td>{item?.remark}</td>
                   <td>{item?.site}</td>
                   <td>{item?.date_added}</td>

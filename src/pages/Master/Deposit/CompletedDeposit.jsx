@@ -31,7 +31,12 @@ const CompletedDeposit = () => {
   ) {
     payload.branch_id = branchId;
   }
-  const { allUTRs, isLoading, isSuccess } = useGetALLDeposit(payload);
+  const {
+    allUTRs,
+    isLoading,
+    isSuccess,
+    refetchAllUTRs: refetch,
+  } = useGetALLDeposit(payload);
   const meta = allUTRs?.pagination;
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
@@ -50,6 +55,7 @@ const CompletedDeposit = () => {
         startDate={startDate}
         setBranchId={setBranchId}
         branches={data}
+        refetch={refetch}
       />
     </div>
   );
