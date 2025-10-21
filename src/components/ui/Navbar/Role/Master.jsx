@@ -14,6 +14,7 @@ const Master = () => {
   const [clientPermission, setClientPermission] = useState(false);
   const [reportPermission, setReportPermission] = useState(false);
   const [paymentPermission, setPaymentPermission] = useState(false);
+  const [siteNotification, setSiteNotification] = useState(false);
   const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
   const { dwCount } = useGetDWCount();
@@ -875,6 +876,25 @@ const Master = () => {
             <ul className="menu-sub">
               <li className="menu-item">
                 <a
+                  onClick={() => handleNavigate("view-banner")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">View Banners</div>
+                </a>
+              </li>
+
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("add-banner")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Banner">Add Banner</div>
+                </a>
+              </li>
+              <li className="menu-item">
+                <a
                   onClick={() => {
                     setShowSocialLink(true);
                   }}
@@ -884,6 +904,50 @@ const Master = () => {
                   <div data-i18n="View Banners">Social Links</div>
                 </a>
               </li>
+              <a
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "start",
+                }}
+                onMouseEnter={() => setSiteNotification(true)}
+                onMouseLeave={() => setSiteNotification(false)}
+                className="menu-link menu-toggle"
+              >
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Settings">Site Notification</div>
+                <ul
+                  className="menu-sub"
+                  style={{
+                    display: siteNotification ? "block" : "none",
+                    right: "100%",
+                    top: "0px",
+                    left: "-100%",
+                    zIndex: "99999",
+                    background: "#273143",
+                  }}
+                >
+                  <li className="menu-item">
+                    <a
+                      onClick={() => handleNavigate("view-notification")}
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="View Banners">View Notification</div>
+                    </a>
+                  </li>
+
+                  <li className="menu-item">
+                    <a
+                      onClick={() => handleNavigate("add-notification")}
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="View Banners">Add Notification</div>
+                    </a>
+                  </li>
+                </ul>
+              </a>
             </ul>
           </li>
         )}

@@ -704,6 +704,27 @@ const MasterSidebar = () => {
 
             <ul className="menu-sub">
               <li className="menu-item">
+                <Link
+                  to="/view-banner"
+                  onClick={() => setShowSidebar(false)}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">View Banners</div>
+                </Link>
+              </li>
+
+              <li className="menu-item">
+                <Link
+                  onClick={() => setShowSidebar(false)}
+                  to="/add-banner"
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Banner">Add Banner</div>
+                </Link>
+              </li>
+              <li className="menu-item">
                 <a
                   onClick={() => {
                     setShowSocialLink(true);
@@ -714,6 +735,31 @@ const MasterSidebar = () => {
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
                   <div data-i18n="Pending Withdraw">Social Links</div>
                 </a>
+              </li>
+              <li className="menu-item">
+                <Link
+                  to="/view-notification"
+                  onClick={() => {
+                    setShowSidebar(false);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Social Links">View Notifications</div>
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link
+                  to="/add-notification"
+                  onClick={() => {
+                    setShowSocialLink(true);
+                    setShowSidebar(false);
+                  }}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Social Links">Add Notifications</div>
+                </Link>
               </li>
             </ul>
           </li>
