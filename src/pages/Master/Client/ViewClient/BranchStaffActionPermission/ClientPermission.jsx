@@ -14,7 +14,7 @@ const ClientPermission = ({
   setShowChangePassword,
 }) => {
   return (
-    <td>
+    <td style={{ display: "flex", gap: "3px" }}>
       <a
         style={{
           color: "white",
@@ -32,7 +32,7 @@ const ClientPermission = ({
       >
         P
       </a>
-      &nbsp;
+
       <a
         style={{
           color: "white",
@@ -43,7 +43,7 @@ const ClientPermission = ({
       >
         PL
       </a>
-      &nbsp;
+
       <a
         style={{
           color: "white",
@@ -61,7 +61,7 @@ const ClientPermission = ({
       >
         S
       </a>
-      &nbsp;
+
       {adminRole === "master" ? (
         <div className="btn-group">
           <button

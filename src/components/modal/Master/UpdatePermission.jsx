@@ -61,6 +61,9 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
   const report = staffData?.includes("report") ?? false;
   const exposure = staffData?.includes("exposure") ?? false;
   const settings = staffData?.includes("settings") ?? false;
+  const directDeposit = staffData?.includes("directDeposit") ?? false;
+  const depositWithSlip = staffData?.includes("depositWithSlip") ?? false;
+  const directWithdraw = staffData?.includes("directWithdraw") ?? false;
 
   if (!checkerData?.success) {
     return null;
@@ -227,6 +230,78 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                           }}
                         >
                           Report
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "start",
+                          gap: "3px",
+                        }}
+                      >
+                        <input
+                          value="directDeposit"
+                          style={{ height: "100%" }}
+                          type="checkbox"
+                          {...register("directDeposit", { required: true })}
+                          defaultChecked={directDeposit}
+                        />
+                        <p
+                          style={{
+                            margin: "0px",
+
+                            height: "100%",
+                          }}
+                        >
+                          Direct Deposit
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "start",
+                          gap: "3px",
+                        }}
+                      >
+                        <input
+                          value="depositWithSlip"
+                          style={{ height: "100%" }}
+                          type="checkbox"
+                          {...register("depositWithSlip", { required: true })}
+                          defaultChecked={depositWithSlip}
+                        />
+                        <p
+                          style={{
+                            margin: "0px",
+
+                            height: "100%",
+                          }}
+                        >
+                          Deposit With Slip
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "start",
+                          gap: "3px",
+                        }}
+                      >
+                        <input
+                          value="directWithdraw"
+                          style={{ height: "100%" }}
+                          type="checkbox"
+                          {...register("directWithdraw", { required: true })}
+                          defaultChecked={directWithdraw}
+                        />
+                        <p
+                          style={{
+                            margin: "0px",
+
+                            height: "100%",
+                          }}
+                        >
+                          Direct Withdraw
                         </p>
                       </div>
                       {adminRole === AdminRole.hyper_master && (
