@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
 const ClientPermission = ({
@@ -12,55 +13,125 @@ const ClientPermission = ({
   showMore,
   showMoreRef,
   setShowChangePassword,
+  clientPermission,
+  depositPermission,
+  withdrawPermission,
+  setDirectDeposit,
+  setDirectWithdraw,
+  setClientDeposit,
 }) => {
   return (
     <td style={{ display: "flex", gap: "3px" }}>
-      <a
-        style={{
-          color: "white",
-          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-        }}
-        onClick={() => {
-          handleOpenModal(
-            setShowChangePassword,
-            client?.username,
-            client?.role,
-            client?.downlineId
-          );
-        }}
-        className="btn btn-icon btn-sm btn-info"
-      >
-        P
-      </a>
+      {depositPermission && (
+        <Fragment>
+          <a
+            style={{
+              color: "white",
+              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+            }}
+            onClick={() => {
+              handleOpenModal(
+                setDirectDeposit,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-success"
+          >
+            DD
+          </a>
 
-      <a
-        style={{
-          color: "white",
-          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-        }}
-        onClick={() => handleNavigate(client)}
-        className="btn btn-icon btn-sm btn-warning"
-      >
-        PL
-      </a>
+          <a
+            style={{
+              color: "white",
+              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+            }}
+            onClick={() => {
+              handleOpenModal(
+                setClientDeposit,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-primary"
+          >
+            D
+          </a>
+        </Fragment>
+      )}
+      {withdrawPermission && (
+        <Fragment>
+          <a
+            style={{
+              color: "white",
+              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+            }}
+            onClick={() => {
+              handleOpenModal(
+                setDirectWithdraw,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-danger"
+          >
+            W
+          </a>
+        </Fragment>
+      )}
+      {clientPermission && (
+        <Fragment>
+          <a
+            style={{
+              color: "white",
+              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+            }}
+            onClick={() => {
+              handleOpenModal(
+                setShowChangePassword,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-info"
+          >
+            P
+          </a>
 
-      <a
-        style={{
-          color: "white",
-          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-        }}
-        onClick={() => {
-          handleOpenModal(
-            setShowChangeStatus,
-            client?.username,
-            client?.role,
-            client?.downlineId
-          );
-        }}
-        className="btn btn-icon btn-sm btn-dark"
-      >
-        S
-      </a>
+          <a
+            style={{
+              color: "white",
+              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+            }}
+            onClick={() => handleNavigate(client)}
+            className="btn btn-icon btn-sm btn-warning"
+          >
+            PL
+          </a>
+
+          <a
+            style={{
+              color: "white",
+              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+            }}
+            onClick={() => {
+              handleOpenModal(
+                setShowChangeStatus,
+                client?.username,
+                client?.role,
+                client?.downlineId
+              );
+            }}
+            className="btn btn-icon btn-sm btn-dark"
+          >
+            S
+          </a>
+        </Fragment>
+      )}
 
       {adminRole === "master" ? (
         <div className="btn-group">

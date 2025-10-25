@@ -421,8 +421,7 @@ const ViewClient = () => {
                           {/* For search branch_staff  */}
                           {adminRole === AdminRole.branch_staff &&
                             !searchBy &&
-                            !searchHistory &&
-                            clientPermission && (
+                            !searchHistory && (
                               <ClientPermission
                                 adminRole={adminRole}
                                 client={client}
@@ -435,6 +434,12 @@ const ViewClient = () => {
                                 setShowChangeStatus={setShowChangeStatus}
                                 showMore={showMore}
                                 showMoreRef={showMoreRef}
+                                clientPermission={clientPermission}
+                                depositPermission={depositPermission}
+                                withdrawPermission={withdrawPermission}
+                                setDirectDeposit={setDirectDeposit}
+                                setDirectWithdraw={setDirectWithdraw}
+                                setClientDeposit={setClientDeposit}
                               />
                             )}
 

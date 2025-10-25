@@ -21,6 +21,8 @@ import Loader from "../../../components/ui/Loader/Loader";
 const ActiveClient = () => {
   const [showColor, setShowColor] = useState(false);
   const [clientPermission, setClientPermission] = useState(false);
+  const [depositPermission, setDepositPermission] = useState(false);
+  const [withdrawPermission, setWithdrawPermission] = useState(false);
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState(1);
   const [directWithdraw, setDirectWithdraw] = useState(false);
@@ -67,15 +69,21 @@ const ActiveClient = () => {
     setPayloadRole(role);
     setId(id);
   };
-
   useEffect(() => {
     if (adminRole) {
       if (adminRole === "branch_staff") {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
+
+        const depositPermission = permissions?.includes("deposit") ?? false;
+        const withdrawPermission = permissions?.includes("withdraw") ?? false;
         const clientPermission = permissions?.includes("client") ?? false;
+        setDepositPermission(depositPermission);
+        setWithdrawPermission(withdrawPermission);
         setClientPermission(clientPermission);
       } else {
+        setDepositPermission(true);
+        setWithdrawPermission(true);
         setClientPermission(true);
       }
     }
@@ -360,6 +368,72 @@ const ActiveClient = () => {
                         )}
                         {clientPermission && adminRole !== AdminRole.master && (
                           <>
+                            {depositPermission && (
+                              <Fragment>
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setDirectDeposit,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-success"
+                                >
+                                  DD
+                                </a>
+
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setClientDeposit,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-primary"
+                                >
+                                  D
+                                </a>
+                              </Fragment>
+                            )}
+                            {withdrawPermission && (
+                              <Fragment>
+                                <a
+                                  style={{
+                                    color: "white",
+                                    cursor: `${
+                                      !readOnly ? "pointer" : "not-allowed"
+                                    }`,
+                                  }}
+                                  onClick={() => {
+                                    handleOpenModal(
+                                      setDirectWithdraw,
+                                      client?.username,
+                                      client?.role,
+                                      client?.downlineId
+                                    );
+                                  }}
+                                  className="btn btn-icon btn-sm btn-danger"
+                                >
+                                  W
+                                </a>
+                              </Fragment>
+                            )}
                             <a
                               style={{ color: "white" }}
                               onClick={() => {
