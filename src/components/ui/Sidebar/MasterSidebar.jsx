@@ -294,6 +294,15 @@ const MasterSidebar = () => {
                 <div data-i18n="Add Payment Method">Add USDT (BEP20)</div>
               </a>
             </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("add-upi-gateway")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Add Payment Method">Add UPI Gateway</div>
+              </a>
+            </li>
           </ul>
         </li>
       ) : null}

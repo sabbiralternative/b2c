@@ -21,6 +21,7 @@ import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
 import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway";
 import AddQR from "../pages/Master/Payments/AddQR";
 import AddUPI from "../pages/Master/Payments/AddUPI";
+import AddUPIGateway from "../pages/Master/Payments/AddUPIGateway";
 import AddUSDT from "../pages/Master/Payments/AddUSDT";
 import AddUSDTBEP20 from "../pages/Master/Payments/AddUSDTBEP20";
 import AddWhatsappDeposit from "../pages/Master/Payments/AddWhatsappDeposit";
@@ -132,6 +133,10 @@ export const MasterRoutes = [
   {
     path: "/add-UPI",
     element: <AddUPI />,
+  },
+  {
+    path: "/add-upi-gateway",
+    element: <AddUPIGateway />,
   },
   {
     path: "/add-whatsapp-deposit",
