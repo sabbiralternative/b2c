@@ -70,7 +70,7 @@ const AddUPIGateway = () => {
                       {...register("api_key", {
                         required: true,
                       })}
-                      type="number"
+                      type="text"
                       className="form-control"
                       id="basic-default-company"
                     />
