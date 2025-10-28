@@ -28,9 +28,9 @@ const AddUPIGateway = () => {
     setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
-      type: "upigateway",
+      type: "addPayment",
       ...values,
-      method: "upi",
+      method: "upigateway",
       token: generatedToken,
     };
     const res = await axios.post(API.payments, payload, {
