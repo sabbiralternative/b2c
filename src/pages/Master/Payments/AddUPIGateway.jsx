@@ -85,7 +85,7 @@ const AddUPIGateway = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("minimum_deposit", {
+                      {...register("min_amount", {
                         required: true,
                       })}
                       type="number"
@@ -104,7 +104,7 @@ const AddUPIGateway = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("maximum_deposit", {
+                      {...register("max_amount", {
                         required: true,
                       })}
                       type="number"
