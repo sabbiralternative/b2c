@@ -14,8 +14,14 @@ const MasterSidebar = () => {
   const [paymentPermission, setPaymentPermission] = useState(false);
 
   const navigate = useNavigate();
-  const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker, token } =
-    useContextState();
+  const {
+    setShowSidebar,
+    setShowSocialLink,
+    adminRole,
+    setAddChecker,
+    token,
+    setAddPaymentGateway,
+  } = useContextState();
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -296,11 +302,14 @@ const MasterSidebar = () => {
             </li>
             <li className="menu-item">
               <a
-                onClick={() => handleNavigate("add-upi-gateway")}
+                onClick={() => {
+                  setAddPaymentGateway(true);
+                  setShowSidebar(false);
+                }}
                 className="menu-link"
               >
                 <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="Add Payment Method">Add UPI Gateway</div>
+                <div data-i18n="Add Payment Method">Add Payment Gateway</div>
               </a>
             </li>
           </ul>

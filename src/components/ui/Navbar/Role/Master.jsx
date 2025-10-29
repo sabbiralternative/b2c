@@ -15,8 +15,14 @@ const Master = () => {
   const [reportPermission, setReportPermission] = useState(false);
   const [paymentPermission, setPaymentPermission] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
-  const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
-    useContextState();
+  const {
+    readOnly,
+    setShowSocialLink,
+    adminRole,
+    setAddChecker,
+    token,
+    setAddPaymentGateway,
+  } = useContextState();
   const { dwCount } = useGetDWCount();
 
   const [depositReport, setDepositReport] = useState(false);
@@ -304,11 +310,13 @@ const Master = () => {
                 </li>
                 <li className="menu-item">
                   <a
-                    onClick={() => handleNavigate("add-upi-gateway")}
+                    onClick={() => setAddPaymentGateway(true)}
                     className="menu-link"
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="Add Payment Method">Add UPI Gateway</div>
+                    <div data-i18n="Add Payment Method">
+                      Add Payment Gateway
+                    </div>
                   </a>
                 </li>
               </>

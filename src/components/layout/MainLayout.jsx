@@ -20,6 +20,7 @@ import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
 import { useVerifyUser } from "../../hooks/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import AddSuperBranch from "../modal/HyperMaster/Branch/AddSuperBranch";
+import AddPaymentGateway from "../../pages/Master/Payments/AddPaymentGateway";
 
 const MainLayout = () => {
   const queryClient = useQueryClient();
@@ -38,6 +39,8 @@ const MainLayout = () => {
     setShowAddSuperBranch,
     showSocialLink,
     setShowSocialLink,
+    addPaymentGateway,
+    setAddPaymentGateway,
 
     downLineId,
     payloadRole,
@@ -165,6 +168,9 @@ const MainLayout = () => {
             )}
 
             {showAddChecker && <AddChecker setShowAddChecker={setAddChecker} />}
+            {addPaymentGateway && (
+              <AddPaymentGateway setAddPaymentGateway={setAddPaymentGateway} />
+            )}
             {addWhiteLabel && (
               <AddWhiteLabel setShowAddWhiteLabel={setAddWhiteLabel} />
             )}
