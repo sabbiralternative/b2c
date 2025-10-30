@@ -15,14 +15,8 @@ const Master = () => {
   const [reportPermission, setReportPermission] = useState(false);
   const [paymentPermission, setPaymentPermission] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
-  const {
-    readOnly,
-    setShowSocialLink,
-    adminRole,
-    setAddChecker,
-    token,
-    setAddPaymentGateway,
-  } = useContextState();
+  const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
+    useContextState();
   const { dwCount } = useGetDWCount();
 
   const [depositReport, setDepositReport] = useState(false);
@@ -310,12 +304,34 @@ const Master = () => {
                 </li>
                 <li className="menu-item">
                   <a
-                    onClick={() => setAddPaymentGateway(true)}
+                    onClick={() => handleNavigate("add-payment-gateway")}
                     className="menu-link"
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="Add Payment Method">
                       Add Payment Gateway
+                    </div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-payment-gateway-2")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">
+                      Add Payment Gateway 2
+                    </div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-payment-gateway-3")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">
+                      Add Payment Gateway 3
                     </div>
                   </a>
                 </li>

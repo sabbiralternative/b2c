@@ -10,7 +10,7 @@ import handleRandomToken from "../../../utils/handleRandomToken";
 import axios from "axios";
 import { API } from "../../../api";
 
-const AddPaymentGateway = ({ setAddPaymentGateway }) => {
+const AddPaymentGateway2 = ({ setAddPaymentGateway }) => {
   const [disabled, setDisabled] = useState(false);
   const payload = {
     type: "viewPaymentMethods",
@@ -36,7 +36,7 @@ const AddPaymentGateway = ({ setAddPaymentGateway }) => {
     const payload = {
       type: "addPayment",
       ...values,
-      method: "upigateway",
+      method: "upigateway2",
       token: generatedToken,
     };
     const res = await axios.post(API.payments, payload, {
@@ -69,6 +69,7 @@ const AddPaymentGateway = ({ setAddPaymentGateway }) => {
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 breadcrumb-wrapper mb-4">
         <span className="text-muted fw-light">Home /</span> Add Payment Gateway
+        2
       </h4>
 
       <div className="row">
@@ -249,4 +250,4 @@ const AddPaymentGateway = ({ setAddPaymentGateway }) => {
   );
 };
 
-export default AddPaymentGateway;
+export default AddPaymentGateway2;

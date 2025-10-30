@@ -19,6 +19,9 @@ import RejectedDeposit from "../pages/Master/Deposit/RejectedDeposit";
 import UTRSearch from "../pages/Master/Deposit/UTRSearch";
 import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
 import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway";
+import AddPaymentGateway from "../pages/Master/Payments/AddPaymentGateway";
+import AddPaymentGateway2 from "../pages/Master/Payments/AddPaymentGateway2";
+import AddPaymentGateway3 from "../pages/Master/Payments/AddPaymentGateway3";
 import AddQR from "../pages/Master/Payments/AddQR";
 import AddUPI from "../pages/Master/Payments/AddUPI";
 import AddUSDT from "../pages/Master/Payments/AddUSDT";
@@ -129,6 +132,19 @@ export const MasterRoutes = [
     path: "/add-USDT-BEP20",
     element: <AddUSDTBEP20 />,
   },
+  {
+    path: "/add-payment-gateway",
+    element: <AddPaymentGateway />,
+  },
+  {
+    path: "/add-payment-gateway-2",
+    element: <AddPaymentGateway2 />,
+  },
+  {
+    path: "/add-payment-gateway-3",
+    element: <AddPaymentGateway3 />,
+  },
+
   {
     path: "/add-UPI",
     element: <AddUPI />,
