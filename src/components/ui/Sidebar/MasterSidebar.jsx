@@ -303,7 +303,7 @@ const MasterSidebar = () => {
                 <div data-i18n="Add Payment Method">Add Payment Gateway</div>
               </a>
             </li>
-            <li className="menu-item">
+            {/* <li className="menu-item">
               <a
                 onClick={() => handleNavigate("add-payment-gateway-2")}
                 className="menu-link"
@@ -311,8 +311,8 @@ const MasterSidebar = () => {
                 <i className="menu-icon tf-icons bx bxs-institution"></i>
                 <div data-i18n="Add Payment Method">Add Payment Gateway 2</div>
               </a>
-            </li>
-            <li className="menu-item">
+            </li> */}
+            {/* <li className="menu-item">
               <a
                 onClick={() => handleNavigate("add-payment-gateway-3")}
                 className="menu-link"
@@ -320,7 +320,7 @@ const MasterSidebar = () => {
                 <i className="menu-icon tf-icons bx bxs-institution"></i>
                 <div data-i18n="Add Payment Method">Add Payment Gateway 3</div>
               </a>
-            </li>
+            </li> */}
           </ul>
         </li>
       ) : null}

@@ -313,7 +313,7 @@ const Master = () => {
                     </div>
                   </a>
                 </li>
-                <li className="menu-item">
+                {/* <li className="menu-item">
                   <a
                     onClick={() => handleNavigate("add-payment-gateway-2")}
                     className="menu-link"
@@ -323,8 +323,8 @@ const Master = () => {
                       Add Payment Gateway 2
                     </div>
                   </a>
-                </li>
-                <li className="menu-item">
+                </li> */}
+                {/* <li className="menu-item">
                   <a
                     onClick={() => handleNavigate("add-payment-gateway-3")}
                     className="menu-link"
@@ -334,7 +334,7 @@ const Master = () => {
                       Add Payment Gateway 3
                     </div>
                   </a>
-                </li>
+                </li> */}
               </>
             )}
           </ul>
