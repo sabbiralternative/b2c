@@ -13,8 +13,8 @@ const PendingWithdraw = () => {
   const { adminRole } = useContextState();
   const [branchId, setBranchId] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  // const [amountFrom, setAmountFrom] = useState(null);
-  // const [amountTo, setAmountTo] = useState(null);
+  const [amountFrom, setAmountFrom] = useState(null);
+  const [amountTo, setAmountTo] = useState(null);
   const { data } = useGetIndex({
     type: "getBranches",
   });
@@ -23,8 +23,8 @@ const PendingWithdraw = () => {
     type: "viewWithdraw",
     status: "PENDING",
     pagination: true,
-    // amountFrom,
-    // amountTo,
+    amountFrom,
+    amountTo,
     page: activePage,
     fromDate: moment(startDate).format("YYYY-MM-DD"),
     toDate: moment(endDate).format("YYYY-MM-DD"),
@@ -47,8 +47,8 @@ const PendingWithdraw = () => {
         activePage={activePage}
         setActivePage={setActivePage}
         meta={meta}
-        // setAmountFrom={setAmountFrom}
-        // setAmountTo={setAmountTo}
+        setAmountFrom={setAmountFrom}
+        setAmountTo={setAmountTo}
         data={allWithdraw?.result}
         title="Pending Withdraw"
         isLoading={isLoading}

@@ -22,8 +22,8 @@ const Withdraw = ({
   meta,
   activePage,
   setActivePage,
-  // setAmountFrom,
-  // setAmountTo,
+  setAmountFrom,
+  setAmountTo,
   refetchAllWithdraw,
   isLoading,
   isSuccess,
@@ -123,11 +123,31 @@ const Withdraw = ({
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "20px 60px",
+              gap: "20px 30px",
               flexWrap: "wrap",
             }}
           >
             <h5 style={{ marginBottom: "0px" }}>{title}</h5>
+            {(adminRole === AdminRole.branch_staff ||
+              adminRole === AdminRole.master) &&
+              title === "Pending Withdraw" && (
+                <Fragment>
+                  <input
+                    style={{ width: "200px" }}
+                    onChange={(e) => setAmountFrom(e.target.value)}
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter From Amount"
+                  />
+                  <input
+                    style={{ width: "200px" }}
+                    onChange={(e) => setAmountTo(e.target.value)}
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter To Amount"
+                  />
+                </Fragment>
+              )}
 
             {(adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master) &&
