@@ -243,7 +243,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                           value="directDeposit"
                           style={{ height: "100%" }}
                           type="checkbox"
-                          {...register("directDeposit", { required: true })}
+                          {...register("permissions", { required: true })}
                           defaultChecked={directDeposit}
                         />
                         <p
@@ -267,7 +267,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                           value="depositWithSlip"
                           style={{ height: "100%" }}
                           type="checkbox"
-                          {...register("depositWithSlip", { required: true })}
+                          {...register("permissions", { required: true })}
                           defaultChecked={depositWithSlip}
                         />
                         <p
@@ -291,7 +291,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                           value="directWithdraw"
                           style={{ height: "100%" }}
                           type="checkbox"
-                          {...register("directWithdraw", { required: true })}
+                          {...register("permissions", { required: true })}
                           defaultChecked={directWithdraw}
                         />
                         <p
