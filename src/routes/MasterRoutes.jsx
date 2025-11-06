@@ -19,7 +19,7 @@ import RejectedDeposit from "../pages/Master/Deposit/RejectedDeposit";
 import UTRSearch from "../pages/Master/Deposit/UTRSearch";
 import AddBankAccount from "../pages/Master/Payments/AddBankAccount";
 import AddNewPaymentGateway from "../pages/Master/Payments/AddNewPaymentGateway";
-import AddPaymentGateway from "../pages/Master/Payments/AddPaymentGateway";
+import AddUPIPaymentGateway from "../pages/Master/Payments/AddUPIPaymentGateway";
 import AddPaymentGateway2 from "../pages/Master/Payments/AddPaymentGateway2";
 import AddPaymentGateway3 from "../pages/Master/Payments/AddPaymentGateway3";
 import AddQR from "../pages/Master/Payments/AddQR";
@@ -34,6 +34,7 @@ import WithdrawStatement from "../pages/Master/Statement/WithdrawStatement";
 import CompletedWithdraw from "../pages/Master/Withdraw/CompletedWithdraw";
 import PendingWithdraw from "../pages/Master/Withdraw/PendingWithdraw";
 import RejectedWithdraw from "../pages/Master/Withdraw/RejectedWithdraw";
+import AddTOITPaymentGateway from "../pages/Master/Payments/AddTOITPaymentGateway";
 
 export const MasterRoutes = [
   {
@@ -133,8 +134,12 @@ export const MasterRoutes = [
     element: <AddUSDTBEP20 />,
   },
   {
-    path: "/add-payment-gateway",
-    element: <AddPaymentGateway />,
+    path: "/add-upi-payment-gateway",
+    element: <AddUPIPaymentGateway />,
+  },
+  {
+    path: "/add-toit-payment-gateway",
+    element: <AddTOITPaymentGateway />,
   },
   {
     path: "/add-payment-gateway-2",

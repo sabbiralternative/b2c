@@ -304,12 +304,23 @@ const Master = () => {
                 </li>
                 <li className="menu-item">
                   <a
-                    onClick={() => handleNavigate("add-payment-gateway")}
+                    onClick={() => handleNavigate("add-upi-payment-gateway")}
                     className="menu-link"
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="Add Payment Method">
-                      Add Payment Gateway
+                      Add UPI Payment Gateway
+                    </div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("add-toit-payment-gateway")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Payment Method">
+                      Add TOIT Payment Gateway
                     </div>
                   </a>
                 </li>
