@@ -2,9 +2,9 @@ import useContextState from "../../../hooks/useContextState";
 import useGetAllBranch from "../../../hooks/HyperMaster/Branch/useGetAllBranch";
 import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API } from "../../../api";
-import handleRandomToken from "../../../utils/handleRandomToken";
+// import axios from "axios";
+// import { API } from "../../../api";
+// import handleRandomToken from "../../../utils/handleRandomToken";
 import Deposit from "../../../components/modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../../../components/modal/HyperMaster/Branch/Withdraw";
 import ChangePassword from "../../../components/modal/ChangePassword";
@@ -28,7 +28,7 @@ const ViewBranches = () => {
   const { branches, refetchAllBranch } = useGetAllBranch({
     branch_type: "branch",
   });
-  const { token, adminRole } = useContextState();
+  const { adminRole } = useContextState();
   const navigate = useNavigate();
 
   const handleNavigate = (username, link) => {
@@ -37,34 +37,34 @@ const ViewBranches = () => {
   };
 
   /* Handle login read only without password */
-  const handleLoginReadOnly = async (username) => {
-    const generatedToken = handleRandomToken();
-    const payload = {
-      username,
-      token: generatedToken,
-    };
-    const res = await axios.post(API.loginReadOnly, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = res.data;
-    if (data?.success) {
-      const baseUrl = window.location.origin;
-      const readOnlyLoginCredential = {
-        token: data?.result?.token,
-        site: data?.result?.site,
-        role: data?.result?.role,
-        loginname: data?.result?.loginname,
-        readOnly: data?.result?.readOnly,
-      };
-      const readOnlyLoginData = encodeURIComponent(
-        JSON.stringify(readOnlyLoginCredential)
-      );
-      const newTabUrl = `${baseUrl}?data=${readOnlyLoginData}`;
-      window.open(newTabUrl, "_blank");
-    }
-  };
+  // const handleLoginReadOnly = async (username) => {
+  //   const generatedToken = handleRandomToken();
+  //   const payload = {
+  //     username,
+  //     token: generatedToken,
+  //   };
+  //   const res = await axios.post(API.loginReadOnly, payload, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   });
+  //   const data = res.data;
+  //   if (data?.success) {
+  //     const baseUrl = window.location.origin;
+  //     const readOnlyLoginCredential = {
+  //       token: data?.result?.token,
+  //       site: data?.result?.site,
+  //       role: data?.result?.role,
+  //       loginname: data?.result?.loginname,
+  //       readOnly: data?.result?.readOnly,
+  //     };
+  //     const readOnlyLoginData = encodeURIComponent(
+  //       JSON.stringify(readOnlyLoginCredential)
+  //     );
+  //     const newTabUrl = `${baseUrl}?data=${readOnlyLoginData}`;
+  //     window.open(newTabUrl, "_blank");
+  //   }
+  // };
 
   return (
     <>
@@ -287,8 +287,7 @@ const ViewBranches = () => {
                         >
                           CR
                         </a>
-                        &nbsp;
-                        {adminRole === "hyper_master" && (
+                        {/* {adminRole === "hyper_master" && (
                           <a
                             style={{
                               color: "white",
@@ -301,7 +300,7 @@ const ViewBranches = () => {
                           >
                             L
                           </a>
-                        )}
+                        )} */}
                         &nbsp;
                         {adminRole === AdminRole.hyper_master ||
                         adminRole === AdminRole.admin_staff ? (
