@@ -155,7 +155,7 @@ const PendingDeposit = () => {
             <thead className="table-dark">
               <tr>
                 <th>User Id</th>
-                <th>Login Name</th>
+                {/* <th>Login Name</th> */}
                 {adminRole === AdminRole.admin_staff ||
                 adminRole === AdminRole.hyper_master ||
                 adminRole === AdminRole.super_master ||
@@ -205,7 +205,7 @@ const PendingDeposit = () => {
                       />
                       <strong>{item?.userId}</strong>
                     </td>
-                    <td>{item?.loginnameVisible && item?.loginname}</td>
+                    {/* <td>{item?.loginnameVisible && item?.loginname}</td> */}
                     {adminRole === AdminRole.admin_staff ||
                     adminRole === AdminRole.hyper_master ||
                     adminRole === AdminRole.super_master ||
@@ -300,6 +300,26 @@ const PendingDeposit = () => {
               }}
             >
               <Loader />
+            </div>
+          )}
+
+          {isSuccess && allUTRs?.result?.length === 0 && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "5px",
+                marginTop: "15px",
+              }}
+              className="card"
+            >
+              <h5
+                style={{ fontSize: "18px", padding: "0px" }}
+                className="card-header"
+              >
+                No pending deposit.
+              </h5>
             </div>
           )}
           {meta && (

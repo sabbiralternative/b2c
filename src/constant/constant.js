@@ -6,6 +6,11 @@ export const AdminRole = {
   branch_staff: "branch_staff",
   super_master: "super_master",
 };
+export const Status = {
+  PENDING: "PENDING",
+  APPROVED: "APPROVED",
+  REJECTED: "REJECTED",
+};
 
 export const clientColor = {
   0: "white",

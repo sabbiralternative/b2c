@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { FaRegCopy } from "react-icons/fa";
 import { DatePicker, Pagination } from "rsuite";
 import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
-import { AdminRole, clientColor } from "../../../constant/constant";
+import { AdminRole, clientColor, Status } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import Slip from "../../modal/Master/Deposit/Slip";
@@ -85,7 +85,7 @@ const Withdraw = ({
       );
     }
   };
-
+  const status = data?.[0]?.status;
   return (
     <div className="card">
       {showImage && <Slip setShowImage={setShowImage} image={image} />}
@@ -130,7 +130,7 @@ const Withdraw = ({
             <h5 style={{ marginBottom: "0px" }}>{title}</h5>
             {(adminRole === AdminRole.branch_staff ||
               adminRole === AdminRole.master) &&
-              title === "Pending Withdraw" && (
+              status === Status.PENDING && (
                 <Fragment>
                   <input
                     style={{ width: "200px" }}
@@ -151,7 +151,7 @@ const Withdraw = ({
 
             {(adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master) &&
-              title === "Pending Withdraw" && (
+              status === Status.PENDING && (
                 <div
                   style={{
                     width: "100%",
@@ -183,7 +183,7 @@ const Withdraw = ({
           </div>
 
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-            {title !== "Pending Withdraw" && (
+            {status !== Status.PENDING && (
               <Fragment>
                 <div style={{ width: "100%", maxWidth: "250px" }}>
                   <label htmlFor="flatpickr-range" className="form-label">
@@ -216,7 +216,7 @@ const Withdraw = ({
 
             {(adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master) &&
-              title !== "Pending Withdraw" && (
+              status !== Status.PENDING && (
                 <div
                   style={{
                     width: "100%",
@@ -245,7 +245,7 @@ const Withdraw = ({
                 </div>
               )}
           </div>
-          {title !== "Pending Withdraw" && (
+          {status !== Status.PENDING && (
             <DefaultDateButton
               setEndDate={setEndDate}
               setStartDate={setStartDate}
@@ -301,8 +301,7 @@ const Withdraw = ({
               ) : null}
               {/* <th>Username</th> */}
               <th>Amount</th>
-              {(title === "Completed Withdraw" ||
-                title === "Rejected Withdraw") && (
+              {(status === Status.APPROVED || status === Status.REJECTED) && (
                 <Fragment>
                   <th>Remark</th> <th>Slip</th>
                 </Fragment>
@@ -316,7 +315,12 @@ const Withdraw = ({
               <th>Status</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
-              {title === "Pending Withdraw" &&
+              {(status === Status.APPROVED || status === Status.REJECTED) && (
+                <th>
+                  {status === Status.APPROVED ? "Approved By" : "Rejected By"}
+                </th>
+              )}
+              {status === Status.PENDING &&
               (adminRole === "master" || adminRole === "branch_staff") ? (
                 <th>Actions</th>
               ) : null}
@@ -367,8 +371,8 @@ const Withdraw = ({
                       {handleSplitUserName(item?.loginname)}
                     </td> */}
                     <td>{item?.amount}</td>
-                    {(title === "Completed Withdraw" ||
-                      title === "Rejected Withdraw") && (
+                    {(status === Status.APPROVED ||
+                      status === Status.REJECTED) && (
                       <Fragment>
                         <td>{item.remark}</td>
                         <td>
@@ -449,9 +453,21 @@ const Withdraw = ({
                     <td>
                       <span
                         className={`badge me-1
-                      ${item?.status === "PENDING" ? "bg-label-warning" : ""}
-                      ${item?.status === "APPROVED" ? "bg-label-success" : ""}
-                      ${item?.status === "REJECTED" ? "bg-label-danger" : ""}
+                      ${
+                        item?.status === Status.PENDING
+                          ? "bg-label-warning"
+                          : ""
+                      }
+                      ${
+                        item?.status === Status.APPROVED
+                          ? "bg-label-success"
+                          : ""
+                      }
+                      ${
+                        item?.status === Status.REJECTED
+                          ? "bg-label-danger"
+                          : ""
+                      }
                       `}
                       >
                         {item?.status}
@@ -460,7 +476,11 @@ const Withdraw = ({
 
                     <td>{item?.date_added}</td>
                     {time && <td>{item?.date_modified}</td>}
-                    {item?.status === "PENDING" &&
+                    {(item?.status === Status.APPROVED ||
+                      item?.status === Status.REJECTED) && (
+                      <td>{item?.modify_by}</td>
+                    )}
+                    {item?.status === Status.PENDING &&
                     (adminRole === "master" || adminRole === "branch_staff") ? (
                       <>
                         <td>
@@ -544,6 +564,32 @@ const Withdraw = ({
             }}
           >
             <Loader />
+          </div>
+        )}
+
+        {isSuccess && data?.length === 0 && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "5px",
+              marginTop: "15px",
+            }}
+            className="card"
+          >
+            <h5
+              style={{ fontSize: "18px", padding: "0px" }}
+              className="card-header"
+            >
+              No{" "}
+              {title === "Pending Withdraw"
+                ? "pending"
+                : title === "Completed Withdraw"
+                ? "completed"
+                : "rejected"}{" "}
+              withdraw.
+            </h5>
           </div>
         )}
         {meta && (

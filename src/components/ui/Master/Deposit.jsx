@@ -7,7 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { DatePicker, Pagination } from "rsuite";
-import { AdminRole, clientColor } from "../../../constant/constant";
+import { AdminRole, clientColor, Status } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import EditDepositFromBank from "../../modal/Master/Deposit/EditDepositFromBank";
@@ -50,6 +50,8 @@ const Deposit = ({
       setMessage("");
     }
   }, [message]);
+
+  const status = data?.[0]?.status;
 
   return (
     <div className="card">
@@ -158,7 +160,7 @@ const Deposit = ({
           <thead className="table-dark">
             <tr>
               <th>User Id</th>
-              <th>Login Name</th>
+              {/* <th>Login Name</th> */}
               {adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master ||
               adminRole === AdminRole.super_master ? (
@@ -173,13 +175,18 @@ const Deposit = ({
               <th>Status</th>
               {(adminRole === AdminRole.master ||
                 adminRole === AdminRole.admin_staff) &&
-                title === "Completed Deposit" && <th>Deposited From</th>}
+                status === Status.APPROVED && <th>Deposited From</th>}
 
               <th>Remark</th>
               <th>Site</th>
               <th>Request Time</th>
               {time && <th>{time}</th>}
-              {title === "Pending Deposit" && adminRole === "master" && (
+              {(status === Status.APPROVED || status === Status.REJECTED) && (
+                <th>
+                  {status === Status.APPROVED ? "Approved By" : "Rejected By"}
+                </th>
+              )}
+              {status === Status.PENDING && adminRole === "master" && (
                 <th>Actions</th>
               )}
             </tr>
@@ -210,7 +217,7 @@ const Deposit = ({
                     />
                     <strong> {item?.userId}</strong>
                   </td>
-                  <td>{item?.loginnameVisible && item?.loginname}</td>
+                  {/* <td>{item?.loginnameVisible && item?.loginname}</td> */}
                   {adminRole === AdminRole.admin_staff ||
                   adminRole === AdminRole.hyper_master ||
                   adminRole === AdminRole.super_master ? (
@@ -259,9 +266,21 @@ const Deposit = ({
                   <td>
                     <span
                       className={`badge me-1
-                      ${item?.status === "PENDING" ? "bg-label-warning" : ""}
-                      ${item?.status === "APPROVED" ? "bg-label-success" : ""}
-                      ${item?.status === "REJECTED" ? "bg-label-danger" : ""}
+                      ${
+                        item?.status === Status.PENDING
+                          ? "bg-label-warning"
+                          : ""
+                      }
+                      ${
+                        item?.status === Status.APPROVED
+                          ? "bg-label-success"
+                          : ""
+                      }
+                      ${
+                        item?.status === Status.REJECTED
+                          ? "bg-label-danger"
+                          : ""
+                      }
                       `}
                     >
                       {item?.status}
@@ -269,7 +288,7 @@ const Deposit = ({
                   </td>
                   {(adminRole === AdminRole.master ||
                     adminRole === AdminRole.admin_staff) &&
-                    title === "Completed Deposit" && (
+                    item?.status === Status.APPROVED && (
                       <td>
                         {item?.depositedFrom ? (
                           <span>{item?.depositedFrom}</span>
@@ -288,23 +307,28 @@ const Deposit = ({
                   <td>{item?.site}</td>
                   <td>{item?.date_added}</td>
                   {time && <td>{item?.date_modified}</td>}
-                  {item?.status === "PENDING" && adminRole === "master" && (
-                    <td>
-                      <a
-                        style={{
-                          color: "white",
-                          cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                        }}
-                        onClick={() => {
-                          !readOnly && setDownLineId(item?.id);
-                          !readOnly && setEditPendingDeposit(true);
-                        }}
-                        className="btn btn-icon btn-sm btn-success"
-                      >
-                        <i className="bx bxs-edit"></i>
-                      </a>
-                    </td>
+                  {(item?.status === Status.APPROVED ||
+                    item?.status === Status.REJECTED) && (
+                    <td>{item?.modify_by}</td>
                   )}
+                  {item?.status === Status.PENDING &&
+                    adminRole === "master" && (
+                      <td>
+                        <a
+                          style={{
+                            color: "white",
+                            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                          }}
+                          onClick={() => {
+                            !readOnly && setDownLineId(item?.id);
+                            !readOnly && setEditPendingDeposit(true);
+                          }}
+                          className="btn btn-icon btn-sm btn-success"
+                        >
+                          <i className="bx bxs-edit"></i>
+                        </a>
+                      </td>
+                    )}
                 </tr>
               );
             })}
@@ -321,6 +345,27 @@ const Deposit = ({
             }}
           >
             <Loader />
+          </div>
+        )}
+
+        {isSuccess && data?.length === 0 && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "5px",
+              marginTop: "15px",
+            }}
+            className="card"
+          >
+            <h5
+              style={{ fontSize: "18px", padding: "0px" }}
+              className="card-header"
+            >
+              No {title === "Completed Deposit" ? "completed" : "rejected"}{" "}
+              deposit.
+            </h5>
           </div>
         )}
         {meta && (
