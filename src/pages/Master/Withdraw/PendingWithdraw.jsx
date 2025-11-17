@@ -49,6 +49,8 @@ const PendingWithdraw = () => {
         meta={meta}
         setAmountFrom={setAmountFrom}
         setAmountTo={setAmountTo}
+        amountFrom={amountFrom}
+        amountTo={amountTo}
         data={allWithdraw?.result}
         title="Pending Withdraw"
         isLoading={isLoading}

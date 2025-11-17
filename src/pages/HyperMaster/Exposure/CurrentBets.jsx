@@ -4,15 +4,17 @@ import useCurrentBets from "../../../hooks/useCurrentBets";
 import { useGetIndex } from "../../../hooks";
 import { AdminRole } from "../../../constant/constant";
 import { useNavigate } from "react-router-dom";
+import { Pagination } from "rsuite";
 
 const CurrentBets = () => {
   const navigate = useNavigate();
   const { adminRole, setClientId, setRefetchViewClient } = useContextState();
   const [branchId, setBranchId] = useState(0);
+  const [activePage, setActivePage] = useState(1);
   const { data: branches } = useGetIndex({
     type: "getBranches",
   });
-  const payload = {};
+  const payload = { pagination: true, page: activePage };
   if (
     adminRole === AdminRole.hyper_master ||
     adminRole === AdminRole.admin_staff
@@ -22,34 +24,70 @@ const CurrentBets = () => {
 
   const { currentBets } = useCurrentBets(payload);
 
+  const meta = currentBets?.pagination;
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
-        <div
-          style={{ display: "flex", alignItems: "center", columnGap: "15px" }}
-        >
-          <h5 className="card-header">Current Bets</h5>
-          {adminRole === AdminRole.admin_staff && (
-            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-              <div>Branch:</div>
-              <select
-                style={{ width: "200px" }}
-                defaultValue="0"
-                onChange={(e) => setBranchId(e.target.value)}
-                className="form-control"
-              >
-                <option disabled value="">
-                  Branch
-                </option>
-                <option value="0">All Branch</option>
-                {branches?.result?.map((site) => (
-                  <option key={site?.branch_id} value={site?.branch_id}>
-                    {site?.branch_name}
-                  </option>
-                ))}
-              </select>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              columnGap: "15px",
+              justifyContent: "space-between",
+            }}
+            className="card-header"
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                columnGap: "15px",
+                justifyContent: "space-between",
+              }}
+            >
+              <h5 style={{ marginBottom: "0px" }}>Current Bets</h5>
+              {adminRole === AdminRole.admin_staff && (
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                >
+                  <div>Branch:</div>
+                  <select
+                    style={{ width: "200px" }}
+                    defaultValue="0"
+                    onChange={(e) => setBranchId(e.target.value)}
+                    className="form-control"
+                  >
+                    <option disabled value="">
+                      Branch
+                    </option>
+                    <option value="0">All Branch</option>
+                    {branches?.result?.map((site) => (
+                      <option key={site?.branch_id} value={site?.branch_id}>
+                        {site?.branch_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
-          )}
+
+            {meta && (
+              <Pagination
+                prev
+                next
+                size="md"
+                total={meta?.totalRecords}
+                limit={meta?.recordsPerPage}
+                activePage={activePage}
+                onChangePage={setActivePage}
+                maxButtons={5}
+                ellipsis
+                boundaryLinks
+              />
+            )}
+          </div>
         </div>
 
         <div className="row">
@@ -70,7 +108,7 @@ const CurrentBets = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentBets?.map((betData, i) => {
+                  {currentBets?.result?.map((betData, i) => {
                     return (
                       <tr
                         key={i}
@@ -111,6 +149,30 @@ const CurrentBets = () => {
                   })}
                 </tbody>
               </table>
+
+              {meta && (
+                <div
+                  style={{
+                    marginTop: "20px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "end",
+                  }}
+                >
+                  <Pagination
+                    prev
+                    next
+                    size="md"
+                    total={meta?.totalRecords}
+                    limit={meta?.recordsPerPage}
+                    activePage={activePage}
+                    onChangePage={setActivePage}
+                    maxButtons={5}
+                    ellipsis
+                    boundaryLinks
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -100,6 +100,7 @@ const PendingDeposit = () => {
               type="text"
               className="form-control"
               placeholder="Enter From Amount"
+              value={amountFrom}
             />
             <input
               style={{ width: "200px" }}
@@ -107,6 +108,7 @@ const PendingDeposit = () => {
               type="text"
               className="form-control"
               placeholder="Enter To Amount"
+              value={amountTo}
             />
 
             {(adminRole === AdminRole.admin_staff ||

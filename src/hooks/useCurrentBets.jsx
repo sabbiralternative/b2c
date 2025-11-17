@@ -25,7 +25,7 @@ const useCurrentBets = (payload) => {
       const data = res.data;
 
       if (data?.success) {
-        return data?.result;
+        return data;
       }
     },
     refetchInterval: 1000 * 15,

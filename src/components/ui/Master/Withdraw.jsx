@@ -24,6 +24,8 @@ const Withdraw = ({
   setActivePage,
   setAmountFrom,
   setAmountTo,
+  amountFrom,
+  amountTo,
   refetchAllWithdraw,
   isLoading,
   isSuccess,
@@ -85,7 +87,9 @@ const Withdraw = ({
       );
     }
   };
+
   const status = data?.[0]?.status;
+
   return (
     <div className="card">
       {showImage && <Slip setShowImage={setShowImage} image={image} />}
@@ -118,7 +122,7 @@ const Withdraw = ({
           flexWrap: "wrap",
         }}
       >
-        <div className="col-md-8 col-12 mb-4 ">
+        <div className="col-md-10 col-12 mb-4 ">
           <div
             style={{
               display: "flex",
@@ -130,7 +134,7 @@ const Withdraw = ({
             <h5 style={{ marginBottom: "0px" }}>{title}</h5>
             {(adminRole === AdminRole.branch_staff ||
               adminRole === AdminRole.master) &&
-              status === Status.PENDING && (
+              title === "Pending Withdraw" && (
                 <Fragment>
                   <input
                     style={{ width: "200px" }}
@@ -138,6 +142,7 @@ const Withdraw = ({
                     type="text"
                     className="form-control"
                     placeholder="Enter From Amount"
+                    value={amountFrom}
                   />
                   <input
                     style={{ width: "200px" }}
@@ -145,45 +150,74 @@ const Withdraw = ({
                     type="text"
                     className="form-control"
                     placeholder="Enter To Amount"
+                    value={amountTo}
                   />
                 </Fragment>
               )}
 
             {(adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master) &&
-              status === Status.PENDING && (
-                <div
-                  style={{
-                    width: "100%",
-                    maxWidth: "250px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px",
-                  }}
-                >
-                  <div style={{ fontSize: "15px" }}>Branch:</div>
-                  <select
-                    style={{ width: "200px" }}
-                    defaultValue="0"
-                    onChange={(e) => setBranchId(e.target.value)}
-                    className="form-control"
+              title === "Pending Withdraw" && (
+                <Fragment>
+                  <div
+                    style={{
+                      width: "100%",
+                      maxWidth: "260px",
+                      display: "flex",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      gap: "5px",
+                    }}
                   >
-                    <option disabled value="">
-                      Branch
-                    </option>
-                    <option value="0">All Branch</option>
-                    {branches?.result?.map((site) => (
-                      <option key={site?.branch_id} value={site?.branch_id}>
-                        {site?.branch_name}
+                    <div style={{ fontSize: "15px" }}>Branch:</div>
+                    <select
+                      style={{ width: "200px" }}
+                      defaultValue="0"
+                      onChange={(e) => setBranchId(e.target.value)}
+                      className="form-control"
+                    >
+                      <option disabled value="">
+                        Branch
                       </option>
-                    ))}
-                  </select>
-                </div>
+                      <option value="0">All Branch</option>
+                      {branches?.result?.map((site) => (
+                        <option key={site?.branch_id} value={site?.branch_id}>
+                          {site?.branch_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "15px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <input
+                      style={{ width: "200px" }}
+                      onChange={(e) => setAmountFrom(e.target.value)}
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter From Amount"
+                      value={amountFrom}
+                    />
+                    <input
+                      style={{ width: "200px" }}
+                      onChange={(e) => setAmountTo(e.target.value)}
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter To Amount"
+                      value={amountTo}
+                    />
+                  </div>
+                </Fragment>
               )}
           </div>
 
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-            {status !== Status.PENDING && (
+            {title !== "Pending Withdraw" && (
               <Fragment>
                 <div style={{ width: "100%", maxWidth: "250px" }}>
                   <label htmlFor="flatpickr-range" className="form-label">
@@ -216,7 +250,7 @@ const Withdraw = ({
 
             {(adminRole === AdminRole.admin_staff ||
               adminRole === AdminRole.hyper_master) &&
-              status !== Status.PENDING && (
+              title !== "Pending Withdraw" && (
                 <div
                   style={{
                     width: "100%",
@@ -245,7 +279,7 @@ const Withdraw = ({
                 </div>
               )}
           </div>
-          {status !== Status.PENDING && (
+          {title !== "Pending Withdraw" && (
             <DefaultDateButton
               setEndDate={setEndDate}
               setStartDate={setStartDate}
@@ -256,22 +290,6 @@ const Withdraw = ({
           )}
         </div>
 
-        {/* <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-          <input
-            style={{ width: "200px" }}
-            onChange={(e) => setAmountFrom(e.target.value)}
-            type="text"
-            className="form-control"
-            placeholder="Enter From Amount"
-          />
-          <input
-            style={{ width: "200px" }}
-            onChange={(e) => setAmountTo(e.target.value)}
-            type="text"
-            className="form-control"
-            placeholder="Enter To Amount"
-          />
-        </div> */}
         {meta && (
           <Pagination
             prev
