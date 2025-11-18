@@ -116,7 +116,10 @@ const Deposit = ({
                 <select
                   style={{ width: "200px" }}
                   defaultValue="0"
-                  onChange={(e) => setBranchId(e.target.value)}
+                  onChange={(e) => {
+                    setBranchId(e.target.value);
+                    setActivePage(1);
+                  }}
                   className="form-control"
                 >
                   <option disabled value="">

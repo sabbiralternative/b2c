@@ -93,7 +93,34 @@ const PendingDeposit = () => {
               flexWrap: "wrap",
             }}
           >
-            <h5>Pending Deposit</h5>
+            <h5 style={{ marginBottom: "0px" }}>Pending Deposit</h5>
+            {(adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master) && (
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <div>Branch:</div>
+                <select
+                  style={{ width: "200px" }}
+                  defaultValue="0"
+                  onChange={(e) => {
+                    setBranchId(e.target.value);
+                    setActivePage(1);
+                  }}
+                  className="form-control"
+                >
+                  <option disabled value="">
+                    Branch
+                  </option>
+                  <option value="0">All Branch</option>
+                  {data?.result?.map((site) => (
+                    <option key={site?.branch_id} value={site?.branch_id}>
+                      {site?.branch_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             <input
               style={{ width: "200px" }}
               onChange={(e) => setAmountFrom(e.target.value)}
@@ -110,32 +137,8 @@ const PendingDeposit = () => {
               placeholder="Enter To Amount"
               value={amountTo}
             />
-
-            {(adminRole === AdminRole.admin_staff ||
-              adminRole === AdminRole.hyper_master) && (
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "5px" }}
-              >
-                <div>Branch:</div>
-                <select
-                  style={{ width: "200px" }}
-                  defaultValue="0"
-                  onChange={(e) => setBranchId(e.target.value)}
-                  className="form-control"
-                >
-                  <option disabled value="">
-                    Branch
-                  </option>
-                  <option value="0">All Branch</option>
-                  {data?.result?.map((site) => (
-                    <option key={site?.branch_id} value={site?.branch_id}>
-                      {site?.branch_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
           </div>
+
           {meta && (
             <Pagination
               prev

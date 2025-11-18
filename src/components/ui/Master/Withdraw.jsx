@@ -122,12 +122,12 @@ const Withdraw = ({
           flexWrap: "wrap",
         }}
       >
-        <div className="col-md-10 col-12 mb-4 ">
+        <div className="col-md-8 col-12 mb-4 ">
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "20px 30px",
+              gap: "20px",
               flexWrap: "wrap",
             }}
           >
@@ -173,7 +173,10 @@ const Withdraw = ({
                     <select
                       style={{ width: "200px" }}
                       defaultValue="0"
-                      onChange={(e) => setBranchId(e.target.value)}
+                      onChange={(e) => {
+                        setBranchId(e.target.value);
+                        setActivePage(1);
+                      }}
                       className="form-control"
                     >
                       <option disabled value="">
@@ -263,7 +266,10 @@ const Withdraw = ({
                   <select
                     style={{ width: "200px" }}
                     defaultValue="0"
-                    onChange={(e) => setBranchId(e.target.value)}
+                    onChange={(e) => {
+                      setBranchId(e.target.value);
+                      setActivePage(1);
+                    }}
                     className="form-control"
                   >
                     <option disabled value="">
