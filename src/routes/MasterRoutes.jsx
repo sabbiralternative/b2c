@@ -35,6 +35,7 @@ import CompletedWithdraw from "../pages/Master/Withdraw/CompletedWithdraw";
 import PendingWithdraw from "../pages/Master/Withdraw/PendingWithdraw";
 import RejectedWithdraw from "../pages/Master/Withdraw/RejectedWithdraw";
 import AddTOITPaymentGateway from "../pages/Master/Payments/AddTOITPaymentGateway";
+import AddI100PaymentGateway from "../pages/Master/Payments/AddI100PaymentGateway";
 
 export const MasterRoutes = [
   {
@@ -140,6 +141,10 @@ export const MasterRoutes = [
   {
     path: "/add-toit-payment-gateway",
     element: <AddTOITPaymentGateway />,
+  },
+  {
+    path: "/add-i100-payment-gateway",
+    element: <AddI100PaymentGateway />,
   },
   {
     path: "/add-payment-gateway-2",

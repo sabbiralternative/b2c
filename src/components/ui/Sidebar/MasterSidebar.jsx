@@ -316,6 +316,17 @@ const MasterSidebar = () => {
                 </div>
               </a>
             </li>
+            <li className="menu-item">
+              <a
+                onClick={() => handleNavigate("add-i100-payment-gateway")}
+                className="menu-link"
+              >
+                <i className="menu-icon tf-icons bx bxs-institution"></i>
+                <div data-i18n="Add Payment Method">
+                  Add i100 Payment Gateway
+                </div>
+              </a>
+            </li>
             {/* <li className="menu-item">
               <a
                 onClick={() => handleNavigate("add-payment-gateway-2")}
