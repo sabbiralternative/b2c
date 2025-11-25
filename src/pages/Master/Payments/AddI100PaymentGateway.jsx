@@ -38,6 +38,7 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
       method: "i100gateway",
       token: generatedToken,
     };
+
     const res = await axios.post(API.payments, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -89,11 +90,11 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-company"
                   >
-                    API Key
+                    Secret Key
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("api_key", {
+                      {...register("secret_key", {
                         required: true,
                       })}
                       type="text"
@@ -178,6 +179,43 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
                         {errors.transaction_code.message}
                       </p>
                     )}
+                  </div>
+                </div>
+
+                <div className="row mb-3">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    Vendor
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      {...register("vendor", {
+                        required: true,
+                      })}
+                      type="text"
+                      className="form-control"
+                      id="basic-default-company"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-company"
+                  >
+                    X-key
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      {...register("x_key", {
+                        required: true,
+                      })}
+                      type="text"
+                      className="form-control"
+                      id="basic-default-company"
+                    />
                   </div>
                 </div>
 
