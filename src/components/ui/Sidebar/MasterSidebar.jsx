@@ -12,6 +12,7 @@ const MasterSidebar = () => {
   const [clientPermission, setClientPermission] = useState(false);
   const [reportPermission, setReportPermission] = useState(false);
   const [paymentPermission, setPaymentPermission] = useState(false);
+  const [bonusPermission, setBonusPermission] = useState(false);
 
   const navigate = useNavigate();
   const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker, token } =
@@ -33,11 +34,13 @@ const MasterSidebar = () => {
         const clientPermission = permissions?.includes("client") ?? false;
         const reportPermission = permissions?.includes("report") ?? false;
         const paymentPermission = permissions?.includes("payment") ?? false;
+        const bonusPermission = permissions?.includes("bonus") ?? false;
         setDepositPermission(depositPermission);
         setWithdrawPermission(withdrawPermission);
         setClientPermission(clientPermission);
         setReportPermission(reportPermission);
         setPaymentPermission(paymentPermission);
+        setBonusPermission(bonusPermission);
       } else {
         setDepositPermission(true);
         setWithdrawPermission(true);
@@ -812,6 +815,61 @@ const MasterSidebar = () => {
                   <div data-i18n="Social Links">Add Notifications</div>
                 </Link>
               </li>
+              {adminRole === AdminRole.admin_staff && bonusPermission && (
+                <>
+                  <li className="menu-item">
+                    <Link
+                      to="/view-bonus"
+                      onClick={() => setShowSidebar(false)}
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="View Banners">View Bonus</div>
+                    </Link>
+                  </li>
+
+                  <li className="menu-item">
+                    <Link
+                      onClick={() => setShowSidebar(false)}
+                      to="/add-bonus"
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="Add Banner">Add Bonus</div>
+                    </Link>
+                  </li>
+                  <li className="menu-item">
+                    <Link
+                      onClick={() => setShowSidebar(false)}
+                      to="/pending-bonus"
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                    </Link>
+                  </li>
+                  <li className="menu-item">
+                    <Link
+                      onClick={() => setShowSidebar(false)}
+                      to="/completed-bonus"
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="Pending Withdraw">Completed Bonus</div>
+                    </Link>
+                  </li>
+                  <li className="menu-item">
+                    <Link
+                      onClick={() => setShowSidebar(false)}
+                      to="/rejected-bonus"
+                      className="menu-link"
+                    >
+                      <i className="menu-icon tf-icons bx bxs-institution"></i>
+                      <div data-i18n="Pending Withdraw">Rejected Bonus</div>
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </li>
         )}

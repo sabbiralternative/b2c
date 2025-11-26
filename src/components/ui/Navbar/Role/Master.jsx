@@ -10,11 +10,14 @@ const Master = () => {
   const [navList, setNavList] = useState(null);
 
   const [depositPermission, setDepositPermission] = useState(false);
+  const [bonusPermission, setBonusPermission] = useState(false);
+
   const [withdrawPermission, setWithdrawPermission] = useState(false);
   const [clientPermission, setClientPermission] = useState(false);
   const [reportPermission, setReportPermission] = useState(false);
   const [paymentPermission, setPaymentPermission] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
+  const [showBonus, setShowBonus] = useState(false);
   const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
   const { dwCount } = useGetDWCount();
@@ -72,12 +75,14 @@ const Master = () => {
         const clientPermission = permissions?.includes("client") ?? false;
         const reportPermission = permissions?.includes("report") ?? false;
         const paymentPermission = permissions?.includes("payment") ?? false;
+        const bonusPermission = permissions?.includes("bonus") ?? false;
 
         setDepositPermission(depositPermission);
         setWithdrawPermission(withdrawPermission);
         setClientPermission(clientPermission);
         setReportPermission(reportPermission);
         setPaymentPermission(paymentPermission);
+        setBonusPermission(bonusPermission);
       } else {
         setDepositPermission(true);
         setWithdrawPermission(true);
@@ -1003,6 +1008,81 @@ const Master = () => {
                   </li>
                 </ul>
               </a>
+              {adminRole === AdminRole.admin_staff && bonusPermission && (
+                <a
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "start",
+                  }}
+                  onMouseEnter={() => setShowBonus(true)}
+                  onMouseLeave={() => setShowBonus(false)}
+                  className="menu-link menu-toggle"
+                >
+                  <i className="menu-icon tf-icons bx bx-layout"></i>
+                  <div data-i18n="Settings">Bonus</div>
+                  <ul
+                    className="menu-sub"
+                    style={{
+                      display: showBonus ? "block" : "none",
+                      right: "100%",
+                      top: "0px",
+                      left: "-100%",
+                      zIndex: "99999",
+                      background: "#273143",
+                    }}
+                  >
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("view-bonus")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Pending Withdraw">View Bonus</div>
+                      </a>
+                    </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("add-bonus")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Pending Withdraw">Add Bonus</div>
+                      </a>
+                    </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("pending-bonus")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                      </a>
+                    </li>
+
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("completed-bonus")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Completed Withdraw">
+                          Completed Bonus
+                        </div>
+                      </a>
+                    </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("rejected-bonus")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
+                      </a>
+                    </li>
+                  </ul>
+                </a>
+              )}
             </ul>
           </li>
         )}
