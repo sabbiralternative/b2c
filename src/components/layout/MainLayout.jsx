@@ -88,7 +88,7 @@ const MainLayout = () => {
           const info = "devtool opened!; type =" + type;
           if (info) {
             handleLogOut();
-            navigate("/login");
+            window.location.href = "https://www.google.com/";
           }
         },
       });

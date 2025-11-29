@@ -6,6 +6,7 @@ import { AdminRole } from "../../../constant/constant";
 
 const MasterSidebar = () => {
   const [sidebarItem, setSidebarItem] = useState(null);
+  const [permission, setPermission] = useState([]);
 
   const [depositPermission, setDepositPermission] = useState(false);
   const [withdrawPermission, setWithdrawPermission] = useState(false);
@@ -28,7 +29,7 @@ const MasterSidebar = () => {
       if (adminRole === "branch_staff") {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
-
+        setPermission(permissions);
         const depositPermission = permissions?.includes("deposit") ?? false;
         const withdrawPermission = permissions?.includes("withdraw") ?? false;
         const clientPermission = permissions?.includes("client") ?? false;
@@ -42,6 +43,14 @@ const MasterSidebar = () => {
         setPaymentPermission(paymentPermission);
         setBonusPermission(bonusPermission);
       } else {
+        setPermission([
+          "deposit",
+          "withdraw",
+          "client",
+          "report",
+          "payment",
+          "bonus",
+        ]);
         setDepositPermission(true);
         setWithdrawPermission(true);
         setClientPermission(true);
