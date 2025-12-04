@@ -162,6 +162,7 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
+          refetchAllBranch={refetchClients}
         />
       )}
       {showChangeStatus && (

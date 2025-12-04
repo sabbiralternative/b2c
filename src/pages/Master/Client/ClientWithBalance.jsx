@@ -125,6 +125,7 @@ const ClientWithBalance = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
+          refetchAllBranch={refetchClient}
         />
       )}
       {showChangeStatus && (

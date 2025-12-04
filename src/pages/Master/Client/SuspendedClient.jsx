@@ -119,6 +119,7 @@ const SuspendedClient = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
+          refetchAllBranch={refetchClient}
         />
       )}
       {showChangeStatus && (

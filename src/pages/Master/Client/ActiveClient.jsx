@@ -123,6 +123,7 @@ const ActiveClient = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
+          refetchAllBranch={refetchClient}
         />
       )}
       {showChangeStatus && (

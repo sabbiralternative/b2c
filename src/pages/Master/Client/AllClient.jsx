@@ -122,6 +122,7 @@ const AllClient = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
+          refetchAllBranch={refetchClient}
         />
       )}
       {showChangeStatus && (
@@ -131,6 +132,7 @@ const AllClient = () => {
           registrationStatus={null}
           role={payloadRole}
           setShowChangeStatus={setShowChangeStatus}
+          refetchAllBranch={refetchClient}
         />
       )}
       {showCreditRef && (
