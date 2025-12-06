@@ -35,13 +35,37 @@ const Login = () => {
 
       // token: generatedToken,
     };
-    // /* Encrypted the post data */
-    // const encryptedData = handleEncryptData(loginData);
+
+    const secret = "USER_SESSION_SECRET"; // must come from server, not hardcoded
+    // Convert payload to JSON string
+    const json = JSON.stringify(loginData);
+
+    // Browser-safe HMAC function
+    async function hmacSHA256(message, key) {
+      const enc = new TextEncoder();
+      const keyData = await crypto.subtle.importKey(
+        "raw",
+        enc.encode(key),
+        { name: "HMAC", hash: "SHA-256" },
+        false,
+        ["sign"]
+      );
+      const signature = await crypto.subtle.sign(
+        "HMAC",
+        keyData,
+        enc.encode(message)
+      );
+      return btoa(String.fromCharCode(...new Uint8Array(signature)));
+    }
+
+    const hmac = await hmacSHA256(json, secret);
 
     fetch(API.login, {
       method: "POST",
+
       headers: {
         "content-type": "application/json",
+        secret: hmac,
       },
       body: JSON.stringify(loginData),
     })
