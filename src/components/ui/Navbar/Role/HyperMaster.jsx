@@ -28,6 +28,7 @@ const HyperMaster = () => {
   const [showStaff, setShowStaff] = useState(false);
   const [showWhiteLabel, setShowWhiteLabel] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
   const navigate = useNavigate();
 
   /* Sound notification start */
@@ -323,36 +324,61 @@ const HyperMaster = () => {
               </a>
 
               <ul className="menu-sub">
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("view-banner")}
-                    className="menu-link"
+                <a
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "start",
+                  }}
+                  onMouseEnter={() => setShowBanner(true)}
+                  onMouseLeave={() => setShowBanner(false)}
+                  className="menu-link menu-toggle"
+                >
+                  <i className="menu-icon tf-icons bx bx-layout"></i>
+                  <div data-i18n="Settings">Banner</div>
+                  <ul
+                    className="menu-sub"
+                    style={{
+                      display: showBanner ? "block" : "none",
+                      right: "100%",
+                      top: "0px",
+                      left: "-100%",
+                      zIndex: "99999",
+                      background: "#273143",
+                    }}
                   >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="View Banners">View Banners</div>
-                  </a>
-                </li>
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("view-banner")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">View Banners</div>
+                      </a>
+                    </li>
 
-                <li className="menu-item">
-                  <a
-                    onClick={() => handleNavigate("add-banner")}
-                    className="menu-link"
-                  >
-                    <i className="menu-icon tf-icons bx bxs-institution"></i>
-                    <div data-i18n="Add Banner">Add Banner</div>
-                  </a>
-                </li>
-                {adminRole === AdminRole.hyper_master && (
-                  <li className="menu-item">
-                    <a
-                      onClick={() => handleNavigate("add-login-banner")}
-                      className="menu-link"
-                    >
-                      <i className="menu-icon tf-icons bx bxs-institution"></i>
-                      <div data-i18n="Add Banner">Add Login Banner</div>
-                    </a>
-                  </li>
-                )}
+                    <li className="menu-item">
+                      <a
+                        onClick={() => handleNavigate("add-banner")}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Add Banner">Add Banner</div>
+                      </a>
+                    </li>
+                    {adminRole === AdminRole.hyper_master && (
+                      <li className="menu-item">
+                        <a
+                          onClick={() => handleNavigate("add-login-banner")}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Add Banner">Add Login Banner</div>
+                        </a>
+                      </li>
+                    )}
+                  </ul>
+                </a>
 
                 <li className="menu-item">
                   <a
