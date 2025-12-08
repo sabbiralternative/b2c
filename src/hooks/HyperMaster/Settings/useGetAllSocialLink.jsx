@@ -4,22 +4,23 @@ import useContextState from "../../useContextState";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 
-const useGetAllSocialLink = () => {
+const useGetAllSocialLink = (payload) => {
   const { token, tokenLoading } = useContextState();
   const {
     data: socialLinks = [],
     refetch: refetchAllSocialLinks,
     isLoading,
   } = useQuery({
-    queryKey: ["socialLink"],
+    queryKey: ["socialLink", payload],
     enabled: !tokenLoading,
     queryFn: async () => {
       const generatedToken = handleRandomToken();
-      const payload = {
+      const postData = {
         token: generatedToken,
         type: "getSocial",
+        ...payload,
       };
-      const res = await axios.post(API.socialLinks, payload, {
+      const res = await axios.post(API.socialLinks, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

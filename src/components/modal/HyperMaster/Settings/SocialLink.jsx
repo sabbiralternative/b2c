@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
@@ -16,8 +16,6 @@ const SocialLink = ({ setShowSocialLink }) => {
   });
 
   const [disabled, setDisabled] = useState(false);
-  const { socialLinks, refetchAllSocialLinks, isLoading } =
-    useGetAllSocialLink();
 
   /* close modal click outside */
   const socialLinkRef = useRef();
@@ -25,8 +23,12 @@ const SocialLink = ({ setShowSocialLink }) => {
     setShowSocialLink(false);
   });
 
-  const { register, handleSubmit, reset } = useForm({});
+  const { register, handleSubmit, reset, watch } = useForm({});
   const { token, adminRole } = useContextState();
+  const site = watch("site");
+  const { socialLinks, refetchAllSocialLinks, isLoading } = useGetAllSocialLink(
+    { site }
+  );
 
   /* handle edit social link */
   const onSubmit = async ({ whatsapp, instagram, telegram, site }) => {
@@ -73,9 +75,20 @@ const SocialLink = ({ setShowSocialLink }) => {
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
-  if (isLoading) {
-    return;
-  }
+
+  useEffect(() => {
+    if (socialLinks?.length > 0) {
+      reset({
+        instagram: socialLinks?.[0]?.instagram || "",
+        pixel: socialLinks?.[0]?.pixel || "",
+        telegram: socialLinks?.[0]?.telegram || "",
+        whatsapp: socialLinks?.[0]?.whatsapp || "",
+      });
+    }
+  }, [socialLinks, reset]);
+
+  // console.log(socialLinks);
+  // console.log(site);
 
   return (
     <>
@@ -145,13 +158,10 @@ const SocialLink = ({ setShowSocialLink }) => {
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("whatsapp", {
-                          value: socialLinks?.[0]?.whatsapp,
-                        })}
+                        {...register("whatsapp")}
                         type="text"
                         className="form-control"
                         id="basic-default-name"
-                        placeholder=""
                       />
                     </div>
                   </div>
@@ -166,13 +176,26 @@ const SocialLink = ({ setShowSocialLink }) => {
                         </label>
                         <div className="col-sm-10">
                           <input
-                            {...register("instagram", {
-                              value: socialLinks?.[0]?.instagram,
-                            })}
+                            {...register("instagram")}
                             type="text"
                             className="form-control"
                             id="basic-default-company"
-                            placeholder=""
+                          />
+                        </div>
+                      </div>
+                      <div className="row mb-3" id="bank_account_number_div">
+                        <label
+                          className="col-sm-2 col-form-label"
+                          htmlFor="basic-default-company"
+                        >
+                          Meta Pixel
+                        </label>
+                        <div className="col-sm-10">
+                          <input
+                            {...register("pixel")}
+                            type="text"
+                            className="form-control"
+                            id="basic-default-company"
                           />
                         </div>
                       </div>
@@ -185,13 +208,10 @@ const SocialLink = ({ setShowSocialLink }) => {
                         </label>
                         <div className="col-sm-10">
                           <input
-                            {...register("telegram", {
-                              value: socialLinks?.[0]?.telegram,
-                            })}
+                            {...register("telegram")}
                             type="text"
                             className="form-control"
                             id="basic-default-company"
-                            placeholder=""
                           />
                         </div>
                       </div>
