@@ -60,7 +60,8 @@ const ChangePassword = ({
       setDisabled(false);
       toast.success(data?.result?.message);
       reset();
-      if (adminRole === "hyper_master") {
+
+      if (adminRole === "hyper_master" || adminRole === "admin_master") {
         refetchAllBranch();
       } else {
         refetchClient();

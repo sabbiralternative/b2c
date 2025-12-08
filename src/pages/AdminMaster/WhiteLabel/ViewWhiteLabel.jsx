@@ -2,13 +2,28 @@ import { useState } from "react";
 import UpdateChecker from "../../../components/modal/HyperMaster/Staff/UpdateChecker";
 import UpdatePassword from "../../../components/modal/HyperMaster/Staff/UpdatePassword";
 import { useWhiteLabel } from "../../../hooks/AdminMaster/whiteLabel";
+import Deposit from "../../../components/modal/Master/Client/Deposit";
+import DirectWithdraw from "../../../components/modal/Master/Client/DirectWithdraw";
+import ChangePassword from "../../../components/modal/ChangePassword";
+import CreditReference from "../../../components/modal/CreditReference";
 
 const ViewWhiteLabel = () => {
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  const [showCreditRefModal, setShowCreditRefModal] = useState(false);
+  const [downLineId, setDownLineId] = useState("");
+  const [payloadRole, setPayloadRole] = useState("");
+  const [id, setId] = useState("");
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
-  const { data } = useWhiteLabel({
+  const { data, refetch } = useWhiteLabel({
     type: "viewWhitelabel",
   });
+
+  const handleOpenModal = (setModal, username, role, id) => {
+    setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
+  };
 
   return (
     <>
@@ -24,6 +39,44 @@ const ViewWhiteLabel = () => {
           updatePasswordId={updatePasswordId}
         />
       )}
+
+      {showDepositModal && (
+        <Deposit
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setClientDeposit={setShowDepositModal}
+        />
+      )}
+
+      {showWithdrawModal && (
+        <DirectWithdraw
+          id={id}
+          role={payloadRole}
+          downlineId={downLineId}
+          setDirectWithdraw={setShowWithdrawModal}
+        />
+      )}
+
+      {showChangePasswordModal && (
+        <ChangePassword
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowChangePassword={setShowChangePasswordModal}
+          refetchAllBranch={refetch}
+        />
+      )}
+
+      {showCreditRefModal && (
+        <CreditReference
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowCreditRef={setShowCreditRefModal}
+        />
+      )}
+
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
           <h5 className="card-header">White Label</h5>
@@ -57,49 +110,42 @@ const ViewWhiteLabel = () => {
 
                       <td style={{ display: "flex", color: "white" }}>
                         <a
-                          // onClick={() =>
-                          //   handleDownLineId(
-                          //     setShowDeposit,
-                          //     branch?.username,
-                          //     setDownLineId
-                          //   )
-                          // }
+                          onClick={() =>
+                            handleOpenModal(
+                              setShowDepositModal,
+                              whiteLabel?.username,
+                              whiteLabel?.role,
+                              whiteLabel?.downlineId
+                            )
+                          }
                           className="btn btn-icon btn-sm btn-success"
                         >
                           D
                         </a>
                         &nbsp;
                         <a
-                          // onClick={() =>
-                          //   handleDownLineId(
-                          //     setShowWithdraw,
-                          //     branch?.username,
-                          //     setDownLineId
-                          //   )
-                          // }
+                          onClick={() =>
+                            handleOpenModal(
+                              setShowWithdrawModal,
+                              whiteLabel?.username,
+                              whiteLabel?.role,
+                              whiteLabel?.downlineId
+                            )
+                          }
                           className="btn btn-icon btn-sm btn-danger"
                         >
                           W
                         </a>
                         &nbsp;
                         <a
-                          style={{ color: "white" }}
-                          // onClick={() => {
-                          //   handleNavigate(branch?.username, "pnl");
-                          // }}
-                          className="btn btn-icon btn-sm btn-warning"
-                        >
-                          PL
-                        </a>
-                        &nbsp;
-                        <a
-                          // onClick={() => {
-                          //   handleDownLineId(
-                          //     setShowChangePassword,
-                          //     branch?.username,
-                          //     setDownLineId
-                          //   );
-                          // }}
+                          onClick={() => {
+                            handleOpenModal(
+                              setShowChangePasswordModal,
+                              whiteLabel?.username,
+                              whiteLabel?.role,
+                              whiteLabel?.downlineId
+                            );
+                          }}
                           className="btn btn-icon btn-sm btn-info"
                         >
                           P
@@ -107,29 +153,17 @@ const ViewWhiteLabel = () => {
                         &nbsp;
                         <a
                           style={{ color: "white" }}
-                          // onClick={() =>
-                          //   handleDownLineId(
-                          //     setShowCreditRef,
-                          //     branch?.username,
-                          //     setDownLineId
-                          //   )
-                          // }
+                          onClick={() => {
+                            handleOpenModal(
+                              setShowCreditRefModal,
+                              whiteLabel?.username,
+                              whiteLabel?.role,
+                              whiteLabel?.downlineId
+                            );
+                          }}
                           className="btn btn-icon btn-sm btn-primary"
                         >
                           CR
-                        </a>
-                        &nbsp;
-                        <a
-                          style={{
-                            color: "white",
-                            backgroundColor: "lightseagreen",
-                          }}
-                          // onClick={() =>
-                          //   handleLoginReadOnly(branch?.username)
-                          // }
-                          className="btn btn-icon btn-sm btn-read-only-login"
-                        >
-                          L
                         </a>
                       </td>
                     </tr>

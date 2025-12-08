@@ -9,11 +9,12 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import useGetDownlineEditForm from "../../../../hooks/Master/Client/useGetDownlineEditForm";
 import useBalance from "../../../../hooks/useBalance";
 import useGetClient from "../../../../hooks/Master/Client/useGetClient";
+import { AdminRole } from "../../../../constant/constant";
 
 const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   const directWithdraw = useRef();
   const [disabled, setDisabled] = useState(false);
-  const { clientId } = useContextState();
+  const { clientId, adminRole } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   let payload = {
     type: "balance",
@@ -65,9 +66,11 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
-      refetchBalance();
       toast.success(data?.result?.message);
-      refetchClients();
+      if (adminRole !== AdminRole.admin_master) {
+        refetchBalance();
+        refetchClients();
+      }
       reset();
       setDirectWithdraw(false);
     } else {

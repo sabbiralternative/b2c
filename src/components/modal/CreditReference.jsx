@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import useGetCurrentRef from "../../hooks/useGetCurrentRef";
 
 import useGetClient from "../../hooks/Master/Client/useGetClient";
+import { AdminRole } from "../../constant/constant";
 
 const CreditReference = ({
   downlineId,
@@ -24,7 +25,7 @@ const CreditReference = ({
     setShowCreditRef(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+  const { token, adminRole } = useContextState();
   let payload = {
     downlineId,
     id,
@@ -53,8 +54,11 @@ const CreditReference = ({
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
-      refetchAllBranch();
-      refetchClients();
+
+      if (adminRole !== AdminRole.admin_master) {
+        refetchAllBranch();
+        refetchClients();
+      }
       toast.success(data?.result?.message);
       reset();
       setShowCreditRef(false);

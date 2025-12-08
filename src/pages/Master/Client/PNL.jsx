@@ -22,6 +22,7 @@ const PNL = () => {
   const [marketId, setMarketId] = useState("");
   const [startDate, setStartDate] = useState(defaultDate(30));
   const [endDate, setEndDate] = useState(new Date());
+  const [table, setTable] = useState("new");
 
   const { pnl, refetchPNL } = useGetPNL({
     downlineId,
@@ -31,6 +32,7 @@ const PNL = () => {
     id,
     page: activePage,
     type,
+    table,
   });
 
   const meta = pnl?.pagination;
@@ -104,9 +106,11 @@ const PNL = () => {
                 className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
                 onSubmit={handleUserHistory}
               >
-                <div className="col-md-6 col-12 mb-4">
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    <div style={{ width: "100%" }}>
+                <div className=" mb-4">
+                  <div
+                    style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}
+                  >
+                    <div style={{ width: "250px" }}>
                       <label htmlFor="flatpickr-range" className="form-label">
                         From Date
                       </label>
@@ -119,7 +123,7 @@ const PNL = () => {
                         block
                       />
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div style={{ width: "250px" }}>
                       <label htmlFor="flatpickr-range" className="form-label">
                         To Date
                       </label>
@@ -130,6 +134,42 @@ const PNL = () => {
                         onChange={(date) => setEndDate(date)}
                         value={endDate}
                         block
+                      />
+                    </div>
+                    <div
+                      style={{
+                        width: "100px",
+                        display: "flex",
+                        gap: "0px 10px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      New
+                      <input
+                        onChange={(e) => setTable(e.target.value)}
+                        type="radio"
+                        name="table"
+                        value="new"
+                        defaultChecked={table === "new"}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        width: "100px",
+                        display: "flex",
+                        gap: "0px 10px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Old
+                      <input
+                        onChange={(e) => setTable(e.target.value)}
+                        type="radio"
+                        name="table"
+                        value="old"
+                        defaultChecked={table === "old"}
                       />
                     </div>
                   </div>
