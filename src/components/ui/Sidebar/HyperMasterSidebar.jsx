@@ -14,6 +14,7 @@ const HyperMasterSidebar = () => {
     setAddChecker,
     adminRole,
     setAddWhiteLabel,
+    setShowDWLimit,
   } = useContextState();
 
   const handleOpenSidebarItem = (item) => {
@@ -261,6 +262,31 @@ const HyperMasterSidebar = () => {
 
                 <li className="menu-item">
                   <Link
+                    onClick={() => {
+                      setShowSocialLink(true);
+                      setShowSidebar(false);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Social Links">Social Links</div>
+                  </Link>
+                </li>
+                <li className="menu-item">
+                  <Link
+                    onClick={() => {
+                      setShowDWLimit(true);
+                      setShowSidebar(false);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Social Links">Update D/W Limit</div>
+                  </Link>
+                </li>
+
+                <li className="menu-item">
+                  <Link
                     to="/view-notification"
                     onClick={() => {
                       setShowSidebar(false);
@@ -275,7 +301,6 @@ const HyperMasterSidebar = () => {
                   <Link
                     to="/add-notification"
                     onClick={() => {
-                      setShowSocialLink(true);
                       setShowSidebar(false);
                     }}
                     className="menu-link"

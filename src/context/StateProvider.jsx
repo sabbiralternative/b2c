@@ -17,6 +17,7 @@ const StateProvider = ({ children }) => {
   const [showAddBranch, setShowAddBranch] = useState(false);
   const [showAddSuperBranch, setShowAddSuperBranch] = useState(false);
   const [showSocialLink, setShowSocialLink] = useState(false);
+  const [showDWLimit, setShowDWLimit] = useState(false);
   const [addPaymentGateway, setAddPaymentGateway] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
@@ -129,6 +130,8 @@ const StateProvider = ({ children }) => {
     setDownLineId,
     addPaymentGateway,
     setAddPaymentGateway,
+    showDWLimit,
+    setShowDWLimit,
 
     clientData,
     setClientData,

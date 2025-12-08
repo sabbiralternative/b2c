@@ -2,72 +2,46 @@ import toast from "react-hot-toast";
 import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
-import handleRandomToken from "../../../../utils/handleRandomToken";
 import useContextState from "../../../../hooks/useContextState";
-import axios from "axios";
 import { API } from "../../../../api";
-import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
 import { useWhiteLabel } from "../../../../hooks/AdminMaster/whiteLabel";
 import { AdminRole } from "../../../../constant/constant";
+import { useGetIndex } from "../../../../hooks";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
-const SocialLink = ({ setShowSocialLink }) => {
+const UpdateDWLimit = ({ setShowDWLimit }) => {
   const { data } = useWhiteLabel({
     type: "viewWhitelabelByAdmin",
   });
-
   const [disabled, setDisabled] = useState(false);
-
-  /* close modal click outside */
-  const socialLinkRef = useRef();
-  useCloseModalClickOutside(socialLinkRef, () => {
-    setShowSocialLink(false);
+  const ref = useRef();
+  useCloseModalClickOutside(ref, () => {
+    setShowDWLimit(false);
   });
 
-  const { register, handleSubmit, reset, watch } = useForm({});
-  const { token, adminRole } = useContextState();
+  const { register, handleSubmit, reset, watch } = useForm();
+  const { adminRole } = useContextState();
   const site = watch("site");
-  const { socialLinks, refetchAllSocialLinks } = useGetAllSocialLink({ site });
+  const { data: dwLimit } = useGetIndex({
+    site,
+    type: "viewDWLimit",
+  });
 
-  /* handle edit social link */
-  const onSubmit = async ({ whatsapp, instagram, telegram, site }) => {
+  const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
-    //   const encryptedData = handleEncryptData({
-    //     newPassword: newPassword,
-    //     confirmPassword: newPasswordConfirm,
-    //     mpassword: transactionCode,
-    //     type: "panel",
-    //     token: generatedToken,
-    //   });
-    let payload = {};
 
-    if (adminRole === "master") {
-      payload = {
-        type: "updateSocial",
-        whatsapp,
-        token: generatedToken,
-      };
-    } else {
-      payload = {
-        type: "updateSocial",
-        whatsapp,
-        instagram,
-        telegram,
-        site,
-        token: generatedToken,
-      };
-    }
+    const payload = {
+      type: "updateDWLimit",
+      ...values,
+    };
 
-    const res = await axios.post(API.socialLinks, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.index, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
       toast.success(data?.result?.message);
       reset();
-      setShowSocialLink(false);
-      refetchAllSocialLinks();
+      setShowDWLimit(false);
     } else {
       setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
@@ -75,16 +49,13 @@ const SocialLink = ({ setShowSocialLink }) => {
   };
 
   useEffect(() => {
-    if (socialLinks?.length > 0) {
+    if (dwLimit?.success) {
       reset({
-        instagram: socialLinks?.[0]?.instagram,
-        pixel: socialLinks?.[0]?.pixel,
-        telegram: socialLinks?.[0]?.telegram,
-        whatsapp: socialLinks?.[0]?.whatsapp,
         site,
+        ...dwLimit?.result,
       });
     }
-  }, [socialLinks, reset, site]);
+  }, [dwLimit, reset, site]);
 
   return (
     <>
@@ -97,13 +68,13 @@ const SocialLink = ({ setShowSocialLink }) => {
         style={{ display: "block" }}
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content" ref={socialLinkRef}>
+          <div className="modal-content" ref={ref}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Social Links
+                Update D/W limits
               </h5>
               <button
-                onClick={() => setShowSocialLink(false)}
+                onClick={() => setShowDWLimit(false)}
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
@@ -150,74 +121,38 @@ const SocialLink = ({ setShowSocialLink }) => {
                       className="col-sm-2 col-form-label"
                       htmlFor="basic-default-name"
                     >
-                      Whatsapp
+                      Deposit Limit
                     </label>
                     <div className="col-sm-10">
                       <input
-                        {...register("whatsapp")}
+                        {...register("deposit_limit")}
                         type="text"
                         className="form-control"
                         id="basic-default-name"
                       />
                     </div>
                   </div>
-                  {adminRole !== "master" && (
-                    <>
-                      <div className="row mb-3" id="bank_account_number_div">
-                        <label
-                          className="col-sm-2 col-form-label"
-                          htmlFor="basic-default-company"
-                        >
-                          Instagram
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("instagram")}
-                            type="text"
-                            className="form-control"
-                            id="basic-default-company"
-                          />
-                        </div>
-                      </div>
-                      <div className="row mb-3" id="bank_account_number_div">
-                        <label
-                          className="col-sm-2 col-form-label"
-                          htmlFor="basic-default-company"
-                        >
-                          Meta Pixel
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("pixel")}
-                            type="text"
-                            className="form-control"
-                            id="basic-default-company"
-                          />
-                        </div>
-                      </div>
-                      <div className="row mb-3" id="ifsc_div">
-                        <label
-                          className="col-sm-2 col-form-label"
-                          htmlFor="basic-default-company"
-                        >
-                          Telegram
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("telegram")}
-                            type="text"
-                            className="form-control"
-                            id="basic-default-company"
-                          />
-                        </div>
-                      </div>
-                    </>
-                  )}
+                  <div className="row mb-3" id="bank_account_name_div">
+                    <label
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-name"
+                    >
+                      Withdraw Limit
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        {...register("withdraw_limit")}
+                        type="text"
+                        className="form-control"
+                        id="basic-default-name"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="modal-footer">
                 <button
-                  onClick={() => setShowSocialLink(false)}
+                  onClick={() => setShowDWLimit(false)}
                   type="button"
                   className="btn btn-label-secondary"
                   data-bs-dismiss="modal"
@@ -240,4 +175,4 @@ const SocialLink = ({ setShowSocialLink }) => {
   );
 };
 
-export default SocialLink;
+export default UpdateDWLimit;

@@ -20,6 +20,7 @@ import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
 import { useVerifyUser } from "../../hooks/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import AddSuperBranch from "../modal/HyperMaster/Branch/AddSuperBranch";
+import UpdateDWLimit from "../modal/HyperMaster/Settings/UpdateDWLimit";
 // import AddPaymentGateway from "../../pages/Master/Payments/AddPaymentGateway";
 
 const MainLayout = () => {
@@ -52,6 +53,8 @@ const MainLayout = () => {
     addWhiteLabel,
     setAddWhiteLabel,
     id,
+    showDWLimit,
+    setShowDWLimit,
   } = useContextState();
   const navigate = useNavigate();
   const location = useLocation();
@@ -142,6 +145,8 @@ const MainLayout = () => {
             {showSocialLink && (
               <SocialLink setShowSocialLink={setShowSocialLink} />
             )}
+
+            {showDWLimit && <UpdateDWLimit setShowDWLimit={setShowDWLimit} />}
 
             {/* {siteNotification && (
               <SiteNotification setSiteNotification={setSiteNotification} />

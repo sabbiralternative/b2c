@@ -12,6 +12,7 @@ const HyperMaster = () => {
     setAddChecker,
     adminRole,
     setAddWhiteLabel,
+    setShowDWLimit,
   } = useContextState();
 
   const [depositReport, setDepositReport] = useState(false);
@@ -390,6 +391,18 @@ const HyperMaster = () => {
                   >
                     <i className="menu-icon tf-icons bx bxs-institution"></i>
                     <div data-i18n="Social Links">Social Links</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => {
+                      setShowDWLimit(true);
+                      setShowSettings(false);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Social Links">Update D/W Limits</div>
                   </a>
                 </li>
                 {/* <li className="menu-item">
