@@ -18,6 +18,8 @@ const TransferStatement = () => {
 
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
+  const [table, setTable] = useState("new");
+
   const onSubmit = async () => {
     const generatedToken = handleRandomToken();
     const payload = {
@@ -27,6 +29,7 @@ const TransferStatement = () => {
       token: generatedToken,
       pagination: true,
       page: activePage,
+      table,
     };
 
     const res = await axios.post(API.transferStatement, payload, {
@@ -111,9 +114,11 @@ const TransferStatement = () => {
                 id="formValidationExamples"
                 className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
               >
-                <div className="col-md-6 col-12 mb-4">
-                  <div style={{ display: "flex", gap: "10px" }}>
-                    <div style={{ width: "100%" }}>
+                <div className="mb-4">
+                  <div
+                    style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
+                  >
+                    <div style={{ width: "250px" }}>
                       <label htmlFor="flatpickr-range" className="form-label">
                         From Date
                       </label>
@@ -126,7 +131,7 @@ const TransferStatement = () => {
                         block
                       />
                     </div>
-                    <div style={{ width: "100%" }}>
+                    <div style={{ width: "250px" }}>
                       <label htmlFor="flatpickr-range" className="form-label">
                         To Date
                       </label>
@@ -137,6 +142,42 @@ const TransferStatement = () => {
                         onChange={(date) => setEndDate(date)}
                         value={endDate}
                         block
+                      />
+                    </div>
+                    <div
+                      style={{
+                        width: "100px",
+                        display: "flex",
+                        gap: "0px 10px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      New
+                      <input
+                        onChange={(e) => setTable(e.target.value)}
+                        type="radio"
+                        name="table"
+                        value="new"
+                        defaultChecked={table === "new"}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        width: "100px",
+                        display: "flex",
+                        gap: "0px 10px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Old
+                      <input
+                        onChange={(e) => setTable(e.target.value)}
+                        type="radio"
+                        name="table"
+                        value="old"
+                        defaultChecked={table === "old"}
                       />
                     </div>
                   </div>
