@@ -25,29 +25,17 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
   });
   const { register, handleSubmit, reset } = useForm();
   const { mutate: addChecker } = useAddChecker();
-  const { refetch } = useGetAllChecker({
-    type: "viewStaff",
-    role: "admin_staff",
-  });
+  const { refetch } = useGetAllChecker();
 
   const onSubmit = async (values) => {
     setDisabled(true);
     const generatedToken = handleRandomToken();
-    let payload;
-    if (adminRole === "master") {
-      payload = {
-        ...values,
-        type: "addStaff",
-        token: generatedToken,
-      };
-    } else {
-      payload = {
-        ...values,
-        type: "addStaff",
-        role: "admin_staff",
-        token: generatedToken,
-      };
-    }
+    const payload = {
+      ...values,
+      type: "addStaff",
+      role: "branch_staff",
+      token: generatedToken,
+    };
 
     addChecker(payload, {
       onSuccess: (data) => {
@@ -106,7 +94,7 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
           <div className="modal-content" ref={addCheckerRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Add {adminRole === "master" ? "Staff" : "Branch Staff"}
+                Add Branch Staff
               </h5>
               <button
                 onClick={() => setShowAddBranchStaff(false)}
@@ -208,58 +196,56 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
                       />
                     </div>
                   </div>
-                  {(adminRole === "master" ||
-                    adminRole === AdminRole.hyper_master) && (
-                    <div className="row mb-3" id="ifsc_div">
-                      <label
-                        style={{ paddingTop: "0px" }}
-                        className="col-sm-2 col-form-label"
-                        htmlFor="basic-default-company"
-                      >
-                        Permissions
-                      </label>
-                      <div
-                        className="col-sm-10"
-                        style={{
-                          display: "flex",
 
-                          gap: "15px",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        {permissionsList.map((permission) => {
-                          if (!permission.show) return;
-                          return (
-                            <div
-                              key={permission.value}
+                  <div className="row mb-3" id="ifsc_div">
+                    <label
+                      style={{ paddingTop: "0px" }}
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      Permissions
+                    </label>
+                    <div
+                      className="col-sm-10"
+                      style={{
+                        display: "flex",
+
+                        gap: "15px",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {permissionsList.map((permission) => {
+                        if (!permission.show) return;
+                        return (
+                          <div
+                            key={permission.value}
+                            style={{
+                              display: "flex",
+                              alignItems: "start",
+
+                              gap: "3px",
+                            }}
+                          >
+                            <input
+                              style={{ height: "100%" }}
+                              type="checkbox"
+                              {...register("permissions", { required: true })}
+                              value={permission.value}
+                            />
+                            <p
                               style={{
-                                display: "flex",
-                                alignItems: "start",
+                                margin: "0px",
 
-                                gap: "3px",
+                                height: "100%",
                               }}
                             >
-                              <input
-                                style={{ height: "100%" }}
-                                type="checkbox"
-                                {...register("permissions", { required: true })}
-                                value={permission.value}
-                              />
-                              <p
-                                style={{
-                                  margin: "0px",
-
-                                  height: "100%",
-                                }}
-                              >
-                                {permission.label}
-                              </p>
-                            </div>
-                          );
-                        })}
-                      </div>
+                              {permission.label}
+                            </p>
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
               <div className="modal-footer">
