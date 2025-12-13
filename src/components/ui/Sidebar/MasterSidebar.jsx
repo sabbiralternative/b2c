@@ -35,6 +35,8 @@ const MasterSidebar = () => {
           "report",
           "payment",
           "bonus",
+          "exposure",
+          "setting",
         ]);
       }
     }

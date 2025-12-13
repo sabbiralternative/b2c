@@ -8,15 +8,8 @@ import { AdminRole } from "../../../../constant/constant";
 
 const Master = () => {
   const [navList, setNavList] = useState(null);
+  const [permission, setPermission] = useState([]);
 
-  const [depositPermission, setDepositPermission] = useState(false);
-  const [bonusPermission, setBonusPermission] = useState(false);
-  const [exposurePermission, setExposurePermission] = useState(false);
-  const [settingsPermission, setSettingsPermission] = useState(false);
-  const [withdrawPermission, setWithdrawPermission] = useState(false);
-  const [clientPermission, setClientPermission] = useState(false);
-  const [reportPermission, setReportPermission] = useState(false);
-  const [paymentPermission, setPaymentPermission] = useState(false);
   const [siteNotification, setSiteNotification] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
   const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
@@ -70,32 +63,18 @@ const Master = () => {
       ) {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
-
-        const depositPermission = permissions?.includes("deposit") ?? false;
-        const withdrawPermission = permissions?.includes("withdraw") ?? false;
-        const clientPermission = permissions?.includes("client") ?? false;
-        const reportPermission = permissions?.includes("report") ?? false;
-        const paymentPermission = permissions?.includes("payment") ?? false;
-        const bonusPermission = permissions?.includes("bonus") ?? false;
-        const exposurePermission = permissions?.includes("exposure") ?? false;
-        const settingsPermission = permissions?.includes("settings") ?? false;
-
-        setDepositPermission(depositPermission);
-        setWithdrawPermission(withdrawPermission);
-        setClientPermission(clientPermission);
-        setReportPermission(reportPermission);
-        setPaymentPermission(paymentPermission);
-        setBonusPermission(bonusPermission);
-        setExposurePermission(exposurePermission);
-        setSettingsPermission(settingsPermission);
+        setPermission(permissions);
       } else {
-        setDepositPermission(true);
-        setWithdrawPermission(true);
-        setClientPermission(true);
-        setReportPermission(true);
-        setPaymentPermission(true);
-        setExposurePermission(true);
-        setSettingsPermission(true);
+        setPermission([
+          "deposit",
+          "withdraw",
+          "client",
+          "report",
+          "payment",
+          "bonus",
+          "exposure",
+          "setting",
+        ]);
       }
     }
   }, [adminRole, token]);
@@ -144,8 +123,8 @@ const Master = () => {
       )} */}
 
       {adminRole === "master" ||
-      (adminRole === "admin_staff" && clientPermission) ||
-      (adminRole === "branch_staff" && clientPermission) ? (
+      (adminRole === "admin_staff" && permission.includes("client")) ||
+      (adminRole === "branch_staff" && permission.includes("client")) ? (
         <li
           onMouseEnter={() => setNavList("client")}
           onMouseLeave={() => setNavList(null)}
@@ -229,8 +208,9 @@ const Master = () => {
       ) : null}
 
       {adminRole === "master" ||
-      (adminRole === "branch_staff" && paymentPermission) ||
-      (adminRole === AdminRole.admin_staff && paymentPermission) ? (
+      (adminRole === "branch_staff" && permission.includes("payment")) ||
+      (adminRole === AdminRole.admin_staff &&
+        permission.includes("payment")) ? (
         <li
           onMouseEnter={() => setNavList("payment")}
           onMouseLeave={() => setNavList(null)}
@@ -374,7 +354,7 @@ const Master = () => {
           </ul>
         </li>
       ) : null}
-      {depositPermission && (
+      {permission.includes("deposit") && (
         <li
           onMouseEnter={() => setNavList("deposit")}
           onMouseLeave={() => setNavList(null)}
@@ -443,7 +423,7 @@ const Master = () => {
           </ul>
         </li>
       )}
-      {withdrawPermission && (
+      {permission.includes("withdraw") && (
         <li
           onMouseEnter={() => setNavList("withdraw")}
           onMouseLeave={() => setNavList(null)}
@@ -503,47 +483,48 @@ const Master = () => {
         </li>
       )}
 
-      {adminRole === AdminRole.admin_staff && exposurePermission && (
-        <li
-          onMouseEnter={() => setNavList("exposure")}
-          onMouseLeave={() => setNavList(null)}
-          className={`menu-item ${navList === "exposure" ? "open" : ""}`}
-        >
-          <a
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            className="menu-link menu-toggle"
+      {adminRole === AdminRole.admin_staff &&
+        permission.includes("exposure") && (
+          <li
+            onMouseEnter={() => setNavList("exposure")}
+            onMouseLeave={() => setNavList(null)}
+            className={`menu-item ${navList === "exposure" ? "open" : ""}`}
           >
-            <i className="menu-icon tf-icons bx bx-layout"></i>
-            <div data-i18n="Settings">Exposure</div>
-          </a>
+            <a
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Exposure</div>
+            </a>
 
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <a
-                onClick={() => handleNavigate("market-analysis")}
-                className="menu-link"
-              >
-                <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="View Banners">Market Analysis</div>
-              </a>
-            </li>
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("market-analysis")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Market Analysis</div>
+                </a>
+              </li>
 
-            <li className="menu-item">
-              <a
-                onClick={() => handleNavigate("current-bets")}
-                className="menu-link"
-              >
-                <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="Add Banner">Current Bets</div>
-              </a>
-            </li>
-          </ul>
-        </li>
-      )}
+              <li className="menu-item">
+                <a
+                  onClick={() => handleNavigate("current-bets")}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Banner">Current Bets</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+        )}
 
       {adminRole === "master" && (
         <>
@@ -676,8 +657,8 @@ const Master = () => {
         </>
       )}
       {adminRole === "master" ||
-      (adminRole === "admin_staff" && reportPermission) ||
-      (adminRole === "branch_staff" && reportPermission) ? (
+      (adminRole === "admin_staff" && permission.includes("report")) ||
+      (adminRole === "branch_staff" && permission.includes("report")) ? (
         <li
           onMouseEnter={() => setNavList("report")}
           onMouseLeave={() => setNavList(null)}
@@ -696,7 +677,7 @@ const Master = () => {
           </a>
 
           <ul className="menu-sub">
-            {clientPermission && (
+            {permission.includes("client") && (
               <li className="menu-item">
                 <a
                   onClick={() => handleNavigate("client-report")}
@@ -765,7 +746,7 @@ const Master = () => {
                     background: "#273143",
                   }}
                 >
-                  {depositPermission && (
+                  {permission.includes("deposit") && (
                     <>
                       <li className="menu-item">
                         <a
@@ -864,7 +845,7 @@ const Master = () => {
               </a>
             )}
 
-            {withdrawPermission && (
+            {permission.includes("withdraw") && (
               <li className="menu-item">
                 <a
                   onClick={() => handleNavigate("withdraw-report")}
@@ -924,7 +905,7 @@ const Master = () => {
       {adminRole != AdminRole.master &&
         adminRole !== AdminRole.branch_staff &&
         adminRole === AdminRole.admin_staff &&
-        settingsPermission && (
+        permission.includes("setting") && (
           <li
             onMouseEnter={() => setNavList("setting")}
             onMouseLeave={() => setNavList(null)}
@@ -1017,81 +998,84 @@ const Master = () => {
                   </li>
                 </ul>
               </a>
-              {adminRole === AdminRole.admin_staff && bonusPermission && (
-                <a
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "start",
-                  }}
-                  onMouseEnter={() => setShowBonus(true)}
-                  onMouseLeave={() => setShowBonus(false)}
-                  className="menu-link menu-toggle"
-                >
-                  <i className="menu-icon tf-icons bx bx-layout"></i>
-                  <div data-i18n="Settings">Bonus</div>
-                  <ul
-                    className="menu-sub"
+              {adminRole === AdminRole.admin_staff &&
+                permission.includes("bonus") && (
+                  <a
                     style={{
-                      display: showBonus ? "block" : "none",
-                      right: "100%",
-                      top: "0px",
-                      left: "-100%",
-                      zIndex: "99999",
-                      background: "#273143",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "start",
                     }}
+                    onMouseEnter={() => setShowBonus(true)}
+                    onMouseLeave={() => setShowBonus(false)}
+                    className="menu-link menu-toggle"
                   >
-                    <li className="menu-item">
-                      <a
-                        onClick={() => handleNavigate("view-bonus")}
-                        className="menu-link"
-                      >
-                        <i className="menu-icon tf-icons bx bxs-institution"></i>
-                        <div data-i18n="Pending Withdraw">View Bonus</div>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a
-                        onClick={() => handleNavigate("add-bonus")}
-                        className="menu-link"
-                      >
-                        <i className="menu-icon tf-icons bx bxs-institution"></i>
-                        <div data-i18n="Pending Withdraw">Add Bonus</div>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a
-                        onClick={() => handleNavigate("pending-bonus")}
-                        className="menu-link"
-                      >
-                        <i className="menu-icon tf-icons bx bxs-institution"></i>
-                        <div data-i18n="Pending Withdraw">Pending Bonus</div>
-                      </a>
-                    </li>
+                    <i className="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Settings">Bonus</div>
+                    <ul
+                      className="menu-sub"
+                      style={{
+                        display: showBonus ? "block" : "none",
+                        right: "100%",
+                        top: "0px",
+                        left: "-100%",
+                        zIndex: "99999",
+                        background: "#273143",
+                      }}
+                    >
+                      <li className="menu-item">
+                        <a
+                          onClick={() => handleNavigate("view-bonus")}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Pending Withdraw">View Bonus</div>
+                        </a>
+                      </li>
+                      <li className="menu-item">
+                        <a
+                          onClick={() => handleNavigate("add-bonus")}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Pending Withdraw">Add Bonus</div>
+                        </a>
+                      </li>
+                      <li className="menu-item">
+                        <a
+                          onClick={() => handleNavigate("pending-bonus")}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                        </a>
+                      </li>
 
-                    <li className="menu-item">
-                      <a
-                        onClick={() => handleNavigate("completed-bonus")}
-                        className="menu-link"
-                      >
-                        <i className="menu-icon tf-icons bx bxs-institution"></i>
-                        <div data-i18n="Completed Withdraw">
-                          Completed Bonus
-                        </div>
-                      </a>
-                    </li>
-                    <li className="menu-item">
-                      <a
-                        onClick={() => handleNavigate("rejected-bonus")}
-                        className="menu-link"
-                      >
-                        <i className="menu-icon tf-icons bx bxs-institution"></i>
-                        <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
-                      </a>
-                    </li>
-                  </ul>
-                </a>
-              )}
+                      <li className="menu-item">
+                        <a
+                          onClick={() => handleNavigate("completed-bonus")}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Completed Withdraw">
+                            Completed Bonus
+                          </div>
+                        </a>
+                      </li>
+                      <li className="menu-item">
+                        <a
+                          onClick={() => handleNavigate("rejected-bonus")}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Rejected Withdraw">
+                            Rejected Bonus
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </a>
+                )}
             </ul>
           </li>
         )}
