@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
@@ -54,22 +54,37 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
     });
   };
   const staffData = checkerData?.result?.[0]?.permissions;
-  const deposit = staffData?.includes("deposit") ?? false;
-  const withdraw = staffData?.includes("withdraw") ?? false;
-  const client = staffData?.includes("client") ?? false;
-  const payment = staffData?.includes("payment") ?? false;
-  const report = staffData?.includes("report") ?? false;
-  const exposure = staffData?.includes("exposure") ?? false;
-  const settings = staffData?.includes("settings") ?? false;
-  const directDeposit = staffData?.includes("directDeposit") ?? false;
-  const depositWithSlip = staffData?.includes("depositWithSlip") ?? false;
-  const directWithdraw = staffData?.includes("directWithdraw") ?? false;
-  const bonus = staffData?.includes("bonus") ?? false;
-  const dashboard = staffData?.includes("dashboard") ?? false;
 
   if (!checkerData?.success) {
     return null;
   }
+
+  const permissionsList = [
+    { label: "Deposit", value: "deposit", show: true },
+    { label: "Withdraw", value: "withdraw", show: true },
+    { label: "Client", value: "client", show: true },
+    { label: "Payment", value: "payment", show: true },
+    { label: "Report", value: "report", show: true },
+    {
+      label: "Direct Deposit",
+      value: "directDeposit",
+      show: adminRole !== AdminRole.hyper_master,
+    },
+    {
+      label: "Deposit With Slip",
+      value: "depositWithSlip",
+      show: adminRole !== AdminRole.hyper_master,
+    },
+    {
+      label: "Direct Withdraw",
+      value: "directWithdraw",
+      show: adminRole !== AdminRole.hyper_master,
+    },
+    { label: "Settings", value: "settings", show: true },
+    { label: "Bonus", value: "bonus", show: true },
+    { label: "Exposure", value: "exposure", show: true },
+    { label: "Dashboard", value: "dashboard", show: true },
+  ];
 
   return (
     <>
@@ -114,203 +129,11 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                         gap: "15px",
                       }}
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          value="deposit"
-                          defaultChecked={deposit}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Deposit
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          value="withdraw"
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          defaultChecked={withdraw}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Withdraw
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          value="client"
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          defaultChecked={client}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Client
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          value="payment"
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          defaultChecked={payment}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Payment
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          value="report"
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          defaultChecked={report}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Report
-                        </p>
-                      </div>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          value="directDeposit"
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          defaultChecked={directDeposit}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Direct Deposit
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          value="depositWithSlip"
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          defaultChecked={depositWithSlip}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Deposit With Slip
-                        </p>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "start",
-                          gap: "3px",
-                        }}
-                      >
-                        <input
-                          value="directWithdraw"
-                          style={{ height: "100%" }}
-                          type="checkbox"
-                          {...register("permissions", { required: true })}
-                          defaultChecked={directWithdraw}
-                        />
-                        <p
-                          style={{
-                            margin: "0px",
-
-                            height: "100%",
-                          }}
-                        >
-                          Direct Withdraw
-                        </p>
-                      </div>
-
-                      {adminRole === AdminRole.hyper_master && (
-                        <Fragment>
+                      {permissionsList?.map((permission) => {
+                        if (!permission.show) return;
+                        return (
                           <div
+                            key={permission.value}
                             style={{
                               display: "flex",
                               alignItems: "start",
@@ -318,11 +141,13 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                             }}
                           >
                             <input
-                              value="exposure"
                               style={{ height: "100%" }}
                               type="checkbox"
                               {...register("permissions", { required: true })}
-                              defaultChecked={exposure}
+                              value={permission.value}
+                              defaultChecked={staffData?.includes(
+                                permission.value
+                              )}
                             />
                             <p
                               style={{
@@ -331,89 +156,11 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                                 height: "100%",
                               }}
                             >
-                              Exposure
+                              {permission.label}
                             </p>
                           </div>
-
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "start",
-                              gap: "3px",
-                            }}
-                          >
-                            <input
-                              value="settings"
-                              style={{ height: "100%" }}
-                              type="checkbox"
-                              {...register("permissions", {
-                                required: true,
-                              })}
-                              defaultChecked={settings}
-                            />
-                            <p
-                              style={{
-                                margin: "0px",
-
-                                height: "100%",
-                              }}
-                            >
-                              Settings
-                            </p>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "start",
-                              gap: "3px",
-                            }}
-                          >
-                            <input
-                              value="bonus"
-                              style={{ height: "100%" }}
-                              type="checkbox"
-                              {...register("permissions", {
-                                required: true,
-                              })}
-                              defaultChecked={bonus}
-                            />
-                            <p
-                              style={{
-                                margin: "0px",
-
-                                height: "100%",
-                              }}
-                            >
-                              Bonus
-                            </p>
-                          </div>
-
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "start",
-                              gap: "3px",
-                            }}
-                          >
-                            <input
-                              value="dashboard"
-                              style={{ height: "100%" }}
-                              type="checkbox"
-                              {...register("permissions", { required: true })}
-                              defaultChecked={dashboard}
-                            />
-                            <p
-                              style={{
-                                margin: "0px",
-
-                                height: "100%",
-                              }}
-                            >
-                              Dashboard
-                            </p>
-                          </div>
-                        </Fragment>
-                      )}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

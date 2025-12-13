@@ -60,6 +60,34 @@ const AddChecker = ({ setShowAddChecker }) => {
       },
     });
   };
+
+  const permissionsList = [
+    { label: "Deposit", value: "deposit", show: true },
+    { label: "Withdraw", value: "withdraw", show: true },
+    { label: "Client", value: "client", show: true },
+    { label: "Payment", value: "payment", show: true },
+    { label: "Report", value: "report", show: true },
+    {
+      label: "Direct Deposit",
+      value: "directDeposit",
+      show: adminRole !== AdminRole.hyper_master,
+    },
+    {
+      label: "Deposit With Slip",
+      value: "depositWithSlip",
+      show: adminRole !== AdminRole.hyper_master,
+    },
+    {
+      label: "Direct Withdraw",
+      value: "directWithdraw",
+      show: adminRole !== AdminRole.hyper_master,
+    },
+    { label: "Settings", value: "settings", show: true },
+    { label: "Bonus", value: "bonus", show: true },
+    { label: "Exposure", value: "exposure", show: true },
+    { label: "Dashboard", value: "dashboard", show: true },
+  ];
+
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -163,284 +191,36 @@ const AddChecker = ({ setShowAddChecker }) => {
                           flexWrap: "wrap",
                         }}
                       >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
+                        {permissionsList.map((permission) => {
+                          if (!permission.show) return;
+                          return (
+                            <div
+                              key={permission.value}
+                              style={{
+                                display: "flex",
+                                alignItems: "start",
 
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                            value="deposit"
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
+                                gap: "3px",
+                              }}
+                            >
+                              <input
+                                style={{ height: "100%" }}
+                                type="checkbox"
+                                {...register("permissions", { required: true })}
+                                value={permission.value}
+                              />
+                              <p
+                                style={{
+                                  margin: "0px",
 
-                              height: "100%",
-                            }}
-                          >
-                            Deposit
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="withdraw"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Withdraw
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="client"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Client
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="payment"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Payment
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="report"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Report
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="directDeposit"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Direct Deposit
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="depositWithSlip"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Deposit With Slip
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="directWithdraw"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Direct Withdraw
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="settings"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Settings
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="bonus"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Bonus
-                          </p>
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="exposure"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Exposure
-                          </p>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "start",
-                            gap: "3px",
-                          }}
-                        >
-                          <input
-                            value="dashboard"
-                            style={{ height: "100%" }}
-                            type="checkbox"
-                            {...register("permissions", { required: true })}
-                          />
-                          <p
-                            style={{
-                              margin: "0px",
-
-                              height: "100%",
-                            }}
-                          >
-                            Dashboard
-                          </p>
-                        </div>
+                                  height: "100%",
+                                }}
+                              >
+                                {permission.label}
+                              </p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
