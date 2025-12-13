@@ -63,6 +63,7 @@ const Master = () => {
       ) {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
+        console.log(permission);
         setPermission(permissions);
       } else {
         setPermission([
@@ -73,7 +74,7 @@ const Master = () => {
           "payment",
           "bonus",
           "exposure",
-          "setting",
+          "settings",
         ]);
       }
     }
@@ -526,7 +527,7 @@ const Master = () => {
           </li>
         )}
 
-      {adminRole === "master" && (
+      {(adminRole === "master" || adminRole === AdminRole.branch_staff) && (
         <>
           <li
             onMouseEnter={() => setNavList("bonus")}
@@ -905,7 +906,7 @@ const Master = () => {
       {adminRole != AdminRole.master &&
         adminRole !== AdminRole.branch_staff &&
         adminRole === AdminRole.admin_staff &&
-        permission.includes("setting") && (
+        permission.includes("settings") && (
           <li
             onMouseEnter={() => setNavList("setting")}
             onMouseLeave={() => setNavList(null)}

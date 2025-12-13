@@ -234,6 +234,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                           Report
                         </p>
                       </div>
+
                       <div
                         style={{
                           display: "flex",
@@ -306,6 +307,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                           Direct Withdraw
                         </p>
                       </div>
+
                       {adminRole === AdminRole.hyper_master && (
                         <Fragment>
                           <div
@@ -332,6 +334,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                               Exposure
                             </p>
                           </div>
+
                           <div
                             style={{
                               display: "flex",
@@ -343,7 +346,9 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                               value="settings"
                               style={{ height: "100%" }}
                               type="checkbox"
-                              {...register("permissions", { required: true })}
+                              {...register("permissions", {
+                                required: true,
+                              })}
                               defaultChecked={settings}
                             />
                             <p
@@ -367,7 +372,9 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                               value="bonus"
                               style={{ height: "100%" }}
                               type="checkbox"
-                              {...register("permissions", { required: true })}
+                              {...register("permissions", {
+                                required: true,
+                              })}
                               defaultChecked={bonus}
                             />
                             <p
@@ -380,6 +387,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                               Bonus
                             </p>
                           </div>
+
                           <div
                             style={{
                               display: "flex",

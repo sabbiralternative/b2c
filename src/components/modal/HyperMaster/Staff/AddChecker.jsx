@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
@@ -279,56 +279,168 @@ const AddChecker = ({ setShowAddChecker }) => {
                             Report
                           </p>
                         </div>
-                        {adminRole === AdminRole.hyper_master && (
-                          <Fragment>
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "start",
-                                gap: "3px",
-                              }}
-                            >
-                              <input
-                                value="exposure"
-                                style={{ height: "100%" }}
-                                type="checkbox"
-                                {...register("permissions", { required: true })}
-                              />
-                              <p
-                                style={{
-                                  margin: "0px",
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="directDeposit"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
 
-                                  height: "100%",
-                                }}
-                              >
-                                Exposure
-                              </p>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "start",
-                                gap: "3px",
-                              }}
-                            >
-                              <input
-                                value="dashboard"
-                                style={{ height: "100%" }}
-                                type="checkbox"
-                                {...register("permissions", { required: true })}
-                              />
-                              <p
-                                style={{
-                                  margin: "0px",
+                              height: "100%",
+                            }}
+                          >
+                            Direct Deposit
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="depositWithSlip"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
 
-                                  height: "100%",
-                                }}
-                              >
-                                Dashboard
-                              </p>
-                            </div>
-                          </Fragment>
-                        )}
+                              height: "100%",
+                            }}
+                          >
+                            Deposit With Slip
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="directWithdraw"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+
+                              height: "100%",
+                            }}
+                          >
+                            Direct Withdraw
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="settings"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+
+                              height: "100%",
+                            }}
+                          >
+                            Settings
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="bonus"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+
+                              height: "100%",
+                            }}
+                          >
+                            Bonus
+                          </p>
+                        </div>
+
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="exposure"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+
+                              height: "100%",
+                            }}
+                          >
+                            Exposure
+                          </p>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            gap: "3px",
+                          }}
+                        >
+                          <input
+                            value="dashboard"
+                            style={{ height: "100%" }}
+                            type="checkbox"
+                            {...register("permissions", { required: true })}
+                          />
+                          <p
+                            style={{
+                              margin: "0px",
+
+                              height: "100%",
+                            }}
+                          >
+                            Dashboard
+                          </p>
+                        </div>
                       </div>
                     </div>
                   )}
