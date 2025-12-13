@@ -51,7 +51,20 @@ const ViewBanner = () => {
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="card">
-        <h5 className="card-header">Banners</h5>
+        <div
+          className="card-header"
+          style={{ display: "flex", alignItems: "center", gap: "0px 50px" }}
+        >
+          <h5 style={{ margin: "0px" }}>Banners</h5>
+          <button
+            onClick={() => navigate("/add-banner")}
+            type="button"
+            className="btn btn-primary"
+          >
+            Add Banner
+          </button>
+        </div>
+
         <div className="table-responsive text-nowrap">
           <table className="table table-hover table-sm">
             <thead className="table-dark">

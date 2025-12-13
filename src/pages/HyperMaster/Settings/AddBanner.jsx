@@ -87,7 +87,8 @@ const AddBanner = () => {
           <div className="card mb-4">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
-                {adminRole === AdminRole.hyper_master &&
+                {(adminRole === AdminRole.hyper_master ||
+                  adminRole === AdminRole.admin_staff) &&
                   data?.result?.length > 0 && (
                     <div className="row mb-3" id="bank_account_name_div">
                       <label
@@ -165,8 +166,7 @@ const AddBanner = () => {
                       className="col-sm-2 col-form-label"
                       htmlFor="basic-default-company"
                     >
-                      {" "}
-                      QR Code
+                      Banner Image (1350px * 583px)
                     </span>
                     <div
                       style={{

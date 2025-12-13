@@ -8,13 +8,6 @@ const MasterSidebar = () => {
   const [sidebarItem, setSidebarItem] = useState(null);
   const [permission, setPermission] = useState([]);
 
-  const [depositPermission, setDepositPermission] = useState(false);
-  const [withdrawPermission, setWithdrawPermission] = useState(false);
-  const [clientPermission, setClientPermission] = useState(false);
-  const [reportPermission, setReportPermission] = useState(false);
-  const [paymentPermission, setPaymentPermission] = useState(false);
-  const [bonusPermission, setBonusPermission] = useState(false);
-
   const navigate = useNavigate();
   const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker, token } =
     useContextState();
@@ -26,22 +19,14 @@ const MasterSidebar = () => {
 
   useEffect(() => {
     if (adminRole) {
-      if (adminRole === "branch_staff") {
+      if (
+        adminRole === AdminRole.branch_staff ||
+        adminRole === AdminRole.admin_staff
+      ) {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
+
         setPermission(permissions);
-        const depositPermission = permissions?.includes("deposit") ?? false;
-        const withdrawPermission = permissions?.includes("withdraw") ?? false;
-        const clientPermission = permissions?.includes("client") ?? false;
-        const reportPermission = permissions?.includes("report") ?? false;
-        const paymentPermission = permissions?.includes("payment") ?? false;
-        const bonusPermission = permissions?.includes("bonus") ?? false;
-        setDepositPermission(depositPermission);
-        setWithdrawPermission(withdrawPermission);
-        setClientPermission(clientPermission);
-        setReportPermission(reportPermission);
-        setPaymentPermission(paymentPermission);
-        setBonusPermission(bonusPermission);
       } else {
         setPermission([
           "deposit",
@@ -51,11 +36,6 @@ const MasterSidebar = () => {
           "payment",
           "bonus",
         ]);
-        setDepositPermission(true);
-        setWithdrawPermission(true);
-        setClientPermission(true);
-        setReportPermission(true);
-        setPaymentPermission(true);
       }
     }
   }, [adminRole, token]);
@@ -108,8 +88,8 @@ const MasterSidebar = () => {
       )} */}
 
       {adminRole === "master" ||
-      (adminRole === "admin_staff" && clientPermission) ||
-      (adminRole === "branch_staff" && clientPermission) ? (
+      (adminRole === "admin_staff" && permission.includes("client")) ||
+      (adminRole === "branch_staff" && permission.includes("client")) ? (
         <li className={`menu-item ${sidebarItem === "client" ? "open" : ""}`}>
           <a
             onClick={() => handleOpenSidebarItem("client")}
@@ -227,8 +207,8 @@ const MasterSidebar = () => {
       )}
 
       {adminRole === "master" ||
-      (adminRole === AdminRole.admin_staff && paymentPermission) ||
-      (adminRole === "branch_staff" && paymentPermission) ? (
+      (adminRole === AdminRole.admin_staff && permission.includes("payment")) ||
+      (adminRole === "branch_staff" && permission.includes("payment")) ? (
         <li
           onClick={() => handleOpenSidebarItem("payment")}
           className={`menu-item ${sidebarItem === "payment" ? "open" : ""}`}
@@ -361,7 +341,7 @@ const MasterSidebar = () => {
         </li>
       ) : null}
 
-      {depositPermission && (
+      {permission.includes("deposit") && (
         <li
           onClick={() => handleOpenSidebarItem("deposit")}
           className={`menu-item ${sidebarItem === "deposit" ? "open" : ""}`}
@@ -414,7 +394,7 @@ const MasterSidebar = () => {
         </li>
       )}
 
-      {withdrawPermission && (
+      {permission.includes("withdraw") && (
         <li
           onClick={() => handleOpenSidebarItem("withdraw")}
           className={`menu-item ${sidebarItem === "withdraw" ? "open" : ""}`}
@@ -457,41 +437,44 @@ const MasterSidebar = () => {
         </li>
       )}
 
-      {adminRole === AdminRole.admin_staff && (
-        <li className={`menu-item ${sidebarItem === "exposure" ? "open" : ""}`}>
-          <a
-            onClick={() => handleOpenSidebarItem("exposure")}
-            className="menu-link menu-toggle"
+      {adminRole === AdminRole.admin_staff &&
+        permission.includes("exposure") && (
+          <li
+            className={`menu-item ${sidebarItem === "exposure" ? "open" : ""}`}
           >
-            <i className="menu-icon tf-icons bx bx-layout"></i>
-            <div data-i18n="Settings">Exposure</div>
-          </a>
+            <a
+              onClick={() => handleOpenSidebarItem("exposure")}
+              className="menu-link menu-toggle"
+            >
+              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <div data-i18n="Settings">Exposure</div>
+            </a>
 
-          <ul className="menu-sub">
-            <li className="menu-item">
-              <Link
-                to="/market-analysis"
-                onClick={() => setShowSidebar(false)}
-                className="menu-link"
-              >
-                <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="View Banners">Market Analysis</div>
-              </Link>
-            </li>
+            <ul className="menu-sub">
+              <li className="menu-item">
+                <Link
+                  to="/market-analysis"
+                  onClick={() => setShowSidebar(false)}
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="View Banners">Market Analysis</div>
+                </Link>
+              </li>
 
-            <li className="menu-item">
-              <Link
-                onClick={() => setShowSidebar(false)}
-                to="/current-bets"
-                className="menu-link"
-              >
-                <i className="menu-icon tf-icons bx bxs-institution"></i>
-                <div data-i18n="Add Banner">Current Bets</div>
-              </Link>
-            </li>
-          </ul>
-        </li>
-      )}
+              <li className="menu-item">
+                <Link
+                  onClick={() => setShowSidebar(false)}
+                  to="/current-bets"
+                  className="menu-link"
+                >
+                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                  <div data-i18n="Add Banner">Current Bets</div>
+                </Link>
+              </li>
+            </ul>
+          </li>
+        )}
 
       {adminRole === "master" && (
         <>
@@ -605,8 +588,9 @@ const MasterSidebar = () => {
       )}
 
       {adminRole === "master" ||
-      (adminRole === "branch_staff" && paymentPermission) ||
-      (adminRole === AdminRole.admin_staff && paymentPermission) ? (
+      (adminRole === "branch_staff" && permission.includes("payment")) ||
+      (adminRole === AdminRole.admin_staff &&
+        permission.includes("payment")) ? (
         <li
           onClick={() => handleOpenSidebarItem("report")}
           className={`menu-item ${sidebarItem === "report" ? "open" : ""}`}
@@ -755,7 +739,9 @@ const MasterSidebar = () => {
         </li>
       ) : null}
       {adminRole !== AdminRole.master &&
-        adminRole !== AdminRole.branch_staff && (
+        adminRole !== AdminRole.branch_staff &&
+        adminRole === AdminRole.admin_staff &&
+        permission.includes("setting") && (
           <li
             onClick={() => handleOpenSidebarItem("setting")}
             className={`menu-item ${sidebarItem === "setting" ? "open" : ""}`}
@@ -824,61 +810,62 @@ const MasterSidebar = () => {
                   <div data-i18n="Social Links">Add Notifications</div>
                 </Link>
               </li>
-              {adminRole === AdminRole.admin_staff && bonusPermission && (
-                <>
-                  <li className="menu-item">
-                    <Link
-                      to="/view-bonus"
-                      onClick={() => setShowSidebar(false)}
-                      className="menu-link"
-                    >
-                      <i className="menu-icon tf-icons bx bxs-institution"></i>
-                      <div data-i18n="View Banners">View Bonus</div>
-                    </Link>
-                  </li>
+              {adminRole === AdminRole.admin_staff &&
+                permission.includes("bonus") && (
+                  <>
+                    <li className="menu-item">
+                      <Link
+                        to="/view-bonus"
+                        onClick={() => setShowSidebar(false)}
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="View Banners">View Bonus</div>
+                      </Link>
+                    </li>
 
-                  <li className="menu-item">
-                    <Link
-                      onClick={() => setShowSidebar(false)}
-                      to="/add-bonus"
-                      className="menu-link"
-                    >
-                      <i className="menu-icon tf-icons bx bxs-institution"></i>
-                      <div data-i18n="Add Banner">Add Bonus</div>
-                    </Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link
-                      onClick={() => setShowSidebar(false)}
-                      to="/pending-bonus"
-                      className="menu-link"
-                    >
-                      <i className="menu-icon tf-icons bx bxs-institution"></i>
-                      <div data-i18n="Pending Withdraw">Pending Bonus</div>
-                    </Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link
-                      onClick={() => setShowSidebar(false)}
-                      to="/completed-bonus"
-                      className="menu-link"
-                    >
-                      <i className="menu-icon tf-icons bx bxs-institution"></i>
-                      <div data-i18n="Pending Withdraw">Completed Bonus</div>
-                    </Link>
-                  </li>
-                  <li className="menu-item">
-                    <Link
-                      onClick={() => setShowSidebar(false)}
-                      to="/rejected-bonus"
-                      className="menu-link"
-                    >
-                      <i className="menu-icon tf-icons bx bxs-institution"></i>
-                      <div data-i18n="Pending Withdraw">Rejected Bonus</div>
-                    </Link>
-                  </li>
-                </>
-              )}
+                    <li className="menu-item">
+                      <Link
+                        onClick={() => setShowSidebar(false)}
+                        to="/add-bonus"
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Add Banner">Add Bonus</div>
+                      </Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link
+                        onClick={() => setShowSidebar(false)}
+                        to="/pending-bonus"
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                      </Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link
+                        onClick={() => setShowSidebar(false)}
+                        to="/completed-bonus"
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Pending Withdraw">Completed Bonus</div>
+                      </Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link
+                        onClick={() => setShowSidebar(false)}
+                        to="/rejected-bonus"
+                        className="menu-link"
+                      >
+                        <i className="menu-icon tf-icons bx bxs-institution"></i>
+                        <div data-i18n="Pending Withdraw">Rejected Bonus</div>
+                      </Link>
+                    </li>
+                  </>
+                )}
             </ul>
           </li>
         )}

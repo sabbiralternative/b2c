@@ -11,7 +11,8 @@ const Master = () => {
 
   const [depositPermission, setDepositPermission] = useState(false);
   const [bonusPermission, setBonusPermission] = useState(false);
-
+  const [exposurePermission, setExposurePermission] = useState(false);
+  const [settingsPermission, setSettingsPermission] = useState(false);
   const [withdrawPermission, setWithdrawPermission] = useState(false);
   const [clientPermission, setClientPermission] = useState(false);
   const [reportPermission, setReportPermission] = useState(false);
@@ -76,6 +77,8 @@ const Master = () => {
         const reportPermission = permissions?.includes("report") ?? false;
         const paymentPermission = permissions?.includes("payment") ?? false;
         const bonusPermission = permissions?.includes("bonus") ?? false;
+        const exposurePermission = permissions?.includes("exposure") ?? false;
+        const settingsPermission = permissions?.includes("settings") ?? false;
 
         setDepositPermission(depositPermission);
         setWithdrawPermission(withdrawPermission);
@@ -83,12 +86,16 @@ const Master = () => {
         setReportPermission(reportPermission);
         setPaymentPermission(paymentPermission);
         setBonusPermission(bonusPermission);
+        setExposurePermission(exposurePermission);
+        setSettingsPermission(settingsPermission);
       } else {
         setDepositPermission(true);
         setWithdrawPermission(true);
         setClientPermission(true);
         setReportPermission(true);
         setPaymentPermission(true);
+        setExposurePermission(true);
+        setSettingsPermission(true);
       }
     }
   }, [adminRole, token]);
@@ -496,7 +503,7 @@ const Master = () => {
         </li>
       )}
 
-      {adminRole === AdminRole.admin_staff && (
+      {adminRole === AdminRole.admin_staff && exposurePermission && (
         <li
           onMouseEnter={() => setNavList("exposure")}
           onMouseLeave={() => setNavList(null)}
@@ -915,7 +922,9 @@ const Master = () => {
       ) : null}
 
       {adminRole != AdminRole.master &&
-        adminRole !== AdminRole.branch_staff && (
+        adminRole !== AdminRole.branch_staff &&
+        adminRole === AdminRole.admin_staff &&
+        settingsPermission && (
           <li
             onMouseEnter={() => setNavList("setting")}
             onMouseLeave={() => setNavList(null)}

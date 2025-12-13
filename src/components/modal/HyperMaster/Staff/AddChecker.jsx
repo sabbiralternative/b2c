@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
@@ -280,29 +280,54 @@ const AddChecker = ({ setShowAddChecker }) => {
                           </p>
                         </div>
                         {adminRole === AdminRole.hyper_master && (
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "start",
-                              gap: "3px",
-                            }}
-                          >
-                            <input
-                              value="exposure"
-                              style={{ height: "100%" }}
-                              type="checkbox"
-                              {...register("permissions", { required: true })}
-                            />
-                            <p
+                          <Fragment>
+                            <div
                               style={{
-                                margin: "0px",
-
-                                height: "100%",
+                                display: "flex",
+                                alignItems: "start",
+                                gap: "3px",
                               }}
                             >
-                              Exposure
-                            </p>
-                          </div>
+                              <input
+                                value="exposure"
+                                style={{ height: "100%" }}
+                                type="checkbox"
+                                {...register("permissions", { required: true })}
+                              />
+                              <p
+                                style={{
+                                  margin: "0px",
+
+                                  height: "100%",
+                                }}
+                              >
+                                Exposure
+                              </p>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "start",
+                                gap: "3px",
+                              }}
+                            >
+                              <input
+                                value="dashboard"
+                                style={{ height: "100%" }}
+                                type="checkbox"
+                                {...register("permissions", { required: true })}
+                              />
+                              <p
+                                style={{
+                                  margin: "0px",
+
+                                  height: "100%",
+                                }}
+                              >
+                                Dashboard
+                              </p>
+                            </div>
+                          </Fragment>
                         )}
                       </div>
                     </div>

@@ -65,6 +65,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
   const depositWithSlip = staffData?.includes("depositWithSlip") ?? false;
   const directWithdraw = staffData?.includes("directWithdraw") ?? false;
   const bonus = staffData?.includes("bonus") ?? false;
+  const dashboard = staffData?.includes("dashboard") ?? false;
 
   if (!checkerData?.success) {
     return null;
@@ -377,6 +378,30 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                               }}
                             >
                               Bonus
+                            </p>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "start",
+                              gap: "3px",
+                            }}
+                          >
+                            <input
+                              value="dashboard"
+                              style={{ height: "100%" }}
+                              type="checkbox"
+                              {...register("permissions", { required: true })}
+                              defaultChecked={dashboard}
+                            />
+                            <p
+                              style={{
+                                margin: "0px",
+
+                                height: "100%",
+                              }}
+                            >
+                              Dashboard
                             </p>
                           </div>
                         </Fragment>
