@@ -11,7 +11,9 @@ const HyperMasterSidebar = () => {
     setShowSidebar,
     setShowAddBranch,
     setShowSocialLink,
-    setAddChecker,
+    setShowAddStaff,
+
+    setShowAddBranchStaff,
     adminRole,
     setAddWhiteLabel,
     setShowDWLimit,
@@ -671,14 +673,33 @@ const HyperMasterSidebar = () => {
                 <Link
                   onClick={() => {
                     setShowSidebar(false);
-                    setAddChecker(true);
+                    setShowAddStaff(true);
                   }}
                   className="menu-link"
                 >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Banner">Add Checker</div>
+                  <div data-i18n="Add Banner">
+                    {" "}
+                    {adminRole === AdminRole.hyper_master
+                      ? "Add Admin Staff"
+                      : "Add Staff"}
+                  </div>
                 </Link>
               </li>
+              {adminRole === AdminRole.hyper_master && (
+                <li className="menu-item">
+                  <Link
+                    onClick={() => {
+                      setShowSidebar(false);
+                      setShowAddBranchStaff(true);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Banner">Add Branch Staff</div>
+                  </Link>
+                </li>
+              )}
             </ul>
           </li>
         </>

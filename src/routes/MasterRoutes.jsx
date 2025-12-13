@@ -1,4 +1,3 @@
-import ViewChecker from "../pages/HyperMaster/Staff/ViewChecker";
 import ActivityLogs from "../pages/Master/ActivityLogs/ActivityLogs";
 import CompletedBonus from "../pages/Master/Bonus/CompletedBonus/CompletedBonus";
 import PendingBonus from "../pages/Master/Bonus/PendingBonus/PendingBonus";
@@ -36,6 +35,7 @@ import PendingWithdraw from "../pages/Master/Withdraw/PendingWithdraw";
 import RejectedWithdraw from "../pages/Master/Withdraw/RejectedWithdraw";
 import AddTOITPaymentGateway from "../pages/Master/Payments/AddTOITPaymentGateway";
 import AddI100PaymentGateway from "../pages/Master/Payments/AddI100PaymentGateway";
+import ViewStaff from "../pages/HyperMaster/Staff/ViewStaff";
 
 export const MasterRoutes = [
   {
@@ -181,7 +181,7 @@ export const MasterRoutes = [
   },
   {
     path: "/view-staff",
-    element: <ViewChecker />,
+    element: <ViewStaff />,
   },
   {
     path: "/activity-logs",

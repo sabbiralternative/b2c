@@ -5,7 +5,7 @@ import UpdatePassword from "../../../components/modal/HyperMaster/Staff/UpdatePa
 import useContextState from "../../../hooks/useContextState";
 import UpdatePermission from "../../../components/modal/Master/UpdatePermission";
 
-const ViewChecker = () => {
+const ViewStaff = () => {
   const { adminRole } = useContextState();
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
@@ -107,4 +107,4 @@ const ViewChecker = () => {
   );
 };
 
-export default ViewChecker;
+export default ViewStaff;

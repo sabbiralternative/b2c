@@ -11,13 +11,13 @@ import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 import { AdminRole } from "../../../../constant/constant";
 
-const AddChecker = ({ setShowAddChecker }) => {
+const AddAdminStaff = ({ setShowAddStaff }) => {
   const [disabled, setDisabled] = useState(false);
   const { adminRole } = useContextState();
 
   const addCheckerRef = useRef();
   useCloseModalClickOutside(addCheckerRef, () => {
-    setShowAddChecker(false);
+    setShowAddStaff(false);
   });
   const { register, handleSubmit, reset } = useForm();
   const { mutate: addChecker } = useAddChecker();
@@ -52,7 +52,7 @@ const AddChecker = ({ setShowAddChecker }) => {
           refetch();
           toast.success(data?.result);
           reset();
-          setShowAddChecker(false);
+          setShowAddStaff(false);
         } else {
           setDisabled(false);
           toast.error(data?.error);
@@ -102,10 +102,10 @@ const AddChecker = ({ setShowAddChecker }) => {
           <div className="modal-content" ref={addCheckerRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Add {adminRole === "master" ? "Staff" : "admin_staff"}
+                Add {adminRole === "master" ? "Staff" : "Admin Staff"}
               </h5>
               <button
-                onClick={() => setShowAddChecker(false)}
+                onClick={() => setShowAddStaff(false)}
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
@@ -228,7 +228,7 @@ const AddChecker = ({ setShowAddChecker }) => {
               </div>
               <div className="modal-footer">
                 <button
-                  onClick={() => setShowAddChecker(false)}
+                  onClick={() => setShowAddStaff(false)}
                   type="button"
                   className="btn btn-label-secondary"
                   data-bs-dismiss="modal"
@@ -251,4 +251,4 @@ const AddChecker = ({ setShowAddChecker }) => {
   );
 };
 
-export default AddChecker;
+export default AddAdminStaff;

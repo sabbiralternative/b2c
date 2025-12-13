@@ -9,7 +9,9 @@ const HyperMaster = () => {
     setShowAddSuperBranch,
     setShowAddBranch,
     setShowSocialLink,
-    setAddChecker,
+    setShowAddStaff,
+
+    setShowAddBranchStaff,
     adminRole,
     setAddWhiteLabel,
     setShowDWLimit,
@@ -940,7 +942,7 @@ const HyperMaster = () => {
             <ul className="menu-sub">
               <li className="menu-item">
                 <a
-                  onClick={() => handleNavigate("view-checker")}
+                  onClick={() => handleNavigate("view-staff")}
                   className="menu-link"
                 >
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
@@ -948,11 +950,26 @@ const HyperMaster = () => {
                 </a>
               </li>
               <li className="menu-item">
-                <a onClick={() => setAddChecker(true)} className="menu-link">
+                <a onClick={() => setShowAddStaff(true)} className="menu-link">
                   <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Add Staff</div>
+                  <div data-i18n="Pending Withdraw">
+                    {adminRole === AdminRole.hyper_master
+                      ? "Add Admin Staff"
+                      : "Add Staff"}
+                  </div>
                 </a>
               </li>
+              {adminRole === AdminRole.hyper_master && (
+                <li className="menu-item">
+                  <a
+                    onClick={() => setShowAddBranchStaff(true)}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">Add Branch Staff</div>
+                  </a>
+                </li>
+              )}
             </ul>
           </li>
         </>

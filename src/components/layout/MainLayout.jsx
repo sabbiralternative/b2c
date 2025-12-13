@@ -15,12 +15,13 @@ import EditPayment from "../modal/Master/Payment/EditPayment";
 // import SiteNotification from "../modal/HyperMaster/Settings/SiteNotification";
 import toast from "react-hot-toast";
 import DirectDeposit from "../modal/Master/Client/DirectDeposit";
-import AddChecker from "../modal/HyperMaster/Staff/AddChecker";
+import AddAdminStaff from "../modal/HyperMaster/Staff/AddAdminStaff";
 import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
 import { useVerifyUser } from "../../hooks/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import AddSuperBranch from "../modal/HyperMaster/Branch/AddSuperBranch";
 import UpdateDWLimit from "../modal/HyperMaster/Settings/UpdateDWLimit";
+import AddBranchStaff from "../modal/HyperMaster/Staff/AddBranchStaff";
 // import AddPaymentGateway from "../../pages/Master/Payments/AddPaymentGateway";
 
 const MainLayout = () => {
@@ -48,8 +49,10 @@ const MainLayout = () => {
     showEditPayment,
     setShowEditPayment,
 
-    showAddChecker,
-    setAddChecker,
+    showAddStaff,
+    setShowAddStaff,
+    showAddBranchStaff,
+    setShowAddBranchStaff,
     addWhiteLabel,
     setAddWhiteLabel,
     id,
@@ -172,7 +175,12 @@ const MainLayout = () => {
               <EditPayment setShowEditPayment={setShowEditPayment} />
             )}
 
-            {showAddChecker && <AddChecker setShowAddChecker={setAddChecker} />}
+            {showAddStaff && (
+              <AddAdminStaff setShowAddStaff={setShowAddStaff} />
+            )}
+            {showAddBranchStaff && (
+              <AddBranchStaff setShowAddBranchStaff={setShowAddBranchStaff} />
+            )}
             {/* {addPaymentGateway && (
               <AddPaymentGateway setAddPaymentGateway={setAddPaymentGateway} />
             )} */}

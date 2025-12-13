@@ -36,7 +36,8 @@ const StateProvider = ({ children }) => {
   const [siteNotification, setSiteNotification] = useState(false);
   const [noticeLoaded, setNoticeLoaded] = useState(false);
   const [directDeposit, setDirectDeposit] = useState(false);
-  const [showAddChecker, setAddChecker] = useState(false);
+  const [showAddStaff, setShowAddStaff] = useState(false);
+  const [showAddBranchStaff, setShowAddBranchStaff] = useState(false);
   const [payloadRole, setPayloadRole] = useState("");
   const [addWhiteLabel, setAddWhiteLabel] = useState(false);
   const [id, setId] = useState("");
@@ -151,8 +152,10 @@ const StateProvider = ({ children }) => {
     setSiteNotification,
     directDeposit,
     setDirectDeposit,
-    showAddChecker,
-    setAddChecker,
+    showAddStaff,
+    setShowAddStaff,
+    showAddBranchStaff,
+    setShowAddBranchStaff,
     payloadRole,
     setPayloadRole,
     addWhiteLabel,

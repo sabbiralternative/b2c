@@ -7,9 +7,10 @@ import MarketAnalysis from "../pages/HyperMaster/Exposure/MarketAnalysis";
 import CurrentBets from "../pages/HyperMaster/Exposure/CurrentBets";
 import AddBonus from "../pages/HyperMaster/Bonus/AddBonus";
 import ViewBonus from "../pages/HyperMaster/Bonus/ViewBonus";
-import ViewChecker from "../pages/HyperMaster/Staff/ViewChecker";
+
 import ViewSuperBranch from "../pages/HyperMaster/ViewSuperBranch/ViewSuperBranch";
 import AddLoginBanner from "../pages/HyperMaster/Settings/AddLoginBanner";
+import ViewStaff from "../pages/HyperMaster/Staff/ViewStaff";
 
 export const HyperMasterRoutes = [
   {
@@ -57,7 +58,7 @@ export const HyperMasterRoutes = [
     element: <ViewBonus />,
   },
   {
-    path: "/view-checker",
-    element: <ViewChecker />,
+    path: "/view-staff",
+    element: <ViewStaff />,
   },
 ];
