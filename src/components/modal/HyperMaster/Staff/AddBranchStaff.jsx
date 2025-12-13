@@ -10,11 +10,11 @@ import {
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 import { AdminRole } from "../../../../constant/constant";
-import { useWhiteLabel } from "../../../../hooks/AdminMaster/whiteLabel";
+import { useGetIndex } from "../../../../hooks";
 
 const AddBranchStaff = ({ setShowAddBranchStaff }) => {
-  const { data } = useWhiteLabel({
-    type: "viewWhitelabelByAdmin",
+  const { data } = useGetIndex({
+    type: "getBranches",
   });
   const [disabled, setDisabled] = useState(false);
   const { adminRole } = useContextState();
@@ -114,7 +114,7 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
                           className="col-sm-2 col-form-label"
                           htmlFor="basic-default-name"
                         >
-                          Site *
+                          Branch *
                         </label>
                         <div className="col-sm-10">
                           <select
@@ -125,14 +125,14 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
                             className="form-control"
                           >
                             <option disabled value="">
-                              Select Site
+                              Select Branch
                             </option>
-                            {data?.result?.map((site) => (
+                            {data?.result?.map((branch) => (
                               <option
-                                key={site?.site_url}
-                                value={site?.site_url}
+                                key={branch?.branch_id}
+                                value={branch?.branch_id}
                               >
-                                {site?.site_url}
+                                {branch?.branch_name}
                               </option>
                             ))}
                           </select>

@@ -9,8 +9,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
+import { AdminRole } from "../../constant/constant";
+import { useGetIndex } from "../../hooks";
 
 const ClientBranchChangeReport = () => {
+  const [branchId, setBranchId] = useState(0);
   const [refetch, setRefetch] = useState(false);
   const [activePage, setActivePage] = useState(1);
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -18,7 +21,9 @@ const ClientBranchChangeReport = () => {
   const [viewClientData, setViewClientData] = useState(false);
   const [clientData, setClientData] = useState([]);
   const navigate = useNavigate();
-
+  const { data } = useGetIndex({
+    type: "getBranches",
+  });
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
 
@@ -32,6 +37,13 @@ const ClientBranchChangeReport = () => {
       pagination: true,
       page: activePage,
     };
+
+    if (
+      adminRole === AdminRole.admin_staff ||
+      adminRole === AdminRole.hyper_master
+    ) {
+      payload.branch_id = branchId;
+    }
     const res = await axios.post(API.export, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -85,8 +97,8 @@ const ClientBranchChangeReport = () => {
               className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
             >
               <div className="col-md-6 col-12 mb-4">
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <div style={{ width: "100%" }}>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  <div style={{ width: "100%", maxWidth: "200px" }}>
                     <label htmlFor="flatpickr-range" className="form-label">
                       From Date
                     </label>
@@ -99,7 +111,7 @@ const ClientBranchChangeReport = () => {
                       block
                     />
                   </div>
-                  <div style={{ width: "100%" }}>
+                  <div style={{ width: "100%", maxWidth: "200px" }}>
                     <label htmlFor="flatpickr-range" className="form-label">
                       To Date
                     </label>
@@ -112,6 +124,33 @@ const ClientBranchChangeReport = () => {
                       block
                     />
                   </div>
+                  {(adminRole === AdminRole.admin_staff ||
+                    adminRole === AdminRole.hyper_master) && (
+                    <div style={{ width: "100%", maxWidth: "200px" }}>
+                      <label htmlFor="flatpickr-range" className="form-label">
+                        Branch
+                      </label>
+                      <select
+                        style={{ width: "100%" }}
+                        defaultValue="0"
+                        onChange={(e) => {
+                          setBranchId(e.target.value);
+                          setActivePage(1);
+                        }}
+                        className="form-control"
+                      >
+                        <option disabled value="">
+                          Branch
+                        </option>
+                        <option value="0">All Branch</option>
+                        {data?.result?.map((site) => (
+                          <option key={site?.branch_id} value={site?.branch_id}>
+                            {site?.branch_name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                 </div>
 
                 <DefaultDateButton
