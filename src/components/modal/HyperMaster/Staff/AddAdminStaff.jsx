@@ -192,33 +192,25 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
                         }}
                       >
                         {permissionsList.map((permission) => {
-                          if (!permission.show) return;
+                          if (!permission.show) return null;
+
                           return (
-                            <div
+                            <label
                               key={permission.value}
                               style={{
                                 display: "flex",
-                                alignItems: "start",
-
+                                alignItems: "center",
                                 gap: "3px",
+                                cursor: "pointer",
                               }}
                             >
                               <input
-                                style={{ height: "100%" }}
                                 type="checkbox"
                                 {...register("permissions", { required: true })}
                                 value={permission.value}
                               />
-                              <p
-                                style={{
-                                  margin: "0px",
-
-                                  height: "100%",
-                                }}
-                              >
-                                {permission.label}
-                              </p>
-                            </div>
+                              <span>{permission.label}</span>
+                            </label>
                           );
                         })}
                       </div>
