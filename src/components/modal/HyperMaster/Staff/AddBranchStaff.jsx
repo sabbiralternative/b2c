@@ -119,7 +119,7 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
                         <div className="col-sm-10">
                           <select
                             defaultValue=""
-                            {...register("brach_id", {
+                            {...register("branch_id", {
                               required: true,
                             })}
                             className="form-control"
