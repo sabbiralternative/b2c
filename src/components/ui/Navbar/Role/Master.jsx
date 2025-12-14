@@ -12,7 +12,7 @@ const Master = () => {
 
   const [siteNotification, setSiteNotification] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
-  const { readOnly, setShowSocialLink, adminRole, setAddChecker, token } =
+  const { readOnly, setShowSocialLink, adminRole, setShowAddStaff, token } =
     useContextState();
   const { dwCount } = useGetDWCount();
 
@@ -63,7 +63,7 @@ const Master = () => {
       ) {
         const decode = jwtDecode(token);
         const permissions = decode?.permissions;
-        console.log(permission);
+
         setPermission(permissions);
       } else {
         setPermission([
@@ -208,7 +208,7 @@ const Master = () => {
         </li>
       ) : null}
 
-      {adminRole === "master" ||
+      {(adminRole === "master" && permission.includes("payment")) ||
       (adminRole === "branch_staff" && permission.includes("payment")) ||
       (adminRole === AdminRole.admin_staff &&
         permission.includes("payment")) ? (
@@ -529,137 +529,146 @@ const Master = () => {
 
       {(adminRole === "master" || adminRole === AdminRole.branch_staff) && (
         <>
-          <li
-            onMouseEnter={() => setNavList("bonus")}
-            onMouseLeave={() => setNavList(null)}
-            className={`menu-item ${navList === "bonus" ? "open" : ""}`}
-          >
-            <a className="menu-link menu-toggle">
-              {dwCount?.claimCount !== 0 ? (
-                <span
-                  style={{
-                    borderRadius: "5px",
-                    backgroundColor: "#39da8a",
-                    marginRight: "5px",
-                    padding: "0px 4px",
-                    color: "black",
-                    fontWeight: "500",
-                  }}
-                >
-                  {dwCount?.claimCount}
-                </span>
-              ) : (
-                <i className="menu-icon tf-icons bx bx-layout"></i>
-              )}
-
-              <div data-i18n="Withdraw">Bonus</div>
-            </a>
-
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("pending-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Pending Bonus</div>
-                </a>
-              </li>
-
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("completed-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Completed Withdraw">Completed Bonus</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("rejected-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li
-            onMouseEnter={() => setNavList("exposure")}
-            onMouseLeave={() => setNavList(null)}
-            className={`menu-item ${navList === "exposure" ? "open" : ""}`}
-          >
-            <a
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              className="menu-link menu-toggle"
+          {permission.includes("bonus") && (
+            <li
+              onMouseEnter={() => setNavList("bonus")}
+              onMouseLeave={() => setNavList(null)}
+              className={`menu-item ${navList === "bonus" ? "open" : ""}`}
             >
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Settings">Exposure</div>
-            </a>
+              <a className="menu-link menu-toggle">
+                {dwCount?.claimCount !== 0 ? (
+                  <span
+                    style={{
+                      borderRadius: "5px",
+                      backgroundColor: "#39da8a",
+                      marginRight: "5px",
+                      padding: "0px 4px",
+                      color: "black",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {dwCount?.claimCount}
+                  </span>
+                ) : (
+                  <i className="menu-icon tf-icons bx bx-layout"></i>
+                )}
 
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("market-analysis")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">Market Analysis</div>
-                </a>
-              </li>
+                <div data-i18n="Withdraw">Bonus</div>
+              </a>
 
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("current-bets")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Banner">Current Bets</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li
-            onMouseEnter={() => setNavList("staff")}
-            onMouseLeave={() => setNavList(null)}
-            className={`menu-item ${navList === "staff" ? "open" : ""}`}
-          >
-            <a className="menu-link menu-toggle">
-              <i className="menu-icon tf-icons bx bx-layout"></i>
+              <ul className="menu-sub">
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("pending-bonus")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                  </a>
+                </li>
 
-              <div data-i18n="Withdraw">Staff</div>
-            </a>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("completed-bonus")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Completed Withdraw">Completed Bonus</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("rejected-bonus")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Rejected Withdraw">Rejected Bonus</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
+          {permission.includes("exposure") && (
+            <li
+              onMouseEnter={() => setNavList("exposure")}
+              onMouseLeave={() => setNavList(null)}
+              className={`menu-item ${navList === "exposure" ? "open" : ""}`}
+            >
+              <a
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                className="menu-link menu-toggle"
+              >
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Settings">Exposure</div>
+              </a>
 
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("view-staff")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">View Staff</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a onClick={() => setAddChecker(true)} className="menu-link">
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Add Staff</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <ul className="menu-sub">
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("market-analysis")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="View Banners">Market Analysis</div>
+                  </a>
+                </li>
+
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("current-bets")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Banner">Current Bets</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
+          {permission.includes("staff") && (
+            <li
+              onMouseEnter={() => setNavList("staff")}
+              onMouseLeave={() => setNavList(null)}
+              className={`menu-item ${navList === "staff" ? "open" : ""}`}
+            >
+              <a className="menu-link menu-toggle">
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+
+                <div data-i18n="Withdraw">Staff</div>
+              </a>
+
+              <ul className="menu-sub">
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("view-staff")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">View Staff</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => setShowAddStaff(true)}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">Add Staff</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
         </>
       )}
-      {adminRole === "master" ||
-      (adminRole === "admin_staff" && permission.includes("report")) ||
-      (adminRole === "branch_staff" && permission.includes("report")) ? (
+      {(adminRole === "master" ||
+        adminRole === "admin_staff" ||
+        adminRole === "branch_staff") &&
+      permission.includes("report") ? (
         <li
           onMouseEnter={() => setNavList("report")}
           onMouseLeave={() => setNavList(null)}

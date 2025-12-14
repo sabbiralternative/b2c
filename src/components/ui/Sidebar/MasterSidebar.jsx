@@ -9,8 +9,13 @@ const MasterSidebar = () => {
   const [permission, setPermission] = useState([]);
 
   const navigate = useNavigate();
-  const { setShowSidebar, setShowSocialLink, adminRole, setAddChecker, token } =
-    useContextState();
+  const {
+    setShowSidebar,
+    setShowSocialLink,
+    adminRole,
+    setShowAddStaff,
+    token,
+  } = useContextState();
 
   const handleNavigate = (link) => {
     navigate(`/${link}`);
@@ -478,114 +483,122 @@ const MasterSidebar = () => {
           </li>
         )}
 
-      {adminRole === "master" && (
+      {(adminRole === "master" || adminRole === AdminRole.branch_staff) && (
         <>
-          <li
-            onClick={() => handleOpenSidebarItem("bonus")}
-            className={`menu-item ${sidebarItem === "bonus" ? "open" : ""}`}
-          >
-            <a className="menu-link menu-toggle">
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Withdraw">Bonus</div>
-            </a>
+          {permission.includes("bonus") && (
+            <li
+              onClick={() => handleOpenSidebarItem("bonus")}
+              className={`menu-item ${sidebarItem === "bonus" ? "open" : ""}`}
+            >
+              <a className="menu-link menu-toggle">
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Withdraw">Bonus</div>
+              </a>
 
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("pending-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Pending Bonus</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("completed-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Completed Bonus</div>
-                </a>
-              </li>
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("rejected-bonus")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Rejected Bonus</div>
-                </a>
-              </li>
-            </ul>
-          </li>
+              <ul className="menu-sub">
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("pending-bonus")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">Pending Bonus</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("completed-bonus")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">Completed Bonus</div>
+                  </a>
+                </li>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("rejected-bonus")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">Rejected Bonus</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
 
-          <li
-            onClick={() => handleOpenSidebarItem("exposure")}
-            className={`menu-item ${sidebarItem === "exposure" ? "open" : ""}`}
-          >
-            <a className="menu-link menu-toggle">
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Withdraw">Exposure</div>
-            </a>
+          {permission.includes("exposure") && (
+            <li
+              onClick={() => handleOpenSidebarItem("exposure")}
+              className={`menu-item ${
+                sidebarItem === "exposure" ? "open" : ""
+              }`}
+            >
+              <a className="menu-link menu-toggle">
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Withdraw">Exposure</div>
+              </a>
 
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("market-analysis")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Pending Withdraw">Market Analysis</div>
-                </a>
-              </li>
+              <ul className="menu-sub">
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("market-analysis")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Pending Withdraw">Market Analysis</div>
+                  </a>
+                </li>
 
-              <li className="menu-item">
-                <a
-                  onClick={() => handleNavigate("current-bets")}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Completed Withdraw">Current Bets</div>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li
-            onClick={() => handleOpenSidebarItem("staff")}
-            className={`menu-item ${sidebarItem === "staff" ? "open" : ""}`}
-          >
-            <a className="menu-link menu-toggle">
-              <i className="menu-icon tf-icons bx bx-layout"></i>
-              <div data-i18n="Settings">Staff</div>
-            </a>
+                <li className="menu-item">
+                  <a
+                    onClick={() => handleNavigate("current-bets")}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Completed Withdraw">Current Bets</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          )}
+          {permission.includes("staff") && (
+            <li
+              onClick={() => handleOpenSidebarItem("staff")}
+              className={`menu-item ${sidebarItem === "staff" ? "open" : ""}`}
+            >
+              <a className="menu-link menu-toggle">
+                <i className="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Settings">Staff</div>
+              </a>
 
-            <ul className="menu-sub">
-              <li className="menu-item">
-                <Link
-                  to="/view-staff"
-                  onClick={() => setShowSidebar(false)}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="View Banners">View Staff</div>
-                </Link>
-              </li>
+              <ul className="menu-sub">
+                <li className="menu-item">
+                  <Link
+                    to="/view-staff"
+                    onClick={() => setShowSidebar(false)}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="View Banners">View Staff</div>
+                  </Link>
+                </li>
 
-              <li className="menu-item">
-                <Link
-                  onClick={() => {
-                    setShowSidebar(false);
-                    setAddChecker(true);
-                  }}
-                  className="menu-link"
-                >
-                  <i className="menu-icon tf-icons bx bxs-institution"></i>
-                  <div data-i18n="Add Banner">Add Staff</div>
-                </Link>
-              </li>
-            </ul>
-          </li>
+                <li className="menu-item">
+                  <Link
+                    onClick={() => {
+                      setShowSidebar(false);
+                      setShowAddStaff(true);
+                    }}
+                    className="menu-link"
+                  >
+                    <i className="menu-icon tf-icons bx bxs-institution"></i>
+                    <div data-i18n="Add Banner">Add Staff</div>
+                  </Link>
+                </li>
+              </ul>
+            </li>
+          )}
         </>
       )}
 
