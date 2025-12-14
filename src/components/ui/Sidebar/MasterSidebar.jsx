@@ -42,6 +42,7 @@ const MasterSidebar = () => {
           "bonus",
           "exposure",
           "setting",
+          "staff",
         ]);
       }
     }
@@ -54,6 +55,122 @@ const MasterSidebar = () => {
       setSidebarItem(item);
     }
   };
+
+  const navItems = [
+    { label: "Dashboard", href: "/" },
+    {
+      tab: "Clients",
+      key: "client",
+      children: [
+        {
+          label: "View Clients",
+          href: "/view-client",
+        },
+        {
+          label: "Add Client",
+          href: "/add-client",
+        },
+        {
+          label: "Clients With Balance",
+          href: "/clients-with-balance",
+        },
+        {
+          label: "All Client",
+          href: "/all-client",
+        },
+        {
+          label: "Active Client",
+          href: "/active-client",
+        },
+        {
+          label: "Inactive Client",
+          href: "/inactive-client",
+        },
+        {
+          label: "Suspended Client",
+          href: "/suspended-client",
+        },
+      ],
+    },
+    {
+      tab: "Statement",
+      key: "statement",
+      children: [
+        {
+          label: "All Statement",
+          href: "/all-statement",
+        },
+        {
+          label: "Deposit Statement",
+          href: "/deposit-statement",
+        },
+        {
+          label: "Withdraw Statement",
+          href: "/withdraw-statement",
+        },
+      ],
+    },
+    {
+      tab: "Payments",
+      key: "payment",
+      children: [
+        {
+          label: "View Payment Method",
+          href: "/view-payment-method",
+        },
+        {
+          label: "Add Bank Account",
+          href: "/add-bank-account",
+        },
+        {
+          label: "Add QR",
+          href: "/add-QR",
+        },
+        {
+          label: "Add UPI",
+          href: "/add-UPI",
+        },
+        {
+          label: "Add Whatsapp Deposit",
+          href: "/add-whatsapp-deposit",
+        },
+        {
+          label: "Add USDT (TRC20)",
+          href: "/add-USDT-TRC20",
+        },
+        {
+          label: "Add USDT (BEP20)",
+          href: "/add-USDT-BEP20",
+        },
+        {
+          label: "Add UPI Payment Gateway",
+          href: "/add-payment-gateway",
+        },
+        {
+          label: "Add TOIT Payment Gateway",
+          href: "/add-toit-payment-gateway",
+        },
+        {
+          label: "Add i100 Payment Gateway",
+          href: "/add-i100-payment-gateway",
+        },
+      ],
+    },
+    {
+      tab: "Deposit",
+      key: "deposit",
+      children: [
+        {
+          label: "Pending Deposit",
+          href: "/pending-deposit",
+        },
+        {
+          label: "Completed Deposit",
+          href: "/completed-deposit",
+        },
+      ],
+    },
+  ];
 
   return (
     <ul className="menu-inner overflow-auto" style={{ marginLeft: "0px" }}>

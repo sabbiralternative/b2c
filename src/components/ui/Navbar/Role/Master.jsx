@@ -75,6 +75,7 @@ const Master = () => {
           "bonus",
           "exposure",
           "settings",
+          "staff",
         ]);
       }
     }
