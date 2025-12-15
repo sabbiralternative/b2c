@@ -86,6 +86,11 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
     { label: "Bonus", value: "bonus", show: true },
     { label: "Exposure", value: "exposure", show: true },
     { label: "Dashboard", value: "dashboard", show: true },
+    {
+      label: "Password",
+      value: "password",
+      show: adminRole === AdminRole.master,
+    },
   ];
 
   return (

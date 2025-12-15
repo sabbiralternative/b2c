@@ -13,16 +13,14 @@ const ClientPermission = ({
   showMore,
   showMoreRef,
   setShowChangePassword,
-  clientPermission,
-  depositPermission,
-  withdrawPermission,
+  permission,
   setDirectDeposit,
   setDirectWithdraw,
   setClientDeposit,
 }) => {
   return (
     <td style={{ display: "flex", gap: "3px" }}>
-      {depositPermission && (
+      {permission.includes("deposit") && (
         <Fragment>
           <a
             style={{
@@ -61,7 +59,7 @@ const ClientPermission = ({
           </a>
         </Fragment>
       )}
-      {withdrawPermission && (
+      {permission.includes("withdraw") && (
         <Fragment>
           <a
             style={{
@@ -82,26 +80,86 @@ const ClientPermission = ({
           </a>
         </Fragment>
       )}
-      {clientPermission && (
-        <Fragment>
-          <a
-            style={{
-              color: "white",
-              cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-            }}
-            onClick={() => {
-              handleOpenModal(
-                setShowChangePassword,
-                client?.username,
-                client?.role,
-                client?.downlineId
-              );
-            }}
-            className="btn btn-icon btn-sm btn-info"
-          >
-            P
-          </a>
+      {permission.includes("depositWithSlip") && (
+        <a
+          style={{
+            color: "white",
+            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+          }}
+          onClick={() =>
+            handleOpenModal(
+              setClientDeposit,
+              client?.username,
+              client?.role,
+              client?.downlineId
+            )
+          }
+          className="btn btn-icon btn-sm btn-success"
+        >
+          D
+        </a>
+      )}
 
+      {permission?.includes("directWithdraw") && (
+        <a
+          style={{
+            color: "white",
+            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+          }}
+          onClick={() => {
+            handleOpenModal(
+              setDirectWithdraw,
+              client?.username,
+              client?.role,
+              client?.downlineId
+            );
+          }}
+          className="btn btn-icon btn-sm btn-danger"
+        >
+          W
+        </a>
+      )}
+      {permission?.includes("directDeposit") && (
+        <a
+          style={{
+            color: "white",
+            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+          }}
+          onClick={() => {
+            handleOpenModal(
+              setDirectDeposit,
+              client?.username,
+              client?.role,
+              client?.downlineId
+            );
+          }}
+          className="btn btn-icon btn-sm btn-success"
+        >
+          DD
+        </a>
+      )}
+
+      {permission.includes("password") && (
+        <a
+          style={{
+            color: "white",
+            cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+          }}
+          onClick={() => {
+            handleOpenModal(
+              setShowChangePassword,
+              client?.username,
+              client?.role,
+              client?.downlineId
+            );
+          }}
+          className="btn btn-icon btn-sm btn-info"
+        >
+          P
+        </a>
+      )}
+      {permission.includes("client") && (
+        <Fragment>
           <a
             style={{
               color: "white",
