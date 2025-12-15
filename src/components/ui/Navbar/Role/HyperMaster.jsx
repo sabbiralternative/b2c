@@ -75,6 +75,7 @@ const HyperMaster = () => {
     setShowStaff(false);
     setShowWhiteLabel(false);
   };
+
   return (
     <ul className="menu-inner" style={{ marginLeft: "0px" }}>
       <li className="menu-item">
