@@ -15,7 +15,7 @@ const Home = () => {
   const { permissions } = usePermission();
   const { data } = useGetIndex({ type: "getDashboardDW" });
   const { balanceData, isLoading, isPending } = useBalance({
-    date: moment(date).format("YYYY-MM-DD"),
+    date: moment(date).format("DD-MM-YYYY"),
     user_id: user?.user_id,
     role: user?.role,
   });
@@ -34,15 +34,24 @@ const Home = () => {
   const deposit = data?.result?.deposit;
   const withdraw = data?.result?.withdraw;
 
+  const today = new Date();
+  const disableOutsideLast14Days = (date) => {
+    const start = new Date();
+    start.setDate(today.getDate() - 14);
+
+    return date < start || date > today;
+  };
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div style={{ marginBottom: "10px" }}>
         <DatePicker
           style={{ width: "100%", maxWidth: "300px" }}
-          format="yyyy-MM-dd"
-          editable
-          onChange={(date) => setDate(date)}
+          format="dd-MM-yyyy"
+          editable={false}
           value={date}
+          onChange={setDate}
+          disabledDate={disableOutsideLast14Days}
           block
         />
       </div>
