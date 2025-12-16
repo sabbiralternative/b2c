@@ -9,9 +9,11 @@ import {
 } from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
-import { AdminRole } from "../../../../constant/constant";
+import { usePermission } from "../../../../hooks/use-permission";
+import { permissionsList } from "../../../../constant/constant";
 
 const AddAdminStaff = ({ setShowAddStaff }) => {
+  const { permissions } = usePermission();
   const [disabled, setDisabled] = useState(false);
   const { adminRole } = useContextState();
 
@@ -60,38 +62,6 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
       },
     });
   };
-
-  const permissionsList = [
-    { label: "Deposit", value: "deposit", show: true },
-    { label: "Withdraw", value: "withdraw", show: true },
-    { label: "Client", value: "client", show: true },
-    { label: "Payment", value: "payment", show: true },
-    { label: "Report", value: "report", show: true },
-    {
-      label: "Direct Deposit",
-      value: "directDeposit",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    {
-      label: "Deposit With Slip",
-      value: "depositWithSlip",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    {
-      label: "Direct Withdraw",
-      value: "directWithdraw",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    { label: "Settings", value: "settings", show: true },
-    { label: "Bonus", value: "bonus", show: true },
-    { label: "Exposure", value: "exposure", show: true },
-    { label: "Dashboard", value: "dashboard", show: true },
-    {
-      label: "Password",
-      value: "password",
-      show: adminRole === AdminRole.master,
-    },
-  ];
 
   return (
     <>
@@ -177,50 +147,49 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
                       />
                     </div>
                   </div>
-                  {(adminRole === "master" ||
-                    adminRole === AdminRole.hyper_master) && (
-                    <div className="row mb-3" id="ifsc_div">
-                      <label
-                        style={{ paddingTop: "0px" }}
-                        className="col-sm-2 col-form-label"
-                        htmlFor="basic-default-company"
-                      >
-                        Permissions
-                      </label>
-                      <div
-                        className="col-sm-10"
-                        style={{
-                          display: "flex",
 
-                          gap: "15px",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        {permissionsList.map((permission) => {
-                          if (!permission.show) return null;
+                  <div className="row mb-3" id="ifsc_div">
+                    <label
+                      style={{ paddingTop: "0px" }}
+                      className="col-sm-2 col-form-label"
+                      htmlFor="basic-default-company"
+                    >
+                      Permissions
+                    </label>
+                    <div
+                      className="col-sm-10"
+                      style={{
+                        display: "flex",
 
-                          return (
-                            <label
-                              key={permission.value}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "3px",
-                                cursor: "pointer",
-                              }}
-                            >
-                              <input
-                                type="checkbox"
-                                {...register("permissions", { required: true })}
-                                value={permission.value}
-                              />
-                              <span>{permission.label}</span>
-                            </label>
-                          );
-                        })}
-                      </div>
+                        gap: "15px",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {permissionsList.map((permission) => {
+                        if (!permissions.includes(permission?.value))
+                          return null;
+
+                        return (
+                          <label
+                            key={permission.value}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "3px",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              {...register("permissions", { required: true })}
+                              value={permission.value}
+                            />
+                            <span>{permission.label}</span>
+                          </label>
+                        );
+                      })}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
               <div className="modal-footer">

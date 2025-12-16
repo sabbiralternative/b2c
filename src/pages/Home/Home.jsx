@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
-import { AdminRole } from "../../constant/constant";
+import { Permission } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
 import useBalance from "../../hooks/useBalance";
-import useContextState from "../../hooks/useContextState";
 import DashboardDW from "./DashboardDW";
-import { jwtDecode } from "jwt-decode";
 import Loader from "../../components/ui/Loader/Loader";
+import { usePermission } from "../../hooks/use-permission";
+import { useState } from "react";
+import { DatePicker } from "rsuite";
+import { useUser } from "../../hooks/use-user";
+import moment from "moment";
 
 const Home = () => {
-  const [depositPermission, setDepositPermission] = useState(false);
-  const [withdrawPermission, setWithdrawPermission] = useState(false);
+  const { user } = useUser();
+  const [date, setDate] = useState(new Date());
+  const { permissions } = usePermission();
   const { data } = useGetIndex({ type: "getDashboardDW" });
-  const { adminRole, token } = useContextState();
-  const { balanceData, isLoading, isPending } = useBalance();
+  const { balanceData, isLoading, isPending } = useBalance({
+    date: moment(date).format("YYYY-MM-DD"),
+    user_id: user?.user_id,
+    role: user?.role,
+  });
   const defineBalanceColor = (amount) => {
     if (amount) {
       const parseAmount = parseFloat(amount);
@@ -28,26 +34,19 @@ const Home = () => {
   const deposit = data?.result?.deposit;
   const withdraw = data?.result?.withdraw;
 
-  useEffect(() => {
-    if (adminRole) {
-      if (adminRole === AdminRole.admin_staff) {
-        const decode = jwtDecode(token);
-        const permissions = decode?.permissions;
-        const depositPermission = permissions?.includes("deposit") ?? false;
-        const withdrawPermission = permissions?.includes("withdraw") ?? false;
-        setDepositPermission(depositPermission);
-        setWithdrawPermission(withdrawPermission);
-      }
-      if (adminRole === AdminRole.hyper_master) {
-        setDepositPermission(true);
-        setWithdrawPermission(true);
-      }
-    }
-  }, [adminRole, token]);
-
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      {adminRole && adminRole !== "branch_staff" && (
+      <div style={{ marginBottom: "10px" }}>
+        <DatePicker
+          style={{ width: "100%", maxWidth: "300px" }}
+          format="yyyy-MM-dd"
+          editable
+          onChange={(date) => setDate(date)}
+          value={date}
+          block
+        />
+      </div>
+      {permissions.includes(Permission.dashboard) && (
         <div className="row">
           <div className="col-lg-6 col-md-12">
             <div className="row">
@@ -224,25 +223,23 @@ const Home = () => {
           </div>
         </div>
       )}
-      {adminRole === AdminRole.hyper_master ||
-      adminRole === AdminRole.admin_staff ? (
-        <div className="d-lg-flex" style={{ gap: "10px" }}>
-          {depositPermission && (
-            <DashboardDW
-              data={deposit}
-              title="Pending Deposit"
-              emptyMessage="No pending deposit"
-            />
-          )}
-          {withdrawPermission && (
-            <DashboardDW
-              data={withdraw}
-              title="Pending Withdraw"
-              emptyMessage="No pending withdraw"
-            />
-          )}
-        </div>
-      ) : null}
+
+      <div className="d-lg-flex" style={{ gap: "10px" }}>
+        {permissions.includes(Permission.deposit) && (
+          <DashboardDW
+            data={deposit}
+            title="Pending Deposit"
+            emptyMessage="No pending deposit"
+          />
+        )}
+        {permissions.includes(Permission.withdraw) && (
+          <DashboardDW
+            data={withdraw}
+            title="Pending Withdraw"
+            emptyMessage="No pending withdraw"
+          />
+        )}
+      </div>
     </div>
   );
 };

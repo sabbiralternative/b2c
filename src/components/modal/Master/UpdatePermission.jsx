@@ -8,11 +8,11 @@ import {
 } from "../../../hooks/HyperMaster/Staff";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../utils/handleRandomToken";
-import useContextState from "../../../hooks/useContextState";
-import { AdminRole } from "../../../constant/constant";
+import { usePermission } from "../../../hooks/use-permission";
+import { permissionsList } from "../../../constant/constant";
 
 const UpdatePermission = ({ setShowPermission, showPermission }) => {
-  const { adminRole } = useContextState();
+  const { permissions } = usePermission();
   const [disabled, setDisabled] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const updatePermissionRef = useRef();
@@ -59,38 +59,6 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
     return null;
   }
 
-  const permissionsList = [
-    { label: "Deposit", value: "deposit", show: true },
-    { label: "Withdraw", value: "withdraw", show: true },
-    { label: "Client", value: "client", show: true },
-    { label: "Payment", value: "payment", show: true },
-    { label: "Report", value: "report", show: true },
-    {
-      label: "Direct Deposit",
-      value: "directDeposit",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    {
-      label: "Deposit With Slip",
-      value: "depositWithSlip",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    {
-      label: "Direct Withdraw",
-      value: "directWithdraw",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    { label: "Settings", value: "settings", show: true },
-    { label: "Bonus", value: "bonus", show: true },
-    { label: "Exposure", value: "exposure", show: true },
-    { label: "Dashboard", value: "dashboard", show: true },
-    {
-      label: "Password",
-      value: "password",
-      show: adminRole === AdminRole.master,
-    },
-  ];
-
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -135,7 +103,8 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                       }}
                     >
                       {permissionsList.map((permission) => {
-                        if (!permission.show) return null;
+                        if (!permissions.includes(permission.value))
+                          return null;
 
                         return (
                           <label

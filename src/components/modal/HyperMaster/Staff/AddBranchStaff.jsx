@@ -9,10 +9,12 @@ import {
 } from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
-import { AdminRole } from "../../../../constant/constant";
+import { AdminRole, permissionsList } from "../../../../constant/constant";
 import { useGetIndex } from "../../../../hooks";
+import { usePermission } from "../../../../hooks/use-permission";
 
 const AddBranchStaff = ({ setShowAddBranchStaff }) => {
+  const { permissions } = usePermission();
   const { data } = useGetIndex({
     type: "getBranches",
   });
@@ -52,33 +54,6 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
       },
     });
   };
-
-  const permissionsList = [
-    { label: "Deposit", value: "deposit", show: true },
-    { label: "Withdraw", value: "withdraw", show: true },
-    { label: "Client", value: "client", show: true },
-    { label: "Payment", value: "payment", show: true },
-    { label: "Report", value: "report", show: true },
-    {
-      label: "Direct Deposit",
-      value: "directDeposit",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    {
-      label: "Deposit With Slip",
-      value: "depositWithSlip",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    {
-      label: "Direct Withdraw",
-      value: "directWithdraw",
-      show: adminRole !== AdminRole.hyper_master,
-    },
-    { label: "Settings", value: "settings", show: true },
-    { label: "Bonus", value: "bonus", show: true },
-    { label: "Exposure", value: "exposure", show: true },
-    { label: "Dashboard", value: "dashboard", show: true },
-  ];
 
   return (
     <>
@@ -215,7 +190,8 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
                       }}
                     >
                       {permissionsList.map((permission) => {
-                        if (!permission.show) return null;
+                        if (!permissions.includes(permission.value))
+                          return null;
 
                         return (
                           <label
