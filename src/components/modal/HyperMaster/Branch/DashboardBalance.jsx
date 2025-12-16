@@ -1,17 +1,14 @@
 import { useState } from "react";
-// import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useBalance from "../../../../hooks/useBalance";
 import moment from "moment";
 import { DatePicker } from "rsuite";
+import Loader from "../../../ui/Loader/Loader";
 
 const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
   const today = new Date();
   const [date, setDate] = useState(new Date());
-  //   const ref = useRef();
-  //   useCloseModalClickOutside(ref, () => {
-  //     setShowDashboardBalance(false);
-  //   });
-  const { balanceData, isSuccess } = useBalance({
+
+  const { balanceData, isSuccess, isLoading, isPending } = useBalance({
     date: moment(date).format("DD-MM-YYYY"),
     user_id,
     role,
@@ -51,11 +48,7 @@ const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
           role="document"
           style={{ maxWidth: "80vw" }}
         >
-          <div
-            className="modal-content"
-
-            //   ref={ref}
-          >
+          <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
                 Dashboard Balance
@@ -74,7 +67,6 @@ const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
               <div className="modal-body">
                 <div style={{ marginBottom: "20px" }}>
                   <DatePicker
-                    // ref={ref}
                     style={{
                       width: "100%",
                       maxWidth: "300px",
@@ -87,7 +79,7 @@ const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
                     block
                   />
                 </div>
-                <div className="table-responsive text-nowrap">
+                {/* <div className="table-responsive text-nowrap">
                   <table className="table table-hover table-sm">
                     <thead className="table-dark">
                       <tr>
@@ -134,6 +126,169 @@ const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
                       </tr>
                     </tbody>
                   </table>
+                </div> */}
+                <div className="row">
+                  <div className="col-lg-6 col-md-12">
+                    <div className="row">
+                      <div className="col-sm-6 col-12 mb-4">
+                        <a>
+                          <div className="card">
+                            <div className="card-body text-center">
+                              <h2
+                                className="mb-1"
+                                style={{
+                                  color: `${defineBalanceColor(
+                                    balanceData?.upperLevel
+                                  )}`,
+                                }}
+                              >
+                                {isLoading || isPending ? (
+                                  <Loader />
+                                ) : (
+                                  balanceData?.upperLevel
+                                )}
+                              </h2>
+                              <span className="text-muted">Upper Level</span>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div className="col-sm-6 col-12 mb-4">
+                        <div className="card">
+                          <div className="card-body text-center">
+                            <h2 className="mb-1">
+                              {isLoading || isPending ? (
+                                <Loader />
+                              ) : (
+                                balanceData?.downLevelOccupyBalance
+                              )}
+                            </h2>
+                            <span className="text-muted">
+                              Total Client Balance
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-6 col-md-12">
+                    <div className="row">
+                      <div className="col-sm-6 col-12 mb-4">
+                        <div className="card">
+                          <div className="card-body text-center">
+                            <h2 className="mb-1">
+                              {isLoading || isPending ? (
+                                <Loader />
+                              ) : (
+                                balanceData?.availableBalance ||
+                                (balanceData?.availableBalance == 0 &&
+                                  balanceData?.availableBalance?.toFixed(2))
+                              )}
+                            </h2>
+                            <span className="text-muted">
+                              Available Balance
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="col-sm-6 col-12 mb-4">
+                        <div className="card">
+                          <div className="card-body text-center">
+                            <h2 className="mb-1">
+                              {isLoading || isPending ? (
+                                <Loader />
+                              ) : (
+                                balanceData?.totalMasterBalance
+                              )}
+                            </h2>
+                            <span className="text-muted">
+                              Total Master Balance
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-6 col-md-12">
+                    <div className="row">
+                      <div className="col-sm-6 col-12 mb-4">
+                        <div className="card">
+                          <div className="card-body text-center">
+                            <h2 className="mb-1">
+                              {isLoading || isPending ? (
+                                <Loader />
+                              ) : (
+                                balanceData?.usersToday
+                              )}
+                            </h2>
+                            <span className="text-muted">New Users Today</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-12 mb-4">
+                        <div className="card">
+                          <div className="card-body text-center">
+                            <h2 className="mb-1">
+                              {isLoading || isPending ? (
+                                <Loader />
+                              ) : (
+                                balanceData?.depositToday
+                              )}
+                            </h2>
+                            <span className="text-muted">
+                              Total Deposit Today
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-lg-6 col-md-12">
+                    <div className="row">
+                      <div className="col-sm-6 col-12 mb-4">
+                        <div className="card">
+                          <div className="card-body text-center">
+                            <h2 className="mb-1">
+                              {isLoading || isPending ? (
+                                <Loader />
+                              ) : (
+                                balanceData?.withdrawToday
+                              )}
+                            </h2>
+                            <span className="text-muted">
+                              Total Withdraw Today
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-12 mb-4">
+                        <div className="card">
+                          <div className="card-body text-center">
+                            <h2
+                              style={{
+                                color: `${defineBalanceColor(
+                                  balanceData?.pnlToday
+                                )}`,
+                              }}
+                              className="mb-1"
+                            >
+                              {isLoading || isPending ? (
+                                <Loader />
+                              ) : (
+                                balanceData?.pnlToday
+                              )}
+                            </h2>
+                            <span className="text-muted">P/L Today</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 {isSuccess && !balanceData && (
                   <div className="card">
