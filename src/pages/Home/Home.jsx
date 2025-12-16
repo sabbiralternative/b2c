@@ -10,6 +10,7 @@ import { useUser } from "../../hooks/use-user";
 import moment from "moment";
 
 const Home = () => {
+  const today = new Date();
   const { user } = useUser();
   const [date, setDate] = useState(new Date());
   const { permissions } = usePermission();
@@ -34,7 +35,6 @@ const Home = () => {
   const deposit = data?.result?.deposit;
   const withdraw = data?.result?.withdraw;
 
-  const today = new Date();
   const disableOutsideLast14Days = (date) => {
     const start = new Date();
     start.setDate(today.getDate() - 14);

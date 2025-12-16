@@ -117,3 +117,7 @@ div:where(.swal2-container) .swal2-html-container {
     margin-top: 0;
   }
 }
+
+.rs-picker-popup {
+  z-index: 99999999999 !important;
+}

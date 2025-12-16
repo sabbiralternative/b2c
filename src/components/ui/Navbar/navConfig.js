@@ -25,6 +25,33 @@ export const getNavItems = (permissions, adminRole, setters) => {
       show: permissions.includes("dashboard"),
     },
     {
+      tab: "Branch",
+      key: "branch",
+      show: permissions.includes("branch"),
+      children: [
+        {
+          label: "View Branch",
+          href: "/view-branch",
+          show: true,
+        },
+        {
+          label: "Add Branch",
+          setState: setShowAddBranch,
+          show: true,
+        },
+        {
+          label: "View Super Branch",
+          href: "/view-super-branch",
+          show: true,
+        },
+        {
+          label: "Add Super Branch",
+          setState: setShowAddSuperBranch,
+          show: true,
+        },
+      ],
+    },
+    {
       tab: "Clients",
       key: "client",
       show: permissions.includes("client"),
@@ -385,33 +412,6 @@ export const getNavItems = (permissions, adminRole, setters) => {
         {
           label: "Add Whitelabel",
           setState: setAddWhiteLabel,
-          show: true,
-        },
-      ],
-    },
-    {
-      tab: "Branch",
-      key: "branch",
-      show: permissions.includes("branch"),
-      children: [
-        {
-          label: "View Branch",
-          href: "/view-branch",
-          show: true,
-        },
-        {
-          label: "Add Branch",
-          setState: setShowAddBranch,
-          show: true,
-        },
-        {
-          label: "View Super Branch",
-          href: "/view-super-branch",
-          show: true,
-        },
-        {
-          label: "Add Super Branch",
-          setState: setShowAddSuperBranch,
           show: true,
         },
       ],

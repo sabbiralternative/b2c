@@ -10,9 +10,10 @@ import Withdraw from "../../components/modal/HyperMaster/Branch/Withdraw";
 import ChangePassword from "../../components/modal/ChangePassword";
 import ChangeStatus from "../../components/modal/ChangeStatus";
 import CreditReference from "../../components/modal/CreditReference";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import UpdateWhatsAppNumber from "../../components/modal/UpdateWhatsAppNumber";
 import { AdminRole } from "../../constant/constant";
+import DashboardBalance from "../../components/modal/HyperMaster/Branch/DashboardBalance";
 
 const ViewBranches = () => {
   const [id, setId] = useState("");
@@ -25,6 +26,7 @@ const ViewBranches = () => {
   const [registrationStatus, setRegistrationStatus] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showDeposit, setShowDeposit] = useState(false);
+  const [showDashboardBalance, setShowDashboardBalance] = useState(false);
   const { branches, refetchAllBranch } = useGetAllBranch({
     branch_type: "branch",
   });
@@ -123,6 +125,13 @@ const ViewBranches = () => {
           refetchAllBranch={refetchAllBranch}
         />
       )}
+      {showDashboardBalance && (
+        <DashboardBalance
+          user_id={id}
+          role={role}
+          setShowDashboardBalance={setShowDashboardBalance}
+        />
+      )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
           <h5 className="card-header">Branches</h5>
@@ -149,6 +158,7 @@ const ViewBranches = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {branches?.map((branch, i) => {
+                  console.log(branch);
                   return (
                     <tr key={i}>
                       <td>
@@ -304,21 +314,38 @@ const ViewBranches = () => {
                         &nbsp;
                         {adminRole === AdminRole.hyper_master ||
                         adminRole === AdminRole.admin_staff ? (
-                          <a
-                            style={{
-                              color: "white",
-                              backgroundColor: "green",
-                            }}
-                            onClick={() => {
-                              setShowWhatsApp(true);
-                              setDownLineId(branch?.username);
-                              setRole(branch?.role);
-                              setId(branch?.id);
-                            }}
-                            className="btn btn-icon btn-sm btn-read-only-login"
-                          >
-                            WA
-                          </a>
+                          <Fragment>
+                            <a
+                              style={{
+                                color: "white",
+                                backgroundColor: "green",
+                              }}
+                              onClick={() => {
+                                setShowWhatsApp(true);
+                                setDownLineId(branch?.username);
+                                setRole(branch?.role);
+                                setId(branch?.id);
+                              }}
+                              className="btn btn-icon btn-sm btn-read-only-login"
+                            >
+                              WA
+                            </a>
+                            &nbsp;
+                            <a
+                              style={{
+                                color: "white",
+                                backgroundColor: "saddlebrown",
+                              }}
+                              onClick={() => {
+                                setShowDashboardBalance(true);
+                                setRole(branch?.role);
+                                setId(branch?.id);
+                              }}
+                              className="btn btn-icon btn-sm btn-read-only-login"
+                            >
+                              DB
+                            </a>
+                          </Fragment>
                         ) : null}
                       </td>
                     </tr>

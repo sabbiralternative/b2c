@@ -16,6 +16,7 @@ const useBalance = (payload) => {
     refetch: refetchBalance,
     isLoading,
     isPending,
+    isSuccess,
   } = useQuery({
     queryKey: ["balance", payload],
 
@@ -51,7 +52,7 @@ const useBalance = (payload) => {
     }
   }, [token, refetchBalance]);
 
-  return { balanceData, refetchBalance, isLoading, isPending };
+  return { balanceData, refetchBalance, isLoading, isPending, isSuccess };
 };
 
 export default useBalance;
