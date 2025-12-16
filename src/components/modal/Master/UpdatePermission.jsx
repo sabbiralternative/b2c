@@ -8,11 +8,11 @@ import {
 } from "../../../hooks/HyperMaster/Staff";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../../utils/handleRandomToken";
-import { usePermission } from "../../../hooks/use-permission";
-import { permissionsList } from "../../../constant/constant";
+import useContextState from "../../../hooks/useContextState";
+import { AdminRole } from "../../../constant/constant";
 
 const UpdatePermission = ({ setShowPermission, showPermission }) => {
-  const { permissions } = usePermission();
+  const { adminRole } = useContextState();
   const [disabled, setDisabled] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const updatePermissionRef = useRef();
@@ -59,6 +59,98 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
     return null;
   }
 
+  const permissionsList = [
+    {
+      label: "Dashboard",
+      value: "dashboard",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Deposit",
+      value: "deposit",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Withdraw",
+      value: "withdraw",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Client",
+      value: "client",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Direct Deposit",
+      value: "directDeposit",
+      show: true,
+    },
+    {
+      label: "Deposit With Slip",
+      value: "depositWithSlip",
+      show: true,
+    },
+    {
+      label: "Direct Withdraw",
+      value: "directWithdraw",
+      show: true,
+    },
+    {
+      label: "Payment",
+      value: "payment",
+      show: adminRole === AdminRole.master,
+    },
+    {
+      label: "Report",
+      value: "report",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Settings",
+      value: "setting",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Bonus",
+      value: "bonus",
+      show: adminRole === AdminRole.master,
+    },
+    {
+      label: "Exposure",
+      value: "exposure",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+
+    {
+      label: "Password",
+      value: "password",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Branch",
+      value: "branch",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Complaint",
+      value: "complaint",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Staff",
+      value: "staff",
+      show:
+        adminRole === AdminRole.master || adminRole === AdminRole.hyper_master,
+    },
+  ];
+
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -103,8 +195,7 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
                       }}
                     >
                       {permissionsList.map((permission) => {
-                        if (!permissions.includes(permission.value))
-                          return null;
+                        if (!permission?.show) return null;
 
                         return (
                           <label

@@ -9,11 +9,9 @@ import {
 } from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
-import { usePermission } from "../../../../hooks/use-permission";
-import { permissionsList } from "../../../../constant/constant";
+import { AdminRole } from "../../../../constant/constant";
 
 const AddAdminStaff = ({ setShowAddStaff }) => {
-  const { permissions } = usePermission();
   const [disabled, setDisabled] = useState(false);
   const { adminRole } = useContextState();
 
@@ -62,6 +60,83 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
       },
     });
   };
+
+  const permissionsList = [
+    {
+      label: "Dashboard",
+      value: "dashboard",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Deposit",
+      value: "deposit",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Withdraw",
+      value: "withdraw",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Client",
+      value: "client",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Payment",
+      value: "payment",
+      show: adminRole === AdminRole.master,
+    },
+    {
+      label: "Report",
+      value: "report",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Settings",
+      value: "setting",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Bonus",
+      value: "bonus",
+      show: adminRole === AdminRole.master,
+    },
+    {
+      label: "Exposure",
+      value: "exposure",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+
+    {
+      label: "Password",
+      value: "password",
+      show:
+        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+    },
+    {
+      label: "Branch",
+      value: "branch",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Complaint",
+      value: "complaint",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Staff",
+      value: "staff",
+      show:
+        adminRole === AdminRole.master || adminRole === AdminRole.hyper_master,
+    },
+  ];
 
   return (
     <>
@@ -166,9 +241,7 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
                       }}
                     >
                       {permissionsList.map((permission) => {
-                        if (!permissions.includes(permission?.value))
-                          return null;
-
+                        if (!permission?.show) return;
                         return (
                           <label
                             key={permission.value}

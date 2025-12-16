@@ -9,12 +9,10 @@ import {
 } from "../../../../hooks/HyperMaster/Staff";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
-import { AdminRole, permissionsList } from "../../../../constant/constant";
+import { AdminRole } from "../../../../constant/constant";
 import { useGetIndex } from "../../../../hooks";
-import { usePermission } from "../../../../hooks/use-permission";
 
 const AddBranchStaff = ({ setShowAddBranchStaff }) => {
-  const { permissions } = usePermission();
   const { data } = useGetIndex({
     type: "getBranches",
   });
@@ -54,6 +52,48 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
       },
     });
   };
+
+  const permissionsList = [
+    { label: "Deposit", value: "deposit", show: true },
+    { label: "Withdraw", value: "withdraw", show: true },
+    { label: "Client", value: "client", show: true },
+    { label: "Report", value: "report", show: true },
+    {
+      label: "Direct Deposit",
+      value: "directDeposit",
+    },
+    {
+      label: "Deposit With Slip",
+      value: "depositWithSlip",
+    },
+    {
+      label: "Direct Withdraw",
+      value: "directWithdraw",
+    },
+
+    { label: "Exposure", value: "exposure", show: true },
+    { label: "Dashboard", value: "dashboard", show: true },
+    {
+      label: "Password",
+      value: "password",
+    },
+    {
+      label: "Branch",
+      value: "branch",
+    },
+    {
+      label: "Staff",
+      value: "staff",
+    },
+    {
+      label: "Setting",
+      value: "setting",
+    },
+    {
+      label: "Complaint",
+      value: "complaint",
+    },
+  ];
 
   return (
     <>
@@ -190,9 +230,6 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
                       }}
                     >
                       {permissionsList.map((permission) => {
-                        if (!permissions.includes(permission.value))
-                          return null;
-
                         return (
                           <label
                             key={permission.value}
