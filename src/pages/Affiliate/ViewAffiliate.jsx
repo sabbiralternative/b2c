@@ -1,48 +1,30 @@
 import { useForm } from "react-hook-form";
 import Loader from "../../components/ui/Loader/Loader";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAffiliateMutation } from "../../hooks/affiliate";
+import { useAffiliateQuery } from "../../hooks/affiliate";
 
 const ViewAffiliate = () => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  const searchedAffiliate_id = params.get("affiliate_id");
-
+  const affiliate_id = params.get("affiliate_id");
+  const type = params.get("type");
   const navigate = useNavigate();
+
   const {
-    mutate: handleSearchAffiliate,
     data: affiliateData,
     isSuccess,
-    isPending,
-  } = useAffiliateMutation();
+    isLoading,
+  } = useAffiliateQuery({ type, affiliate_id });
 
-  const { handleSubmit, register, watch, reset } = useForm();
-  const affiliate_id = watch("affiliate_id");
+  const { handleSubmit, register, reset } = useForm();
 
   const onSubmit = ({ affiliate_id }) => {
-    handleSearchAffiliate({
-      type: "search_affiliate",
-      affiliate_id,
-    });
+    navigate(
+      `/view-affiliate?affiliate_id=${affiliate_id}&type=search_affiliate`
+    );
     reset();
   };
-
-  useEffect(() => {
-    if (searchedAffiliate_id) {
-      handleSearchAffiliate(
-        {
-          type: "search_affiliate",
-          affiliate_id: searchedAffiliate_id,
-        },
-        {
-          onSuccess: () => {
-            navigate("/view-affiliate");
-          },
-        }
-      );
-    }
-  }, [searchedAffiliate_id, handleSearchAffiliate, navigate]);
 
   return (
     <>
@@ -61,7 +43,6 @@ const ViewAffiliate = () => {
                     type="text"
                     className="form-control"
                     placeholder="Search Affiliate"
-                    value={affiliate_id}
                   />
                   <div className="fv-plugins-message-container invalid-feedback"></div>
                 </div>
@@ -83,7 +64,7 @@ const ViewAffiliate = () => {
           <Fragment>
             <hr className="my-3" />
             <div className="card">
-              <h5 className="card-header">Clients</h5>
+              <h5 className="card-header">Affiliate</h5>
               <div className="table-responsive text-nowrap">
                 <table className="table table-hover table-sm">
                   <thead>
@@ -127,7 +108,13 @@ const ViewAffiliate = () => {
                           </td>
 
                           <td>{affiliate?.registrationDate}</td>
-                          <td>
+                          <td
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "4px",
+                            }}
+                          >
                             <a
                               onClick={() =>
                                 navigate(
@@ -138,6 +125,28 @@ const ViewAffiliate = () => {
                               className="btn btn-icon btn-sm btn-success"
                             >
                               U
+                            </a>
+                            <a
+                              onClick={() =>
+                                navigate(
+                                  `/view-affiliate-deposit?affiliate_id=${affiliate?.affiliate_id}`
+                                )
+                              }
+                              style={{ color: "white" }}
+                              className="btn btn-icon btn-sm btn-warning"
+                            >
+                              D
+                            </a>
+                            <a
+                              onClick={() =>
+                                navigate(
+                                  `/view-affiliate-withdraw?affiliate_id=${affiliate?.affiliate_id}`
+                                )
+                              }
+                              style={{ color: "white" }}
+                              className="btn btn-icon btn-sm btn-danger"
+                            >
+                              W
                             </a>
                           </td>
                         </tr>
@@ -150,7 +159,7 @@ const ViewAffiliate = () => {
           </Fragment>
         )}
 
-        {isPending && !isSuccess && (
+        {isLoading && !isSuccess && (
           <div
             style={{
               display: "flex",

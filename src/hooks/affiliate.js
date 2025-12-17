@@ -15,6 +15,7 @@ export const useAffiliateMutation = () => {
 export const useAffiliateQuery = (payload) => {
   return useQuery({
     queryKey: ["affiliate", payload],
+    enabled: payload?.affiliate_id !== null,
     queryFn: async () => {
       const { data } = await AxiosSecure.post(API.affiliate, payload);
       return data;

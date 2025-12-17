@@ -75,6 +75,8 @@ import ViewClient from "../pages/Client/ViewClient";
 import ViewWhiteLabel from "../pages/WhiteLabel/ViewWhiteLabel";
 import ViewAffiliate from "../pages/Affiliate/ViewAffiliate";
 import ViewAffiliateClient from "../pages/Affiliate/ViewAffiliateClient";
+import ViewAffiliateDeposit from "../pages/Affiliate/ViewAffiliateDeposit";
+import ViewAffiliateWithdraw from "../pages/Affiliate/ViewAffiliateWithdraw";
 
 export const router = createBrowserRouter(
   [
@@ -375,6 +377,14 @@ export const router = createBrowserRouter(
         {
           path: "/view-affiliate-client",
           element: <ViewAffiliateClient />,
+        },
+        {
+          path: "/view-affiliate-deposit",
+          element: <ViewAffiliateDeposit />,
+        },
+        {
+          path: "/view-affiliate-withdraw",
+          element: <ViewAffiliateWithdraw />,
         },
       ],
     },

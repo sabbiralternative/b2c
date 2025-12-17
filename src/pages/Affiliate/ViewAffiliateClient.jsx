@@ -7,8 +7,7 @@ import { Pagination } from "rsuite";
 
 const ViewAffiliateClient = () => {
   const navigate = useNavigate();
-  const { register, watch } = useForm();
-  const searchAffiliateId = watch("affiliate_id");
+  const { register, reset, handleSubmit } = useForm();
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const affiliate_id = params.get("affiliate_id");
@@ -25,12 +24,20 @@ const ViewAffiliateClient = () => {
 
   const meta = affiliateData?.pagination;
 
+  const onSubmit = ({ affiliate_id }) => {
+    navigate(
+      `/view-affiliate?affiliate_id=${affiliate_id}&type=search_affiliate`
+    );
+    reset();
+  };
+
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="col-12">
         <div className="card">
           <div className="card-body">
             <form
+              onSubmit={handleSubmit(onSubmit)}
               id="formValidationExamples"
               className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
             >
@@ -40,19 +47,13 @@ const ViewAffiliateClient = () => {
                   type="text"
                   className="form-control"
                   placeholder="Search Affiliate"
-                  value={searchAffiliateId}
                 />
                 <div className="fv-plugins-message-container invalid-feedback"></div>
               </div>
 
               <div className="col-12">
                 <input
-                  onClick={() =>
-                    navigate(
-                      `/view-affiliate?affiliate_id=${searchAffiliateId}`
-                    )
-                  }
-                  type="button"
+                  type="submit"
                   name="submit"
                   className="btn btn-primary"
                   value="Search"
@@ -66,6 +67,17 @@ const ViewAffiliateClient = () => {
         <Fragment>
           <hr className="my-3" />
           <div className="card">
+            <button
+              onClick={() => navigate(-1)}
+              className="btn btn-primary"
+              style={{
+                width: "fit-content",
+                marginLeft: "15px",
+                marginTop: "15px",
+              }}
+            >
+              Back
+            </button>
             <div
               className="card-header"
               style={{
