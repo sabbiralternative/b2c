@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useAffiliateQuery } from "../../hooks/affiliate";
 import { defaultDate } from "../../utils/defaultDate";
 import { DatePicker, Pagination } from "rsuite";
+import moment from "moment";
 
 const ViewAffiliateDeposit = () => {
   const { search } = useLocation();
@@ -21,8 +22,8 @@ const ViewAffiliateDeposit = () => {
     type: "view_affiliate_deposit",
     affiliate_id,
     page,
-    fromDate,
-    toDate,
+    fromDate: moment(fromDate).format("YYYY-MM-DD"),
+    toDate: moment(toDate).format("YYYY-MM-DD"),
   });
 
   const meta = affiliateDepositData?.pagination;
