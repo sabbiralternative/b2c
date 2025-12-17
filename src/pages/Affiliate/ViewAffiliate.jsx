@@ -49,7 +49,6 @@ const ViewAffiliate = () => {
 
                 <div className="col-12">
                   <input
-                    disabled={affiliate_id?.length < 2}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
