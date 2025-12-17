@@ -106,7 +106,8 @@
       "detectUtr": "https://b2c.bet/deposit/utr",
       "index": "https://admin.api7.live/api/b2c/index",
       "exportCSV": "https://admin.api7.live/api/b2c/exportCSV",
-      "complaint": "https://admin.api7.live/api/b2c/complaint"
+      "complaint": "https://admin.api7.live/api/b2c/complaint",
+      "affiliate": "https://admin.api7.live/api/b2c/affiliate"
     }
   },
   "success": true

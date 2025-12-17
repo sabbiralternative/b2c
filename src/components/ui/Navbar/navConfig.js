@@ -291,6 +291,18 @@ export const getNavItems = (permissions, adminRole, setters) => {
       ],
     },
     {
+      tab: "Affiliate",
+      key: "affiliate",
+      show: permissions.includes("affiliate"),
+      children: [
+        {
+          label: "View Affiliate",
+          href: "/view-affiliate",
+          show: true,
+        },
+      ],
+    },
+    {
       tab: "Settings",
       key: "setting",
       show: permissions.includes("setting"),

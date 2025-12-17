@@ -73,6 +73,8 @@ import ClientWithBalance from "../pages/Client/ClientWithBalance";
 import AddClient from "../pages/Client/AddClient";
 import ViewClient from "../pages/Client/ViewClient";
 import ViewWhiteLabel from "../pages/WhiteLabel/ViewWhiteLabel";
+import ViewAffiliate from "../pages/Affiliate/ViewAffiliate";
+import ViewAffiliateClient from "../pages/Affiliate/ViewAffiliateClient";
 
 export const router = createBrowserRouter(
   [
@@ -365,6 +367,14 @@ export const router = createBrowserRouter(
         {
           path: "/view-whitelabel",
           element: <ViewWhiteLabel />,
+        },
+        {
+          path: "/view-affiliate",
+          element: <ViewAffiliate />,
+        },
+        {
+          path: "/view-affiliate-client",
+          element: <ViewAffiliateClient />,
         },
       ],
     },

@@ -72,6 +72,7 @@ export const API = {
   index: "",
   exportCSV: "",
   complaint: "",
+  affiliate: "",
 };
 
 export const Settings = {

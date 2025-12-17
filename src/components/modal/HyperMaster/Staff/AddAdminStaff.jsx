@@ -136,6 +136,11 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
       show:
         adminRole === AdminRole.master || adminRole === AdminRole.hyper_master,
     },
+    {
+      label: "Affiliate",
+      value: "affiliate",
+      show: adminRole === AdminRole.hyper_master,
+    },
   ];
 
   return (
