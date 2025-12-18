@@ -16,7 +16,7 @@ const Home = () => {
   const { permissions } = usePermission();
   const { data } = useGetIndex({ type: "getDashboardDW" });
   const { balanceData, isLoading, isPending } = useBalance({
-    date: moment(date).format("DD-MM-YYYY"),
+    date: moment(date).format("YYYY-DD-MM"),
     user_id: user?.user_id,
     role: user?.role,
   });

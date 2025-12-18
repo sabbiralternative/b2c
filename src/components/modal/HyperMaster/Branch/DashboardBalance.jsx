@@ -9,7 +9,7 @@ const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
   const [date, setDate] = useState(new Date());
 
   const { balanceData, isSuccess, isLoading, isPending } = useBalance({
-    date: moment(date).format("DD-MM-YYYY"),
+    date: moment(date).format("YYYY-DD-MM"),
     user_id,
     role,
   });
