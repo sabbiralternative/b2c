@@ -292,31 +292,31 @@ export const getNavItems = (permissions, adminRole, setters) => {
               href: "/add-notification",
               show: true,
             },
-            {
-              label: "View Bonus",
-              href: "/view-bonus",
-              show: permissions.includes("bonus"),
-            },
-            {
-              label: "Add Bonus",
-              href: "/add-bonus",
-              show: permissions.includes("bonus"),
-            },
-            {
-              label: "Pending Bonus",
-              href: "/pending-bonus",
-              show: permissions.includes("bonus"),
-            },
-            {
-              label: "Completed Bonus",
-              href: "/completed-bonus",
-              show: permissions.includes("bonus"),
-            },
-            {
-              label: "Rejected Bonus",
-              href: "/rejected-bonus",
-              show: permissions.includes("bonus"),
-            },
+            // {
+            //   label: "View Bonus",
+            //   href: "/view-bonus",
+            //   show: permissions.includes("bonus"),
+            // },
+            // {
+            //   label: "Add Bonus",
+            //   href: "/add-bonus",
+            //   show: permissions.includes("bonus"),
+            // },
+            // {
+            //   label: "Pending Bonus",
+            //   href: "/pending-bonus",
+            //   show: permissions.includes("bonus"),
+            // },
+            // {
+            //   label: "Completed Bonus",
+            //   href: "/completed-bonus",
+            //   show: permissions.includes("bonus"),
+            // },
+            // {
+            //   label: "Rejected Bonus",
+            //   href: "/rejected-bonus",
+            //   show: permissions.includes("bonus"),
+            // },
           ],
         },
         {
