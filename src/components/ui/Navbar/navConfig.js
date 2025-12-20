@@ -106,47 +106,65 @@ export const getNavItems = (permissions, adminRole, setters) => {
         {
           label: "Add Bank Account",
           href: "/add-bank-account",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add QR",
           href: "/add-QR",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add UPI",
           href: "/add-UPI",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add Whatsapp Deposit",
           href: "/add-whatsapp-deposit",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add USDT (TRC20)",
           href: "/add-USDT-TRC20",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add USDT (BEP20)",
           href: "/add-USDT-BEP20",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add UPI Payment Gateway",
           href: "/add-payment-gateway",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add TOIT Payment Gateway",
           href: "/add-toit-payment-gateway",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
         {
           label: "Add i100 Payment Gateway",
           href: "/add-i100-payment-gateway",
-          show: true,
+          show:
+            adminRole !== AdminRole.hyper_master &&
+            adminRole !== AdminRole.admin_staff,
         },
       ],
     },
