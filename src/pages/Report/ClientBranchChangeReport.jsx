@@ -1,6 +1,6 @@
 import moment from "moment/moment";
 import { DatePicker, Pagination } from "rsuite";
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -11,6 +11,7 @@ import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ClientBranchChangeReport = () => {
   const [branchId, setBranchId] = useState(0);
@@ -54,22 +55,41 @@ const ClientBranchChangeReport = () => {
 
   const exportToExcel = async (e) => {
     e.preventDefault();
-    const data = await getClientBranchTargetReport();
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let clientReport = data?.result;
-        if (adminRole === "master") {
-          clientReport = data?.result.map(
-            // eslint-disable-next-line no-unused-vars
-            ({ loginname, mobile, ...rest }) => rest
-          );
-        }
-        const ws = utils.json_to_sheet(clientReport);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "customers_data.xlsx");
-      }
-    }
+    const payload = {
+      type: "getClientTransfer",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+      pagination: true,
+      page: activePage,
+    };
+    const { data } = await AxiosSecure.post(API.exportCSV, payload, {
+      responseType: "blob",
+    });
+
+    const blob = new Blob([data.data], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "export.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let clientReport = data?.result;
+    //     if (adminRole === "master") {
+    //       clientReport = data?.result.map(
+    //         // eslint-disable-next-line no-unused-vars
+    //         ({ loginname, mobile, ...rest }) => rest
+    //       );
+    //     }
+    //     const ws = utils.json_to_sheet(clientReport);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "customers_data.xlsx");
+    //   }
+    // }
   };
 
   const handleToggleViewClient = async () => {
