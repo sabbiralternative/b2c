@@ -8,6 +8,7 @@ import { usePermission } from "../../../hooks/use-permission";
 
 const NavListItem = () => {
   const [navList, setNavList] = useState(null);
+  const [childTabList, setChildTabList] = useState(null);
   const { permissions } = usePermission();
   const {
     setShowSocialLink,
@@ -136,43 +137,113 @@ const NavListItem = () => {
 
               <div data-i18n={navItem?.tab}>{navItem?.tab}</div>
             </a>
+            {navItem?.willSubTab && navList === navItem?.key ? (
+              <div
+                style={{
+                  display: "flex",
+                  position: "absolute",
 
-            <ul className="menu-sub">
-              {navItem?.children?.map((child) => {
-                if (!child?.show) return;
-                if (child?.href) {
+                  background: "#232c3eff",
+                  zIndex: 9999,
+                }}
+              >
+                {navItem?.children?.map((childTab, childTabIndex) => {
                   return (
-                    <li key={child?.href} className="menu-item">
-                      <a
-                        onClick={() => {
-                          navigate(child?.href);
-                          setNavList(null);
-                        }}
-                        className="menu-link"
-                      >
-                        <i className="menu-icon tf-icons bx bxs-user"></i>
-                        <div data-i18n={child?.label}>{child?.label}</div>
+                    <li
+                      key={childTabIndex}
+                      onMouseEnter={() => setChildTabList(childTab?.key)}
+                      onMouseLeave={() => setChildTabList(null)}
+                      className={`menu-item ${
+                        childTabList === childTab?.key ? "open" : ""
+                      }`}
+                    >
+                      <a className="menu-link menu-toggle">
+                        <i className="menu-icon tf-icons bx bx-layout"></i>
+
+                        <div data-i18n={childTab?.tab}>{childTab?.tab}</div>
                       </a>
+                      <ul className="menu-sub">
+                        {childTab?.children?.map((child) => {
+                          if (!child?.show) return;
+                          if (child?.href) {
+                            return (
+                              <li key={child?.href} className="menu-item">
+                                <a
+                                  onClick={() => {
+                                    navigate(child?.href);
+                                    setChildTabList(null);
+                                  }}
+                                  className="menu-link"
+                                >
+                                  <i className="menu-icon tf-icons bx bxs-user"></i>
+                                  <div data-i18n={child?.label}>
+                                    {child?.label}
+                                  </div>
+                                </a>
+                              </li>
+                            );
+                          }
+                          if (child?.setState) {
+                            return (
+                              <li key={child?.label} className="menu-item">
+                                <a
+                                  onClick={() => {
+                                    child?.setState(true);
+                                  }}
+                                  className="menu-link"
+                                >
+                                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                                  <div data-i18n="Pending Withdraw">
+                                    {child?.label}
+                                  </div>
+                                </a>
+                              </li>
+                            );
+                          }
+                        })}
+                      </ul>
                     </li>
                   );
-                }
-                if (child?.setState) {
-                  return (
-                    <li key={child?.label} className="menu-item">
-                      <a
-                        onClick={() => {
-                          child?.setState(true);
-                        }}
-                        className="menu-link"
-                      >
-                        <i className="menu-icon tf-icons bx bxs-institution"></i>
-                        <div data-i18n="Pending Withdraw">{child?.label}</div>
-                      </a>
-                    </li>
-                  );
-                }
-              })}
-            </ul>
+                })}
+              </div>
+            ) : (
+              <ul className="menu-sub">
+                {navItem?.children?.map((child) => {
+                  if (!child?.show) return;
+                  if (child?.href) {
+                    return (
+                      <li key={child?.href} className="menu-item">
+                        <a
+                          onClick={() => {
+                            navigate(child?.href);
+                            setNavList(null);
+                          }}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-user"></i>
+                          <div data-i18n={child?.label}>{child?.label}</div>
+                        </a>
+                      </li>
+                    );
+                  }
+                  if (child?.setState) {
+                    return (
+                      <li key={child?.label} className="menu-item">
+                        <a
+                          onClick={() => {
+                            child?.setState(true);
+                          }}
+                          className="menu-link"
+                        >
+                          <i className="menu-icon tf-icons bx bxs-institution"></i>
+                          <div data-i18n="Pending Withdraw">{child?.label}</div>
+                        </a>
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            )}
           </li>
         );
       }

@@ -94,81 +94,6 @@ export const getNavItems = (permissions, adminRole, setters) => {
       ],
     },
     {
-      tab: "Payments",
-      key: "payment",
-      show: permissions.includes("payment"),
-      children: [
-        {
-          label: "View Payment Method",
-          href: "/view-payment-method",
-          show: true,
-        },
-        {
-          label: "Add Bank Account",
-          href: "/add-bank-account",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add QR",
-          href: "/add-QR",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add UPI",
-          href: "/add-UPI",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add Whatsapp Deposit",
-          href: "/add-whatsapp-deposit",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add USDT (TRC20)",
-          href: "/add-USDT-TRC20",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add USDT (BEP20)",
-          href: "/add-USDT-BEP20",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add UPI Payment Gateway",
-          href: "/add-payment-gateway",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add TOIT Payment Gateway",
-          href: "/add-toit-payment-gateway",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-        {
-          label: "Add i100 Payment Gateway",
-          href: "/add-i100-payment-gateway",
-          show:
-            adminRole !== AdminRole.hyper_master &&
-            adminRole !== AdminRole.admin_staff,
-        },
-      ],
-    },
-    {
       tab: "Deposit",
       key: "deposit",
       show: permissions.includes("deposit"),
@@ -218,22 +143,202 @@ export const getNavItems = (permissions, adminRole, setters) => {
       ],
     },
     {
-      tab: "Exposure",
-      key: "exposure",
-      show: permissions.includes("exposure"),
+      tab: "Miscellaneous",
+      key: "miscellaneous",
+      show: true,
+      willSubTab: true,
       children: [
         {
-          label: "Market Analysis",
-          href: "/market-analysis",
-          show: true,
+          tab: "Payments",
+          key: "payment",
+          show: permissions.includes("payment"),
+          children: [
+            {
+              label: "View Payment Method",
+              href: "/view-payment-method",
+              show: true,
+            },
+            {
+              label: "Add Bank Account",
+              href: "/add-bank-account",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add QR",
+              href: "/add-QR",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add UPI",
+              href: "/add-UPI",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add Whatsapp Deposit",
+              href: "/add-whatsapp-deposit",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add USDT (TRC20)",
+              href: "/add-USDT-TRC20",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add USDT (BEP20)",
+              href: "/add-USDT-BEP20",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add UPI Payment Gateway",
+              href: "/add-payment-gateway",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add TOIT Payment Gateway",
+              href: "/add-toit-payment-gateway",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+            {
+              label: "Add i100 Payment Gateway",
+              href: "/add-i100-payment-gateway",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
+          ],
         },
         {
-          label: "Current Bets",
-          href: "/current-bets",
-          show: true,
+          tab: "Exposure",
+          key: "exposure",
+          show: permissions.includes("exposure"),
+          children: [
+            {
+              label: "Market Analysis",
+              href: "/market-analysis",
+              show: true,
+            },
+            {
+              label: "Current Bets",
+              href: "/current-bets",
+              show: true,
+            },
+          ],
+        },
+        {
+          tab: "Affiliate",
+          key: "affiliate",
+          show: permissions.includes("affiliate"),
+          children: [
+            {
+              label: "View Affiliate",
+              href: "/view-affiliate",
+              show: true,
+            },
+          ],
+        },
+        {
+          tab: "Settings",
+          key: "setting",
+          show: permissions.includes("setting"),
+          children: [
+            {
+              label: "View Banners",
+              href: "/view-banner",
+              show: true,
+            },
+            {
+              label: "Add Banner",
+              href: "/add-banner",
+              show: true,
+            },
+            {
+              label: "Add Login Banner",
+              href: "/add-login-banner",
+              show: true,
+            },
+            {
+              label: "Social Links",
+              setState: setShowSocialLink,
+              show: true,
+            },
+            {
+              label: "Update D/W Limit",
+              setState: setShowDWLimit,
+              show: true,
+            },
+            {
+              label: "View Notifications",
+              href: "/view-notification",
+              show: true,
+            },
+            {
+              label: "Add Notifications",
+              href: "/add-notification",
+              show: true,
+            },
+            {
+              label: "View Bonus",
+              href: "/view-bonus",
+              show: permissions.includes("bonus"),
+            },
+            {
+              label: "Add Bonus",
+              href: "/add-bonus",
+              show: permissions.includes("bonus"),
+            },
+            {
+              label: "Pending Bonus",
+              href: "/pending-bonus",
+              show: permissions.includes("bonus"),
+            },
+            {
+              label: "Completed Bonus",
+              href: "/completed-bonus",
+              show: permissions.includes("bonus"),
+            },
+            {
+              label: "Rejected Bonus",
+              href: "/rejected-bonus",
+              show: permissions.includes("bonus"),
+            },
+          ],
+        },
+        {
+          tab: "Complaints",
+          key: "complaint",
+          show: permissions?.includes("complaint"),
+          children: [
+            {
+              label: "Pending Complaints",
+              href: "/pending-complaints",
+              show: true,
+            },
+            {
+              label: "Resolved Complaints",
+              href: "/resolved-complaints",
+              show: true,
+            },
+          ],
         },
       ],
     },
+
     {
       tab: "Bonus",
       key: "bonus",
@@ -304,102 +409,6 @@ export const getNavItems = (permissions, adminRole, setters) => {
         {
           label: "Client Branch Change Report",
           href: "/client-branch-change-report",
-          show: true,
-        },
-      ],
-    },
-    {
-      tab: "Affiliate",
-      key: "affiliate",
-      show: permissions.includes("affiliate"),
-      children: [
-        {
-          label: "View Affiliate",
-          href: "/view-affiliate",
-          show: true,
-        },
-      ],
-    },
-    {
-      tab: "Settings",
-      key: "setting",
-      show: permissions.includes("setting"),
-      children: [
-        {
-          label: "View Banners",
-          href: "/view-banner",
-          show: true,
-        },
-        {
-          label: "Add Banner",
-          href: "/add-banner",
-          show: true,
-        },
-        {
-          label: "Add Login Banner",
-          href: "/add-login-banner",
-          show: true,
-        },
-        {
-          label: "Social Links",
-          setState: setShowSocialLink,
-          show: true,
-        },
-        {
-          label: "Update D/W Limit",
-          setState: setShowDWLimit,
-          show: true,
-        },
-        {
-          label: "View Notifications",
-          href: "/view-notification",
-          show: true,
-        },
-        {
-          label: "Add Notifications",
-          href: "/add-notification",
-          show: true,
-        },
-        {
-          label: "View Bonus",
-          href: "/view-bonus",
-          show: permissions.includes("bonus"),
-        },
-        {
-          label: "Add Bonus",
-          href: "/add-bonus",
-          show: permissions.includes("bonus"),
-        },
-        {
-          label: "Pending Bonus",
-          href: "/pending-bonus",
-          show: permissions.includes("bonus"),
-        },
-        {
-          label: "Completed Bonus",
-          href: "/completed-bonus",
-          show: permissions.includes("bonus"),
-        },
-        {
-          label: "Rejected Bonus",
-          href: "/rejected-bonus",
-          show: permissions.includes("bonus"),
-        },
-      ],
-    },
-    {
-      tab: "Complaints",
-      key: "complaint",
-      show: permissions?.includes("complaint"),
-      children: [
-        {
-          label: "Pending Complaints",
-          href: "/pending-complaints",
-          show: true,
-        },
-        {
-          label: "Resolved Complaints",
-          href: "/resolved-complaints",
           show: true,
         },
       ],

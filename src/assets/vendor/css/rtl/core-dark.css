@@ -18472,7 +18472,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
   width: 100%;
 }
 .menu-horizontal .menu-inner {
-  overflow: auto;
+  overflow: hidden;
   flex-direction: row;
   flex: 0 1 100%;
 }
