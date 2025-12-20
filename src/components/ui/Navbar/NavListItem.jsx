@@ -140,11 +140,10 @@ const NavListItem = () => {
             {navItem?.willSubTab && navList === navItem?.key ? (
               <div
                 style={{
-                  display: "flex",
                   position: "absolute",
-
                   background: "#232c3eff",
                   zIndex: 9999,
+                  minWidth: "170px",
                 }}
               >
                 {navItem?.children?.map((childTab, childTabIndex) => {
@@ -162,7 +161,10 @@ const NavListItem = () => {
 
                         <div data-i18n={childTab?.tab}>{childTab?.tab}</div>
                       </a>
-                      <ul className="menu-sub">
+                      <ul
+                        style={{ left: "170px", top: "0px" }}
+                        className="menu-sub"
+                      >
                         {childTab?.children?.map((child) => {
                           if (!child?.show) return;
                           if (child?.href) {

@@ -73,7 +73,7 @@ const ClientBranchChangeReport = () => {
       responseType: "blob",
     });
 
-    const blob = new Blob([data.data], { type: "text/csv" });
+    const blob = new Blob([data], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
