@@ -345,6 +345,20 @@ export const getNavItems = (permissions, adminRole, setters) => {
       show: permissions.includes("bonus"),
       children: [
         {
+          label: "View Bonus",
+          href: "/view-bonus",
+          show:
+            adminRole === AdminRole.hyper_master ||
+            adminRole === AdminRole.admin_staff,
+        },
+        {
+          label: "Add Bonus",
+          href: "/add-bonus",
+          show:
+            adminRole === AdminRole.hyper_master ||
+            adminRole === AdminRole.admin_staff,
+        },
+        {
           label: "Pending Bonus",
           href: "/pending-bonus",
           show: true,
