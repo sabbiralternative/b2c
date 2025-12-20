@@ -367,7 +367,7 @@ export const router = createBrowserRouter(
           element: <ActivityLogs />,
         },
         {
-          path: "/view-whitelabel",
+          path: "/view-whitelable",
           element: <ViewWhiteLabel />,
         },
         {

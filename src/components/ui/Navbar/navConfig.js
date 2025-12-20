@@ -463,12 +463,12 @@ export const getNavItems = (permissions, adminRole, setters) => {
       show: permissions.includes("whitelable"),
       children: [
         {
-          label: "View Whitelabel",
-          href: "/view-whitelabel",
+          label: "View Whitelable",
+          href: "/view-whitelable",
           show: true,
         },
         {
-          label: "Add Whitelabel",
+          label: "Add Whitelable",
           setState: setAddWhiteLabel,
           show: true,
         },
