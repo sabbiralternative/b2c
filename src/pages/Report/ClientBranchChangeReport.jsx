@@ -62,6 +62,13 @@ const ClientBranchChangeReport = () => {
       pagination: true,
       page: activePage,
     };
+
+    if (
+      adminRole === AdminRole.admin_staff ||
+      adminRole === AdminRole.hyper_master
+    ) {
+      payload.branch_id = branchId;
+    }
     const { data } = await AxiosSecure.post(API.exportCSV, payload, {
       responseType: "blob",
     });
