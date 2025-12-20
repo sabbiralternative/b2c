@@ -145,7 +145,12 @@ export const getNavItems = (permissions, adminRole, setters) => {
     {
       tab: "Miscellaneous",
       key: "miscellaneous",
-      show: true,
+      show:
+        permissions?.includes("payment") ||
+        permissions?.includes("exposure") ||
+        permissions?.includes("affiliate") ||
+        permissions?.includes("setting") ||
+        permissions?.includes("complaint"),
       willSubTab: true,
       children: [
         {
@@ -453,9 +458,9 @@ export const getNavItems = (permissions, adminRole, setters) => {
       ],
     },
     {
-      tab: "Whitelabel",
-      key: "whitelabel",
-      show: permissions.includes("whitelabel"),
+      tab: "Whitelable",
+      key: "whitelable",
+      show: permissions.includes("whitelable"),
       children: [
         {
           label: "View Whitelabel",
