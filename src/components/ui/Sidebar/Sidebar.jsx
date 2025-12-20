@@ -48,7 +48,6 @@ const Sidebar = () => {
     if (adminRole) {
       const decode = jwtDecode(token);
       const permissions = decode?.permissions;
-      console.log(permissions);
       setPermission(permissions?.length > 0 ? permissions : []);
     }
   }, [adminRole, token]);
@@ -99,6 +98,7 @@ const Sidebar = () => {
             </a>
             {navItem?.willSubTab && sidebarItem === navItem?.key ? (
               navItem?.children?.map((child, childIndex) => {
+                if (!child?.show) return;
                 return (
                   <li
                     key={childIndex}

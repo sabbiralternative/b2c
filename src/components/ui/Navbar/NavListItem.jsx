@@ -147,6 +147,7 @@ const NavListItem = () => {
                 }}
               >
                 {navItem?.children?.map((childTab, childTabIndex) => {
+                  if (!childTab?.show) return;
                   return (
                     <li
                       key={childTabIndex}
