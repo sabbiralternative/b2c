@@ -64,7 +64,9 @@ export const getNavItems = (permissions, adminRole, setters) => {
         {
           label: "Add Client",
           href: "/add-client",
-          show: true,
+          show:
+            adminRole === AdminRole.master ||
+            adminRole === AdminRole.branch_staff,
         },
         {
           label: "Clients With Balance",
