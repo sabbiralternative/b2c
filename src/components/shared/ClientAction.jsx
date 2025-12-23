@@ -483,7 +483,8 @@ const ClientAction = ({ refetchClient, client, index }) => {
               )}
               {adminRole !== AdminRole.hyper_master &&
                 adminRole !== AdminRole.branch_staff &&
-                adminRole !== "admin_staff" && (
+                adminRole !== "admin_staff" &&
+                adminRole !== AdminRole.master && (
                   <li
                     onClick={() => {
                       setShowMore(false);

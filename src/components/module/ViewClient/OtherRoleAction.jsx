@@ -249,20 +249,22 @@ const OtherRoleAction = ({
                   </li>
                 </>
               )}
-              {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
-                <li
-                  onClick={() => {
-                    handleOpenModal(
-                      setShowCreditRef,
-                      client?.username,
-                      client?.role,
-                      client?.downlineId
-                    );
-                  }}
-                >
-                  <a className="dropdown-item">Credit Reference</a>
-                </li>
-              )}
+              {adminRole !== "hyper_master" &&
+                adminRole !== "admin_staff" &&
+                adminRole !== AdminRole.master && (
+                  <li
+                    onClick={() => {
+                      handleOpenModal(
+                        setShowCreditRef,
+                        client?.username,
+                        client?.role,
+                        client?.downlineId
+                      );
+                    }}
+                  >
+                    <a className="dropdown-item">Credit Reference</a>
+                  </li>
+                )}
             </ul>
           )}
         </div>
