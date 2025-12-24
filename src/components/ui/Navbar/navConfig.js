@@ -423,6 +423,16 @@ export const getNavItems = (permissions, adminRole, setters) => {
           show: true,
         },
         {
+          label: "Direct Deposit Report",
+          href: "/direct-deposit-report",
+          show: true,
+        },
+        {
+          label: "Direct Withdraw Report",
+          href: "/direct-withdraw-report",
+          show: true,
+        },
+        {
           label: "Transfer Statement",
           href: "/transfer-statement",
           show: true,

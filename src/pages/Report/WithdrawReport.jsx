@@ -305,22 +305,24 @@ const WithdrawReport = () => {
                             <td>{data?.bank_account_name}</td>
                             <td>{data?.amount}</td>
                             <td>{data?.bank_name}</td>
+
                             <td>
-                              {data?.image && (
-                                <img
+                              {data?.image ? (
+                                <span
                                   onClick={() => {
                                     setImage("");
                                     setShowImage(true);
                                     setImage(data?.image);
                                   }}
                                   style={{
-                                    height: "40px",
-                                    width: "40px",
-                                    objectFit: "contain",
+                                    color: "#346cee",
+                                    cursor: "pointer",
                                   }}
-                                  src={data?.image}
-                                  alt=""
-                                />
+                                >
+                                  View
+                                </span>
+                              ) : (
+                                "N/A"
                               )}
                             </td>
 

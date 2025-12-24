@@ -320,24 +320,25 @@ const DepositReport = () => {
                             <td>{data?.deposit_date}</td>
                             <td>{data?.date_modified}</td>
                             <td>
-                              {data?.image && (
-                                <img
+                              {data?.image ? (
+                                <span
                                   onClick={() => {
                                     setImage("");
                                     setShowDepositImage(true);
                                     setImage(data?.image);
                                   }}
                                   style={{
-                                    height: "40px",
-                                    width: "40px",
-                                    objectFit: "contain",
+                                    color: "#346cee",
                                     cursor: "pointer",
                                   }}
-                                  src={data?.image}
-                                  alt=""
-                                />
+                                >
+                                  View
+                                </span>
+                              ) : (
+                                "N/A"
                               )}
                             </td>
+
                             <td>{data?.remark}</td>
                             <td>
                               <span
