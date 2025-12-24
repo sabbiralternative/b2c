@@ -6,7 +6,6 @@ import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ShowImage from "../../components/modal/ShowImage";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
@@ -18,10 +17,9 @@ const DirectWithdrawReport = () => {
   const { data: branches } = useGetIndex({
     type: "getBranches",
   });
-  const [amountFrom, setAmountFrom] = useState(null);
-  const [amountTo, setAmountTo] = useState(null);
-  const [showImage, setShowImage] = useState(false);
-  const [image, setImage] = useState("");
+  // const [amountFrom, setAmountFrom] = useState(null);
+  // const [amountTo, setAmountTo] = useState(null);
+
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const navigate = useNavigate();
@@ -40,8 +38,8 @@ const DirectWithdrawReport = () => {
       toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
-      amountFrom: amountFrom ? Number(amountFrom) : null,
-      amountTo: amountTo ? Number(amountTo) : null,
+      // amountFrom: amountFrom ? Number(amountFrom) : null,
+      // amountTo: amountTo ? Number(amountTo) : null,
     };
     if (adminRole === AdminRole.admin_staff) {
       payload.branch_id = branchId;
@@ -99,7 +97,6 @@ const DirectWithdrawReport = () => {
 
   return (
     <>
-      {showImage && <ShowImage image={image} setShowImage={setShowImage} />}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
           <div className="card">
@@ -175,7 +172,7 @@ const DirectWithdrawReport = () => {
                         </select>
                       </div>
                     )}
-                    <div
+                    {/* <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
@@ -208,7 +205,7 @@ const DirectWithdrawReport = () => {
                         className="form-control"
                         id="Amount To"
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -256,7 +253,7 @@ const DirectWithdrawReport = () => {
                     <thead className="table-dark">
                       <tr>
                         <th>User Id</th>
-                        <th>Login Name</th>
+
                         <th>Branch Name</th>
 
                         {adminRole === AdminRole.hyper_master ||
@@ -270,13 +267,12 @@ const DirectWithdrawReport = () => {
                         <th>Bank A/C</th>
                         <th>Amount</th>
                         <th>Bank Name</th>
-                        <th>Image</th>
-                        <th>Request Time</th>
+
                         <th>Approval Time</th>
                         <th>Account No</th>
                         <th>Ifsc</th>
                         <th>Remark</th>
-                        <th>Status</th>
+
                         {/* <th>Action</th> */}
                       </tr>
                     </thead>
@@ -294,7 +290,7 @@ const DirectWithdrawReport = () => {
                             >
                               {data?.userId}
                             </td>
-                            <td>{data?.loginname}</td>
+
                             <td>{data?.branch_name}</td>
                             {adminRole === AdminRole.hyper_master ||
                             adminRole === AdminRole.admin_master ? (
@@ -307,42 +303,11 @@ const DirectWithdrawReport = () => {
                             <td>{data?.amount}</td>
                             <td>{data?.bank_name}</td>
 
-                            <td>
-                              {data?.image ? (
-                                <span
-                                  onClick={() => {
-                                    setImage("");
-                                    setShowImage(true);
-                                    setImage(data?.image);
-                                  }}
-                                  style={{
-                                    color: "#346cee",
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  View
-                                </span>
-                              ) : (
-                                "N/A"
-                              )}
-                            </td>
-
-                            <td>{data?.withdraw_date}</td>
                             <td>{data?.date_modified}</td>
                             <td>{data?.account_number}</td>
                             <td>{data?.ifsc}</td>
                             <td>{data?.remark}</td>
-                            <td>
-                              <span
-                                className={`badge ${
-                                  data?.status == "APPROVED"
-                                    ? "bg-label-primary"
-                                    : "bg-label-warning"
-                                } me-1`}
-                              >
-                                {data?.status}
-                              </span>
-                            </td>
+
                             {/* <td>
                             <a
                               style={{ color: "white" }}

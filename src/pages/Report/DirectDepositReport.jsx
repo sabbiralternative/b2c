@@ -5,7 +5,6 @@ import { API } from "../../api";
 import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
-import ShowImage from "../../components/modal/ShowImage";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
@@ -18,10 +17,8 @@ const DirectDepositReport = () => {
   const { data: branches } = useGetIndex({
     type: "getBranches",
   });
-  const [amountFrom, setAmountFrom] = useState(null);
-  const [amountTo, setAmountTo] = useState(null);
-  const [showDepositImage, setShowDepositImage] = useState(false);
-  const [image, setImage] = useState("");
+  // const [amountFrom, setAmountFrom] = useState(null);
+  // const [amountTo, setAmountTo] = useState(null);
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const navigate = useNavigate();
@@ -40,8 +37,8 @@ const DirectDepositReport = () => {
       toDate: moment(endDate).format("YYYY-MM-DD"),
       token: generatedToken,
       pagination: true,
-      amountFrom: amountFrom ? Number(amountFrom) : null,
-      amountTo: amountTo ? Number(amountTo) : null,
+      // amountFrom: amountFrom ? Number(amountFrom) : null,
+      // amountTo: amountTo ? Number(amountTo) : null,
     };
     if (adminRole === AdminRole.admin_staff) {
       payload.branch_id = branchId;
@@ -103,9 +100,6 @@ const DirectDepositReport = () => {
 
   return (
     <>
-      {showDepositImage && (
-        <ShowImage image={image} setShowImage={setShowDepositImage} />
-      )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
           <div className="card">
@@ -181,7 +175,7 @@ const DirectDepositReport = () => {
                         </select>
                       </div>
                     )}
-                    <div
+                    {/* <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
@@ -214,7 +208,7 @@ const DirectDepositReport = () => {
                         className="form-control"
                         id="Amount To"
                       />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 
@@ -262,7 +256,6 @@ const DirectDepositReport = () => {
                     <thead className="table-dark">
                       <tr>
                         <th>User Id</th>
-                        <th>Login Name</th>
 
                         <th>Branch Name</th>
                         {adminRole === AdminRole.hyper_master ||
@@ -274,10 +267,9 @@ const DirectDepositReport = () => {
                         ) : null}
 
                         <th>Amount</th>
-                        <th>Utr</th>
-                        <th>Request Time</th>
+
                         <th>Approval Time</th>
-                        <th>Image</th>
+
                         <th>Remark</th>
                         <th>Status</th>
                       </tr>
@@ -296,7 +288,6 @@ const DirectDepositReport = () => {
                             >
                               {data?.userId}
                             </td>
-                            <td>{data?.loginname}</td>
 
                             <td>{data?.branch_name}</td>
                             {adminRole === AdminRole.hyper_master ||
@@ -308,29 +299,9 @@ const DirectDepositReport = () => {
                             ) : null}
 
                             <td>{data?.amount}</td>
-                            <td>{data?.utr}</td>
-                            <td>{data?.deposit_date}</td>
+
                             <td>{data?.date_modified}</td>
 
-                            <td>
-                              {data?.image ? (
-                                <span
-                                  onClick={() => {
-                                    setImage("");
-                                    setShowDepositImage(true);
-                                    setImage(data?.image);
-                                  }}
-                                  style={{
-                                    color: "#346cee",
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  View
-                                </span>
-                              ) : (
-                                "N/A"
-                              )}
-                            </td>
                             <td>{data?.remark}</td>
                             <td>
                               <span
