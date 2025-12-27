@@ -194,69 +194,71 @@ const ClientAction = ({ refetchClient, client, index }) => {
           </a>
         </>
       )}
-      {permission.includes("client") && adminRole !== AdminRole.master && (
-        <>
-          {permission.includes("deposit") && (
-            <Fragment>
-              <a
-                style={{
-                  color: "white",
-                  cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                }}
-                onClick={() => {
-                  handleOpenModal(
-                    setDirectDeposit,
-                    client?.username,
-                    client?.role,
-                    client?.downlineId
-                  );
-                }}
-                className="btn btn-icon btn-sm btn-success"
-              >
-                DD
-              </a>
+      {permission.includes("client") &&
+        adminRole !== AdminRole.master &&
+        adminRole !== AdminRole.hyper_master && (
+          <Fragment>
+            {permission.includes("deposit") && (
+              <Fragment>
+                <a
+                  style={{
+                    color: "white",
+                    cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                  }}
+                  onClick={() => {
+                    handleOpenModal(
+                      setDirectDeposit,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId
+                    );
+                  }}
+                  className="btn btn-icon btn-sm btn-success"
+                >
+                  DD
+                </a>
 
-              <a
-                style={{
-                  color: "white",
-                  cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                }}
-                onClick={() => {
-                  handleOpenModal(
-                    setClientDeposit,
-                    client?.username,
-                    client?.role,
-                    client?.downlineId
-                  );
-                }}
-                className="btn btn-icon btn-sm btn-primary"
-              >
-                D
-              </a>
-            </Fragment>
-          )}
-          {permission.includes("withdraw") && (
-            <Fragment>
-              <a
-                style={{
-                  color: "white",
-                  cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
-                }}
-                onClick={() => {
-                  handleOpenModal(
-                    setDirectWithdraw,
-                    client?.username,
-                    client?.role,
-                    client?.downlineId
-                  );
-                }}
-                className="btn btn-icon btn-sm btn-danger"
-              >
-                W
-              </a>
-            </Fragment>
-          )}
-          {/* <a
+                <a
+                  style={{
+                    color: "white",
+                    cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                  }}
+                  onClick={() => {
+                    handleOpenModal(
+                      setClientDeposit,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId
+                    );
+                  }}
+                  className="btn btn-icon btn-sm btn-primary"
+                >
+                  D
+                </a>
+              </Fragment>
+            )}
+            {permission.includes("withdraw") && (
+              <Fragment>
+                <a
+                  style={{
+                    color: "white",
+                    cursor: `${!readOnly ? "pointer" : "not-allowed"}`,
+                  }}
+                  onClick={() => {
+                    handleOpenModal(
+                      setDirectWithdraw,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId
+                    );
+                  }}
+                  className="btn btn-icon btn-sm btn-danger"
+                >
+                  W
+                </a>
+              </Fragment>
+            )}
+            {/* <a
                                 style={{ color: "white" }}
                                 onClick={() => {
                                   setShowMore(false);
@@ -271,7 +273,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                               >
                                 P
                               </a> */}
-          {/* {adminRole !== "admin_staff" && (
+            {/* {adminRole !== "admin_staff" && (
                                 <a
                                   style={{ color: "white" }}
                                   onClick={() => {
@@ -288,8 +290,8 @@ const ClientAction = ({ refetchClient, client, index }) => {
                                   S
                                 </a>
                               )} */}
-        </>
-      )}
+          </Fragment>
+        )}
       {adminRole == AdminRole.hyper_master ||
       adminRole === AdminRole.admin_staff ? (
         <Fragment>
@@ -300,20 +302,24 @@ const ClientAction = ({ refetchClient, client, index }) => {
           >
             B
           </a>
-          <a
-            style={{ color: "white" }}
-            onClick={() => {
-              handleOpenModal(
-                setShowChangeBranch,
-                client?.username,
-                client?.role,
-                client?.downlineId
-              );
-            }}
-            className="btn btn-icon btn-sm btn-danger"
-          >
-            M
-          </a>
+          {((adminRole === AdminRole.admin_staff &&
+            permission?.includes("change_branch")) ||
+            adminRole == AdminRole.hyper_master) && (
+            <a
+              style={{ color: "white" }}
+              onClick={() => {
+                handleOpenModal(
+                  setShowChangeBranch,
+                  client?.username,
+                  client?.role,
+                  client?.downlineId
+                );
+              }}
+              className="btn btn-icon btn-sm btn-danger"
+            >
+              M
+            </a>
+          )}
         </Fragment>
       ) : null}
       {adminRole !== AdminRole.hyper_master &&

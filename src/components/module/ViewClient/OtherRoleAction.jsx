@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { AdminRole } from "../../../constant/constant";
 import { Link, useNavigate } from "react-router-dom";
+import { usePermission } from "../../../hooks/use-permission";
 
 const OtherRoleAction = ({
   adminRole,
@@ -21,6 +22,7 @@ const OtherRoleAction = ({
   setShowColor,
   setShowChangeBranch,
 }) => {
+  const { permissions } = usePermission();
   const navigate = useNavigate();
   return (
     <td style={{ display: "flex", gap: "3px" }}>
@@ -120,20 +122,24 @@ const OtherRoleAction = ({
           >
             B
           </a>
-          <a
-            style={{ color: "white" }}
-            onClick={() => {
-              handleOpenModal(
-                setShowChangeBranch,
-                client?.username,
-                client?.role,
-                client?.downlineId
-              );
-            }}
-            className="btn btn-icon btn-sm btn-danger"
-          >
-            M
-          </a>
+          {((adminRole === AdminRole.admin_staff &&
+            permissions?.includes("change_branch")) ||
+            adminRole == AdminRole.hyper_master) && (
+            <a
+              style={{ color: "white" }}
+              onClick={() => {
+                handleOpenModal(
+                  setShowChangeBranch,
+                  client?.username,
+                  client?.role,
+                  client?.downlineId
+                );
+              }}
+              className="btn btn-icon btn-sm btn-danger"
+            >
+              M
+            </a>
+          )}
         </Fragment>
       ) : null}
       {adminRole !== "hyper_master" && adminRole !== "admin_staff" && (
