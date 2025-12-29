@@ -13,14 +13,14 @@ const ClientPermission = ({
   showMore,
   showMoreRef,
   setShowChangePassword,
-  permission,
+  permissions,
   setDirectDeposit,
   setDirectWithdraw,
   setClientDeposit,
 }) => {
   return (
     <td style={{ display: "flex", gap: "3px" }}>
-      {permission.includes("deposit") && (
+      {permissions.includes("deposit") && (
         <Fragment>
           <a
             style={{
@@ -59,7 +59,7 @@ const ClientPermission = ({
           </a>
         </Fragment>
       )}
-      {permission.includes("withdraw") && (
+      {permissions.includes("withdraw") && (
         <Fragment>
           <a
             style={{
@@ -80,7 +80,7 @@ const ClientPermission = ({
           </a>
         </Fragment>
       )}
-      {permission.includes("depositWithSlip") && (
+      {permissions.includes("depositWithSlip") && (
         <a
           style={{
             color: "white",
@@ -100,7 +100,7 @@ const ClientPermission = ({
         </a>
       )}
 
-      {permission?.includes("directWithdraw") && (
+      {permissions?.includes("directWithdraw") && (
         <a
           style={{
             color: "white",
@@ -119,7 +119,7 @@ const ClientPermission = ({
           W
         </a>
       )}
-      {permission?.includes("directDeposit") && (
+      {permissions?.includes("directDeposit") && (
         <a
           style={{
             color: "white",
@@ -139,7 +139,7 @@ const ClientPermission = ({
         </a>
       )}
 
-      {permission.includes("password") && (
+      {permissions.includes("password") && (
         <a
           style={{
             color: "white",
@@ -158,7 +158,7 @@ const ClientPermission = ({
           P
         </a>
       )}
-      {permission.includes("client") && (
+      {permissions.includes("client") && (
         <Fragment>
           <a
             style={{

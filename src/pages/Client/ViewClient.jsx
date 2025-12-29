@@ -11,7 +11,6 @@ import ChangeStatus from "../../components/modal/ChangeStatus";
 import CreditReference from "../../components/modal/CreditReference";
 import DirectDeposit from "../../components/modal/Master/Client/DirectDeposit";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
-import { jwtDecode } from "jwt-decode";
 import { AdminRole, clientColor } from "../../constant/constant";
 import ClientWithdrawDeposit from "../../components/module/ViewClient/ClientWithdrawDeposit";
 import DepositPermission from "../../components/module/ViewClient/DepositPermission";
@@ -25,15 +24,16 @@ import ChangeColor from "../../components/modal/ChangeColor";
 import ChangeBranch from "../../components/modal/HyperMaster/Client/ChangeBranch";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
+import { usePermission } from "../../hooks/use-permission";
+
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
 const ViewClient = () => {
+  const { permissions } = usePermission();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const searchBy = params.get("role");
   const searchHistory = params.get("history");
-
-  const [permission, setPermission] = useState([]);
   const showMoreRef = useRef(null);
   const [showMore, setShowMore] = useState(null);
   const navigate = useNavigate();
@@ -105,24 +105,6 @@ const ViewClient = () => {
   });
 
   useEffect(() => {
-    if (adminRole) {
-      if (adminRole === "branch_staff") {
-        const decode = jwtDecode(token);
-        const permissions = decode?.permissions;
-        setPermission(permissions);
-      } else {
-        setPermission([
-          "deposit",
-          "withdraw",
-          "client",
-          "directDeposit",
-          "depositWithSlip",
-          "directWithdraw",
-          "dashboard",
-          "password",
-        ]);
-      }
-    }
     if (showColor || showChangeStatus || showCreditRef || showChangePassword) {
       setShowMore(false);
     }
@@ -391,9 +373,9 @@ const ViewClient = () => {
 
                           {/* For search branch_staff for deposit */}
                           {searchBy === AdminRole.branch_staff &&
-                            permission.includes("deposit") &&
-                            !permission.includes("withdraw") &&
-                            !permission.includes("client") && (
+                            permissions.includes("deposit") &&
+                            !permissions.includes("withdraw") &&
+                            !permissions.includes("client") && (
                               <DepositPermission
                                 client={client}
                                 handleNavigate={handleNavigate}
@@ -406,9 +388,9 @@ const ViewClient = () => {
                             )}
                           {/* For search branch_staff for withdraw */}
                           {searchBy === AdminRole.branch_staff &&
-                            permission.includes("withdraw") &&
-                            !permission.includes("deposit") &&
-                            !permission.includes("client") && (
+                            permissions.includes("withdraw") &&
+                            !permissions.includes("deposit") &&
+                            !permissions.includes("client") && (
                               <WithdrawPermission
                                 client={client}
                                 handleNavigate={handleNavigate}
@@ -434,7 +416,7 @@ const ViewClient = () => {
                                 setShowChangeStatus={setShowChangeStatus}
                                 showMore={showMore}
                                 showMoreRef={showMoreRef}
-                                permission={permission}
+                                permissions={permissions}
                                 setDirectDeposit={setDirectDeposit}
                                 setDirectWithdraw={setDirectWithdraw}
                                 setClientDeposit={setClientDeposit}
@@ -443,9 +425,9 @@ const ViewClient = () => {
 
                           {/* all */}
                           {searchBy === AdminRole.branch_staff &&
-                            permission.includes("deposit") &&
-                            permission.includes("withdraw") &&
-                            permission.includes("client") && (
+                            permissions.includes("deposit") &&
+                            permissions.includes("withdraw") &&
+                            permissions.includes("client") && (
                               <ClientWithdrawDeposit
                                 client={client}
                                 handleNavigate={handleNavigate}
@@ -461,9 +443,9 @@ const ViewClient = () => {
 
                           {/* deposit client */}
                           {searchBy === AdminRole.branch_staff &&
-                            permission.includes("deposit") &&
-                            !permission.includes("withdraw") &&
-                            permission.includes("client") && (
+                            permissions.includes("deposit") &&
+                            !permissions.includes("withdraw") &&
+                            permissions.includes("client") && (
                               <DepositClient
                                 client={client}
                                 handleNavigate={handleNavigate}
@@ -477,9 +459,9 @@ const ViewClient = () => {
                             )}
                           {/* deposit withdraw */}
                           {searchBy === AdminRole.branch_staff &&
-                            permission.includes("deposit") &&
-                            permission.includes("withdraw") &&
-                            !permission.includes("client") && (
+                            permissions.includes("deposit") &&
+                            permissions.includes("withdraw") &&
+                            !permissions.includes("client") && (
                               <DepositWithdraw
                                 setDirectWithdraw={setDirectWithdraw}
                                 client={client}
@@ -493,9 +475,9 @@ const ViewClient = () => {
                             )}
                           {/* withdraw client */}
                           {searchBy === AdminRole.branch_staff &&
-                            !permission.includes("deposit") &&
-                            permission.includes("withdraw") &&
-                            permission.includes("client") && (
+                            !permissions.includes("deposit") &&
+                            permissions.includes("withdraw") &&
+                            permissions.includes("client") && (
                               <WithdrawClient
                                 client={client}
                                 handleNavigate={handleNavigate}

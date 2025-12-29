@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import useContextState from "../../hooks/useContextState";
 import { AdminRole } from "../../constant/constant";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,11 +11,11 @@ import CreditReference from "../modal/CreditReference";
 import DirectWithdraw from "../modal/Master/Client/DirectWithdraw";
 import ChangeColor from "../modal/ChangeColor";
 import ChangeBranch from "../modal/HyperMaster/Client/ChangeBranch";
-import { jwtDecode } from "jwt-decode";
+import { usePermission } from "../../hooks/use-permission";
 
 const ClientAction = ({ refetchClient, client, index }) => {
+  const { permissions } = usePermission();
   const navigate = useNavigate();
-  const [permission, setPermission] = useState([]);
   const [showColor, setShowColor] = useState(false);
   const [directWithdraw, setDirectWithdraw] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -27,7 +27,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
   const [payloadRole, setPayloadRole] = useState("");
   const [id, setId] = useState("");
   const [showChangeBranch, setShowChangeBranch] = useState(false);
-  const { adminRole, readOnly, token } = useContextState();
+  const { adminRole, readOnly } = useContextState();
 
   const [showMore, setShowMore] = useState(null);
   const showMoreRef = useRef();
@@ -54,27 +54,6 @@ const ClientAction = ({ refetchClient, client, index }) => {
       setShowMore(i);
     }
   };
-
-  useEffect(() => {
-    if (adminRole) {
-      if (adminRole === "branch_staff") {
-        const decode = jwtDecode(token);
-        const permissions = decode?.permissions;
-        setPermission(permissions);
-      } else {
-        setPermission([
-          "deposit",
-          "withdraw",
-          "client",
-          "directDeposit",
-          "depositWithSlip",
-          "directWithdraw",
-          "dashboard",
-          "password",
-        ]);
-      }
-    }
-  }, [adminRole, token]);
 
   return (
     <Fragment>
@@ -194,11 +173,11 @@ const ClientAction = ({ refetchClient, client, index }) => {
           </a>
         </>
       )}
-      {permission.includes("client") &&
+      {permissions.includes("client") &&
         adminRole !== AdminRole.master &&
         adminRole !== AdminRole.hyper_master && (
           <Fragment>
-            {permission.includes("deposit") && (
+            {permissions.includes("deposit") && (
               <Fragment>
                 <a
                   style={{
@@ -237,7 +216,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                 </a>
               </Fragment>
             )}
-            {permission.includes("withdraw") && (
+            {permissions.includes("withdraw") && (
               <Fragment>
                 <a
                   style={{
@@ -303,7 +282,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
             B
           </a>
           {((adminRole === AdminRole.admin_staff &&
-            permission?.includes("change_branch")) ||
+            permissions?.includes("change_branch")) ||
             adminRole == AdminRole.hyper_master) && (
             <a
               style={{ color: "white" }}
@@ -387,7 +366,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
               }}
               className="dropdown-menu dropdown-menu-end"
             >
-              {permission.includes("depositWithSlip") && (
+              {permissions.includes("depositWithSlip") && (
                 <li
                   onClick={() => {
                     setShowMore(false);
@@ -402,7 +381,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   <a className="dropdown-item">Deposit With Slip</a>
                 </li>
               )}
-              {permission?.includes("directWithdraw") && (
+              {permissions?.includes("directWithdraw") && (
                 <li
                   onClick={() => {
                     setShowMore(false);
@@ -417,7 +396,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   <a className="dropdown-item">Withdraw</a>
                 </li>
               )}
-              {permission?.includes("directDeposit") && (
+              {permissions?.includes("directDeposit") && (
                 <li
                   onClick={() => {
                     setShowMore(false);
@@ -454,39 +433,40 @@ const ClientAction = ({ refetchClient, client, index }) => {
               >
                 <a className="dropdown-item">Client Group</a>
               </li>
-              {permission.includes("client") && adminRole !== "admin_staff" && (
-                <>
-                  {permission.includes("password") && (
+              {permissions.includes("client") &&
+                adminRole !== "admin_staff" && (
+                  <>
+                    {permissions.includes("password") && (
+                      <li
+                        onClick={() => {
+                          setShowMore(false);
+                          handleOpenModal(
+                            setShowChangePassword,
+                            client?.username,
+                            client?.role,
+                            client?.downlineId
+                          );
+                        }}
+                      >
+                        <a className="dropdown-item">Change Password</a>
+                      </li>
+                    )}
+
                     <li
                       onClick={() => {
                         setShowMore(false);
                         handleOpenModal(
-                          setShowChangePassword,
+                          setShowChangeStatus,
                           client?.username,
                           client?.role,
                           client?.downlineId
                         );
                       }}
                     >
-                      <a className="dropdown-item">Change Password</a>
+                      <a className="dropdown-item">Change Status</a>
                     </li>
-                  )}
-
-                  <li
-                    onClick={() => {
-                      setShowMore(false);
-                      handleOpenModal(
-                        setShowChangeStatus,
-                        client?.username,
-                        client?.role,
-                        client?.downlineId
-                      );
-                    }}
-                  >
-                    <a className="dropdown-item">Change Status</a>
-                  </li>
-                </>
-              )}
+                  </>
+                )}
               {adminRole !== AdminRole.hyper_master &&
                 adminRole !== AdminRole.branch_staff &&
                 adminRole !== "admin_staff" &&
