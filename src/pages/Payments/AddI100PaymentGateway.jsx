@@ -8,6 +8,7 @@ import useContextState from "../../hooks/useContextState";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
+import { classifications } from "../../static/classification";
 
 const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
   const [disabled, setDisabled] = useState(false);
@@ -156,6 +157,32 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
                       className="form-control"
                       id="basic-default-company"
                     />
+                  </div>
+                </div>
+                <div className="row mb-3" id="bank_account_name_div">
+                  <label
+                    className="col-sm-2 col-form-label"
+                    htmlFor="basic-default-name"
+                  >
+                    Classification
+                  </label>
+                  <div className="col-sm-10">
+                    <select
+                      defaultValue=""
+                      {...register("class", {
+                        required: true,
+                      })}
+                      className="form-control"
+                    >
+                      <option disabled value="">
+                        Select Classification
+                      </option>
+                      {classifications.map((item) => (
+                        <option key={item.value} value={item.value}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="row mb-3">
