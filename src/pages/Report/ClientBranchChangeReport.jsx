@@ -11,9 +11,10 @@ import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
-import { AxiosSecure } from "../../lib/AxiosSecure";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const ClientBranchChangeReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [branchId, setBranchId] = useState(0);
   const [refetch, setRefetch] = useState(false);
   const [activePage, setActivePage] = useState(1);
@@ -53,8 +54,7 @@ const ClientBranchChangeReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
+  const handleExport = async () => {
     const payload = {
       type: "getClientTransfer",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
@@ -69,34 +69,7 @@ const ClientBranchChangeReport = () => {
     ) {
       payload.branch_id = branchId;
     }
-    const { data } = await AxiosSecure.post(API.exportCSV, payload, {
-      responseType: "blob",
-    });
-
-    const blob = new Blob([data], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "export.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-    // if (data?.success) {
-    //   if (data?.result?.length > 0) {
-    //     let clientReport = data?.result;
-    //     if (adminRole === "master") {
-    //       clientReport = data?.result.map(
-    //         // eslint-disable-next-line no-unused-vars
-    //         ({ loginname, mobile, ...rest }) => rest
-    //       );
-    //     }
-    //     const ws = utils.json_to_sheet(clientReport);
-    //     const wb = utils.book_new();
-    //     utils.book_append_sheet(wb, ws, "Sheet1");
-    //     writeFile(wb, "customers_data.xlsx");
-    //   }
-    // }
+    exportMutation(payload);
   };
 
   const handleToggleViewClient = async () => {
@@ -197,8 +170,8 @@ const ClientBranchChangeReport = () => {
                 />
                 <input
                   style={{ marginLeft: "10px" }}
-                  onClick={exportToExcel}
-                  type="submit"
+                  onClick={handleExport}
+                  type="button"
                   name="submit"
                   className="btn btn-primary"
                   value="Export"

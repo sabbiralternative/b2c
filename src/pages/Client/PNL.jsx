@@ -4,13 +4,13 @@ import { useLocation } from "react-router-dom";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import useGetPNL from "../../hooks/Master/Client/useGetPNL";
-import { AxiosSecure } from "../../lib/AxiosSecure";
-import { API } from "../../api";
 import Slip from "../../components/modal/Master/Deposit/Slip";
 import SettleBets from "../../components/modal/Master/SettleBets";
 import DefaultDateButton from "../Report/DefaultDateButton";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const PNL = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [image, setImage] = useState("");
   const [type, setType] = useState("all");
   const location = useLocation();
@@ -67,25 +67,7 @@ const PNL = () => {
       method: type,
       downlineId,
     };
-
-    try {
-      const response = await AxiosSecure.post(API.exportCSV, payload, {
-        responseType: "blob",
-      });
-
-      const blob = new Blob([response.data], { type: "text/csv" });
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "export.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error("Error downloading CSV:", error);
-    }
+    exportMutation(payload);
   };
 
   return (

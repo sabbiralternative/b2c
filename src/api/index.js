@@ -73,6 +73,7 @@ export const API = {
   exportCSV: "",
   complaint: "",
   affiliate: "",
+  lossback: "",
 };
 
 export const Settings = {

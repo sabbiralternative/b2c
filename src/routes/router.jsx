@@ -77,6 +77,7 @@ import ViewAffiliate from "../pages/Affiliate/ViewAffiliate";
 import ViewAffiliateClient from "../pages/Affiliate/ViewAffiliateClient";
 import ViewAffiliateDeposit from "../pages/Affiliate/ViewAffiliateDeposit";
 import ViewAffiliateWithdraw from "../pages/Affiliate/ViewAffiliateWithdraw";
+import AddLossBackBonus from "../pages/Bonus/AddLossBackBonus";
 
 export const router = createBrowserRouter(
   [
@@ -208,6 +209,10 @@ export const router = createBrowserRouter(
         {
           path: "/add-bonus",
           element: <AddBonus />,
+        },
+        {
+          path: "/add-loss-back-bonus",
+          element: <AddLossBackBonus />,
         },
         {
           path: "/view-bonus",

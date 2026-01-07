@@ -107,7 +107,8 @@
       "index": "https://admin.api7.live/api/b2c/index",
       "exportCSV": "https://admin.api7.live/api/b2c/exportCSV",
       "complaint": "https://admin.api7.live/api/b2c/complaint",
-      "affiliate": "https://admin.api7.live/api/b2c/affiliate"
+      "affiliate": "https://admin.api7.live/api/b2c/affiliate",
+      "lossback": "https://admin.api7.live/api/b2c/lossback"
     }
   },
   "success": true
