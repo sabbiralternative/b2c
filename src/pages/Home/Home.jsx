@@ -230,6 +230,38 @@ const Home = () => {
               </div>
             </div>
           </div>
+          <div className="col-lg-6 col-md-12">
+            <div className="row">
+              <div className="col-sm-6 col-12 mb-4">
+                <div className="card">
+                  <div className="card-body text-center">
+                    <h2 className="mb-1">
+                      {isLoading || isPending ? (
+                        <Loader />
+                      ) : (
+                        balanceData?.rejectedDepositToday
+                      )}
+                    </h2>
+                    <span className="text-muted">Rejected Deposit Today</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-sm-6 col-12 mb-4">
+                <div className="card">
+                  <div className="card-body text-center">
+                    <h2 className="mb-1">
+                      {isLoading || isPending ? (
+                        <Loader />
+                      ) : (
+                        balanceData?.rejectedDepositToday
+                      )}
+                    </h2>
+                    <span className="text-muted">Rejected Withdraw Today</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
