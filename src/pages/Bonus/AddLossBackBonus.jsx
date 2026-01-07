@@ -1,10 +1,14 @@
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLossBackMutation } from "../../hooks/lossback";
 
 const AddLossBackBonus = () => {
+  const lastLossBackValue = useRef("");
+  const minimumLossAmount = useRef("");
+  const maximumBonusAmount = useRef("");
+  const bonusExpiryDate = useRef("");
   const { mutate: handleLossBack } = useLossBackMutation();
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
@@ -93,9 +97,9 @@ const AddLossBackBonus = () => {
                         Select Clients
                       </option>
 
-                      <option value="all">All</option>
+                      <option value="all">All Clients</option>
                       <option value="referral">Referral</option>
-                      <option value="individual">Individual</option>
+                      <option value="individual">Individual Clients</option>
                     </select>
                   </div>
                 </div>
@@ -136,15 +140,57 @@ const AddLossBackBonus = () => {
 
                 <div className="row mb-3">
                   <label className="col-sm-2 col-form-label">
-                    Lossback (%)
+                    Lossback (%) *
                   </label>
                   <div className="col-sm-10">
                     <input
-                      type="text"
-                      {...register("lossback", {
-                        required: true,
-                      })}
+                      type="number"
                       className="form-control"
+                      min={1}
+                      max={100}
+                      step={1}
+                      onInput={(e) => {
+                        const raw = e.target.value;
+
+                        if (raw === "") {
+                          lastLossBackValue.current = "";
+                          return;
+                        }
+
+                        const value = Number(raw);
+
+                        if (value >= 1 && value <= 100) {
+                          lastLossBackValue.current = raw;
+                        } else {
+                          e.target.value = lastLossBackValue.current;
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "-" ||
+                          e.key === "e" ||
+                          e.key === "E" ||
+                          e.key === "." ||
+                          e.key === "+"
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
+                      {...register("lossback", {
+                        required: "Lossback is required",
+                        min: {
+                          value: 1,
+                          message: "Minimum value is 1",
+                        },
+                        max: {
+                          value: 100,
+                          message: "Maximum value is 100",
+                        },
+                        valueAsNumber: true,
+                        validate: (v) =>
+                          (v >= 1 && v <= 100) ||
+                          "Value must be between 1 and 100",
+                      })}
                     />
                   </div>
                 </div>
@@ -155,11 +201,43 @@ const AddLossBackBonus = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
-                      type="text"
-                      {...register("loss_amount", {
-                        required: true,
-                      })}
+                      type="number"
                       className="form-control"
+                      min={1}
+                      step={1}
+                      onInput={(e) => {
+                        const raw = e.target.value;
+
+                        if (raw === "") {
+                          minimumLossAmount.current = "";
+                          return;
+                        }
+
+                        const value = Number(raw);
+
+                        if (value >= 1) {
+                          minimumLossAmount.current = raw;
+                        } else {
+                          e.target.value = minimumLossAmount.current;
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "-" ||
+                          e.key === "e" ||
+                          e.key === "E" ||
+                          e.key === "." ||
+                          e.key === "+"
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
+                      {...register("loss_amount", {
+                        min: {
+                          value: 1,
+                        },
+                        valueAsNumber: true,
+                      })}
                     />
                   </div>
                 </div>
@@ -170,8 +248,105 @@ const AddLossBackBonus = () => {
                   </label>
                   <div className="col-sm-10">
                     <input
+                      type="number"
+                      className="form-control"
+                      min={1}
+                      step={1}
+                      onInput={(e) => {
+                        const raw = e.target.value;
+
+                        if (raw === "") {
+                          maximumBonusAmount.current = "";
+                          return;
+                        }
+
+                        const value = Number(raw);
+
+                        if (value >= 1) {
+                          maximumBonusAmount.current = raw;
+                        } else {
+                          e.target.value = maximumBonusAmount.current;
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "-" ||
+                          e.key === "e" ||
+                          e.key === "E" ||
+                          e.key === "." ||
+                          e.key === "+"
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
+                      {...register("maximum_bonus_amount", {
+                        min: {
+                          value: 1,
+                        },
+
+                        valueAsNumber: true,
+                      })}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <label className="col-sm-2 col-form-label">
+                    Bonus Expiry (No. of days) *
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      type="number"
+                      className="form-control"
+                      max={14}
+                      min={1}
+                      step={1}
+                      onInput={(e) => {
+                        const raw = e.target.value;
+
+                        if (raw === "") {
+                          bonusExpiryDate.current = "";
+                          return;
+                        }
+
+                        const value = Number(raw);
+
+                        if (value >= 1 && value <= 14) {
+                          bonusExpiryDate.current = raw;
+                        } else {
+                          e.target.value = bonusExpiryDate.current;
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "-" ||
+                          e.key === "e" ||
+                          e.key === "E" ||
+                          e.key === "." ||
+                          e.key === "+"
+                        ) {
+                          e.preventDefault();
+                        }
+                      }}
+                      {...register("bonus_expiry_date", {
+                        min: {
+                          value: 1,
+                        },
+                        max: {
+                          value: 14,
+                        },
+                        valueAsNumber: true,
+                      })}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <label className="col-sm-2 col-form-label">
+                    Transaction Code *
+                  </label>
+                  <div className="col-sm-10">
+                    <input
                       type="text"
-                      {...register("max_bonus_amount", {
+                      {...register("transaction_code", {
                         required: true,
                       })}
                       className="form-control"

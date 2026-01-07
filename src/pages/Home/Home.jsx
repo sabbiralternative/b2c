@@ -253,7 +253,7 @@ const Home = () => {
                       {isLoading || isPending ? (
                         <Loader />
                       ) : (
-                        balanceData?.rejectedDepositToday
+                        balanceData?.rejectedWithdrawToday
                       )}
                     </h2>
                     <span className="text-muted">Rejected Withdraw Today</span>
