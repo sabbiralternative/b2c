@@ -3,8 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useLossBackMutation } from "../../hooks/lossback";
+import { DatePicker } from "rsuite";
+import formatDate from "../../utils/formatDate";
 
-const AddLossBackBonus = () => {
+const AddLossBackBonusByDate = () => {
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
   const lastLossBackValue = useRef("");
   const minimumLossAmount = useRef("");
   const maximumBonusAmount = useRef("");
@@ -18,6 +22,8 @@ const AddLossBackBonus = () => {
   const onSubmit = async (value) => {
     const payload = {
       type: "add_lossback_bonus",
+      from_date: formatDate(fromDate),
+      to_date: formatDate(toDate),
       ...value,
     };
 
@@ -40,6 +46,7 @@ const AddLossBackBonus = () => {
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 breadcrumb-wrapper mb-4">
         <span className="text-muted fw-light">Home /</span> Add Lossback Bonus
+        By Date
       </h4>
 
       <div className="row">
@@ -48,41 +55,31 @@ const AddLossBackBonus = () => {
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-3">
-                  <label className="col-sm-2 col-form-label">Event Id *</label>
+                  <label className="col-sm-2 col-form-label">From Date *</label>
                   <div className="col-sm-10">
-                    <input
-                      type="text"
-                      {...register("event_id", {
-                        required: true,
-                      })}
-                      className="form-control"
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      format="yyyy-MM-dd"
+                      editable
+                      onChange={(date) => setFromDate(date)}
+                      value={fromDate}
+                      block
                     />
                   </div>
                 </div>
-
                 <div className="row mb-3">
-                  <label className="col-sm-2 col-form-label">
-                    Market Name *
-                  </label>
+                  <label className="col-sm-2 col-form-label">To Date *</label>
                   <div className="col-sm-10">
-                    <select
-                      defaultValue=""
-                      {...register("market_name", {
-                        required: true,
-                      })}
-                      className="form-control"
-                    >
-                      <option disabled value="">
-                        Select Market Name
-                      </option>
-
-                      <option value="match_odds">Match Odds</option>
-                      <option value="bookmaker">Bookmaker</option>
-                      <option value="mini_bookmaker">Mini Bookmaker</option>
-                    </select>
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      format="yyyy-MM-dd"
+                      editable
+                      onChange={(date) => setToDate(date)}
+                      value={toDate}
+                      block
+                    />
                   </div>
                 </div>
-
                 <div className="row mb-3">
                   <label className="col-sm-2 col-form-label">Clients *</label>
                   <div className="col-sm-10">
@@ -233,6 +230,7 @@ const AddLossBackBonus = () => {
                         }
                       }}
                       {...register("loss_amount", {
+                        required: true,
                         min: {
                           value: 1,
                         },
@@ -280,6 +278,7 @@ const AddLossBackBonus = () => {
                         }
                       }}
                       {...register("maximum_bonus_amount", {
+                        required: true,
                         min: {
                           value: 1,
                         },
@@ -328,6 +327,7 @@ const AddLossBackBonus = () => {
                         }
                       }}
                       {...register("bonus_expiry_date", {
+                        required: true,
                         min: {
                           value: 1,
                         },
@@ -374,4 +374,4 @@ const AddLossBackBonus = () => {
   );
 };
 
-export default AddLossBackBonus;
+export default AddLossBackBonusByDate;

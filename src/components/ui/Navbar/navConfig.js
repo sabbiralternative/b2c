@@ -366,8 +366,13 @@ export const getNavItems = (permissions, adminRole, setters) => {
             adminRole === AdminRole.admin_staff,
         },
         {
-          label: "Add Lossback Bonus",
-          href: "/add-loss-back-bonus",
+          label: "Add Lossback Bonus by Event",
+          href: "/add-loss-back-bonus-by-event",
+          show: adminRole === AdminRole.hyper_master,
+        },
+        {
+          label: "Add Lossback Bonus by Date",
+          href: "/add-loss-back-bonus-by-date",
           show: adminRole === AdminRole.hyper_master,
         },
         {
