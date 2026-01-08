@@ -1,4 +1,4 @@
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -8,8 +8,10 @@ import { useNavigate } from "react-router-dom";
 import ShowImage from "../../components/modal/ShowImage";
 
 import { AdminRole } from "../../constant/constant";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const ThirdDepositReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [showFTDImage, setShowFTDImage] = useState(false);
   const [image, setImage] = useState("");
   const { token, setClientId, adminRole, setRefetchViewClient } =
@@ -36,24 +38,29 @@ const ThirdDepositReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
-    const data = await getFTDReport();
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let firstDepositReports = data?.result;
-        if (adminRole === "master") {
-          firstDepositReports = data?.result.map(
-            // eslint-disable-next-line no-unused-vars
-            ({ loginname, mobile, ...rest }) => rest
-          );
-        }
-        const ws = utils.json_to_sheet(firstDepositReports);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "ftd_data.xlsx");
-      }
-    }
+  const exportToExcel = async () => {
+    const payload = {
+      type: "get3FTD",
+      pagination: true,
+    };
+    exportMutation(payload);
+    // e.preventDefault();
+    // const data = await getFTDReport();
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let firstDepositReports = data?.result;
+    //     if (adminRole === "master") {
+    //       firstDepositReports = data?.result.map(
+    //         // eslint-disable-next-line no-unused-vars
+    //         ({ loginname, mobile, ...rest }) => rest
+    //       );
+    //     }
+    //     const ws = utils.json_to_sheet(firstDepositReports);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "ftd_data.xlsx");
+    //   }
+    // }
   };
 
   const handleToggleViewFTD = async (e) => {
@@ -104,7 +111,7 @@ const ThirdDepositReport = () => {
                   <input
                     style={{ marginLeft: "10px" }}
                     onClick={exportToExcel}
-                    type="submit"
+                    type="button"
                     name="submit"
                     className="btn btn-primary"
                     value="Export"

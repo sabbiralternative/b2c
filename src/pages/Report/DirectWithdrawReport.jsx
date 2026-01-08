@@ -1,5 +1,5 @@
 import { DatePicker } from "rsuite";
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -11,8 +11,10 @@ import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const DirectWithdrawReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [branchId, setBranchId] = useState(0);
   const { data: branches } = useGetIndex({
     type: "getBranches",
@@ -53,23 +55,36 @@ const DirectWithdrawReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
-    const data = await getWithdrawReport();
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let report = data?.result;
-        if (adminRole === "master") {
-          // eslint-disable-next-line no-unused-vars
-          report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
-        }
+  const exportToExcel = async () => {
+    const payload = {
+      type: "getDirectWithdraw",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
 
-        const ws = utils.json_to_sheet(report);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "withdraw_data.xlsx");
-      }
+      pagination: true,
+      // amountFrom: amountFrom ? Number(amountFrom) : null,
+      // amountTo: amountTo ? Number(amountTo) : null,
+    };
+    if (adminRole === AdminRole.admin_staff) {
+      payload.branch_id = branchId;
     }
+    exportMutation(payload);
+    // e.preventDefault();
+    // const data = await getWithdrawReport();
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let report = data?.result;
+    //     if (adminRole === "master") {
+    //       // eslint-disable-next-line no-unused-vars
+    //       report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
+    //     }
+
+    //     const ws = utils.json_to_sheet(report);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "withdraw_data.xlsx");
+    //   }
+    // }
   };
 
   const handleToggleViewWithdraw = async (e) => {
@@ -220,7 +235,7 @@ const DirectWithdrawReport = () => {
                   <input
                     style={{ marginLeft: "10px" }}
                     onClick={exportToExcel}
-                    type="submit"
+                    type="button"
                     name="submit"
                     className="btn btn-primary"
                     value="Export"

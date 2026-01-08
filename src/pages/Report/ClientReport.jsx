@@ -1,6 +1,5 @@
 import moment from "moment/moment";
 import { DatePicker } from "rsuite";
-import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -10,8 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const ClientReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const [viewClientData, setViewClientData] = useState(false);
@@ -38,24 +39,14 @@ const ClientReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
-    const data = await getClientReport();
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let clientReport = data?.result;
-        if (adminRole === "master") {
-          clientReport = data?.result.map(
-            // eslint-disable-next-line no-unused-vars
-            ({ loginname, mobile, ...rest }) => rest
-          );
-        }
-        const ws = utils.json_to_sheet(clientReport);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "customers_data.xlsx");
-      }
-    }
+  const exportToExcel = async () => {
+    const payload = {
+      type: "getClients",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+      pagination: true,
+    };
+    exportMutation(payload);
   };
 
   const handleToggleViewClient = async (e) => {
@@ -122,7 +113,7 @@ const ClientReport = () => {
                 <input
                   style={{ marginLeft: "10px" }}
                   onClick={exportToExcel}
-                  type="submit"
+                  type="button"
                   name="submit"
                   className="btn btn-primary"
                   value="Export"

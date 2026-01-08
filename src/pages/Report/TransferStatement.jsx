@@ -1,5 +1,5 @@
 import { DatePicker, Pagination } from "rsuite";
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -8,10 +8,12 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const TransferStatement = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [activePage, setActivePage] = useState(1);
-  const { token, adminRole } = useContextState();
+  const { token } = useContextState();
   const [viewTransferStatementData, setViewTransferStatementData] =
     useState(false);
   const [transferStatement, setTransferStatement] = useState([]);
@@ -40,22 +42,33 @@ const TransferStatement = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
-    const data = await onSubmit();
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let report = data?.result;
-        if (adminRole === "master") {
-          // eslint-disable-next-line no-unused-vars
-          report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
-        }
-        const ws = utils.json_to_sheet(report);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "transfer_data.xlsx");
-      }
-    }
+  const exportToExcel = async () => {
+    const payload = {
+      type: "viewTransfer",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+
+      pagination: true,
+      page: activePage,
+      table,
+    };
+    exportMutation(payload);
+
+    // e.preventDefault();
+    // const data = await onSubmit();
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let report = data?.result;
+    //     if (adminRole === "master") {
+    //       // eslint-disable-next-line no-unused-vars
+    //       report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
+    //     }
+    //     const ws = utils.json_to_sheet(report);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "transfer_data.xlsx");
+    //   }
+    // }
   };
 
   const handleViewTransferStatement = async (e) => {
@@ -214,7 +227,7 @@ const TransferStatement = () => {
                   <input
                     style={{ marginLeft: "10px" }}
                     onClick={exportToExcel}
-                    type="submit"
+                    type="button"
                     name="submit"
                     className="btn btn-primary"
                     value="Export"

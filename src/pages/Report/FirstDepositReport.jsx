@@ -1,4 +1,4 @@
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -13,8 +13,10 @@ import DefaultDateButton from "./DefaultDateButton";
 import { useGetIndex } from "../../hooks";
 import moment from "moment";
 import Loader from "../../components/ui/Loader/Loader";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const FirstDepositReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [branchId, setBranchId] = useState(0);
   const { data: branches } = useGetIndex({
     type: "getBranches",
@@ -58,26 +60,45 @@ const FirstDepositReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
+  const exportToExcel = async () => {
     setIsLoadingExport(true);
-    const data = await getFTDReport();
-    setIsLoadingExport(false);
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let firstDepositReports = data?.result;
-        if (adminRole === "master") {
-          firstDepositReports = data?.result.map(
-            // eslint-disable-next-line no-unused-vars
-            ({ loginname, mobile, ...rest }) => rest
-          );
-        }
-        const ws = utils.json_to_sheet(firstDepositReports);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "ftd_data.xlsx");
-      }
+    const payload = {
+      type: "getFTD",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+
+      pagination: true,
+      amountFrom: amountFrom ? Number(amountFrom) : null,
+      amountTo: amountTo ? Number(amountTo) : null,
+    };
+
+    if (adminRole === AdminRole.admin_staff) {
+      payload.branch_id = branchId;
     }
+    exportMutation(payload, {
+      onSuccess: () => {
+        setIsLoadingExport(false);
+      },
+    });
+    // e.preventDefault();
+    // setIsLoadingExport(true);
+    // const data = await getFTDReport();
+    // setIsLoadingExport(false);
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let firstDepositReports = data?.result;
+    //     if (adminRole === "master") {
+    //       firstDepositReports = data?.result.map(
+    //         // eslint-disable-next-line no-unused-vars
+    //         ({ loginname, mobile, ...rest }) => rest
+    //       );
+    //     }
+    //     const ws = utils.json_to_sheet(firstDepositReports);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "ftd_data.xlsx");
+    //   }
+    // }
   };
 
   const handleToggleViewFTD = async (e) => {
@@ -240,7 +261,7 @@ const FirstDepositReport = () => {
                   <button
                     disabled={isLoading || isLoadingExport}
                     onClick={exportToExcel}
-                    type="submit"
+                    type="button"
                     name="submit"
                     className="btn btn-primary"
                     style={{ marginLeft: "10px" }}

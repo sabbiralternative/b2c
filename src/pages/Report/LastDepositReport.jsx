@@ -1,4 +1,4 @@
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -11,8 +11,10 @@ import { DatePicker } from "rsuite";
 import DefaultDateButton from "./DefaultDateButton";
 import moment from "moment";
 import Loader from "../../components/ui/Loader/Loader";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const LastDepositReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const navigate = useNavigate();
@@ -42,26 +44,40 @@ const LastDepositReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
+  const exportToExcel = async () => {
     setIsLoadingExport(true);
-    const data = await getFTDReport();
-    setIsLoadingExport(false);
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let firstDepositReports = data?.result;
-        if (adminRole === "master") {
-          firstDepositReports = data?.result.map(
-            // eslint-disable-next-line no-unused-vars
-            ({ loginname, mobile, ...rest }) => rest
-          );
-        }
-        const ws = utils.json_to_sheet(firstDepositReports);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "ftd_data.xlsx");
-      }
-    }
+    const payload = {
+      type: "getLDT",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+
+      pagination: true,
+    };
+    exportMutation(payload, {
+      onSuccess: () => {
+        setIsLoadingExport(false);
+      },
+    });
+
+    // e.preventDefault();
+    // setIsLoadingExport(true);
+    // const data = await getFTDReport();
+    // setIsLoadingExport(false);
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let firstDepositReports = data?.result;
+    //     if (adminRole === "master") {
+    //       firstDepositReports = data?.result.map(
+    //         // eslint-disable-next-line no-unused-vars
+    //         ({ loginname, mobile, ...rest }) => rest
+    //       );
+    //     }
+    //     const ws = utils.json_to_sheet(firstDepositReports);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "ftd_data.xlsx");
+    //   }
+    // }
   };
 
   const handleViewReport = async (e) => {
@@ -138,7 +154,7 @@ const LastDepositReport = () => {
                   <button
                     disabled={isLoading || isLoadingExport}
                     onClick={exportToExcel}
-                    type="submit"
+                    type="button"
                     name="submit"
                     className="btn btn-primary"
                     style={{ marginLeft: "10px" }}

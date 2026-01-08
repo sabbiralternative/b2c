@@ -230,7 +230,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 col-md-12">
+          {/* <div className="col-lg-6 col-md-12">
             <div className="row">
               <div className="col-sm-6 col-12 mb-4">
                 <div className="card">
@@ -261,7 +261,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
 

@@ -1,5 +1,5 @@
 import { DatePicker } from "rsuite";
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -11,8 +11,10 @@ import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const DirectDepositReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [branchId, setBranchId] = useState(0);
   const { data: branches } = useGetIndex({
     type: "getBranches",
@@ -52,24 +54,38 @@ const DirectDepositReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
-    const data = await getDepositReport();
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let depositReport = data?.result;
-        if (adminRole === "master") {
-          depositReport = data?.result.map(
-            // eslint-disable-next-line no-unused-vars
-            ({ loginname, mobile, ...rest }) => rest
-          );
-        }
-        const ws = utils.json_to_sheet(depositReport);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "deposit_data.xlsx");
-      }
+  const exportToExcel = async () => {
+    const payload = {
+      type: "getDirectDeposit",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+
+      pagination: true,
+      // amountFrom: amountFrom ? Number(amountFrom) : null,
+      // amountTo: amountTo ? Number(amountTo) : null,
+    };
+    if (adminRole === AdminRole.admin_staff) {
+      payload.branch_id = branchId;
     }
+    exportMutation(payload);
+
+    // e.preventDefault();
+    // const data = await getDepositReport();
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let depositReport = data?.result;
+    //     if (adminRole === "master") {
+    //       depositReport = data?.result.map(
+    //         // eslint-disable-next-line no-unused-vars
+    //         ({ loginname, mobile, ...rest }) => rest
+    //       );
+    //     }
+    //     const ws = utils.json_to_sheet(depositReport);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "deposit_data.xlsx");
+    //   }
+    // }
   };
 
   const handleToggleViewDeposit = async (e) => {
@@ -223,7 +239,7 @@ const DirectDepositReport = () => {
                   <input
                     style={{ marginLeft: "10px" }}
                     onClick={exportToExcel}
-                    type="submit"
+                    type="button"
                     name="submit"
                     className="btn btn-primary"
                     value="Export"

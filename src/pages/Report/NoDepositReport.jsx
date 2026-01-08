@@ -1,5 +1,5 @@
 import { DatePicker } from "rsuite";
-import { writeFile, utils } from "xlsx";
+// import { writeFile, utils } from "xlsx";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import axios from "axios";
@@ -10,8 +10,10 @@ import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
+import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const NoDepositReport = () => {
+  const { mutate: exportMutation } = useExportCSVMutation();
   const { token, setClientId, adminRole, setRefetchViewClient } =
     useContextState();
   const [viewNoDepositReportData, setViewNoDepositReportData] = useState(false);
@@ -38,22 +40,30 @@ const NoDepositReport = () => {
     return res.data;
   };
 
-  const exportToExcel = async (e) => {
-    e.preventDefault();
-    const data = await getNoDepositReportReport();
-    if (data?.success) {
-      if (data?.result?.length > 0) {
-        let report = data?.result;
-        if (adminRole === "master") {
-          // eslint-disable-next-line no-unused-vars
-          report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
-        }
-        const ws = utils.json_to_sheet(report);
-        const wb = utils.book_new();
-        utils.book_append_sheet(wb, ws, "Sheet1");
-        writeFile(wb, "no_deposit_report.xlsx");
-      }
-    }
+  const exportToExcel = async () => {
+    const payload = {
+      type: "getND",
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+
+      pagination: true,
+    };
+    exportMutation(payload);
+    // e.preventDefault();
+    // const data = await getNoDepositReportReport();
+    // if (data?.success) {
+    //   if (data?.result?.length > 0) {
+    //     let report = data?.result;
+    //     if (adminRole === "master") {
+    //       // eslint-disable-next-line no-unused-vars
+    //       report = data?.result.map(({ loginname, mobile, ...rest }) => rest);
+    //     }
+    //     const ws = utils.json_to_sheet(report);
+    //     const wb = utils.book_new();
+    //     utils.book_append_sheet(wb, ws, "Sheet1");
+    //     writeFile(wb, "no_deposit_report.xlsx");
+    //   }
+    // }
   };
 
   const handleToggleViewNoDepositReport = async (e) => {
@@ -123,7 +133,7 @@ const NoDepositReport = () => {
                 <input
                   style={{ marginLeft: "10px" }}
                   onClick={exportToExcel}
-                  type="submit"
+                  type="button"
                   name="submit"
                   className="btn btn-primary"
                   value="Export"
