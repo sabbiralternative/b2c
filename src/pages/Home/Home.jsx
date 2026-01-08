@@ -34,6 +34,8 @@ const Home = () => {
   };
   const deposit = data?.result?.deposit;
   const withdraw = data?.result?.withdraw;
+  const rejected_deposit = data?.result?.rejected_deposit;
+  const rejected_withdraw = data?.result?.rejected_withdraw;
 
   const disableOutsideLast14Days = (date) => {
     const start = new Date();
@@ -278,6 +280,22 @@ const Home = () => {
             data={withdraw}
             title="Pending Withdraw"
             emptyMessage="No pending withdraw"
+          />
+        )}
+      </div>
+      <div className="d-lg-flex" style={{ gap: "10px" }}>
+        {permissions.includes(Permission.deposit) && (
+          <DashboardDW
+            data={rejected_deposit}
+            title="Rejected Deposit"
+            emptyMessage="No rejected deposit"
+          />
+        )}
+        {permissions.includes(Permission.withdraw) && (
+          <DashboardDW
+            data={rejected_withdraw}
+            title="Rejected Withdraw"
+            emptyMessage="No rejected withdraw"
           />
         )}
       </div>
