@@ -247,7 +247,7 @@ const AddLossBackBonusByEvent = () => {
 
                 <div className="row mb-3">
                   <label className="col-sm-2 col-form-label">
-                    Minimum Bonus Amount *
+                    Maximum Bonus Amount *
                   </label>
                   <div className="col-sm-10">
                     <input

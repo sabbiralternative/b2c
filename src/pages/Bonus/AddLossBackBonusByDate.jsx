@@ -22,6 +22,7 @@ const AddLossBackBonusByDate = () => {
   const onSubmit = async (value) => {
     const payload = {
       type: "add_lossback_bonus",
+      mode: "date",
       from_date: formatDate(fromDate),
       to_date: formatDate(toDate),
       ...value,
@@ -242,7 +243,7 @@ const AddLossBackBonusByDate = () => {
 
                 <div className="row mb-3">
                   <label className="col-sm-2 col-form-label">
-                    Minimum Bonus Amount *
+                    Maximum Bonus Amount *
                   </label>
                   <div className="col-sm-10">
                     <input
