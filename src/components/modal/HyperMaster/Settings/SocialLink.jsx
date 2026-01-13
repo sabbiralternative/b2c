@@ -29,7 +29,7 @@ const SocialLink = ({ setShowSocialLink }) => {
   const { socialLinks, refetchAllSocialLinks } = useGetAllSocialLink({ site });
 
   /* handle edit social link */
-  const onSubmit = async ({ whatsapp, instagram, telegram, site }) => {
+  const onSubmit = async ({ whatsapp, instagram, telegram, site, pixel }) => {
     setDisabled(true);
     const generatedToken = handleRandomToken();
     //   const encryptedData = handleEncryptData({
@@ -54,6 +54,7 @@ const SocialLink = ({ setShowSocialLink }) => {
         instagram,
         telegram,
         site,
+        pixel,
         token: generatedToken,
       };
     }
