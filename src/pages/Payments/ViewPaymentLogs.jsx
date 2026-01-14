@@ -2,8 +2,10 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
 import Loader from "../../components/ui/Loader/Loader";
+import ViewPaymentInfo from "../../components/modal/ViewPaymentInfo/ViewPaymentInfo";
 
 const ViewPaymentLogs = () => {
+  const [paymentInfoId, setPaymentInfoId] = useState(null);
   const [page] = useState(1);
   const { paymentId } = useParams();
   const payload = {
@@ -16,6 +18,12 @@ const ViewPaymentLogs = () => {
 
   return (
     <>
+      {paymentInfoId && (
+        <ViewPaymentInfo
+          paymentInfoId={paymentInfoId}
+          setPaymentInfoId={setPaymentInfoId}
+        />
+      )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
           <h5 className="card-header">Payment Logs</h5>
@@ -25,6 +33,7 @@ const ViewPaymentLogs = () => {
                 <tr>
                   <th>Id</th>
                   <th>Type</th>
+                  <th>Info</th>
                   <th>Date</th>
                 </tr>
               </thead>
@@ -48,6 +57,15 @@ const ViewPaymentLogs = () => {
                         <span className={`badge  me-1 ${paymentTypeBg}`}>
                           {payment?.type}
                         </span>
+                      </td>
+
+                      <td>
+                        <button
+                          onClick={() => setPaymentInfoId(payment?.id)}
+                          className={`btn btn-icon btn-sm btn-info`}
+                        >
+                          I
+                        </button>
                       </td>
 
                       <td>{payment?.date}</td>
