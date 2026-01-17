@@ -62,11 +62,11 @@ const AddNewPaymentGateway = () => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-company"
                   >
-                    Token
+                    API Key
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("pgToken", {
+                      {...register("api_key", {
                         required: true,
                       })}
                       type="text"
