@@ -27,7 +27,7 @@ const AddNewPaymentGateway = () => {
       type: "addPayment",
       ...values,
       token: generatedToken,
-      method: "pg",
+      method: "upigateway",
     };
 
     const res = await axios.post(API.payments, payload, {
