@@ -79,6 +79,7 @@ import ViewAffiliateDeposit from "../pages/Affiliate/ViewAffiliateDeposit";
 import ViewAffiliateWithdraw from "../pages/Affiliate/ViewAffiliateWithdraw";
 import AddLossBackBonusByEvent from "../pages/Bonus/AddLossBackBonusByEvent";
 import AddLossBackBonusByDate from "../pages/Bonus/AddLossBackBonusByDate";
+import ViewLossBackBonus from "../pages/Bonus/ViewLossBackBonus";
 
 export const router = createBrowserRouter(
   [
@@ -218,6 +219,10 @@ export const router = createBrowserRouter(
         {
           path: "/add-loss-back-bonus-by-date",
           element: <AddLossBackBonusByDate />,
+        },
+        {
+          path: "/view-lossback-bonus",
+          element: <ViewLossBackBonus />,
         },
         {
           path: "/view-bonus",
@@ -413,5 +418,5 @@ export const router = createBrowserRouter(
   ],
   {
     basename: import.meta.env.BASE_URL ?? "/",
-  }
+  },
 );

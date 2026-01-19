@@ -366,15 +366,29 @@ export const getNavItems = (permissions, adminRole, setters) => {
             adminRole === AdminRole.admin_staff,
         },
         {
-          label: "Add Lossback Bonus by Event",
-          href: "/add-loss-back-bonus-by-event",
+          label: "Bonus",
+          key: "bonus",
+          willSubTab: true,
           show: adminRole === AdminRole.hyper_master,
+          children: [
+            {
+              label: "Add Lossback Bonus by Event",
+              href: "/add-loss-back-bonus-by-event",
+              show: adminRole === AdminRole.hyper_master,
+            },
+            {
+              label: "Add Lossback Bonus by Date",
+              href: "/add-loss-back-bonus-by-date",
+              show: adminRole === AdminRole.hyper_master,
+            },
+            {
+              label: "View Lossback Bonus",
+              href: "/view-lossback-bonus",
+              show: adminRole === AdminRole.hyper_master,
+            },
+          ],
         },
-        {
-          label: "Add Lossback Bonus by Date",
-          href: "/add-loss-back-bonus-by-date",
-          show: adminRole === AdminRole.hyper_master,
-        },
+
         {
           label: "Pending Bonus",
           href: "/pending-bonus",
@@ -392,6 +406,7 @@ export const getNavItems = (permissions, adminRole, setters) => {
         },
       ],
     },
+
     {
       tab: "Report",
       key: "report",

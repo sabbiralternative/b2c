@@ -213,6 +213,56 @@ const NavListItem = () => {
               <ul className="menu-sub">
                 {navItem?.children?.map((child) => {
                   if (!child?.show) return;
+
+                  if (child?.willSubTab) {
+                    return (
+                      <a
+                        key={child?.label}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "start",
+                        }}
+                        onMouseEnter={() => setChildTabList(child?.key)}
+                        onMouseLeave={() => setChildTabList(null)}
+                        className="menu-link menu-toggle"
+                      >
+                        <i className="menu-icon tf-icons bx bx-layout"></i>
+                        <div data-i18n="Settings">{child?.label}</div>
+                        <ul
+                          style={{
+                            display:
+                              childTabList === child?.key ? "block" : "none",
+                            right: "100%",
+                            top: "0px",
+                            left: "-100%",
+                            zIndex: "99999",
+                            background: "#273143",
+                          }}
+                          className="menu-sub"
+                        >
+                          {child?.children?.map((child) => {
+                            return (
+                              <li key={child?.label} className="menu-item">
+                                <a
+                                  onClick={() => {
+                                    navigate(child?.href);
+                                    setChildTabList(null);
+                                  }}
+                                  className="menu-link"
+                                >
+                                  <i className="menu-icon tf-icons bx bxs-institution"></i>
+                                  <div data-i18n="Pending Withdraw">
+                                    {child?.label}
+                                  </div>
+                                </a>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </a>
+                    );
+                  }
                   if (child?.href) {
                     return (
                       <li key={child?.href} className="menu-item">
