@@ -35,7 +35,7 @@ const AddLossBackBonusByDate = () => {
           setDisabled(false);
           toast.success(data?.result?.message);
           reset();
-          navigate("/view-bonus");
+          navigate("/view-lossback-bonus");
         } else {
           setDisabled(false);
           toast.error(value?.error?.description);

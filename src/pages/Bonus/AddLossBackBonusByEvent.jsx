@@ -29,7 +29,7 @@ const AddLossBackBonusByEvent = () => {
           setDisabled(false);
           toast.success(data?.result?.message);
           reset();
-          navigate("/view-bonus");
+          navigate("/view-lossback-bonus");
         } else {
           setDisabled(false);
           toast.error(value?.error?.description);
@@ -78,9 +78,9 @@ const AddLossBackBonusByEvent = () => {
                         Select Market Name
                       </option>
 
-                      <option value="match_odds">Match Odds</option>
+                      <option value="matchodds">Match Odds</option>
                       <option value="bookmaker">Bookmaker</option>
-                      <option value="mini_bookmaker">Mini Bookmaker</option>
+                      <option value="minibookmaker">Mini Bookmaker</option>
                     </select>
                   </div>
                 </div>

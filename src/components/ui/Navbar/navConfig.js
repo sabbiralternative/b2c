@@ -366,8 +366,8 @@ export const getNavItems = (permissions, adminRole, setters) => {
             adminRole === AdminRole.admin_staff,
         },
         {
-          label: "Bonus",
-          key: "bonus",
+          label: "Lossback",
+          key: "lossback",
           willSubTab: true,
           show: adminRole === AdminRole.hyper_master,
           children: [

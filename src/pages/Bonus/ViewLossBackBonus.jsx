@@ -6,20 +6,19 @@ import { API } from "../../api";
 import toast from "react-hot-toast";
 import UpdateBonus from "../../components/modal/HyperMaster/Bonus/UpdateBonus";
 import Swal from "sweetalert2";
-import { AdminRole } from "../../constant/constant";
 import { useLossBackQuery } from "../../hooks/lossback";
 
 const ViewLossBackBonus = () => {
   const [editBonusId, setEditBonusId] = useState("");
   const { data, refetch } = useLossBackQuery({
-    type: "viewLossbackBonus",
+    type: "view_lossback_bonus",
   });
-  const { token, adminRole } = useContextState();
+  const { token } = useContextState();
 
   const handleDeleteBonus = async (bonus) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You want to delete ${bonus?.bonus_name}!`,
+      text: `You want to delete ${bonus?.event_name}!`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -29,25 +28,23 @@ const ViewLossBackBonus = () => {
       if (result.isConfirmed) {
         const generatedToken = handleRandomToken();
         const payload = {
-          type: "deleteBonus",
-          bonus_id: bonus?.bonus_id,
+          type: "delete_lossback_bonus",
+          lossback_bonus_id: bonus?.lossback_bonus_id,
           token: generatedToken,
         };
-        const res = await axios.post(API.bonus, payload, {
+        const res = await axios.post(API.lossback, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = res.data;
         if (data?.success) {
           refetch();
-          toast.success("Bonus deleted successfully");
+          toast.success(data?.result?.message);
         } else {
           toast.error(data?.error?.description);
         }
       }
     });
   };
-
-  console.log(data);
 
   return (
     <>
@@ -60,77 +57,53 @@ const ViewLossBackBonus = () => {
       )}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
-          <h5 className="card-header">Bonus</h5>
+          <h5 className="card-header">Lossback Bonus</h5>
           <div className="table-responsive text-nowrap">
             <table className="table table-hover table-sm">
               <thead className="table-dark">
                 <tr>
-                  <th>Bonus Name</th>
-                  <th>Bonus Amount</th>
-                  {adminRole === AdminRole.hyper_master && (
-                    <th>Number Of Usage</th>
-                  )}
-
-                  <th>Max Bonus Amount</th>
-                  <th>Wagering Multiplier</th>
-                  <th>Min. Deposit</th>
-                  <th>Bonus Expiry</th>
-
-                  <th>Bonus Type</th>
+                  <th>Bonus Percentage</th>
+                  <th>Date Added</th>
+                  <th>Event Name</th>
+                  <th>Expire Date</th>
+                  <th>From Date</th>
+                  <th>To Date</th>
+                  <th>Minimum Loss Amount</th>
+                  <th>Mode</th>
+                  <th>Punter Id</th>
+                  <th>Referral Id</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
-                {/* {data?.map((bonus, i) => {
+                {data?.result?.map((loss_back, i) => {
                   return (
                     <tr key={i}>
+                      <td>{loss_back?.bonus_percentage}</td>
+                      <td>{loss_back?.date_added}</td>
+                      <td>{loss_back?.event_name}</td>
+                      <td>{loss_back?.expires_at}</td>
+                      <td>{loss_back?.from_date}</td>
+                      <td>{loss_back?.to_date}</td>
+                      <td>{loss_back?.minimum_loss_amount}</td>
+                      <td>{loss_back?.mode}</td>
+                      <td>{loss_back?.punter_id}</td>
+                      <td>{loss_back?.referral_id}</td>
                       <td>
-                        <strong>
-                          {handleSplitUserName(bonus?.bonus_name)}
-                        </strong>
-                      </td>
-                      <td>
-                        {bonus?.bonus_amount_type === "percentage"
-                          ? `${bonus?.bonus_amount}%`
-                          : `Rs. ${bonus?.bonus_amount}`}
-                      </td>
-                      {adminRole === AdminRole.hyper_master && (
-                        <td>{bonus?.no_of_use}</td>
-                      )}
-                      <td>{bonus?.bonus_max_amount}</td>
-
-                      <td>{bonus?.wagering_multiplier}</td>
-                      <td>{bonus?.minimum_deposit}</td>
-                      <td>
-                        {bonus?.bonus_expiry_days > 1
-                          ? `${bonus?.bonus_expiry_days} days`
-                          : `${bonus?.bonus_expiry_days} day`}{" "}
-                      </td>
-
-                      <td>{bonus?.bonus_type}</td>
-                      <td>
-                        {" "}
                         <span
                           className={`badge  me-1 ${
-                            bonus?.status === 1
+                            loss_back?.status === "ACTIVE"
                               ? "bg-label-primary"
                               : "bg-label-danger"
                           }`}
                         >
-                          {bonus?.status === 1 ? "active" : "inactive"}
+                          {loss_back?.status}
                         </span>
                       </td>
                       <td style={{ display: "flex", color: "white" }}>
                         <a
-                          onClick={() => setEditBonusId(bonus?.bonus_id)}
-                          className="btn btn-icon btn-sm btn-success"
-                        >
-                          E
-                        </a>
-                        &nbsp;
-                        <a
-                          onClick={() => handleDeleteBonus(bonus)}
+                          onClick={() => handleDeleteBonus(loss_back)}
                           className="btn btn-icon btn-sm btn-danger"
                         >
                           D
@@ -138,7 +111,7 @@ const ViewLossBackBonus = () => {
                       </td>
                     </tr>
                   );
-                })} */}
+                })}
               </tbody>
             </table>
           </div>
