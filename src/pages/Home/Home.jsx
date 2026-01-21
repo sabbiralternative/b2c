@@ -1,4 +1,4 @@
-import { Permission } from "../../constant/constant";
+import { AdminRole, Permission } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
 import useBalance from "../../hooks/useBalance";
 import DashboardDW from "./DashboardDW";
@@ -8,8 +8,10 @@ import { useState } from "react";
 import { DatePicker } from "rsuite";
 import { useUser } from "../../hooks/use-user";
 import moment from "moment";
+import useContextState from "../../hooks/useContextState";
 
 const Home = () => {
+  const { adminRole } = useContextState();
   const today = new Date();
   const { user } = useUser();
   const [date, setDate] = useState(new Date());
@@ -83,7 +85,7 @@ const Home = () => {
                         className="mb-1"
                         style={{
                           color: `${defineBalanceColor(
-                            balanceData?.upperLevel
+                            balanceData?.upperLevel,
                           )}`,
                         }}
                       >
@@ -284,20 +286,24 @@ const Home = () => {
         )}
       </div>
       <div className="d-lg-flex" style={{ gap: "10px" }}>
-        {permissions.includes(Permission.deposit) && (
-          <DashboardDW
-            data={rejected_deposit}
-            title="Rejected Deposit"
-            emptyMessage="No rejected deposit"
-          />
-        )}
-        {permissions.includes(Permission.withdraw) && (
-          <DashboardDW
-            data={rejected_withdraw}
-            title="Rejected Withdraw"
-            emptyMessage="No rejected withdraw"
-          />
-        )}
+        {(adminRole === AdminRole.hyper_master ||
+          adminRole === AdminRole.admin_staff) &&
+          permissions.includes(Permission.deposit) && (
+            <DashboardDW
+              data={rejected_deposit}
+              title="Rejected Deposit"
+              emptyMessage="No rejected deposit"
+            />
+          )}
+        {(adminRole === AdminRole.hyper_master ||
+          adminRole === AdminRole.admin_staff) &&
+          permissions.includes(Permission.withdraw) && (
+            <DashboardDW
+              data={rejected_withdraw}
+              title="Rejected Withdraw"
+              emptyMessage="No rejected withdraw"
+            />
+          )}
       </div>
     </div>
   );

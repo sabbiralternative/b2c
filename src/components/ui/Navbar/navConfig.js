@@ -437,11 +437,11 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/no-deposit-report",
           show: true,
         },
-        {
-          label: "No deposit last 15 days",
-          href: "/no-deposit-report-last-15-days",
-          show: true,
-        },
+        // {
+        //   label: "No deposit last 15 days",
+        //   href: "/no-deposit-report-last-15-days",
+        //   show: true,
+        // },
         {
           label: "Withdraw Report",
           href: "/withdraw-report",
