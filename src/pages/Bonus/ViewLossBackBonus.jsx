@@ -62,17 +62,18 @@ const ViewLossBackBonus = () => {
             <table className="table table-hover table-sm">
               <thead className="table-dark">
                 <tr>
-                  <th>Bonus Percentage</th>
-                  <th>Date Added</th>
+                  <th>Bonus</th>
                   <th>Event Name</th>
-                  <th>Expire Date</th>
                   <th>From Date</th>
                   <th>To Date</th>
+                  <th>Expire Date</th>
                   <th>Minimum Loss Amount</th>
                   <th>Mode</th>
+                  <th>Visible On</th>
                   <th>Punter Id</th>
                   <th>Referral Id</th>
                   <th>Status</th>
+                  <th>Date Added</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -81,13 +82,15 @@ const ViewLossBackBonus = () => {
                   return (
                     <tr key={i}>
                       <td>{loss_back?.bonus_percentage}</td>
-                      <td>{loss_back?.date_added}</td>
+
                       <td>{loss_back?.event_name}</td>
-                      <td>{loss_back?.expires_at}</td>
+
                       <td>{loss_back?.from_date}</td>
                       <td>{loss_back?.to_date}</td>
+                      <td>{loss_back?.expires_at}</td>
                       <td>{loss_back?.minimum_loss_amount}</td>
                       <td>{loss_back?.mode}</td>
+                      <td>{loss_back?.visible_on}</td>
                       <td>{loss_back?.punter_id}</td>
                       <td>{loss_back?.referral_id}</td>
                       <td>
@@ -101,6 +104,7 @@ const ViewLossBackBonus = () => {
                           {loss_back?.status}
                         </span>
                       </td>
+                      <td>{loss_back?.date_added}</td>
                       <td style={{ display: "flex", color: "white" }}>
                         <a
                           onClick={() => handleDeleteBonus(loss_back)}
