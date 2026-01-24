@@ -50,6 +50,50 @@ const AddLossBackBonusByEvent = () => {
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row mb-3">
+                  <label className="col-sm-2 col-form-label">
+                    Visible On *
+                  </label>
+                  <div
+                    className="col-sm-10"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0px 30px",
+                    }}
+                  >
+                    <label
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "3px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        {...register("visible_on", { required: true })}
+                        value="all"
+                      />
+                      <span>Website and App</span>
+                    </label>
+                    <label
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "3px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        {...register("visible_on", { required: true })}
+                        value="app"
+                      />
+                      <span>App Only</span>
+                    </label>
+                  </div>
+                </div>
+                <div className="row mb-3">
                   <label className="col-sm-2 col-form-label">Event Id *</label>
                   <div className="col-sm-10">
                     <input
