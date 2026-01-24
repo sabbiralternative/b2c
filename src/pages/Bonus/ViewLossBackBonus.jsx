@@ -84,7 +84,6 @@ const ViewLossBackBonus = () => {
                       <td>{loss_back?.bonus_percentage}</td>
 
                       <td>{loss_back?.event_name}</td>
-
                       <td>{loss_back?.from_date}</td>
                       <td>{loss_back?.to_date}</td>
                       <td>{loss_back?.expires_at}</td>

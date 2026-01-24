@@ -386,6 +386,11 @@ export const getNavItems = (permissions, adminRole, setters) => {
               href: "/view-lossback-bonus",
               show: adminRole === AdminRole.hyper_master,
             },
+            {
+              label: "Lossback Bonus Report",
+              href: "/lossback-bonus-report",
+              show: adminRole === AdminRole.hyper_master,
+            },
           ],
         },
 

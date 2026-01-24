@@ -80,6 +80,7 @@ import ViewAffiliateWithdraw from "../pages/Affiliate/ViewAffiliateWithdraw";
 import AddLossBackBonusByEvent from "../pages/Bonus/AddLossBackBonusByEvent";
 import AddLossBackBonusByDate from "../pages/Bonus/AddLossBackBonusByDate";
 import ViewLossBackBonus from "../pages/Bonus/ViewLossBackBonus";
+import LossBackBonusReport from "../pages/Bonus/LossBackBonusReport";
 
 export const router = createBrowserRouter(
   [
@@ -400,6 +401,10 @@ export const router = createBrowserRouter(
         {
           path: "/view-affiliate-withdraw",
           element: <ViewAffiliateWithdraw />,
+        },
+        {
+          path: "/lossback-bonus-report",
+          element: <LossBackBonusReport />,
         },
       ],
     },
