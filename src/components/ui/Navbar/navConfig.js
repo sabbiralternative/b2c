@@ -472,6 +472,11 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/client-branch-change-report",
           show: true,
         },
+        {
+          label: "Lossback Bonus Report",
+          href: "/lossback-bonus-report",
+          show: true,
+        },
       ],
     },
     {
