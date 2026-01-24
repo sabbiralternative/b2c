@@ -38,7 +38,7 @@ const AddLossBackBonusByDate = () => {
           navigate("/view-lossback-bonus");
         } else {
           setDisabled(false);
-          toast.error(value?.error?.description);
+          toast.error(data?.error?.status?.[0]?.description);
         }
       },
     });
