@@ -49,6 +49,7 @@ const RejectedDeposit = () => {
         startDate={startDate}
         branches={data}
         setBranchId={setBranchId}
+        branchId={branchId}
       />
     </div>
   );

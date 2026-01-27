@@ -47,6 +47,10 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
+
+  if (!singleDeposit) {
+    return null;
+  }
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -74,6 +78,19 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="modal-body">
                 <div className="row">
+                  <div className="row mb-3">
+                    <label className="col-sm-2 col-form-label">Amount</label>
+                    <div className="col-sm-10">
+                      <input
+                        {...register("amount", {
+                          required: true,
+                          value: singleDeposit?.amount,
+                        })}
+                        type="text"
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
                   <div className="row mb-3" id="bank_account_name_div">
                     {/*   <div className="row mb-3" id="bank_account_name_div">
                       <label
@@ -87,19 +104,6 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                         {singleDeposit?.loginname}
                       </div>
                     </div> */}
-                    <div className="row mb-3">
-                      <label
-                        htmlFor="exampleFormControlSelect1"
-                        className="col-sm-2 col-form-label"
-                      >
-                        Amount
-                      </label>
-                      <div className="col-sm-9" data-select2-id="26">
-                        <div className="position-relative" data-select2-id="25">
-                          {singleDeposit?.amount}
-                        </div>
-                      </div>
-                    </div>
 
                     <label
                       className="col-sm-2 col-form-label"

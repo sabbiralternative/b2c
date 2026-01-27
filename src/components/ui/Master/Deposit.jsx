@@ -11,6 +11,8 @@ import { AdminRole, clientColor, Status } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import EditDepositFromBank from "../../modal/Master/Deposit/EditDepositFromBank";
+import moment from "moment";
+import { useExportCSVMutation } from "../../../hooks/exportCSV";
 
 const Deposit = ({
   data,
@@ -28,6 +30,7 @@ const Deposit = ({
   setBranchId,
   branches,
   refetch,
+  branchId,
 }) => {
   const {
     setEditPendingDeposit,
@@ -37,6 +40,7 @@ const Deposit = ({
     readOnly,
     adminRole,
   } = useContextState();
+  const { mutate: exportMutation } = useExportCSVMutation();
   const [editDepositFromBankId, setEditDepositFromBankId] = useState(null);
   const navigate = useNavigate();
   const [showImage, setShowImage] = useState(false);
@@ -52,6 +56,24 @@ const Deposit = ({
   }, [message]);
 
   const status = data?.[0]?.status;
+
+  const exportToExcel = async () => {
+    const payload = {
+      type: "viewUTR",
+      status: "REJECTED",
+      pagination: true,
+      page: activePage,
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+    };
+    if (
+      adminRole === AdminRole.admin_staff ||
+      adminRole === AdminRole.hyper_master
+    ) {
+      payload.branch_id = branchId;
+    }
+    exportMutation(payload);
+  };
 
   return (
     <div className="card">
@@ -75,7 +97,14 @@ const Deposit = ({
       >
         <div className="col-md-8 col-12 mb-4 ">
           <h5>{title}</h5>
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "end",
+              gap: "10px",
+              flexWrap: "wrap",
+            }}
+          >
             <div style={{ width: "100%", maxWidth: "250px" }}>
               <label htmlFor="flatpickr-range" className="form-label">
                 From Date
@@ -114,7 +143,6 @@ const Deposit = ({
                   Branch
                 </label>
                 <select
-                  style={{ width: "200px" }}
                   defaultValue="0"
                   onChange={(e) => {
                     setBranchId(e.target.value);
@@ -133,6 +161,15 @@ const Deposit = ({
                   ))}
                 </select>
               </div>
+            )}
+            {title === "Rejected Deposit" && (
+              <button
+                onClick={exportToExcel}
+                style={{ height: "38px" }}
+                className="btn btn-primary"
+              >
+                Export
+              </button>
             )}
           </div>
           <DefaultDateButton
@@ -204,7 +241,7 @@ const Deposit = ({
                       setClientId(item?.userId);
                       setRefetchViewClient(true);
                       navigate(
-                        `/view-client?role=${adminRole}&history=deposit`
+                        `/view-client?role=${adminRole}&history=deposit`,
                       );
                     }}
                   >

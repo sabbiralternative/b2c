@@ -139,7 +139,7 @@ const LastDepositReport = () => {
                 </div>
 
                 <div className="col-12">
-                  <button
+                  {/* <button
                     disabled={isLoading || isLoadingExport}
                     onClick={handleViewReport}
                     type="submit"
@@ -150,14 +150,14 @@ const LastDepositReport = () => {
                     <span style={{ marginLeft: isLoading ? "8px" : "0px" }}>
                       View
                     </span>
-                  </button>
+                  </button> */}
                   <button
                     disabled={isLoading || isLoadingExport}
                     onClick={exportToExcel}
                     type="button"
                     name="submit"
                     className="btn btn-primary"
-                    style={{ marginLeft: "10px" }}
+                    // style={{ marginLeft: "10px" }}
                   >
                     {isLoadingExport && <Loader size={15} />}{" "}
                     <span

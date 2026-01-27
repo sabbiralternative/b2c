@@ -14,6 +14,8 @@ import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import Slip from "../../modal/Master/Deposit/Slip";
 import AddSlip from "../../modal/Master/Withdraw/AddSlip";
 import DepositReport from "../../modal/Master/Deposit/DepositReport";
+import moment from "moment";
+import { useExportCSVMutation } from "../../../hooks/exportCSV";
 
 const Withdraw = ({
   data,
@@ -35,6 +37,7 @@ const Withdraw = ({
   setStartDate,
   endDate,
   setEndDate,
+  branchId,
 }) => {
   const {
     setDownLineId,
@@ -43,6 +46,7 @@ const Withdraw = ({
     readOnly,
     adminRole,
   } = useContextState();
+  const { mutate: exportMutation } = useExportCSVMutation();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const location = useLocation();
@@ -83,12 +87,30 @@ const Withdraw = ({
     if (!readOnly) {
       const formatUserId = client?.userId?.split("-")[1];
       navigate(
-        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`
+        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`,
       );
     }
   };
 
   const status = data?.[0]?.status;
+
+  const exportToExcel = async () => {
+    const payload = {
+      type: "viewWithdraw",
+      status: "REJECTED",
+      pagination: true,
+      page: activePage,
+      fromDate: moment(startDate).format("YYYY-MM-DD"),
+      toDate: moment(endDate).format("YYYY-MM-DD"),
+    };
+    if (
+      adminRole === AdminRole.admin_staff ||
+      adminRole === AdminRole.hyper_master
+    ) {
+      payload.branch_id = branchId;
+    }
+    exportMutation(payload);
+  };
 
   return (
     <div className="card">
@@ -219,7 +241,14 @@ const Withdraw = ({
               )}
           </div>
 
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "end",
+              gap: "10px",
+              flexWrap: "wrap",
+            }}
+          >
             {title !== "Pending Withdraw" && (
               <Fragment>
                 <div style={{ width: "100%", maxWidth: "250px" }}>
@@ -264,7 +293,6 @@ const Withdraw = ({
                     Branch
                   </label>
                   <select
-                    style={{ width: "200px" }}
                     defaultValue="0"
                     onChange={(e) => {
                       setBranchId(e.target.value);
@@ -284,6 +312,15 @@ const Withdraw = ({
                   </select>
                 </div>
               )}
+            {title === "Rejected Withdraw" && (
+              <button
+                onClick={exportToExcel}
+                style={{ height: "38px" }}
+                className="btn btn-primary"
+              >
+                Export
+              </button>
+            )}
           </div>
           {title !== "Pending Withdraw" && (
             <DefaultDateButton
@@ -361,7 +398,7 @@ const Withdraw = ({
                         setClientId(item?.userId);
                         setRefetchViewClient(true);
                         navigate(
-                          `/view-client?role=${adminRole}&history=withdraw`
+                          `/view-client?role=${adminRole}&history=withdraw`,
                         );
                       }}
                     >
@@ -431,7 +468,7 @@ const Withdraw = ({
                           onClick={() =>
                             handleCopyToClipBoard(
                               item?.bank_account_name,
-                              setMessage
+                              setMessage,
                             )
                           }
                         />
@@ -445,7 +482,7 @@ const Withdraw = ({
                           onClick={() =>
                             handleCopyToClipBoard(
                               item?.account_number,
-                              setMessage
+                              setMessage,
                             )
                           }
                         />
@@ -610,8 +647,8 @@ const Withdraw = ({
               {title === "Pending Withdraw"
                 ? "pending"
                 : title === "Completed Withdraw"
-                ? "completed"
-                : "rejected"}{" "}
+                  ? "completed"
+                  : "rejected"}{" "}
               withdraw.
             </h5>
           </div>

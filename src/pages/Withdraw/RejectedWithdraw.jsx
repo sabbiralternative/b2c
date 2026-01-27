@@ -51,6 +51,7 @@ const RejectedWithdraw = () => {
         setEndDate={setEndDate}
         setStartDate={setStartDate}
         startDate={startDate}
+        branchId={branchId}
       />
     </div>
   );
