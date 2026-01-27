@@ -51,6 +51,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
   if (!singleDeposit) {
     return null;
   }
+
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -78,7 +79,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="modal-body">
                 <div className="row">
-                  <div className="row mb-3">
+                  {/* <div className="row mb-3">
                     <label className="col-sm-2 col-form-label">Amount</label>
                     <div className="col-sm-10">
                       <input
@@ -90,20 +91,17 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                         className="form-control"
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="row mb-3" id="bank_account_name_div">
-                    {/*   <div className="row mb-3" id="bank_account_name_div">
+                    <div className="row mb-3" id="bank_account_name_div">
                       <label
                         className="col-sm-2 col-form-label"
                         htmlFor="basic-default-name"
                       >
-                        Username
+                        Amount
                       </label>
-                      <div className="col-sm-10">
-                        {" "}
-                        {singleDeposit?.loginname}
-                      </div>
-                    </div> */}
+                      <div className="col-sm-10"> {singleDeposit?.amount}</div>
+                    </div>
 
                     <label
                       className="col-sm-2 col-form-label"
