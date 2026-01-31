@@ -7,7 +7,7 @@ import { AdminRole } from "../../constant/constant";
 import { DatePicker, Pagination } from "rsuite";
 import DefaultDateButton from "../Report/DefaultDateButton";
 import Loader from "../../components/ui/Loader/Loader";
-import { useLossBackQuery } from "../../hooks/lossback";
+import { useLossBackMutation } from "../../hooks/lossback";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
 
 const LossBackBonusReport = () => {
@@ -21,6 +21,7 @@ const LossBackBonusReport = () => {
   const [startDate, setStartDate] = useState(defaultDate(1));
   const [endDate, setEndDate] = useState(new Date());
   const [activePage, setActivePage] = useState(1);
+
   const payload = {
     type: "view_lossback_report",
     pagination: true,
@@ -36,11 +37,15 @@ const LossBackBonusReport = () => {
     payload.branch_id = branchId;
   }
 
-  const { data, isLoading, isSuccess } = useLossBackQuery(payload);
+  const { mutate, isSuccess, data, isPending } = useLossBackMutation();
   const meta = data?.pagination;
 
   const handleExport = async () => {
     exportMutation(payload);
+  };
+
+  const handleViewLossBackReport = () => {
+    mutate(payload);
   };
 
   return (
@@ -125,8 +130,16 @@ const LossBackBonusReport = () => {
               lastOneYear={true}
             />
             <button
-              onClick={handleExport}
+              onClick={handleViewLossBackReport}
               style={{ marginTop: "10px" }}
+              type="button"
+              className="btn btn-primary"
+            >
+              View
+            </button>
+            <button
+              onClick={handleExport}
+              style={{ marginLeft: "10px", marginTop: "10px" }}
               type="button"
               className="btn btn-primary"
             >
@@ -147,95 +160,96 @@ const LossBackBonusReport = () => {
             boundaryLinks
           />
         </div>
-
-        <div className="table-responsive text-nowrap">
-          <table className="table table-hover table-sm">
-            <thead className="table-dark">
-              <tr>
-                <th>Punter Id</th>
-                <th>Bonus Amount</th>
-                <th>Bonus Percent</th>
-                <th>Branch Name</th>
-                <th>Date Added</th>
-                <th>Loginname</th>
-                <th>Minimum Loss Amount</th>
-                <th>Total Loss Amount</th>
-              </tr>
-            </thead>
-            <tbody className="table-border-bottom-0">
-              {data?.result?.map((item, i) => {
-                return (
-                  <tr key={i}>
-                    <td>{item?.punter_id}</td>
-                    <td>{item?.bonus_amount}</td>
-                    <td>{item?.bonus_percent} </td>
-                    <td>{item?.branch_name}</td>
-                    <td>{item?.date_added}</td>
-                    <td>{item?.loginname}</td>
-                    <td>{item?.minimum_loss_amount}</td>
-                    <td>{item?.total_loss_amount}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          {isLoading && !isSuccess && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-                margin: "20px",
-              }}
-            >
-              <Loader />
-            </div>
-          )}
-
-          {isSuccess && data?.result?.length === 0 && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "5px",
-                marginTop: "15px",
-              }}
-              className="card"
-            >
-              <h5
-                style={{ fontSize: "18px", padding: "0px" }}
-                className="card-header"
+        {isSuccess && (
+          <div className="table-responsive text-nowrap">
+            <table className="table table-hover table-sm">
+              <thead className="table-dark">
+                <tr>
+                  <th>Punter Id</th>
+                  <th>Bonus Amount</th>
+                  <th>Bonus Percent</th>
+                  <th>Branch Name</th>
+                  <th>Date Added</th>
+                  <th>Loginname</th>
+                  <th>Minimum Loss Amount</th>
+                  <th>Total Loss Amount</th>
+                </tr>
+              </thead>
+              <tbody className="table-border-bottom-0">
+                {data?.result?.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{item?.punter_id}</td>
+                      <td>{item?.bonus_amount}</td>
+                      <td>{item?.bonus_percent} </td>
+                      <td>{item?.branch_name}</td>
+                      <td>{item?.date_added}</td>
+                      <td>{item?.loginname}</td>
+                      <td>{item?.minimum_loss_amount}</td>
+                      <td>{item?.total_loss_amount}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {isPending && !isSuccess && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                  margin: "20px",
+                }}
               >
-                No Lossback report found.
-              </h5>
-            </div>
-          )}
-          {meta && (
-            <div
-              style={{
-                marginTop: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "end",
-              }}
-            >
-              <Pagination
-                prev
-                next
-                size="md"
-                total={meta?.totalRecords}
-                limit={meta?.recordsPerPage}
-                activePage={activePage}
-                onChangePage={setActivePage}
-                maxButtons={5}
-                ellipsis
-                boundaryLinks
-              />
-            </div>
-          )}
-        </div>
+                <Loader />
+              </div>
+            )}
+
+            {isSuccess && data?.result?.length === 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "5px",
+                  marginTop: "15px",
+                }}
+                className="card"
+              >
+                <h5
+                  style={{ fontSize: "18px", padding: "0px" }}
+                  className="card-header"
+                >
+                  No Lossback report found.
+                </h5>
+              </div>
+            )}
+            {meta && (
+              <div
+                style={{
+                  marginTop: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "end",
+                }}
+              >
+                <Pagination
+                  prev
+                  next
+                  size="md"
+                  total={meta?.totalRecords}
+                  limit={meta?.recordsPerPage}
+                  activePage={activePage}
+                  onChangePage={setActivePage}
+                  maxButtons={5}
+                  ellipsis
+                  boundaryLinks
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
