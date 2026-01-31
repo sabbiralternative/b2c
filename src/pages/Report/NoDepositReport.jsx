@@ -123,15 +123,15 @@ const NoDepositReport = () => {
               </div>
 
               <div className="col-12">
-                {/* <input
+                <input
                   onClick={handleToggleViewNoDepositReport}
                   type="submit"
                   name="submit"
                   className="btn btn-primary"
                   value="View"
-                /> */}
+                />
                 <input
-                  // style={{ marginLeft: "10px" }}
+                  style={{ marginLeft: "10px" }}
                   onClick={exportToExcel}
                   type="button"
                   name="submit"

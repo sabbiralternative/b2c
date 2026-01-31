@@ -98,15 +98,15 @@ const FifthDepositReport = () => {
                 className="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
               >
                 <div className="col-12">
-                  {/* <input
+                  <input
                     onClick={handleToggleViewFTD}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
                     value="View"
-                  /> */}
+                  />
                   <input
-                    // style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px" }}
                     onClick={exportToExcel}
                     type="button"
                     name="submit"
