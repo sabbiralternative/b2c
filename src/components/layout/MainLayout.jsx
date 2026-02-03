@@ -16,7 +16,6 @@ import EditPayment from "../modal/Master/Payment/EditPayment";
 import toast from "react-hot-toast";
 import DirectDeposit from "../modal/Master/Client/DirectDeposit";
 import AddAdminStaff from "../modal/HyperMaster/Staff/AddAdminStaff";
-import AddWhiteLabel from "../modal/AdminMaster/AddWhiteLabel";
 import { useVerifyUser } from "../../hooks/auth";
 import { useQueryClient } from "@tanstack/react-query";
 import AddSuperBranch from "../modal/HyperMaster/Branch/AddSuperBranch";
@@ -53,8 +52,6 @@ const MainLayout = () => {
     setShowAddStaff,
     showAddBranchStaff,
     setShowAddBranchStaff,
-    addWhiteLabel,
-    setAddWhiteLabel,
     id,
     showDWLimit,
     setShowDWLimit,
@@ -184,9 +181,7 @@ const MainLayout = () => {
             {/* {addPaymentGateway && (
               <AddPaymentGateway setAddPaymentGateway={setAddPaymentGateway} />
             )} */}
-            {addWhiteLabel && (
-              <AddWhiteLabel setShowAddWhiteLabel={setAddWhiteLabel} />
-            )}
+
             <Footer />
           </div>
 

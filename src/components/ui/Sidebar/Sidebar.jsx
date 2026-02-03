@@ -20,7 +20,6 @@ const Sidebar = () => {
     setShowAddStaff,
     setShowAddBranchStaff,
     adminRole,
-    setAddWhiteLabel,
     setShowDWLimit,
   } = useContextState();
   /* close modal click outside */
@@ -55,7 +54,6 @@ const Sidebar = () => {
   const navItems = getNavItems(permission, adminRole, {
     setShowSocialLink,
     setShowAddStaff,
-    setAddWhiteLabel,
     setShowAddSuperBranch,
     setShowAddBranch,
     setShowAddBranchStaff,

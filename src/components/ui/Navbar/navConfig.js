@@ -11,7 +11,6 @@ export const getNavItems = (permissions, adminRole, setters) => {
   const {
     setShowSocialLink,
     setShowAddStaff,
-    setAddWhiteLabel,
     setShowAddSuperBranch,
     setShowAddBranch,
     setShowAddBranchStaff,
@@ -516,7 +515,7 @@ export const getNavItems = (permissions, adminRole, setters) => {
         },
         {
           label: "Add Whitelable",
-          setState: setAddWhiteLabel,
+          href: "/add-whitelable",
           show: true,
         },
       ],

@@ -14,8 +14,6 @@ const NavListItem = () => {
     setShowSocialLink,
     adminRole,
     setShowAddStaff,
-
-    setAddWhiteLabel,
     setShowAddSuperBranch,
     setShowAddBranch,
     setShowAddBranchStaff,
@@ -56,7 +54,6 @@ const NavListItem = () => {
   const navItems = getNavItems(permissions, adminRole, {
     setShowSocialLink,
     setShowAddStaff,
-    setAddWhiteLabel,
     setShowAddSuperBranch,
     setShowAddBranch,
     setShowAddBranchStaff,

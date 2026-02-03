@@ -39,7 +39,6 @@ const StateProvider = ({ children }) => {
   const [showAddStaff, setShowAddStaff] = useState(false);
   const [showAddBranchStaff, setShowAddBranchStaff] = useState(false);
   const [payloadRole, setPayloadRole] = useState("");
-  const [addWhiteLabel, setAddWhiteLabel] = useState(false);
   const [id, setId] = useState("");
   const baseUrl = notice?.result?.settings?.baseUrl;
   useEffect(() => {
@@ -158,8 +157,6 @@ const StateProvider = ({ children }) => {
     setShowAddBranchStaff,
     payloadRole,
     setPayloadRole,
-    addWhiteLabel,
-    setAddWhiteLabel,
     id,
     setId,
     showAddSuperBranch,

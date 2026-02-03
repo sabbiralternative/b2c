@@ -81,6 +81,7 @@ import AddLossBackBonusByEvent from "../pages/Bonus/AddLossBackBonusByEvent";
 import AddLossBackBonusByDate from "../pages/Bonus/AddLossBackBonusByDate";
 import ViewLossBackBonus from "../pages/Bonus/ViewLossBackBonus";
 import LossBackBonusReport from "../pages/Bonus/LossBackBonusReport";
+import AddWhiteLabel from "../pages/WhiteLabel/AddWhiteLabel";
 
 export const router = createBrowserRouter(
   [
@@ -385,6 +386,10 @@ export const router = createBrowserRouter(
         {
           path: "/view-whitelable",
           element: <ViewWhiteLabel />,
+        },
+        {
+          path: "/add-whitelable",
+          element: <AddWhiteLabel />,
         },
         {
           path: "/view-affiliate",
