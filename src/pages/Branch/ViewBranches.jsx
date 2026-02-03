@@ -158,7 +158,6 @@ const ViewBranches = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {branches?.map((branch, i) => {
-                  console.log(branch);
                   return (
                     <tr key={i}>
                       <td>

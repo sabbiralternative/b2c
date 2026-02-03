@@ -6,6 +6,7 @@ import Deposit from "../../components/modal/Master/Client/Deposit";
 import DirectWithdraw from "../../components/modal/Master/Client/DirectWithdraw";
 import ChangePassword from "../../components/modal/ChangePassword";
 import CreditReference from "../../components/modal/CreditReference";
+import UpdateWhiteLable from "../../components/modal/WhiteLable/UpdateWhiteLable";
 
 const ViewWhiteLabel = () => {
   const [showDepositModal, setShowDepositModal] = useState(false);
@@ -17,12 +18,13 @@ const ViewWhiteLabel = () => {
   const [id, setId] = useState("");
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
+  const [updateWhiteLableModalId, setUpdateWhiteLableModalId] = useState(null);
   const { data, refetch } = useWhiteLabel({
     type: "viewWhitelabel",
   });
 
   const handleOpenModal = (setModal, username, role, id) => {
-    setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
+    (setModal(true), setDownLineId(username), setPayloadRole(role), setId(id));
   };
 
   return (
@@ -76,6 +78,13 @@ const ViewWhiteLabel = () => {
           setShowCreditRef={setShowCreditRefModal}
         />
       )}
+      {updateWhiteLableModalId && (
+        <UpdateWhiteLable
+          updateWhiteLableModalId={updateWhiteLableModalId}
+          setUpdateWhiteLableModalId={setUpdateWhiteLableModalId}
+          refetch={refetch}
+        />
+      )}
 
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
@@ -115,7 +124,7 @@ const ViewWhiteLabel = () => {
                               setShowDepositModal,
                               whiteLabel?.username,
                               whiteLabel?.role,
-                              whiteLabel?.downlineId
+                              whiteLabel?.downlineId,
                             )
                           }
                           className="btn btn-icon btn-sm btn-success"
@@ -129,7 +138,7 @@ const ViewWhiteLabel = () => {
                               setShowWithdrawModal,
                               whiteLabel?.username,
                               whiteLabel?.role,
-                              whiteLabel?.downlineId
+                              whiteLabel?.downlineId,
                             )
                           }
                           className="btn btn-icon btn-sm btn-danger"
@@ -143,7 +152,7 @@ const ViewWhiteLabel = () => {
                               setShowChangePasswordModal,
                               whiteLabel?.username,
                               whiteLabel?.role,
-                              whiteLabel?.downlineId
+                              whiteLabel?.downlineId,
                             );
                           }}
                           className="btn btn-icon btn-sm btn-info"
@@ -158,12 +167,24 @@ const ViewWhiteLabel = () => {
                               setShowCreditRefModal,
                               whiteLabel?.username,
                               whiteLabel?.role,
-                              whiteLabel?.downlineId
+                              whiteLabel?.downlineId,
                             );
                           }}
                           className="btn btn-icon btn-sm btn-primary"
                         >
                           CR
+                        </a>
+                        &nbsp;
+                        <a
+                          style={{ color: "white" }}
+                          onClick={() =>
+                            setUpdateWhiteLableModalId(
+                              whiteLabel?.whitelabel_id,
+                            )
+                          }
+                          className="btn btn-icon btn-sm btn-warning"
+                        >
+                          E
                         </a>
                       </td>
                     </tr>

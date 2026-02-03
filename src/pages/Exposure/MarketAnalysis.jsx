@@ -67,7 +67,7 @@ const MarketAnalysis = () => {
         ([market_name, runners]) => ({
           market_name,
           runners,
-        })
+        }),
       ),
     }));
   }, [marketAnalysis]);
@@ -124,7 +124,7 @@ const MarketAnalysis = () => {
                       }}
                       onClick={() =>
                         navigate(
-                          `/game-details/${event.event_type_id}/${event.event_id}`
+                          `/game-details/${event.event_type_id}/${event.event_id}`,
                         )
                       }
                     >
@@ -133,7 +133,6 @@ const MarketAnalysis = () => {
                       </td>
                     </tr>
                     {event?.markets?.map((market, i) => {
-                      console.log(event?.market);
                       return (
                         <tr
                           key={i}
@@ -147,7 +146,7 @@ const MarketAnalysis = () => {
                           }}
                           onClick={() =>
                             navigate(
-                              `/game-details/${event.event_type_id}/${event.event_id}`
+                              `/game-details/${event.event_type_id}/${event.event_id}`,
                             )
                           }
                         >

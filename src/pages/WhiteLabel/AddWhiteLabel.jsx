@@ -66,10 +66,12 @@ const AddWhiteLabel = () => {
         {
           label: "PNG",
           value: "png",
+          checked: true,
         },
         {
           label: "SVG",
           value: "svg",
+          checked: false,
         },
       ],
     },
@@ -79,11 +81,13 @@ const AddWhiteLabel = () => {
       options: [
         {
           label: "INR",
-          value: "inr",
+          value: "INR",
+          checked: true,
         },
         {
           label: "AED",
-          value: "aed",
+          value: "AED",
+          checked: false,
         },
       ],
     },
@@ -93,11 +97,13 @@ const AddWhiteLabel = () => {
       options: [
         {
           label: "INR",
-          value: "inr",
+          value: "INR",
+          checked: true,
         },
         {
           label: "AED",
-          value: "aed",
+          value: "AED",
+          checked: false,
         },
       ],
     },
@@ -108,10 +114,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: false,
         },
         {
           label: "No",
           value: "0",
+          checked: true,
         },
       ],
     },
@@ -122,10 +130,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -136,10 +146,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -150,10 +162,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -164,10 +178,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -178,10 +194,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -192,10 +210,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -206,10 +226,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: false,
         },
         {
           label: "No",
           value: "0",
+          checked: true,
         },
       ],
     },
@@ -220,10 +242,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -234,10 +258,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -248,10 +274,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: true,
         },
         {
           label: "No",
           value: "0",
+          checked: false,
         },
       ],
     },
@@ -262,10 +290,12 @@ const AddWhiteLabel = () => {
         {
           label: "Yes",
           value: "1",
+          checked: false,
         },
         {
           label: "No",
           value: "0",
+          checked: true,
         },
       ],
     },
@@ -491,6 +521,7 @@ const AddWhiteLabel = () => {
                                 }}
                               >
                                 <input
+                                  defaultChecked={option.checked}
                                   type="radio"
                                   {...register(item.key, {
                                     required: true,
