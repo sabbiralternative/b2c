@@ -82,6 +82,10 @@ import AddLossBackBonusByDate from "../pages/Bonus/AddLossBackBonusByDate";
 import ViewLossBackBonus from "../pages/Bonus/ViewLossBackBonus";
 import LossBackBonusReport from "../pages/Bonus/LossBackBonusReport";
 import AddWhiteLabel from "../pages/WhiteLabel/AddWhiteLabel";
+import NonTrustedClients from "../pages/Client/NonTrustedClients";
+import TrustedClients from "../pages/Client/TrustedClients";
+import VIPClients from "../pages/Client/VIPClients";
+import VVIPClients from "../pages/Client/VVIPClients";
 
 export const router = createBrowserRouter(
   [
@@ -261,6 +265,22 @@ export const router = createBrowserRouter(
         {
           path: "/suspended-client",
           element: <SuspendedClient />,
+        },
+        {
+          path: "/non-trusted-clients",
+          element: <NonTrustedClients />,
+        },
+        {
+          path: "/trusted-clients",
+          element: <TrustedClients />,
+        },
+        {
+          path: "/vip-clients",
+          element: <VIPClients />,
+        },
+        {
+          path: "/vvip-clients",
+          element: <VVIPClients />,
         },
         {
           path: "/change-branch-report/:userId",

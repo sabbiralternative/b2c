@@ -19,7 +19,7 @@ const OtherRoleAction = ({
   i,
   handleShowMore,
   showMoreRef,
-  setShowColor,
+  // setShowColor,
   setShowChangeBranch,
 }) => {
   const { permissions } = usePermission();
@@ -38,7 +38,7 @@ const OtherRoleAction = ({
                 setClientDeposit,
                 client?.username,
                 client?.role,
-                client?.downlineId
+                client?.downlineId,
               )
             }
             className="btn btn-icon btn-sm btn-success"
@@ -56,7 +56,7 @@ const OtherRoleAction = ({
                 setDirectWithdraw,
                 client?.username,
                 client?.role,
-                client?.downlineId
+                client?.downlineId,
               );
             }}
             className="btn btn-icon btn-sm btn-danger"
@@ -84,7 +84,7 @@ const OtherRoleAction = ({
                 setShowChangePassword,
                 client?.username,
                 client?.role,
-                client?.downlineId
+                client?.downlineId,
               );
             }}
             className="btn btn-icon btn-sm btn-success"
@@ -101,7 +101,7 @@ const OtherRoleAction = ({
                     setShowChangeStatus,
                     client?.username,
                     client?.role,
-                    client?.downlineId
+                    client?.downlineId,
                   );
                 }}
                 className="btn btn-icon btn-sm btn-label-secondary"
@@ -132,7 +132,7 @@ const OtherRoleAction = ({
                   setShowChangeBranch,
                   client?.username,
                   client?.role,
-                  client?.downlineId
+                  client?.downlineId,
                 );
               }}
               className="btn btn-icon btn-sm btn-danger"
@@ -154,7 +154,7 @@ const OtherRoleAction = ({
                 setDirectDeposit,
                 client?.username,
                 client?.role,
-                client?.downlineId
+                client?.downlineId,
               );
             }}
             className="btn btn-icon btn-sm btn-success"
@@ -215,7 +215,7 @@ const OtherRoleAction = ({
                   Activity Logs
                 </Link>
               </li>
-              <li
+              {/* <li
                 onClick={() => {
                   handleOpenModal(
                     setShowColor,
@@ -226,7 +226,7 @@ const OtherRoleAction = ({
                 }}
               >
                 <a className="dropdown-item">Client Group</a>
-              </li>
+              </li> */}
               {adminRole !== "admin_staff" && (
                 <>
                   <li
@@ -235,7 +235,7 @@ const OtherRoleAction = ({
                         setShowChangePassword,
                         client?.username,
                         client?.role,
-                        client?.downlineId
+                        client?.downlineId,
                       );
                     }}
                   >
@@ -247,7 +247,7 @@ const OtherRoleAction = ({
                         setShowChangeStatus,
                         client?.username,
                         client?.role,
-                        client?.downlineId
+                        client?.downlineId,
                       );
                     }}
                   >
@@ -264,7 +264,7 @@ const OtherRoleAction = ({
                         setShowCreditRef,
                         client?.username,
                         client?.role,
-                        client?.downlineId
+                        client?.downlineId,
                       );
                     }}
                   >

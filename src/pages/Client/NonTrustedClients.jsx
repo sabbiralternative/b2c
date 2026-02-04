@@ -9,7 +9,7 @@ import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
 import ClientAction from "../../components/shared/ClientAction";
 
-const AllClient = () => {
+const NonTrustedClients = () => {
   const [activePage, setActivePage] = useState(1);
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const AllClient = () => {
     isLoading,
     isSuccess,
   } = useClient({
-    searchId: "allUsers",
+    searchId: "nonTrustedUsers",
     page: activePage,
   });
 
@@ -38,7 +38,7 @@ const AllClient = () => {
             justifyContent: "space-between",
           }}
         >
-          <h5>All Clients</h5>
+          <h5>Non-Trusted Clients</h5>
           <Pagination
             prev
             next
@@ -239,4 +239,4 @@ const AllClient = () => {
   );
 };
 
-export default AllClient;
+export default NonTrustedClients;

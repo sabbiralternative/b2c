@@ -11,7 +11,7 @@ import ChangeStatus from "../../components/modal/ChangeStatus";
 import CreditReference from "../../components/modal/CreditReference";
 import DirectDeposit from "../../components/modal/Master/Client/DirectDeposit";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
-import { AdminRole, clientColor } from "../../constant/constant";
+import { AdminRole } from "../../constant/constant";
 import ClientWithdrawDeposit from "../../components/module/ViewClient/ClientWithdrawDeposit";
 import DepositPermission from "../../components/module/ViewClient/DepositPermission";
 import ClientPermission from "../../components/module/ViewClient/ClientPermission";
@@ -62,7 +62,7 @@ const ViewClient = () => {
   const { clients, refetchClients, isSuccess, isLoading } = useGetClient(
     clientId,
     setFetchClients,
-    fetchClients
+    fetchClients,
   );
 
   const onSubmit = async () => {
@@ -73,7 +73,7 @@ const ViewClient = () => {
     if (!readOnly) {
       const formatUserId = client?.userId?.split("-")[1];
       navigate(
-        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`
+        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`,
       );
     }
   };
@@ -88,7 +88,10 @@ const ViewClient = () => {
 
   const handleOpenModal = (setModal, username, role, id) => {
     if (!readOnly) {
-      setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
+      (setModal(true),
+        setDownLineId(username),
+        setPayloadRole(role),
+        setId(id));
     }
   };
 
@@ -233,6 +236,7 @@ const ViewClient = () => {
                 <table className="table table-hover table-sm">
                   <thead>
                     <tr>
+                      <th>Level</th>
                       <th>User Id</th>
                       {clients?.[0]?.username2Visible && <th>Username</th>}
 
@@ -260,7 +264,10 @@ const ViewClient = () => {
                       return (
                         <tr key={i}>
                           <td>
-                            <span
+                            <strong>{client?.level}</strong>
+                          </td>
+                          <td>
+                            {/* <span
                               style={{
                                 backgroundColor: clientColor?.[client?.color],
                                 width: "8px",
@@ -269,7 +276,7 @@ const ViewClient = () => {
                                 display: "inline-block",
                                 marginRight: "5px",
                               }}
-                            ></span>
+                            ></span> */}
                             <strong>{client?.userId}</strong>
                           </td>
                           {client?.username2Visible && (
@@ -303,7 +310,7 @@ const ViewClient = () => {
                                 onClick={() =>
                                   handleNavigateToWhatsApp(
                                     adminRole,
-                                    client?.mobile
+                                    client?.mobile,
                                   )
                                 }
                               >

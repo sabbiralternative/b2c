@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useContextState from "../../hooks/useContextState";
 import { useClient } from "../../hooks/Master/Client/useClient";
 import { Pagination } from "rsuite";
-import { AdminRole, clientColor } from "../../constant/constant";
+import { AdminRole } from "../../constant/constant";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import ClientAction from "../../components/shared/ClientAction";
 import Loader from "../../components/ui/Loader/Loader";
@@ -56,6 +56,7 @@ const InActiveClient = () => {
           <table className="table table-hover table-sm">
             <thead>
               <tr>
+                <th>Level</th>
                 <th>User Id</th>
                 {data?.result?.[0]?.username2Visible && <th>Username</th>}
                 {adminRole == AdminRole.hyper_master ||
@@ -85,6 +86,9 @@ const InActiveClient = () => {
               {data?.result?.map((client, i) => {
                 return (
                   <tr key={i}>
+                    <td>
+                      <strong>{client?.level}</strong>
+                    </td>
                     <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -93,7 +97,7 @@ const InActiveClient = () => {
                         navigate("/view-client");
                       }}
                     >
-                      <span
+                      {/* <span
                         style={{
                           backgroundColor: clientColor?.[client?.color],
                           width: "8px",
@@ -102,7 +106,7 @@ const InActiveClient = () => {
                           display: "inline-block",
                           marginRight: "5px",
                         }}
-                      ></span>
+                      ></span> */}
                       <strong>{client?.userId}</strong>
                     </td>
                     {client?.username2Visible && <td>{client?.username2}</td>}

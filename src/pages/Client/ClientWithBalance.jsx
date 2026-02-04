@@ -4,7 +4,7 @@ import "rsuite/Pagination/styles/index.css";
 import { useState } from "react";
 import useContextState from "../../hooks/useContextState";
 import { useClient } from "../../hooks/Master/Client/useClient";
-import { AdminRole, clientColor } from "../../constant/constant";
+import { AdminRole } from "../../constant/constant";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
 import ClientAction from "../../components/shared/ClientAction";
@@ -56,6 +56,7 @@ const ClientWithBalance = () => {
           <table className="table table-hover table-sm">
             <thead>
               <tr>
+                <th>Level</th>
                 <th>User Id</th>
                 {data?.result?.[0]?.username2Visible && <th>Username</th>}
                 {adminRole == AdminRole.hyper_master ||
@@ -85,6 +86,9 @@ const ClientWithBalance = () => {
               {data?.result?.map((client, i) => {
                 return (
                   <tr key={i}>
+                    <td>
+                      <strong>{client?.level}</strong>
+                    </td>
                     <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -93,7 +97,7 @@ const ClientWithBalance = () => {
                         navigate("/view-client");
                       }}
                     >
-                      <span
+                      {/* <span
                         style={{
                           backgroundColor: clientColor?.[client?.color],
                           width: "8px",
@@ -102,7 +106,7 @@ const ClientWithBalance = () => {
                           display: "inline-block",
                           marginRight: "5px",
                         }}
-                      />
+                      /> */}
                       <strong>{client?.userId}</strong>
                     </td>
                     {client?.username2Visible && <td>{client?.username2}</td>}

@@ -38,13 +38,13 @@ const ClientAction = ({ refetchClient, client, index }) => {
     if (!readOnly) {
       const formatUserId = client?.userId?.split("-")[1];
       navigate(
-        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`
+        `/pnl?id=${formatUserId}&role=${client?.role}&downlineId=${client?.downlineId}`,
       );
     }
   };
 
   const handleOpenModal = (setModal, username, role, id) => {
-    setModal(true), setDownLineId(username), setPayloadRole(role), setId(id);
+    (setModal(true), setDownLineId(username), setPayloadRole(role), setId(id));
   };
 
   const handleShowMore = (i) => {
@@ -138,7 +138,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   setClientDeposit,
                   client?.username,
                   client?.role,
-                  client?.downlineId
+                  client?.downlineId,
                 )
               }
               className="btn btn-icon btn-sm btn-success"
@@ -153,7 +153,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   setDirectWithdraw,
                   client?.username,
                   client?.role,
-                  client?.downlineId
+                  client?.downlineId,
                 )
               }
               className="btn btn-icon btn-sm btn-danger"
@@ -189,7 +189,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                       setDirectDeposit,
                       client?.username,
                       client?.role,
-                      client?.downlineId
+                      client?.downlineId,
                     );
                   }}
                   className="btn btn-icon btn-sm btn-success"
@@ -207,7 +207,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                       setClientDeposit,
                       client?.username,
                       client?.role,
-                      client?.downlineId
+                      client?.downlineId,
                     );
                   }}
                   className="btn btn-icon btn-sm btn-primary"
@@ -228,7 +228,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                       setDirectWithdraw,
                       client?.username,
                       client?.role,
-                      client?.downlineId
+                      client?.downlineId,
                     );
                   }}
                   className="btn btn-icon btn-sm btn-danger"
@@ -291,7 +291,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   setShowChangeBranch,
                   client?.username,
                   client?.role,
-                  client?.downlineId
+                  client?.downlineId,
                 );
               }}
               className="btn btn-icon btn-sm btn-danger"
@@ -314,7 +314,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   setDirectDeposit,
                   client?.username,
                   client?.role,
-                  client?.downlineId
+                  client?.downlineId,
                 );
               }}
               className="btn btn-icon btn-sm btn-success"
@@ -374,7 +374,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                       setClientDeposit,
                       client?.username,
                       client?.role,
-                      client?.downlineId
+                      client?.downlineId,
                     );
                   }}
                 >
@@ -389,7 +389,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                       setDirectWithdraw,
                       client?.username,
                       client?.role,
-                      client?.downlineId
+                      client?.downlineId,
                     );
                   }}
                 >
@@ -404,7 +404,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                       setDirectDeposit,
                       client?.username,
                       client?.role,
-                      client?.downlineId
+                      client?.downlineId,
                     );
                   }}
                 >
@@ -420,7 +420,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   Activity Logs
                 </Link>
               </li>
-              <li
+              {/* <li
                 onClick={() => {
                   setShowMore(false);
                   handleOpenModal(
@@ -432,7 +432,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                 }}
               >
                 <a className="dropdown-item">Client Group</a>
-              </li>
+              </li> */}
               {permissions.includes("client") &&
                 adminRole !== "admin_staff" && (
                   <>
@@ -444,7 +444,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                             setShowChangePassword,
                             client?.username,
                             client?.role,
-                            client?.downlineId
+                            client?.downlineId,
                           );
                         }}
                       >
@@ -459,7 +459,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                           setShowChangeStatus,
                           client?.username,
                           client?.role,
-                          client?.downlineId
+                          client?.downlineId,
                         );
                       }}
                     >
@@ -478,7 +478,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                         setShowCreditRef,
                         client?.username,
                         client?.role,
-                        client?.downlineId
+                        client?.downlineId,
                       );
                     }}
                   >

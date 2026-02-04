@@ -92,6 +92,26 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/suspended-client",
           show: true,
         },
+        {
+          label: "Non-Trusted Clients",
+          href: "/non-trusted-clients",
+          show: true,
+        },
+        {
+          label: "Trusted Clients",
+          href: "/trusted-clients",
+          show: true,
+        },
+        {
+          label: "VIP Clients",
+          href: "/vip-clients",
+          show: true,
+        },
+        {
+          label: "VVIP Clients",
+          href: "/vvip-clients",
+          show: true,
+        },
       ],
     },
     {

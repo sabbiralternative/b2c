@@ -269,25 +269,35 @@ const AddUSDT = () => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-name"
                   >
-                    Classification
+                    Client Level
                   </label>
-                  <div className="col-sm-10">
-                    <select
-                      defaultValue=""
-                      {...register("class", {
-                        required: true,
-                      })}
-                      className="form-control"
-                    >
-                      <option disabled value="">
-                        Select Classification
-                      </option>
-                      {classifications.map((item) => (
-                        <option key={item.value} value={item.value}>
-                          {item.label}
-                        </option>
-                      ))}
-                    </select>
+                  <div
+                    className="col-sm-10"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0px 30px",
+                    }}
+                  >
+                    {classifications.map((item) => (
+                      <label
+                        key={item?.value}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "3px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          defaultChecked
+                          {...register("class", { required: true })}
+                          value={item?.value}
+                        />
+                        <span>{item?.label}</span>
+                      </label>
+                    ))}
                   </div>
                 </div>
                 <div className="row mb-3">
