@@ -221,7 +221,7 @@ const AddBankAccount = () => {
                         <input
                           type="checkbox"
                           defaultChecked
-                          {...register("class", { required: true })}
+                          {...register("level", { required: true })}
                           value={item?.value}
                         />
                         <span>{item?.label}</span>

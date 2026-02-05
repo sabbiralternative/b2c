@@ -7,7 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { DatePicker, Pagination } from "rsuite";
-import { AdminRole, clientColor, Status } from "../../../constant/constant";
+import { AdminRole, Status } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import EditDepositFromBank from "../../modal/Master/Deposit/EditDepositFromBank";
@@ -199,6 +199,7 @@ const Deposit = ({
         <table className="table table-hover table-sm">
           <thead className="table-dark">
             <tr>
+              <th>Level</th>
               <th>User Id</th>
               {/* <th>Login Name</th> */}
               {adminRole === AdminRole.admin_staff ||
@@ -235,6 +236,9 @@ const Deposit = ({
             {data?.map((item, i) => {
               return (
                 <tr style={{ background: item?.bgcolor || "none" }} key={i}>
+                  <td>
+                    <strong>{item?.level}</strong>
+                  </td>
                   <td
                     style={{ cursor: "pointer" }}
                     onClick={() => {
@@ -245,7 +249,7 @@ const Deposit = ({
                       );
                     }}
                   >
-                    <span
+                    {/* <span
                       style={{
                         backgroundColor: clientColor?.[item?.color],
                         width: "8px",
@@ -254,7 +258,7 @@ const Deposit = ({
                         display: "inline-block",
                         marginRight: "5px",
                       }}
-                    />
+                    /> */}
                     <strong> {item?.userId}</strong>
                   </td>
                   {/* <td>{item?.loginnameVisible && item?.loginname}</td> */}

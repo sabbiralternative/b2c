@@ -5,7 +5,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { Pagination } from "rsuite";
 import useContextState from "../../hooks/useContextState";
 import { useGetIndex } from "../../hooks";
-import { AdminRole, clientColor } from "../../constant/constant";
+import { AdminRole } from "../../constant/constant";
 import useGetALLDeposit from "../../hooks/Master/Deposit/useGetALLDeposit";
 import EditPendingDeposit from "../../components/modal/Master/Deposit/EditPendingDeposit";
 import Slip from "../../components/modal/Master/Deposit/Slip";
@@ -52,7 +52,7 @@ const PendingDeposit = () => {
 
   const { allUTRs, refetchAllUTRs, isLoading, isSuccess } = useGetALLDeposit(
     payload,
-    30000
+    30000,
   );
   const meta = allUTRs?.pagination;
 
@@ -158,6 +158,7 @@ const PendingDeposit = () => {
           <table className="table table-hover table-sm">
             <thead className="table-dark">
               <tr>
+                <th>Level</th>
                 <th>User Id</th>
                 {/* <th>Login Name</th> */}
                 {adminRole === AdminRole.admin_staff ||
@@ -185,6 +186,9 @@ const PendingDeposit = () => {
               {allUTRs?.result?.map((item, i) => {
                 return (
                   <tr style={{ background: item?.bgcolor || "none" }} key={i}>
+                    <td>
+                      <strong>{item?.level}</strong>
+                    </td>
                     <td
                       style={{
                         cursor: "pointer",
@@ -193,11 +197,11 @@ const PendingDeposit = () => {
                         setClientId(item?.userId);
                         setRefetchViewClient(true);
                         navigate(
-                          `/view-client?role=${adminRole}&history=deposit`
+                          `/view-client?role=${adminRole}&history=deposit`,
                         );
                       }}
                     >
-                      <span
+                      {/* <span
                         style={{
                           backgroundColor: clientColor?.[item?.color],
                           width: "8px",
@@ -206,7 +210,7 @@ const PendingDeposit = () => {
                           display: "inline-block",
                           marginRight: "5px",
                         }}
-                      />
+                      /> */}
                       <strong>{item?.userId}</strong>
                     </td>
                     {/* <td>{item?.loginnameVisible && item?.loginname}</td> */}

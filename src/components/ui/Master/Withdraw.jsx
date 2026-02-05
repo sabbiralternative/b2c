@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { FaRegCopy } from "react-icons/fa";
 import { DatePicker, Pagination } from "rsuite";
 import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
-import { AdminRole, clientColor, Status } from "../../../constant/constant";
+import { AdminRole, Status } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import Slip from "../../modal/Master/Deposit/Slip";
@@ -352,6 +352,7 @@ const Withdraw = ({
         <table className="table table-hover table-sm">
           <thead className="table-dark">
             <tr>
+              <th>Level</th>
               <th>User Id</th>
               <th>Login Name</th>
               {adminRole === AdminRole.admin_staff ||
@@ -392,6 +393,9 @@ const Withdraw = ({
               data?.map((item, i) => {
                 return (
                   <tr style={{ background: item?.bgcolor || "none" }} key={i}>
+                    <td>
+                      <strong>{item?.level}</strong>
+                    </td>
                     <td
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -402,7 +406,7 @@ const Withdraw = ({
                         );
                       }}
                     >
-                      <span
+                      {/* <span
                         style={{
                           backgroundColor: clientColor?.[item?.color],
                           width: "8px",
@@ -411,7 +415,7 @@ const Withdraw = ({
                           display: "inline-block",
                           marginRight: "5px",
                         }}
-                      />
+                      /> */}
                       <strong> {item?.userId}</strong>
                     </td>
                     <td>{item?.loginnameVisible && item?.loginname}</td>
