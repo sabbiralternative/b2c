@@ -7,6 +7,7 @@ import { AdminRole } from "../../constant/constant";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import ClientAction from "../../components/shared/ClientAction";
 import Loader from "../../components/ui/Loader/Loader";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const SuspendedClient = () => {
   const navigate = useNavigate();
@@ -233,6 +234,7 @@ const SuspendedClient = () => {
           )}
         </div>
       </div>
+      <LevelTable />
     </div>
   );
 };

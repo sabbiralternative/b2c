@@ -121,3 +121,20 @@ div:where(.swal2-container) .swal2-html-container {
 .rs-picker-popup {
   z-index: 99999999999 !important;
 }
+
+.level-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+
+.level-table thead,
+.level-table tbody,
+.level-table tfoot,
+.level-table tr,
+.level-table td,
+.level-table th {
+  border-width: 1px;
+  border-color: #36445d;
+  padding: 10px;
+}

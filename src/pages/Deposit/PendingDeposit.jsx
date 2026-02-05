@@ -11,6 +11,7 @@ import EditPendingDeposit from "../../components/modal/Master/Deposit/EditPendin
 import Slip from "../../components/modal/Master/Deposit/Slip";
 import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
 import Loader from "../../components/ui/Loader/Loader";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const PendingDeposit = () => {
   const {
@@ -355,6 +356,8 @@ const PendingDeposit = () => {
           )}
         </div>
       </div>
+
+      <LevelTable />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { AdminRole } from "../../constant/constant";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
 import ClientAction from "../../components/shared/ClientAction";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const NonTrustedClients = () => {
   const [activePage, setActivePage] = useState(1);
@@ -235,6 +236,7 @@ const NonTrustedClients = () => {
           )}
         </div>
       </div>
+      <LevelTable />
     </div>
   );
 };

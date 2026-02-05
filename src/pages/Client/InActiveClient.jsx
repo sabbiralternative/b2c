@@ -7,6 +7,7 @@ import { AdminRole } from "../../constant/constant";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import ClientAction from "../../components/shared/ClientAction";
 import Loader from "../../components/ui/Loader/Loader";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 const InActiveClient = () => {
   const navigate = useNavigate();
@@ -234,6 +235,7 @@ const InActiveClient = () => {
           )}
         </div>
       </div>
+      <LevelTable />
     </div>
   );
 };

@@ -25,6 +25,7 @@ import ChangeBranch from "../../components/modal/HyperMaster/Client/ChangeBranch
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
 import { usePermission } from "../../hooks/use-permission";
+import LevelTable from "../../components/shared/LevelTable/LevelTable";
 
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
@@ -504,6 +505,7 @@ const ViewClient = () => {
             </div>
           </>
         )}
+        <LevelTable />
 
         {isLoading && !isSuccess && (
           <div
