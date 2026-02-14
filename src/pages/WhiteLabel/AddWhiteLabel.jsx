@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import handleRandomToken from "../../utils/handleRandomToken";
@@ -11,11 +11,13 @@ import { useNavigate } from "react-router-dom";
 const AddWhiteLabel = () => {
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState(false);
-  const { register, handleSubmit, reset } = useForm();
-  const { mutate: addWhiteLabel } = useAddWhiteLabel();
+  const { register, handleSubmit, reset, watch } = useForm();
+  const { mutate, data } = useAddWhiteLabel();
   const { refetch } = useWhiteLabel({
     type: "viewWhitelabel",
   });
+
+  const admin = watch("admin");
 
   const onSubmit = async (values) => {
     setDisabled(true);
@@ -43,7 +45,7 @@ const AddWhiteLabel = () => {
       token: generatedToken,
     };
 
-    addWhiteLabel(payload, {
+    mutate(payload, {
       onSuccess: (data) => {
         if (data?.success) {
           setDisabled(false);
@@ -301,6 +303,12 @@ const AddWhiteLabel = () => {
     },
   ];
 
+  useEffect(() => {
+    if (admin === "existing") {
+      mutate({ type: "viewAdmin" });
+    }
+  }, [admin, mutate]);
+
   return (
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -371,19 +379,97 @@ const AddWhiteLabel = () => {
                       </div>
                     </div>
                     <div className="row mb-3">
-                      <label className="col-sm-2 col-form-label">
-                        Admin Name
-                      </label>
-                      <div className="col-sm-10">
-                        <input
-                          type="text"
-                          {...register("admin_name", {
-                            required: true,
-                          })}
-                          className="form-control"
-                        />
+                      <label className="col-sm-2 col-form-label">Admin</label>
+
+                      <div
+                        className="col-sm-10"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0px 30px",
+                        }}
+                      >
+                        <label
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "3px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <input
+                            defaultChecked
+                            type="radio"
+                            {...register("admin", {
+                              required: true,
+                            })}
+                            value="new"
+                          />
+                          <span>New Admin</span>
+                        </label>
+                        <label
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "3px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <input
+                            type="radio"
+                            {...register("admin", {
+                              required: true,
+                            })}
+                            value="existing"
+                          />
+                          <span>Existing Admin</span>
+                        </label>
                       </div>
                     </div>
+                    {!admin || admin === "new" ? (
+                      <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label">
+                          Admin Name
+                        </label>
+                        <div className="col-sm-10">
+                          <input
+                            type="text"
+                            {...register("admin_name", {
+                              required: true,
+                            })}
+                            className="form-control"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label">
+                          Admin Name
+                        </label>
+                        <div className="col-sm-10">
+                          <select
+                            defaultValue=""
+                            {...register("admin_id", {
+                              required: true,
+                            })}
+                            className="form-control"
+                          >
+                            <option disabled value="">
+                              Select Admin Name
+                            </option>
+                            {data?.result?.map((admin) => (
+                              <option
+                                key={admin?.admin_id}
+                                value={admin?.admin_id}
+                              >
+                                {admin?.loginname}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
                         Password

@@ -350,6 +350,8 @@ const UpdateWhiteLabel = () => {
                         />
                       </div>
                     </div>
+
+                    {/* 
                     <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
                         Site URL
@@ -375,7 +377,7 @@ const UpdateWhiteLabel = () => {
                       </div>
                     </div>
 
-                    {/* <div className="row mb-3">
+                    <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
                         Admin Name
                       </label>
