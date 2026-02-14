@@ -6,9 +6,10 @@ import Deposit from "../../components/modal/Master/Client/Deposit";
 import DirectWithdraw from "../../components/modal/Master/Client/DirectWithdraw";
 import ChangePassword from "../../components/modal/ChangePassword";
 import CreditReference from "../../components/modal/CreditReference";
-import UpdateWhiteLable from "../../components/modal/WhiteLable/UpdateWhiteLable";
+import { useNavigate } from "react-router-dom";
 
 const ViewWhiteLabel = () => {
+  const navigate = useNavigate();
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
@@ -18,7 +19,6 @@ const ViewWhiteLabel = () => {
   const [id, setId] = useState("");
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
-  const [updateWhiteLableModalId, setUpdateWhiteLableModalId] = useState(null);
   const { data, refetch } = useWhiteLabel({
     type: "viewWhitelabel",
   });
@@ -76,13 +76,6 @@ const ViewWhiteLabel = () => {
           id={id}
           role={payloadRole}
           setShowCreditRef={setShowCreditRefModal}
-        />
-      )}
-      {updateWhiteLableModalId && (
-        <UpdateWhiteLable
-          updateWhiteLableModalId={updateWhiteLableModalId}
-          setUpdateWhiteLableModalId={setUpdateWhiteLableModalId}
-          refetch={refetch}
         />
       )}
 
@@ -178,8 +171,8 @@ const ViewWhiteLabel = () => {
                         <a
                           style={{ color: "white" }}
                           onClick={() =>
-                            setUpdateWhiteLableModalId(
-                              whiteLabel?.whitelabel_id,
+                            navigate(
+                              `/update-whitelabel?whitelabel_id=${whiteLabel?.whitelabel_id}`,
                             )
                           }
                           className="btn btn-icon btn-sm btn-warning"

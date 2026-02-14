@@ -194,7 +194,7 @@ const LastDepositReport = () => {
                         ) : null}
 
                         <th>Last Deposit Date</th>
-                        <th>Day Since Last Deposit</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody className="table-border-bottom-0">

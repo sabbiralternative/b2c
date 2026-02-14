@@ -86,6 +86,7 @@ import NonTrustedClients from "../pages/Client/NonTrustedClients";
 import TrustedClients from "../pages/Client/TrustedClients";
 import VIPClients from "../pages/Client/VIPClients";
 import VVIPClients from "../pages/Client/VVIPClients";
+import UpdateWhiteLabel from "../pages/WhiteLabel/UpdateWhiteLabel";
 
 export const router = createBrowserRouter(
   [
@@ -410,6 +411,10 @@ export const router = createBrowserRouter(
         {
           path: "/add-whitelable",
           element: <AddWhiteLabel />,
+        },
+        {
+          path: "/update-whitelabel",
+          element: <UpdateWhiteLabel />,
         },
         {
           path: "/view-affiliate",
