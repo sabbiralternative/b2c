@@ -362,6 +362,18 @@ const UpdateWhiteLabel = () => {
                         />
                       </div>
                     </div>
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
+                        Live URL
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("live_url")}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
 
                     {/* <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
