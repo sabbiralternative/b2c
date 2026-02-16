@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import handleRandomToken from "../../utils/handleRandomToken";
@@ -208,6 +208,38 @@ const AddWhiteLabel = () => {
     {
       label: "Registration",
       key: "registration",
+      options: [
+        {
+          label: "Yes",
+          value: "1",
+          checked: true,
+        },
+        {
+          label: "No",
+          value: "0",
+          checked: false,
+        },
+      ],
+    },
+    {
+      label: "Registration Whatsapp",
+      key: "registration_whatsapp",
+      options: [
+        {
+          label: "Yes",
+          value: "1",
+          checked: true,
+        },
+        {
+          label: "No",
+          value: "0",
+          checked: false,
+        },
+      ],
+    },
+    {
+      label: "Cashout",
+      key: "cashout",
       options: [
         {
           label: "Yes",
@@ -469,35 +501,39 @@ const AddWhiteLabel = () => {
                         </div>
                       </div>
                     )}
+                    {admin !== "existing" && (
+                      <Fragment>
+                        <div className="row mb-3">
+                          <label className="col-sm-2 col-form-label">
+                            Password
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              type="text"
+                              {...register("password", {
+                                required: true,
+                              })}
+                              className="form-control"
+                            />
+                          </div>
+                        </div>
+                        <div className="row mb-3">
+                          <label className="col-sm-2 col-form-label">
+                            Confirm Password
+                          </label>
+                          <div className="col-sm-10">
+                            <input
+                              type="text"
+                              {...register("confirm_password", {
+                                required: true,
+                              })}
+                              className="form-control"
+                            />
+                          </div>
+                        </div>
+                      </Fragment>
+                    )}
 
-                    <div className="row mb-3">
-                      <label className="col-sm-2 col-form-label">
-                        Password
-                      </label>
-                      <div className="col-sm-10">
-                        <input
-                          type="text"
-                          {...register("password", {
-                            required: true,
-                          })}
-                          className="form-control"
-                        />
-                      </div>
-                    </div>
-                    <div className="row mb-3">
-                      <label className="col-sm-2 col-form-label">
-                        Confirm Password
-                      </label>
-                      <div className="col-sm-10">
-                        <input
-                          type="text"
-                          {...register("confirm_password", {
-                            required: true,
-                          })}
-                          className="form-control"
-                        />
-                      </div>
-                    </div>
                     <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
                         Minimum Deposit
@@ -635,7 +671,20 @@ const AddWhiteLabel = () => {
                         </div>
                       );
                     })}
-
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
+                        Transaction Code
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("transaction_code", {
+                            required: true,
+                          })}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
                     <div className="row justify-content-end">
                       <div className="col-sm-10">
                         <input

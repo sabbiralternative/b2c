@@ -232,6 +232,38 @@ const UpdateWhiteLabel = () => {
       ],
     },
     {
+      label: "Registration Whatsapp",
+      key: "registration_whatsapp",
+      options: [
+        {
+          label: "Yes",
+          value: "1",
+          checked: data?.result?.registration_whatsapp,
+        },
+        {
+          label: "No",
+          value: "0",
+          checked: !data?.result?.registration_whatsapp,
+        },
+      ],
+    },
+    {
+      label: "Cashout",
+      key: "cashout",
+      options: [
+        {
+          label: "Yes",
+          value: "1",
+          checked: data?.result?.cashout,
+        },
+        {
+          label: "No",
+          value: "0",
+          checked: !data?.result?.cashout,
+        },
+      ],
+    },
+    {
       label: "Force Login",
       key: "force_login",
       options: [
@@ -535,7 +567,18 @@ const UpdateWhiteLabel = () => {
                         </div>
                       );
                     })}
-
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
+                        Transaction Code
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("transaction_code")}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
                     <div className="row justify-content-start">
                       <div className="col-sm-10">
                         <input
