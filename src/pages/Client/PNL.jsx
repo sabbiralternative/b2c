@@ -38,6 +38,8 @@ const PNL = () => {
 
   const meta = pnl?.pagination;
 
+  console.log(pnl);
+
   /* Handle user history */
   const handleUserHistory = async (e) => {
     e.preventDefault();
@@ -69,7 +71,7 @@ const PNL = () => {
     };
     exportMutation(payload);
   };
-
+  console.log(pnl);
   return (
     <>
       {image && <Slip setShowImage={setImage} image={image} />}
@@ -316,7 +318,7 @@ const PNL = () => {
                         onClick={() =>
                           handleSettledBets(
                             item?.statement_type,
-                            item?.market_id
+                            item?.market_id,
                           )
                         }
                         key={i}

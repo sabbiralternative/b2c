@@ -173,6 +173,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           </a>
         </>
       )}
+
       {permissions.includes("client") &&
         adminRole !== AdminRole.master &&
         adminRole !== AdminRole.hyper_master && (

@@ -95,7 +95,6 @@ const EditPendingWithdraw = ({
           setLoading(false);
           setImage(null);
           setUploadedImage(data?.filePath);
-
           setFilename(data?.filePath);
         } else {
           setLoading(false);
