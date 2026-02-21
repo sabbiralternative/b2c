@@ -14,6 +14,7 @@ const PendingComplaints = () => {
   });
   const meta = data?.pagination;
   const result = data?.result;
+
   return (
     <>
       {complaintId && (

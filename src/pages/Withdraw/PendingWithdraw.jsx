@@ -8,7 +8,7 @@ import useGetALLWithdraw from "../../hooks/Master/Withdraw/useGetAllWithdraw";
 import Withdraw from "../../components/ui/Master/Withdraw";
 
 const PendingWithdraw = () => {
-  const [startDate, setStartDate] = useState(defaultDate(1));
+  const [startDate, setStartDate] = useState(defaultDate(5));
   const [endDate, setEndDate] = useState(new Date());
   const { adminRole } = useContextState();
   const [branchId, setBranchId] = useState(0);
