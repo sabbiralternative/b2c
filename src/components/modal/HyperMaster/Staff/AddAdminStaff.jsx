@@ -87,6 +87,11 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
         adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
     },
     {
+      label: "Add Client",
+      value: "add_client",
+      show: adminRole === AdminRole.master,
+    },
+    {
       label: "Payment",
       value: "payment",
       show:

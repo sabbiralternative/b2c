@@ -57,6 +57,7 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
     { label: "Deposit", value: "deposit", show: true },
     { label: "Withdraw", value: "withdraw", show: true },
     { label: "Client", value: "client", show: true },
+    { label: "Add Client", value: "add_client", show: true },
     { label: "Report", value: "report", show: true },
     {
       label: "Direct Deposit",
