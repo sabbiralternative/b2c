@@ -102,6 +102,7 @@ const ViewPaymentMethod = () => {
                   <th>Type</th>
                   {adminRole === AdminRole.admin_staff && <th>Branch name</th>}
                   <th>Account name</th>
+                  <th>Level</th>
                   <th>Image</th>
                   <th>Limits</th>
 
@@ -119,23 +120,24 @@ const ViewPaymentMethod = () => {
                       )}
 
                       <td>{method?.name}</td>
+                      <td>{method?.level}</td>
                       <td>
-                        {method?.image && (
-                          <img
+                        {method?.image ? (
+                          <span
                             onClick={() => {
                               setImage("");
                               setShowPaymentImage(true);
                               setImage(method?.image);
                             }}
                             style={{
-                              height: "40px",
-                              width: "40px",
-                              objectFit: "contain",
+                              color: "#346cee",
                               cursor: "pointer",
                             }}
-                            src={method?.image}
-                            alt=""
-                          />
+                          >
+                            View
+                          </span>
+                        ) : (
+                          <span>N/A</span>
                         )}
                       </td>
 
