@@ -5,7 +5,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { Pagination } from "rsuite";
 import useContextState from "../../hooks/useContextState";
 import { useGetIndex } from "../../hooks";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, clientColor } from "../../constant/constant";
 import useGetALLDeposit from "../../hooks/Master/Deposit/useGetALLDeposit";
 import EditPendingDeposit from "../../components/modal/Master/Deposit/EditPendingDeposit";
 import Slip from "../../components/modal/Master/Deposit/Slip";
@@ -202,7 +202,7 @@ const PendingDeposit = () => {
                         );
                       }}
                     >
-                      {/* <span
+                      <span
                         style={{
                           backgroundColor: clientColor?.[item?.color],
                           width: "8px",
@@ -211,7 +211,7 @@ const PendingDeposit = () => {
                           display: "inline-block",
                           marginRight: "5px",
                         }}
-                      /> */}
+                      />
                       <strong>{item?.userId}</strong>
                     </td>
                     {/* <td>{item?.loginnameVisible && item?.loginname}</td> */}

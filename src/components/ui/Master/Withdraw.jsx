@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { FaRegCopy } from "react-icons/fa";
 import { DatePicker, Pagination } from "rsuite";
 import EditPendingWithdraw from "../../modal/Master/Withdraw/EditPendingWithdraw";
-import { AdminRole, Status } from "../../../constant/constant";
+import { AdminRole, clientColor, Status } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import Slip from "../../modal/Master/Deposit/Slip";
@@ -408,16 +408,16 @@ const Withdraw = ({
                           );
                         }}
                       >
-                        {/* <span
-                        style={{
-                          backgroundColor: clientColor?.[item?.color],
-                          width: "8px",
-                          height: "8px",
-                          borderRadius: "50%",
-                          display: "inline-block",
-                          marginRight: "5px",
-                        }}
-                      /> */}
+                        <span
+                          style={{
+                            backgroundColor: clientColor?.[item?.color],
+                            width: "8px",
+                            height: "8px",
+                            borderRadius: "50%",
+                            display: "inline-block",
+                            marginRight: "5px",
+                          }}
+                        />
                         <strong> {item?.userId}</strong>
                       </td>
                       <td>{item?.loginnameVisible && item?.loginname}</td>

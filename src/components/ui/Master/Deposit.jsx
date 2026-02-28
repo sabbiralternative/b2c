@@ -7,7 +7,7 @@ import { MdOutlineContentCopy } from "react-icons/md";
 import { handleCopyToClipBoard } from "../../../utils/handleCopyToClipBoard";
 // import { handleSplitUserName } from "../../../utils/handleSplitUserName";
 import { DatePicker, Pagination } from "rsuite";
-import { AdminRole, Status } from "../../../constant/constant";
+import { AdminRole, clientColor, Status } from "../../../constant/constant";
 import Loader from "../Loader/Loader";
 import DefaultDateButton from "../../../pages/Report/DefaultDateButton";
 import EditDepositFromBank from "../../modal/Master/Deposit/EditDepositFromBank";
@@ -251,16 +251,16 @@ const Deposit = ({
                         );
                       }}
                     >
-                      {/* <span
-                      style={{
-                        backgroundColor: clientColor?.[item?.color],
-                        width: "8px",
-                        height: "8px",
-                        borderRadius: "50%",
-                        display: "inline-block",
-                        marginRight: "5px",
-                      }}
-                    /> */}
+                      <span
+                        style={{
+                          backgroundColor: clientColor?.[item?.color],
+                          width: "8px",
+                          height: "8px",
+                          borderRadius: "50%",
+                          display: "inline-block",
+                          marginRight: "5px",
+                        }}
+                      />
                       <strong> {item?.userId}</strong>
                     </td>
                     {/* <td>{item?.loginnameVisible && item?.loginname}</td> */}
