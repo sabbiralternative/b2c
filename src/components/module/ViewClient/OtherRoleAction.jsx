@@ -19,7 +19,7 @@ const OtherRoleAction = ({
   i,
   handleShowMore,
   showMoreRef,
-  // setShowColor,
+  setShowColor,
   setShowChangeBranch,
 }) => {
   const { permissions } = usePermission();
@@ -215,18 +215,18 @@ const OtherRoleAction = ({
                   Activity Logs
                 </Link>
               </li>
-              {/* <li
+              <li
                 onClick={() => {
                   handleOpenModal(
                     setShowColor,
                     client?.username,
                     client?.role,
-                    client?.downlineId
+                    client?.downlineId,
                   );
                 }}
               >
                 <a className="dropdown-item">Client Group</a>
-              </li> */}
+              </li>
               {adminRole !== "admin_staff" && (
                 <>
                   <li
