@@ -541,7 +541,11 @@ const Withdraw = ({
                         </span>
                       </td>
 
-                      <td>{item?.date_added}</td>
+                      <td>
+                        {item?.reject_request == "1"
+                          ? "Withdraw Reject requested by client"
+                          : item?.date_added}
+                      </td>
                       {time && <td>{item?.date_modified}</td>}
                       {(item?.status === Status.APPROVED ||
                         item?.status === Status.REJECTED) && (
