@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useContextState from "../../hooks/useContextState";
 import { useClient } from "../../hooks/Master/Client/useClient";
 import { Pagination } from "rsuite";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, clientColor } from "../../constant/constant";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import ClientAction from "../../components/shared/ClientAction";
 import Loader from "../../components/ui/Loader/Loader";
@@ -98,7 +98,7 @@ const InActiveClient = () => {
                         navigate("/view-client");
                       }}
                     >
-                      {/* <span
+                      <span
                         style={{
                           backgroundColor: clientColor?.[client?.color],
                           width: "8px",
@@ -107,7 +107,7 @@ const InActiveClient = () => {
                           display: "inline-block",
                           marginRight: "5px",
                         }}
-                      ></span> */}
+                      ></span>
                       <strong>{client?.userId}</strong>
                     </td>
                     {client?.username2Visible && <td>{client?.username2}</td>}

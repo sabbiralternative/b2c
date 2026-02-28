@@ -11,7 +11,7 @@ import ChangeStatus from "../../components/modal/ChangeStatus";
 import CreditReference from "../../components/modal/CreditReference";
 import DirectDeposit from "../../components/modal/Master/Client/DirectDeposit";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, clientColor } from "../../constant/constant";
 import ClientWithdrawDeposit from "../../components/module/ViewClient/ClientWithdrawDeposit";
 import DepositPermission from "../../components/module/ViewClient/DepositPermission";
 import ClientPermission from "../../components/module/ViewClient/ClientPermission";
@@ -268,7 +268,7 @@ const ViewClient = () => {
                             <strong>{client?.level}</strong>
                           </td>
                           <td>
-                            {/* <span
+                            <span
                               style={{
                                 backgroundColor: clientColor?.[client?.color],
                                 width: "8px",
@@ -277,7 +277,7 @@ const ViewClient = () => {
                                 display: "inline-block",
                                 marginRight: "5px",
                               }}
-                            ></span> */}
+                            ></span>
                             <strong>{client?.userId}</strong>
                           </td>
                           {client?.username2Visible && (

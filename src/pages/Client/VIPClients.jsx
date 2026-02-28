@@ -4,7 +4,7 @@ import { Pagination } from "rsuite";
 import "rsuite/Pagination/styles/index.css";
 import useContextState from "../../hooks/useContextState";
 import { useClient } from "../../hooks/Master/Client/useClient";
-import { AdminRole } from "../../constant/constant";
+import { AdminRole, clientColor } from "../../constant/constant";
 import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
 import ClientAction from "../../components/shared/ClientAction";
@@ -99,7 +99,7 @@ const VIPClients = () => {
                         navigate("/view-client");
                       }}
                     >
-                      {/* <span
+                      <span
                         style={{
                           backgroundColor: clientColor?.[client?.color],
                           width: "8px",
@@ -108,7 +108,7 @@ const VIPClients = () => {
                           display: "inline-block",
                           marginRight: "5px",
                         }}
-                      ></span> */}
+                      ></span>
                       <strong>{client?.userId}</strong>
                     </td>
                     {client?.username2Visible && <td>{client?.username2}</td>}

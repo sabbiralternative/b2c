@@ -421,19 +421,19 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   Activity Logs
                 </Link>
               </li>
-              {/* <li
+              <li
                 onClick={() => {
                   setShowMore(false);
                   handleOpenModal(
                     setShowColor,
                     client?.username,
                     client?.role,
-                    client?.downlineId
+                    client?.downlineId,
                   );
                 }}
               >
                 <a className="dropdown-item">Client Group</a>
-              </li> */}
+              </li>
               {permissions.includes("client") &&
                 adminRole !== "admin_staff" && (
                   <>
