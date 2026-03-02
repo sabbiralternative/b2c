@@ -110,6 +110,11 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/vvip-clients",
           show: true,
         },
+        {
+          label: "Premium Clients",
+          href: "/premium-clients",
+          show: true,
+        },
       ],
     },
     {

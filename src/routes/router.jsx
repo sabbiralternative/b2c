@@ -87,6 +87,7 @@ import TrustedClients from "../pages/Client/TrustedClients";
 import VIPClients from "../pages/Client/VIPClients";
 import VVIPClients from "../pages/Client/VVIPClients";
 import UpdateWhiteLabel from "../pages/WhiteLabel/UpdateWhiteLabel";
+import PremiumClients from "../pages/Client/PremiunClients";
 
 export const router = createBrowserRouter(
   [
@@ -282,6 +283,10 @@ export const router = createBrowserRouter(
         {
           path: "/vvip-clients",
           element: <VVIPClients />,
+        },
+        {
+          path: "/premium-clients",
+          element: <PremiumClients />,
         },
         {
           path: "/change-branch-report/:userId",
