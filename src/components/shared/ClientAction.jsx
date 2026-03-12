@@ -12,11 +12,13 @@ import DirectWithdraw from "../modal/Master/Client/DirectWithdraw";
 import ChangeColor from "../modal/ChangeColor";
 import ChangeBranch from "../modal/HyperMaster/Client/ChangeBranch";
 import { usePermission } from "../../hooks/use-permission";
+import ChangeLevel from "../modal/ChangeLevel";
 
 const ClientAction = ({ refetchClient, client, index }) => {
   const { permissions } = usePermission();
   const navigate = useNavigate();
   const [showColor, setShowColor] = useState(false);
+  const [showChangeLevelModal, setShowChangeLevelModal] = useState(false);
   const [directWithdraw, setDirectWithdraw] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [clientDeposit, setClientDeposit] = useState(false);
@@ -125,6 +127,14 @@ const ClientAction = ({ refetchClient, client, index }) => {
           role={payloadRole}
           setShowChangeBranch={setShowChangeBranch}
           refetchClient={refetchClient}
+        />
+      )}
+      {showChangeLevelModal && (
+        <ChangeLevel
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowChangeLevelModal={setShowChangeLevelModal}
         />
       )}
       {adminRole !== "hyper_master" &&
@@ -433,6 +443,19 @@ const ClientAction = ({ refetchClient, client, index }) => {
                 }}
               >
                 <a className="dropdown-item">Client Group</a>
+              </li>
+              <li
+                onClick={() => {
+                  setShowMore(false);
+                  handleOpenModal(
+                    setShowChangeLevelModal,
+                    client?.username,
+                    client?.role,
+                    client?.downlineId,
+                  );
+                }}
+              >
+                <a className="dropdown-item">Change Level</a>
               </li>
               {permissions.includes("client") &&
                 adminRole !== "admin_staff" && (

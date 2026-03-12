@@ -26,6 +26,7 @@ import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
 import { usePermission } from "../../hooks/use-permission";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import ChangeLevel from "../../components/modal/ChangeLevel";
 
 // import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 
@@ -51,6 +52,7 @@ const ViewClient = () => {
   const [id, setId] = useState("");
   const [showColor, setShowColor] = useState(false);
   const [showChangeBranch, setShowChangeBranch] = useState(false);
+  const [showChangeLevelModal, setShowChangeLevelModal] = useState(false);
   const {
     readOnly,
     clientId,
@@ -89,10 +91,11 @@ const ViewClient = () => {
 
   const handleOpenModal = (setModal, username, role, id) => {
     if (!readOnly) {
-      (setModal(true),
-        setDownLineId(username),
-        setPayloadRole(role),
-        setId(id));
+      setModal(true);
+      setDownLineId(username);
+      setPayloadRole(role);
+      setId(id);
+      setShowMore(null);
     }
   };
 
@@ -157,6 +160,14 @@ const ViewClient = () => {
           registrationStatus={null}
           role={payloadRole}
           setShowChangeStatus={setShowChangeStatus}
+        />
+      )}
+      {showChangeLevelModal && (
+        <ChangeLevel
+          downlineId={downLineId}
+          id={id}
+          role={payloadRole}
+          setShowChangeLevelModal={setShowChangeLevelModal}
         />
       )}
       {showCreditRef && (
@@ -376,6 +387,7 @@ const ViewClient = () => {
                               showMore={showMore}
                               showMoreRef={showMoreRef}
                               setShowColor={setShowColor}
+                              setShowChangeLevelModal={setShowChangeLevelModal}
                             />
                           )}
 

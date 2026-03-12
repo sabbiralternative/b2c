@@ -21,6 +21,7 @@ const OtherRoleAction = ({
   showMoreRef,
   setShowColor,
   setShowChangeBranch,
+  setShowChangeLevelModal,
 }) => {
   const { permissions } = usePermission();
   const navigate = useNavigate();
@@ -215,6 +216,7 @@ const OtherRoleAction = ({
                   Activity Logs
                 </Link>
               </li>
+
               <li
                 onClick={() => {
                   handleOpenModal(
@@ -226,6 +228,18 @@ const OtherRoleAction = ({
                 }}
               >
                 <a className="dropdown-item">Client Group</a>
+              </li>
+              <li
+                onClick={() => {
+                  handleOpenModal(
+                    setShowChangeLevelModal,
+                    client?.username,
+                    client?.role,
+                    client?.downlineId,
+                  );
+                }}
+              >
+                <a className="dropdown-item">Change Level</a>
               </li>
               {adminRole !== "admin_staff" && (
                 <>
