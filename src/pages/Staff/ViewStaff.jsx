@@ -4,13 +4,44 @@ import UpdateChecker from "../../components/modal/HyperMaster/Staff/UpdateChecke
 import UpdatePassword from "../../components/modal/HyperMaster/Staff/UpdatePassword";
 import useContextState from "../../hooks/useContextState";
 import UpdatePermission from "../../components/modal/Master/UpdatePermission";
+import Swal from "sweetalert2";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import { API } from "../../api";
+import toast from "react-hot-toast";
 
 const ViewStaff = () => {
   const { adminRole } = useContextState();
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
   const [showPermission, setShowPermission] = useState(null);
-  const { data } = useGetAllChecker();
+  const { data, refetch } = useGetAllChecker();
+
+  const handleDelete = async (staff) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to delete ${staff?.staff_name}!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          type: "deleteStaff",
+          bonus_id: staff?.staff_id,
+        };
+        const { data } = await AxiosSecure.post(API.staff, payload);
+
+        if (data?.success) {
+          refetch();
+          toast.success(data?.result?.message);
+        } else {
+          toast.error(data?.error?.description);
+        }
+      }
+    });
+  };
 
   return (
     <>
@@ -93,6 +124,13 @@ const ViewStaff = () => {
                           className="btn btn-icon btn-sm btn-warning"
                         >
                           R
+                        </a>
+                        &nbsp;
+                        <a
+                          onClick={() => handleDelete(checker)}
+                          className="btn btn-icon btn-sm btn-danger"
+                        >
+                          D
                         </a>
                       </td>
                     </tr>
