@@ -88,6 +88,7 @@ import VIPClients from "../pages/Client/VIPClients";
 import VVIPClients from "../pages/Client/VVIPClients";
 import UpdateWhiteLabel from "../pages/WhiteLabel/UpdateWhiteLabel";
 import PremiumClients from "../pages/Client/PremiunClients";
+import AddUPIClickGateway from "../pages/Payments/AddUPIClickGateway";
 
 export const router = createBrowserRouter(
   [
@@ -367,6 +368,10 @@ export const router = createBrowserRouter(
         {
           path: "/add-i100-payment-gateway",
           element: <AddI100PaymentGateway />,
+        },
+        {
+          path: "/add-upi-click-gateway",
+          element: <AddUPIClickGateway />,
         },
         {
           path: "/add-payment-gateway-2",

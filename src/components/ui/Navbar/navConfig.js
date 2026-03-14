@@ -250,6 +250,13 @@ export const getNavItems = (permissions, adminRole, setters) => {
                 adminRole !== AdminRole.hyper_master &&
                 adminRole !== AdminRole.admin_staff,
             },
+            {
+              label: "Add UPI Click Gateway",
+              href: "/add-upi-click-gateway",
+              show:
+                adminRole !== AdminRole.hyper_master &&
+                adminRole !== AdminRole.admin_staff,
+            },
           ],
         },
         {
