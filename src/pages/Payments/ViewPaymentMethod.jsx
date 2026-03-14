@@ -150,15 +150,22 @@ const ViewPaymentMethod = () => {
                           className={`badge ${
                             method?.status == 1
                               ? "bg-label-primary"
-                              : "bg-label-warning"
+                              : method?.status == 0
+                                ? "bg-label-warning"
+                                : "bg-label-danger"
                           } me-1`}
                         >
-                          {method?.status == 1 ? "Active" : "inactive"}
+                          {method?.status == 1
+                            ? "Active"
+                            : method?.status == 0
+                              ? "inactive"
+                              : "deleted"}
                         </span>
                       </td>
 
                       <td>
-                        {adminRole === AdminRole.admin_staff && (
+                        {(adminRole === AdminRole.admin_staff ||
+                          adminRole === AdminRole.hyper_master) && (
                           <Link
                             to={`/view-payment-logs/${method?.id}`}
                             style={{
