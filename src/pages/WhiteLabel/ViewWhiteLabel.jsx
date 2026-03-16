@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import UpdateChecker from "../../components/modal/HyperMaster/Staff/UpdateChecker";
 import UpdatePassword from "../../components/modal/HyperMaster/Staff/UpdatePassword";
 import { useWhiteLabel } from "../../hooks/AdminMaster/whiteLabel";
@@ -7,8 +7,18 @@ import DirectWithdraw from "../../components/modal/Master/Client/DirectWithdraw"
 import ChangePassword from "../../components/modal/ChangePassword";
 import CreditReference from "../../components/modal/CreditReference";
 import { useNavigate } from "react-router-dom";
+import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
+import AddLogo from "../../components/modal/WhiteLable/AddLogo";
+import AddTheme from "../../components/modal/WhiteLable/AddTheme";
+import AddFavicon from "../../components/modal/WhiteLable/AddFavicon";
 
 const ViewWhiteLabel = () => {
+  const [modal, setModal] = useState({
+    name: "",
+    site: "",
+  });
+  const [showMore, setShowMore] = useState(null);
+  const showMoreRef = useRef();
   const navigate = useNavigate();
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawModal, setShowWithdrawModal] = useState(false);
@@ -26,6 +36,18 @@ const ViewWhiteLabel = () => {
   const handleOpenModal = (setModal, username, role, id) => {
     (setModal(true), setDownLineId(username), setPayloadRole(role), setId(id));
   };
+
+  const handleShowMore = (i) => {
+    if (i === showMore) {
+      setShowMore(null);
+    } else {
+      setShowMore(i);
+    }
+  };
+
+  useCloseModalClickOutside(showMoreRef, () => {
+    setShowMore(null);
+  });
 
   return (
     <>
@@ -78,6 +100,15 @@ const ViewWhiteLabel = () => {
           setShowCreditRef={setShowCreditRefModal}
         />
       )}
+      {modal.name === "addLogo" && (
+        <AddLogo modal={modal} refetch={refetch} setModal={setModal} />
+      )}
+      {modal.name === "addTheme" && (
+        <AddTheme modal={modal} refetch={refetch} setModal={setModal} />
+      )}
+      {modal.name === "addFavicon" && (
+        <AddFavicon modal={modal} refetch={refetch} setModal={setModal} />
+      )}
 
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
@@ -98,9 +129,9 @@ const ViewWhiteLabel = () => {
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
-                {data?.result?.map((whiteLabel, i) => {
+                {data?.result?.map((whiteLabel, index) => {
                   return (
-                    <tr key={i}>
+                    <tr key={index}>
                       <td>{whiteLabel?.site_name}</td>
                       <td>{whiteLabel?.site_url}</td>
                       <td>{whiteLabel?.admin}</td>
@@ -179,6 +210,84 @@ const ViewWhiteLabel = () => {
                         >
                           E
                         </a>
+                        &nbsp;
+                        <div className="btn-group">
+                          <button
+                            onClick={() => handleShowMore(index)}
+                            style={{
+                              height: "auto",
+                              width: "auto",
+                              padding: "0px 2px",
+                            }}
+                            type="button"
+                            className="btn btn-primary btn-icon  dropdown-toggle hide-arrow"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <i className="bx bx-dots-vertical-rounded"></i>
+                          </button>
+
+                          {index === showMore && (
+                            <div
+                              style={{
+                                height: "100vh",
+                                width: "100vw",
+                                position: "fixed",
+                                top: "0",
+                                left: "0",
+                                right: "0",
+                                bottom: "0",
+                                zIndex: 999,
+                              }}
+                            />
+                          )}
+                          {index === showMore && (
+                            <ul
+                              ref={showMoreRef}
+                              style={{
+                                display: "block",
+                                right: "0px",
+                                top: "25px",
+                                zIndex: 9999,
+                              }}
+                              className="dropdown-menu dropdown-menu-end"
+                            >
+                              <li
+                                onClick={() => {
+                                  setModal({
+                                    name: "addLogo",
+                                    site: whiteLabel?.site_url,
+                                  });
+                                  setShowMore(null);
+                                }}
+                              >
+                                <a className="dropdown-item">Add Logo</a>
+                              </li>
+                              <li
+                                onClick={() => {
+                                  setModal({
+                                    name: "addTheme",
+                                    site: whiteLabel?.site_url,
+                                  });
+                                  setShowMore(null);
+                                }}
+                              >
+                                <a className="dropdown-item">Add Theme.css</a>
+                              </li>
+                              <li
+                                onClick={() => {
+                                  setModal({
+                                    name: "addFavicon",
+                                    site: whiteLabel?.site_url,
+                                  });
+                                  setShowMore(null);
+                                }}
+                              >
+                                <a className="dropdown-item">Add Favicon</a>
+                              </li>
+                            </ul>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );
