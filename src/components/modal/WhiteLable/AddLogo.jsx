@@ -3,11 +3,12 @@ import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import { API } from "../../../api";
-import { AxiosSecure } from "../../../lib/AxiosSecure";
+import axios from "axios";
+import useContextState from "../../../hooks/useContextState";
 
 const AddLogo = ({ modal, setModal, refetch }) => {
   const [disabled, setDisabled] = useState(false);
-
+  const { token } = useContextState();
   const ref = useRef();
   useCloseModalClickOutside(ref, () => {
     setModal({
@@ -30,7 +31,11 @@ const AddLogo = ({ modal, setModal, refetch }) => {
     formData.append("image", image);
     formData.append("data", JSON.stringify(payload));
 
-    const res = await AxiosSecure.post(API.upload_assets, formData);
+    const res = await axios.post(API.upload_assets, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
