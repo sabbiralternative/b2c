@@ -39,12 +39,16 @@ const AddLogo = ({ modal, setModal, refetch }) => {
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
-      toast.success(data?.result?.message);
+      toast.success(data?.message);
       reset();
       refetch();
+      setModal({
+        name: "",
+        site: "",
+      });
     } else {
       setDisabled(false);
-      toast.error(data?.error?.status?.[0]?.description);
+      toast.error(data?.message);
     }
   };
 

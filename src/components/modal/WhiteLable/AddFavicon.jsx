@@ -32,7 +32,7 @@ const AddFavicon = ({ modal, setModal, refetch }) => {
     formData.append("image", image);
     formData.append("data", JSON.stringify(payload));
 
-    const res = await axios.post(API.upload_assets, payload, {
+    const res = await axios.post(API.upload_assets, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -40,12 +40,16 @@ const AddFavicon = ({ modal, setModal, refetch }) => {
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
-      toast.success(data?.result?.message);
+      toast.success(data?.message);
       reset();
       refetch();
+      setModal({
+        name: "",
+        site: "",
+      });
     } else {
       setDisabled(false);
-      toast.error(data?.error?.status?.[0]?.description);
+      toast.error(data?.message);
     }
   };
 
