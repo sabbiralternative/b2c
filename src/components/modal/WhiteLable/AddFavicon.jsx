@@ -67,7 +67,7 @@ const AddFavicon = ({ modal, setModal, refetch }) => {
           <div className="modal-content" ref={depositRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Add Favicon
+                Add Favicon {modal.site}
               </h5>
               <button
                 onClick={() =>

@@ -67,7 +67,7 @@ const AddTheme = ({ modal, setModal, refetch }) => {
           <div className="modal-content" ref={ref}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Add Theme
+                Add Theme {modal.site}
               </h5>
               <button
                 onClick={() =>

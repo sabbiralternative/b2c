@@ -121,6 +121,7 @@ const ViewWhiteLabel = () => {
                   <th>Site URL</th>
                   <th>Admin</th>
                   <th>Theme</th>
+                  <th>Assets</th>
                   <th>Deposit Limit</th>
                   <th>Withdraw Limit</th>
                   <th>Casino Currency </th>
@@ -133,9 +134,51 @@ const ViewWhiteLabel = () => {
                   return (
                     <tr key={index}>
                       <td>{whiteLabel?.site_name}</td>
-                      <td>{whiteLabel?.site_url}</td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          window.open(`https://${whiteLabel?.site_url}`)
+                        }
+                      >
+                        {whiteLabel?.site_url}
+                      </td>
                       <td>{whiteLabel?.admin}</td>
                       <td>{whiteLabel?.theme}</td>
+                      <td
+                        style={{
+                          display: "flex",
+                          gap: "0px 5px",
+                          color: "white",
+                        }}
+                      >
+                        <a
+                          className="btn btn-icon btn-sm btn-success"
+                          onClick={() =>
+                            window.open(`https://mythemedata.com/sitethemes/${whiteLabel?.site_url}/logo.${whiteLabel?.logo_format}
+`)
+                          }
+                        >
+                          L
+                        </a>
+                        <a
+                          className="btn btn-icon btn-sm btn-danger"
+                          onClick={() =>
+                            window.open(`https://mythemedata.com/sitethemes/${whiteLabel?.site_url}/theme.css
+`)
+                          }
+                        >
+                          T
+                        </a>
+                        <a
+                          className="btn btn-icon btn-sm btn-info"
+                          onClick={() =>
+                            window.open(`https://mythemedata.com/sitethemes/${whiteLabel?.site_url}/favicon.png
+`)
+                          }
+                        >
+                          F
+                        </a>
+                      </td>
                       <td>{whiteLabel?.deposit_limit}</td>
                       <td>{whiteLabel?.withdraw_limit}</td>
                       <td>{whiteLabel?.casino_currency}</td>
