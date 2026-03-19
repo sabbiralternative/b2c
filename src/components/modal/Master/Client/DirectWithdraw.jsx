@@ -12,6 +12,7 @@ import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 import { AdminRole } from "../../../../constant/constant";
 
 const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
+  const amountRef = useRef("");
   const directWithdraw = useRef();
   const [disabled, setDisabled] = useState(false);
   const { clientId, adminRole } = useContextState();
@@ -32,7 +33,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   const { refetchClients } = useGetClient(
     clientId,
     setFetchClients,
-    fetchClients
+    fetchClients,
   );
   const { register, handleSubmit, reset } = useForm();
   const { token } = useContextState();
@@ -249,6 +250,33 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
                           onChange={(e) => {
                             handleAmount(e.target.value);
                             setAmount(e.target.value);
+                          }}
+                          onInput={(e) => {
+                            const raw = e.target.value;
+
+                            if (raw === "") {
+                              amountRef.current = "";
+                              return;
+                            }
+
+                            const value = Number(raw);
+
+                            if (value >= 1) {
+                              amountRef.current = raw;
+                            } else {
+                              e.target.value = amountRef.current;
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (
+                              e.key === "-" ||
+                              e.key === "e" ||
+                              e.key === "E" ||
+                              e.key === "." ||
+                              e.key === "+"
+                            ) {
+                              e.preventDefault();
+                            }
                           }}
                           type="number"
                           className="form-control"

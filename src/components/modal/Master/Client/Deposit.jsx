@@ -10,6 +10,7 @@ import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMe
 import useUTR from "../../../../hooks/utr";
 
 const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
+  const amountRef = useRef("");
   let payload = {
     type: "getActivePayments",
     id,
@@ -162,7 +163,35 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
                       <input
                         {...register("amount", {
                           required: true,
+                          min: 1,
                         })}
+                        onInput={(e) => {
+                          const raw = e.target.value;
+
+                          if (raw === "") {
+                            amountRef.current = "";
+                            return;
+                          }
+
+                          const value = Number(raw);
+
+                          if (value >= 1) {
+                            amountRef.current = raw;
+                          } else {
+                            e.target.value = amountRef.current;
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (
+                            e.key === "-" ||
+                            e.key === "e" ||
+                            e.key === "E" ||
+                            e.key === "." ||
+                            e.key === "+"
+                          ) {
+                            e.preventDefault();
+                          }
+                        }}
                         type="number"
                         className="form-control"
                         id="basic-default-name"
