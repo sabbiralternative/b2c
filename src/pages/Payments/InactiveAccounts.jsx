@@ -3,15 +3,15 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetIndex } from "../../../hooks";
-import useContextState from "../../../hooks/useContextState";
-import { AdminRole } from "../../../constant/constant";
-import useGetPaymentMethod from "../../../hooks/Master/Client/useGetPaymentMethod";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import { API } from "../../../api";
-import ShowImage from "../../../components/modal/ShowImage";
+import { useGetIndex } from "../../hooks";
+import useContextState from "../../hooks/useContextState";
+import { AdminRole } from "../../constant/constant";
+import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
+import handleRandomToken from "../../utils/handleRandomToken";
+import { API } from "../../api";
+import ShowImage from "../../components/modal/ShowImage";
 
-const ActiveAccount = () => {
+const InactiveAccounts = () => {
   const [branchId, setBranchId] = useState(0);
   const { data } = useGetIndex({
     type: "getBranches",
@@ -21,7 +21,8 @@ const ActiveAccount = () => {
   const { token, setShowEditPayment, setDownLineId, readOnly, adminRole } =
     useContextState();
   const payload = {
-    payment_status: "active",
+    type: "viewPaymentMethods",
+    payment_status: "inactive",
   };
   if (adminRole === AdminRole.admin_staff) {
     payload.branch_id = branchId;
@@ -71,7 +72,7 @@ const ActiveAccount = () => {
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-            <h5 className="card-header">Active Accounts</h5>
+            <h5 className="card-header">Inactive Accounts</h5>
             {adminRole === AdminRole.admin_staff && (
               <div
                 style={{ display: "flex", alignItems: "center", gap: "5px" }}
@@ -231,4 +232,4 @@ const ActiveAccount = () => {
   );
 };
 
-export default ActiveAccount;
+export default InactiveAccounts;

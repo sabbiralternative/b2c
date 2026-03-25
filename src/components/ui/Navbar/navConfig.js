@@ -187,29 +187,43 @@ export const getNavItems = (permissions, adminRole, setters) => {
               href: "/view-payment-method",
               show: true,
             },
+            // {
+            //   tab: "Account",
+            //   key: "account",
+            //   show: true,
+            //   children: [
+            //     {
+            //       label: "Active Accounts",
+            //       href: "/active-accounts",
+            //       show: true,
+            //     },
+            //     {
+            //       label: "Inactive Accounts",
+            //       href: "/inactive-accounts",
+            //       show: true,
+            //     },
+            //     {
+            //       label: "Disabled Accounts",
+            //       href: "/disabled-accounts",
+            //       show: true,
+            //     },
+            //   ],
+            // },
             {
-              tab: "Account",
-              key: "account",
+              label: "Active Accounts",
+              href: "/active-accounts",
               show: true,
-              children: [
-                {
-                  label: "Active Accounts",
-                  href: "/active-accounts",
-                  show: true,
-                },
-                {
-                  label: "Inactive Accounts",
-                  href: "/inactive-accounts",
-                  show: true,
-                },
-                {
-                  label: "Disabled Accounts",
-                  href: "/disabled-accounts",
-                  show: true,
-                },
-              ],
             },
-
+            {
+              label: "Inactive Accounts",
+              href: "/inactive-accounts",
+              show: true,
+            },
+            {
+              label: "Disabled Accounts",
+              href: "/disabled-accounts",
+              show: true,
+            },
             {
               label: "Add Bank Account",
               href: "/add-bank-account",

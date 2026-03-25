@@ -89,7 +89,9 @@ import VVIPClients from "../pages/Client/VVIPClients";
 import UpdateWhiteLabel from "../pages/WhiteLabel/UpdateWhiteLabel";
 import PremiumClients from "../pages/Client/PremiunClients";
 import AddUPIClickGateway from "../pages/Payments/AddUPIClickGateway";
-import ActiveAccount from "../pages/Payments/Account/ActiveAccount";
+import ActiveAccounts from "../pages/Payments/ActiveAccounts";
+import InactiveAccounts from "../pages/Payments/InactiveAccounts";
+import DisabledAccounts from "../pages/Payments/DisabledAccounts";
 
 export const router = createBrowserRouter(
   [
@@ -449,7 +451,15 @@ export const router = createBrowserRouter(
         },
         {
           path: "/active-accounts",
-          element: <ActiveAccount />,
+          element: <ActiveAccounts />,
+        },
+        {
+          path: "/inactive-accounts",
+          element: <InactiveAccounts />,
+        },
+        {
+          path: "/disabled-accounts",
+          element: <DisabledAccounts />,
         },
       ],
     },
