@@ -182,33 +182,33 @@ export const getNavItems = (permissions, adminRole, setters) => {
           key: "payment",
           show: permissions.includes("payment"),
           children: [
-            {
-              label: "View Payment Method",
-              href: "/view-payment-method",
-              show: true,
-            },
             // {
-            //   tab: "Account",
-            //   key: "account",
+            //   label: "View Payment Method",
+            //   href: "/view-payment-method",
             //   show: true,
-            //   children: [
-            //     {
-            //       label: "Active Accounts",
-            //       href: "/active-accounts",
-            //       show: true,
-            //     },
-            //     {
-            //       label: "Inactive Accounts",
-            //       href: "/inactive-accounts",
-            //       show: true,
-            //     },
-            //     {
-            //       label: "Disabled Accounts",
-            //       href: "/disabled-accounts",
-            //       show: true,
-            //     },
-            //   ],
             // },
+            {
+              tab: "View Payment Method",
+              key: "view-payment-method",
+              show: true,
+              children: [
+                {
+                  label: "Active Accounts",
+                  href: "/active-accounts",
+                  show: true,
+                },
+                {
+                  label: "Inactive Accounts",
+                  href: "/inactive-accounts",
+                  show: true,
+                },
+                {
+                  label: "Disabled Accounts",
+                  href: "/disabled-accounts",
+                  show: true,
+                },
+              ],
+            },
             {
               label: "Active Accounts",
               href: "/active-accounts",
