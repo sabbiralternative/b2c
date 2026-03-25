@@ -9,6 +9,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [sidebarItem, setSidebarItem] = useState(null);
   const [childTabList, setChildTabList] = useState(null);
+  const [lastChildList, setLastChildList] = useState(null);
   const [permission, setPermission] = useState([]);
   const {
     setShowSidebar,
@@ -40,6 +41,14 @@ const Sidebar = () => {
       setChildTabList(null);
     } else {
       setChildTabList(item);
+    }
+  };
+
+  const handleOpenSidebarLastChildTabItem = (item) => {
+    if (lastChildList === item) {
+      setLastChildList(null);
+    } else {
+      setLastChildList(item);
     }
   };
 
@@ -115,6 +124,74 @@ const Sidebar = () => {
                     <ul className="menu-sub">
                       {child?.children?.map((child) => {
                         if (!child?.show) return;
+
+                        if (child?.tab) {
+                          return (
+                            <li
+                              key={child.key}
+                              className={`menu-item ${
+                                lastChildList === child?.key ? "open" : ""
+                              }`}
+                            >
+                              <a
+                                onClick={() =>
+                                  handleOpenSidebarLastChildTabItem(child?.key)
+                                }
+                                className="menu-link menu-toggle"
+                              >
+                                <i className="menu-icon tf-icons bx bx-layout"></i>
+                                <div data-i18n={child?.tab}>{child?.tab}</div>
+                              </a>
+                              <ul className="menu-sub">
+                                {child?.children?.map((item) => {
+                                  if (item?.href) {
+                                    return (
+                                      <li
+                                        key={item?.href}
+                                        className="menu-item"
+                                      >
+                                        <a
+                                          onClick={() => {
+                                            navigate(item?.href);
+                                            setShowSidebar(false);
+                                          }}
+                                          className="menu-link"
+                                        >
+                                          <i className="menu-icon tf-icons bx bxs-user"></i>
+                                          <div data-i18n="View Clients">
+                                            {item?.label}
+                                          </div>
+                                        </a>
+                                      </li>
+                                    );
+                                  }
+                                  if (item?.setState) {
+                                    return (
+                                      <li
+                                        key={item?.label}
+                                        className="menu-item"
+                                      >
+                                        <a
+                                          onClick={() => {
+                                            item?.setState(true);
+                                            setShowSidebar(false);
+                                          }}
+                                          className="menu-link"
+                                        >
+                                          <i className="menu-icon tf-icons bx bxs-user"></i>
+                                          <div data-i18n="View Clients">
+                                            {item?.label}
+                                          </div>
+                                        </a>
+                                      </li>
+                                    );
+                                  }
+                                })}
+                              </ul>
+                            </li>
+                          );
+                        }
+
                         if (child?.href) {
                           return (
                             <li key={child?.href} className="menu-item">

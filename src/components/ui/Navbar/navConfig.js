@@ -188,6 +188,29 @@ export const getNavItems = (permissions, adminRole, setters) => {
               show: true,
             },
             {
+              tab: "Account",
+              key: "account",
+              show: true,
+              children: [
+                {
+                  label: "Active Accounts",
+                  href: "/active-accounts",
+                  show: true,
+                },
+                {
+                  label: "Inactive Accounts",
+                  href: "/inactive-accounts",
+                  show: true,
+                },
+                {
+                  label: "Disabled Accounts",
+                  href: "/disabled-accounts",
+                  show: true,
+                },
+              ],
+            },
+
+            {
               label: "Add Bank Account",
               href: "/add-bank-account",
               show:

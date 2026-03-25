@@ -9,6 +9,7 @@ import { usePermission } from "../../../hooks/use-permission";
 const NavListItem = () => {
   const [navList, setNavList] = useState(null);
   const [childTabList, setChildTabList] = useState(null);
+  const [lastChildList, setLastChildList] = useState(null);
   const { permissions } = usePermission();
   const {
     setShowSocialLink,
@@ -145,6 +146,7 @@ const NavListItem = () => {
               >
                 {navItem?.children?.map((childTab, childTabIndex) => {
                   if (!childTab?.show) return;
+
                   return (
                     <li
                       key={childTabIndex}
@@ -165,6 +167,90 @@ const NavListItem = () => {
                       >
                         {childTab?.children?.map((child) => {
                           if (!child?.show) return;
+
+                          if (child?.tab) {
+                            return (
+                              <div key={child.key}>
+                                <li
+                                  onMouseEnter={() =>
+                                    setLastChildList(child?.key)
+                                  }
+                                  onMouseLeave={() => setLastChildList(null)}
+                                  className={`menu-item ${
+                                    lastChildList === child?.key ? "open" : ""
+                                  }`}
+                                  style={{ position: "relative" }}
+                                >
+                                  <a className="menu-link menu-toggle">
+                                    <i className="menu-icon tf-icons bx bx-layout"></i>
+
+                                    <div data-i18n={child?.tab}>
+                                      {child?.tab}
+                                    </div>
+                                  </a>
+
+                                  <ul
+                                    style={{
+                                      position: "absolute",
+                                      left: "230px",
+                                      top: "0px",
+                                      background: "#232c3eff",
+                                      zIndex: 9999,
+                                      minWidth: "200px",
+                                      paddingLeft: "0px",
+                                    }}
+                                    className="menu-sub"
+                                  >
+                                    {child?.children?.map((item) => {
+                                      if (item?.href) {
+                                        return (
+                                          <li
+                                            style={{ listStyle: "none" }}
+                                            key={item?.href}
+                                            className="menu-item"
+                                          >
+                                            <a
+                                              onClick={() => {
+                                                navigate(item?.href);
+                                                setChildTabList(null);
+                                              }}
+                                              className="menu-link"
+                                            >
+                                              <i className="menu-icon tf-icons bx bxs-user"></i>
+                                              <div data-i18n={item?.label}>
+                                                {item?.label}
+                                              </div>
+                                            </a>
+                                          </li>
+                                        );
+                                      }
+                                      if (item?.setState) {
+                                        return (
+                                          <li
+                                            style={{ listStyle: "none" }}
+                                            key={item?.label}
+                                            className="menu-item"
+                                          >
+                                            <a
+                                              onClick={() => {
+                                                item?.setState(true);
+                                              }}
+                                              className="menu-link"
+                                            >
+                                              <i className="menu-icon tf-icons bx bxs-institution"></i>
+                                              <div data-i18n="Pending Withdraw">
+                                                {item?.label}
+                                              </div>
+                                            </a>
+                                          </li>
+                                        );
+                                      }
+                                    })}
+                                  </ul>
+                                </li>
+                              </div>
+                            );
+                          }
                           if (child?.href) {
                             return (
                               <li key={child?.href} className="menu-item">

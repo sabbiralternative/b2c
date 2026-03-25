@@ -20,13 +20,13 @@ const useGetPaymentMethod = (payload) => {
         ...payload,
         token: generatedToken,
       };
-
+      console.log(postData);
       const res = await axios.post(API.payments, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(res);
       const data = res.data;
       if (data?.success) {
         return data?.result;

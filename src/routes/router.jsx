@@ -89,6 +89,7 @@ import VVIPClients from "../pages/Client/VVIPClients";
 import UpdateWhiteLabel from "../pages/WhiteLabel/UpdateWhiteLabel";
 import PremiumClients from "../pages/Client/PremiunClients";
 import AddUPIClickGateway from "../pages/Payments/AddUPIClickGateway";
+import ActiveAccount from "../pages/Payments/Account/ActiveAccount";
 
 export const router = createBrowserRouter(
   [
@@ -445,6 +446,10 @@ export const router = createBrowserRouter(
         {
           path: "/lossback-bonus-report",
           element: <LossBackBonusReport />,
+        },
+        {
+          path: "/active-accounts",
+          element: <ActiveAccount />,
         },
       ],
     },
