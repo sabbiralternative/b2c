@@ -378,12 +378,14 @@ const Withdraw = ({
                 <th>UPI ID</th>
                 <th>Status</th>
                 <th>Request Time</th>
+
                 {time && <th>{time}</th>}
                 {(status === Status.APPROVED || status === Status.REJECTED) && (
                   <th>
                     {status === Status.APPROVED ? "Approved By" : "Rejected By"}
                   </th>
                 )}
+                {status === Status.PENDING && <th>Bank Added</th>}
                 {status === Status.PENDING &&
                 (adminRole === "master" || adminRole === "branch_staff") ? (
                   <th>Actions</th>
@@ -550,6 +552,9 @@ const Withdraw = ({
                       {(item?.status === Status.APPROVED ||
                         item?.status === Status.REJECTED) && (
                         <td>{item?.modify_by}</td>
+                      )}
+                      {item?.status === Status.PENDING && (
+                        <td>{item?.bank_added}</td>
                       )}
                       {item?.status === Status.PENDING &&
                       (adminRole === "master" ||
