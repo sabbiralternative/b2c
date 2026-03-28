@@ -166,6 +166,16 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
       value: "change_branch",
       show: adminRole === AdminRole.hyper_master,
     },
+    {
+      label: "Client Color",
+      value: "client_color",
+      show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Client Level",
+      value: "client_level",
+      show: adminRole === AdminRole.hyper_master,
+    },
   ];
 
   return (
