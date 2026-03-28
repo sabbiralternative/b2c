@@ -335,7 +335,9 @@ const ClientAction = ({ refetchClient, client, index }) => {
           </>
         )}
 
-      {adminRole === "master" || adminRole === AdminRole.branch_staff ? (
+      {adminRole === "master" ||
+      adminRole === AdminRole.branch_staff ||
+      adminRole === AdminRole.admin_staff ? (
         <div className="btn-group">
           <button
             onClick={() => handleShowMore(index)}
@@ -431,32 +433,37 @@ const ClientAction = ({ refetchClient, client, index }) => {
                   Activity Logs
                 </Link>
               </li>
-              <li
-                onClick={() => {
-                  setShowMore(false);
-                  handleOpenModal(
-                    setShowColor,
-                    client?.username,
-                    client?.role,
-                    client?.downlineId,
-                  );
-                }}
-              >
-                <a className="dropdown-item">Client Group</a>
-              </li>
-              <li
-                onClick={() => {
-                  setShowMore(false);
-                  handleOpenModal(
-                    setShowChangeLevelModal,
-                    client?.username,
-                    client?.role,
-                    client?.downlineId,
-                  );
-                }}
-              >
-                <a className="dropdown-item">Change Level</a>
-              </li>
+              {permissions?.includes("client_color") && (
+                <li
+                  onClick={() => {
+                    setShowMore(false);
+                    handleOpenModal(
+                      setShowColor,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId,
+                    );
+                  }}
+                >
+                  <a className="dropdown-item">Change Color</a>
+                </li>
+              )}
+              {permissions?.includes("client_level") && (
+                <li
+                  onClick={() => {
+                    setShowMore(false);
+                    handleOpenModal(
+                      setShowChangeLevelModal,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId,
+                    );
+                  }}
+                >
+                  <a className="dropdown-item">Change Level</a>
+                </li>
+              )}
+
               {permissions.includes("client") &&
                 adminRole !== "admin_staff" && (
                   <>

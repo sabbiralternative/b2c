@@ -165,7 +165,9 @@ const OtherRoleAction = ({
         </>
       )}
 
-      {adminRole === "master" || adminRole === AdminRole.branch_staff ? (
+      {adminRole === "master" ||
+      adminRole === AdminRole.branch_staff ||
+      adminRole === AdminRole.admin_staff ? (
         <div className="btn-group">
           <button
             onClick={() => handleShowMore(i)}
@@ -216,31 +218,35 @@ const OtherRoleAction = ({
                   Activity Logs
                 </Link>
               </li>
+              {permissions?.includes("client_color") && (
+                <li
+                  onClick={() => {
+                    handleOpenModal(
+                      setShowColor,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId,
+                    );
+                  }}
+                >
+                  <a className="dropdown-item">Change Color</a>
+                </li>
+              )}
+              {permissions?.includes("client_level") && (
+                <li
+                  onClick={() => {
+                    handleOpenModal(
+                      setShowChangeLevelModal,
+                      client?.username,
+                      client?.role,
+                      client?.downlineId,
+                    );
+                  }}
+                >
+                  <a className="dropdown-item">Change Level</a>
+                </li>
+              )}
 
-              <li
-                onClick={() => {
-                  handleOpenModal(
-                    setShowColor,
-                    client?.username,
-                    client?.role,
-                    client?.downlineId,
-                  );
-                }}
-              >
-                <a className="dropdown-item">Client Group</a>
-              </li>
-              <li
-                onClick={() => {
-                  handleOpenModal(
-                    setShowChangeLevelModal,
-                    client?.username,
-                    client?.role,
-                    client?.downlineId,
-                  );
-                }}
-              >
-                <a className="dropdown-item">Change Level</a>
-              </li>
               {adminRole !== "admin_staff" && (
                 <>
                   <li
