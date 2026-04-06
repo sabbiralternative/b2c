@@ -149,20 +149,8 @@ const ActiveAccounts = () => {
                       </td>
 
                       <td>
-                        <span
-                          className={`badge ${
-                            method?.status == 1
-                              ? "bg-label-primary"
-                              : method?.status == 0
-                                ? "bg-label-warning"
-                                : "bg-label-danger"
-                          } me-1`}
-                        >
-                          {method?.status == 1
-                            ? "Active"
-                            : method?.status == 0
-                              ? "inactive"
-                              : "deleted"}
+                        <span className={`badge bg-label-primary  me-1`}>
+                          active
                         </span>
                       </td>
 

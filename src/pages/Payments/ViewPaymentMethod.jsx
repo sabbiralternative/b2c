@@ -148,18 +148,22 @@ const ViewPaymentMethod = () => {
                       <td>
                         <span
                           className={`badge ${
-                            method?.status == 1
-                              ? "bg-label-primary"
-                              : method?.status == 0
-                                ? "bg-label-warning"
-                                : "bg-label-danger"
+                            method?.status == 0
+                              ? "bg-label-danger"
+                              : method?.status == 1
+                                ? "bg-label-primary"
+                                : method?.status == 2
+                                  ? "bg-label-warning"
+                                  : ""
                           } me-1`}
                         >
-                          {method?.status == 1
-                            ? "Active"
-                            : method?.status == 0
-                              ? "inactive"
-                              : "deleted"}
+                          {method?.status == 0
+                            ? "deleted"
+                            : method?.status == 1
+                              ? "active"
+                              : method?.status == 2
+                                ? "inactive"
+                                : ""}
                         </span>
                       </td>
 
