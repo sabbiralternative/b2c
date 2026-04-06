@@ -92,6 +92,7 @@ import AddUPIClickGateway from "../pages/Payments/AddUPIClickGateway";
 import ActiveAccounts from "../pages/Payments/ActiveAccounts";
 import InactiveAccounts from "../pages/Payments/InactiveAccounts";
 import DisabledAccounts from "../pages/Payments/DisabledAccounts";
+import WithdrawLockClients from "../pages/Client/WithdrawLockClient";
 
 export const router = createBrowserRouter(
   [
@@ -291,6 +292,10 @@ export const router = createBrowserRouter(
         {
           path: "/premium-clients",
           element: <PremiumClients />,
+        },
+        {
+          path: "/withdraw-lock-clients",
+          element: <WithdrawLockClients />,
         },
         {
           path: "/change-branch-report/:userId",

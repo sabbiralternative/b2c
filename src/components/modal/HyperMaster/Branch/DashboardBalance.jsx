@@ -138,7 +138,7 @@ const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
                                 className="mb-1"
                                 style={{
                                   color: `${defineBalanceColor(
-                                    balanceData?.upperLevel
+                                    balanceData?.upperLevel,
                                   )}`,
                                 }}
                               >
@@ -272,7 +272,7 @@ const DashboardBalance = ({ user_id, role, setShowDashboardBalance }) => {
                             <h2
                               style={{
                                 color: `${defineBalanceColor(
-                                  balanceData?.pnlToday
+                                  balanceData?.pnlToday,
                                 )}`,
                               }}
                               className="mb-1"

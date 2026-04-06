@@ -4,11 +4,11 @@ import useBalance from "../../hooks/useBalance";
 import DashboardDW from "./DashboardDW";
 import Loader from "../../components/ui/Loader/Loader";
 import { usePermission } from "../../hooks/use-permission";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DatePicker } from "rsuite";
 import { useUser } from "../../hooks/use-user";
 import useContextState from "../../hooks/useContextState";
-import { formatInTimeZone } from "date-fns-tz";
+import moment from "moment";
 
 const Home = () => {
   const { adminRole } = useContextState();
@@ -17,18 +17,23 @@ const Home = () => {
   const [date, setDate] = useState(new Date());
   const { permissions } = usePermission();
   const { data } = useGetIndex({ type: "getDashboardDW" });
-  const indianTime = formatInTimeZone(
-    date,
-    "Asia/Kolkata",
-    "yyyy-MM-dd HH:mm:ss",
-  );
-  // console.log(indianTime);
-  // console.log(moment(date).format("YYYY-MM-DD"));
+
   const { balanceData, isLoading, isPending } = useBalance({
-    date: indianTime,
+    date: moment(date).format("YYYY-MM-DD"),
     user_id: user?.user_id,
     role: user?.role,
   });
+
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const res = await fetch(
+        "https://worldtimeapi.org/api/timezone/Asia/Kolkata",
+      );
+      const data = await res.json();
+      console.log(data);
+    };
+    fetchBalance();
+  }, []);
   const defineBalanceColor = (amount) => {
     if (amount) {
       const parseAmount = parseFloat(amount);

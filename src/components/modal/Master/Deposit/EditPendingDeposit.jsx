@@ -23,14 +23,16 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
 
   const { singleDeposit } = useGetSingleDeposit(payload);
   const onSubmit = async (values) => {
-    setDisabled(true);
+    // setDisabled(true);
     const generatedToken = handleRandomToken();
     const payload = {
       ...values,
+      lock_withdraw: values.lock_withdraw ? 1 : 0,
       depositId: downLineId,
       type: "editUTR",
       token: generatedToken,
     };
+
     const res = await axios.post(API.utr, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -109,7 +111,48 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                     >
                       Status
                     </label>
-                    <div className="col-sm-10">
+                    <div
+                      className="col-sm-10"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "50px",
+                      }}
+                    >
+                      <label
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <span>Approve</span>
+                        <input
+                          type="radio"
+                          {...register("status", { required: true })}
+                          value="APPROVED"
+                        />
+                      </label>
+                      <label
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "5px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <span>Reject </span>
+                        <input
+                          type="radio"
+                          {...register("status", { required: true })}
+                          value="REJECTED"
+                        />
+                      </label>
+                    </div>
+                    {/* <div className="col-sm-10">
                       <select
                         {...register("status", {
                           value: singleDeposit?.status,
@@ -136,6 +179,18 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                           REJECTED
                         </option>
                       </select>
+                    </div> */}
+                  </div>
+                  <div className="row mb-3" style={{ alignItems: "center" }}>
+                    <label className="col-sm-2 col-form-label">
+                      Lock Withdraw
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        style={{ height: "18px", width: "18px" }}
+                        {...register("lock_withdraw")}
+                        type="checkbox"
+                      />
                     </div>
                   </div>
                   <div className="row mb-3">

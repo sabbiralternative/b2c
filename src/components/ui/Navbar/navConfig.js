@@ -115,6 +115,11 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/premium-clients",
           show: true,
         },
+        {
+          label: "Withdraw Lock Clients",
+          href: "/withdraw-lock-clients",
+          show: true,
+        },
       ],
     },
     {
