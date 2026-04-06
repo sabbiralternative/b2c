@@ -4,7 +4,7 @@ import useBalance from "../../hooks/useBalance";
 import DashboardDW from "./DashboardDW";
 import Loader from "../../components/ui/Loader/Loader";
 import { usePermission } from "../../hooks/use-permission";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DatePicker } from "rsuite";
 import { useUser } from "../../hooks/use-user";
 import useContextState from "../../hooks/useContextState";
@@ -24,16 +24,6 @@ const Home = () => {
     role: user?.role,
   });
 
-  useEffect(() => {
-    const fetchBalance = async () => {
-      const res = await fetch(
-        "https://worldtimeapi.org/api/timezone/Asia/Kolkata",
-      );
-      const data = await res.json();
-      console.log(data);
-    };
-    fetchBalance();
-  }, []);
   const defineBalanceColor = (amount) => {
     if (amount) {
       const parseAmount = parseFloat(amount);

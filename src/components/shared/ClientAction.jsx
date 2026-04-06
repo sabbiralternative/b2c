@@ -375,7 +375,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
                 display: "block",
                 right: "0px",
                 top: "25px",
-                zIndex: 9999,
+                zIndex: 9999999,
               }}
               className="dropdown-menu dropdown-menu-end"
             >
