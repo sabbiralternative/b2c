@@ -315,7 +315,20 @@ const AddCoupon = () => {
                     </label>
                   </div>
                 </div>
-
+                <div className="row mb-3">
+                  <label className="col-sm-2 col-form-label">
+                    Transaction Code *
+                  </label>
+                  <div className="col-sm-10">
+                    <input
+                      type="text"
+                      {...register("transaction_code", {
+                        required: true,
+                      })}
+                      className="form-control"
+                    />
+                  </div>
+                </div>
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
