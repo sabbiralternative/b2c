@@ -469,6 +469,18 @@ export const router = createBrowserRouter(
           path: "/disabled-accounts",
           element: <DisabledAccounts />,
         },
+        {
+          path: "/add-coupon",
+          element: <AddCoupon />,
+        },
+        {
+          path: "/view-coupons",
+          element: <ViewCoupons />,
+        },
+        {
+          path: "/coupon-statement",
+          element: <CouponStatement />,
+        },
       ],
     },
     {
@@ -482,18 +494,6 @@ export const router = createBrowserRouter(
     {
       path: "/change-password-success",
       element: <ChangePasswordSuccess />,
-    },
-    {
-      path: "/add-coupon",
-      element: <AddCoupon />,
-    },
-    {
-      path: "/view-coupons",
-      element: <ViewCoupons />,
-    },
-    {
-      path: "/coupon-statement",
-      element: <CouponStatement />,
     },
   ],
   {
