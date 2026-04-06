@@ -7,6 +7,7 @@ import useContextState from "../../hooks/useContextState";
 import { AdminRole } from "../../constant/constant";
 import { useBonusMutation } from "../../hooks/bonus";
 import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
+import { FaCopy } from "react-icons/fa";
 
 const AddCoupon = () => {
   const { adminRole } = useContextState();
@@ -96,7 +97,7 @@ const AddCoupon = () => {
                         disabled={!getValues("coupon_code")}
                         className="btn btn-icon btn-sm btn-success"
                       >
-                        <i className="bx bxs-edit"></i>
+                        <FaCopy />
                       </button>
                     </div>
                   </div>
