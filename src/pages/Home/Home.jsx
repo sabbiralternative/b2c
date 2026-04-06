@@ -7,8 +7,8 @@ import { usePermission } from "../../hooks/use-permission";
 import { useState } from "react";
 import { DatePicker } from "rsuite";
 import { useUser } from "../../hooks/use-user";
-import moment from "moment";
 import useContextState from "../../hooks/useContextState";
+import { formatInTimeZone } from "date-fns-tz";
 
 const Home = () => {
   const { adminRole } = useContextState();
@@ -17,8 +17,15 @@ const Home = () => {
   const [date, setDate] = useState(new Date());
   const { permissions } = usePermission();
   const { data } = useGetIndex({ type: "getDashboardDW" });
+  const indianTime = formatInTimeZone(
+    date,
+    "Asia/Kolkata",
+    "yyyy-MM-dd HH:mm:ss",
+  );
+  // console.log(indianTime);
+  // console.log(moment(date).format("YYYY-MM-DD"));
   const { balanceData, isLoading, isPending } = useBalance({
-    date: moment(date).format("YYYY-MM-DD"),
+    date: indianTime,
     user_id: user?.user_id,
     role: user?.role,
   });
