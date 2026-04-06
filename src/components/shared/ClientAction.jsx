@@ -93,7 +93,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           registrationStatus={null}
           role={payloadRole}
           setShowChangeStatus={setShowChangeStatus}
-          refetchAllBranch={refetchClient}
+          refetchClients={refetchClient}
         />
       )}
       {showCreditRef && (

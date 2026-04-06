@@ -8,9 +8,9 @@ import handleRandomToken from "../../utils/handleRandomToken";
 import Deposit from "../../components/modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../../components/modal/HyperMaster/Branch/Withdraw";
 import ChangePassword from "../../components/modal/ChangePassword";
-import ChangeStatus from "../../components/modal/ChangeStatus";
 import CreditReference from "../../components/modal/CreditReference";
 import { useState } from "react";
+import ChangeBranchStatus from "../../components/modal/ChangeBranchStatus";
 
 const ViewSuperBranches = () => {
   const [id, setId] = useState("");
@@ -56,7 +56,7 @@ const ViewSuperBranches = () => {
         readOnly: data?.result?.readOnly,
       };
       const readOnlyLoginData = encodeURIComponent(
-        JSON.stringify(readOnlyLoginCredential)
+        JSON.stringify(readOnlyLoginCredential),
       );
       const newTabUrl = `${baseUrl}?data=${readOnlyLoginData}`;
       window.open(newTabUrl, "_blank");
@@ -75,7 +75,7 @@ const ViewSuperBranches = () => {
         />
       )}
       {showChangeStatus && (
-        <ChangeStatus
+        <ChangeBranchStatus
           id={id}
           role={role}
           setShowChangeStatus={setShowChangeStatus}

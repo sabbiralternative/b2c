@@ -128,12 +128,12 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                           cursor: "pointer",
                         }}
                       >
-                        <span>Approve</span>
                         <input
                           type="radio"
                           {...register("status", { required: true })}
                           value="APPROVED"
                         />
+                        <span>Approve</span>
                       </label>
                       <label
                         style={{
@@ -144,12 +144,12 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                           cursor: "pointer",
                         }}
                       >
-                        <span>Reject </span>
                         <input
                           type="radio"
                           {...register("status", { required: true })}
                           value="REJECTED"
                         />
+                        <span>Reject </span>
                       </label>
                     </div>
                     {/* <div className="col-sm-10">

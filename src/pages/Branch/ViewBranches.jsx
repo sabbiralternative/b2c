@@ -8,12 +8,12 @@ import { useNavigate } from "react-router-dom";
 import Deposit from "../../components/modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../../components/modal/HyperMaster/Branch/Withdraw";
 import ChangePassword from "../../components/modal/ChangePassword";
-import ChangeStatus from "../../components/modal/ChangeStatus";
 import CreditReference from "../../components/modal/CreditReference";
 import { Fragment, useState } from "react";
 import UpdateWhatsAppNumber from "../../components/modal/UpdateWhatsAppNumber";
 import { AdminRole } from "../../constant/constant";
 import DashboardBalance from "../../components/modal/HyperMaster/Branch/DashboardBalance";
+import ChangeBranchStatus from "../../components/modal/ChangeBranchStatus";
 
 const ViewBranches = () => {
   const [id, setId] = useState("");
@@ -89,7 +89,7 @@ const ViewBranches = () => {
         />
       )}
       {showChangeStatus && (
-        <ChangeStatus
+        <ChangeBranchStatus
           id={id}
           role={role}
           setShowChangeStatus={setShowChangeStatus}

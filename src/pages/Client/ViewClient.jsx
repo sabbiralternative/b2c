@@ -157,9 +157,9 @@ const ViewClient = () => {
         <ChangeStatus
           downlineId={downLineId}
           id={id}
-          registrationStatus={null}
           role={payloadRole}
           setShowChangeStatus={setShowChangeStatus}
+          refetchClients={refetchClients}
         />
       )}
       {showChangeLevelModal && (

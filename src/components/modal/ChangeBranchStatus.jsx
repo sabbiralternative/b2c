@@ -2,18 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
 import handleRandomToken from "../../utils/handleRandomToken";
+import axios from "axios";
 import { API } from "../../api";
+import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
-import { AxiosSecure } from "../../lib/AxiosSecure";
+import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
+import { useLocation } from "react-router-dom";
+import useGetClient from "../../hooks/Master/Client/useGetClient";
 
-const ChangeStatus = ({
+const ChangeBranchStatus = ({
   setShowChangeStatus,
   downlineId,
+  registrationStatus: regiStatus,
   role,
   id,
-  refetchClients,
+  refetchAllBranch,
 }) => {
   const [disabled, setDisabled] = useState(false);
+  const { token, adminRole, clientId } = useContextState();
+  const [fetchClients, setFetchClients] = useState(false);
+  const { refetchClient } = useRefetchClient(downlineId);
+  const { refetchClients } = useGetClient(
+    clientId,
+    setFetchClients,
+    fetchClients,
+  );
+  const location = useLocation();
 
   /* close modal ck=lick outside */
   const statusRef = useRef();
@@ -23,56 +37,79 @@ const ChangeStatus = ({
 
   const [betStatus, setBetStatus] = useState(false);
   const [userStatus, setUserStatus] = useState(false);
-  const [withdrawStatus, setWithdrawStatus] = useState(false);
-
-  const { status } = useGetStatus({
+  const [registrationStatus, setRegistrationStatus] = useState(false);
+  let payload = {
     downlineId,
     type: "getStatus",
     id,
     role,
-  });
+  };
+
+  const { status, refetchStatus } = useGetStatus(payload);
+
+  /* set check box default value */
+  useEffect(() => {
+    if (status?.bettingStatus === 0) {
+      setBetStatus(false);
+    } else {
+      setBetStatus(true);
+    }
+    if (status?.userStatus === 0) {
+      setUserStatus(false);
+    } else {
+      setUserStatus(true);
+    }
+    if (regiStatus === 0) {
+      setRegistrationStatus(false);
+    } else {
+      setRegistrationStatus(true);
+    }
+  }, [status, regiStatus]);
+
+  console.log(status);
 
   /* handle edit user lock */
   const handleChangeUserLock = async (e) => {
     setDisabled(true);
     e.preventDefault();
     const generatedToken = handleRandomToken();
-    const payload = {
+    let payload = {
       id,
       downlineId,
+      // registrationStatus: registrationStatus ? 1 : 0,
       type: "changeStatus",
       userStatus: userStatus ? 1 : 0,
       bettingStatus: betStatus ? 1 : 0,
-      withdrawStatus: withdrawStatus ? 1 : 0,
       token: generatedToken,
       role,
     };
 
-    const res = await AxiosSecure.post(API.downLineEdit, payload);
+    if (!location.pathname.includes("client")) {
+      payload.registrationStatus = registrationStatus ? 1 : 0;
+    }
+    const res = await axios.post(API.downLineEdit, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const data = res.data;
     if (data?.success) {
-      toast.success(data?.result?.message);
       setDisabled(false);
-      refetchClients();
+      if (adminRole === "hyper_master") {
+        refetchAllBranch();
+      } else {
+        refetchClients();
+        refetchClient();
+      }
+
+      toast.success(data?.result?.message);
       setShowChangeStatus(false);
+      refetchStatus();
     } else {
       setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);
     }
   };
-
-  useEffect(() => {
-    if (status) {
-      console.log({ status });
-      setUserStatus(status?.userStatus === 1);
-      setBetStatus(status?.bettingStatus === 1);
-      setWithdrawStatus(status?.lock_withdraw === 1);
-    }
-  }, [status]);
-
-  if (status === undefined) {
-    return null;
-  }
 
   return (
     <>
@@ -135,24 +172,29 @@ const ChangeStatus = ({
                     </label>
                   </div>
                 </div>
-
-                <div className="row">
-                  <div className="col mb-3">
-                    <label className="switch">
-                      <input
-                        onChange={() => setWithdrawStatus((prev) => !prev)}
-                        type="checkbox"
-                        className="switch-input"
-                        checked={withdrawStatus}
-                      />
-                      <span className="switch-toggle-slider">
-                        <span className="switch-on"></span>
-                        <span className="switch-off"></span>
-                      </span>
-                      <span className="switch-label">Withdraw Lock</span>
-                    </label>
+                {!location.pathname.includes("client") ? (
+                  <div className="row">
+                    <div className="col mb-3">
+                      <label className="switch">
+                        <input
+                          onChange={() =>
+                            setRegistrationStatus((prev) => !prev)
+                          }
+                          type="checkbox"
+                          className="switch-input"
+                          checked={registrationStatus}
+                        />
+                        <span className="switch-toggle-slider">
+                          <span className="switch-on"></span>
+                          <span className="switch-off"></span>
+                        </span>
+                        <span className="switch-label">
+                          Registration Status
+                        </span>
+                      </label>
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
               <div className="modal-footer">
                 <button
@@ -179,4 +221,4 @@ const ChangeStatus = ({
   );
 };
 
-export default ChangeStatus;
+export default ChangeBranchStatus;
