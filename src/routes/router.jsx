@@ -95,7 +95,7 @@ import DisabledAccounts from "../pages/Payments/DisabledAccounts";
 import WithdrawLockClients from "../pages/Client/WithdrawLockClient";
 import AddCoupon from "../pages/Coupons/AddCoupon";
 import ViewCoupons from "../pages/Coupons/ViewCoupons";
-import CouponStatement from "../pages/Coupons/CouponStatement";
+import CouponBonusReport from "../pages/Coupons/CouponBonusReport";
 
 export const router = createBrowserRouter(
   [
@@ -478,8 +478,8 @@ export const router = createBrowserRouter(
           element: <ViewCoupons />,
         },
         {
-          path: "/coupon-statement",
-          element: <CouponStatement />,
+          path: "/coupon-bonus-report",
+          element: <CouponBonusReport />,
         },
       ],
     },

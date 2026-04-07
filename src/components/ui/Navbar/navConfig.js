@@ -467,8 +467,8 @@ export const getNavItems = (permissions, adminRole, setters) => {
               show: adminRole === AdminRole.hyper_master,
             },
             {
-              label: "Coupon Statement",
-              href: "/coupon-statement",
+              label: "Coupon Bonus Report",
+              href: "/coupon-bonus-report",
               show: adminRole === AdminRole.hyper_master,
             },
           ],

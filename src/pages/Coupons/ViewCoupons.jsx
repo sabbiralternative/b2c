@@ -58,7 +58,8 @@ const ViewCoupons = () => {
                   <th>Coupon Code</th>
                   <th>Added By</th>
                   <th>Coupon Amount</th>
-                  <th>Coupon Expiry Days</th>
+                  <th>Date Added</th>
+                  <th>Expiry Date</th>
                   <th>Usage Limits</th>
                   <th>Used Count</th>
                   <th>Status</th>
@@ -73,8 +74,9 @@ const ViewCoupons = () => {
 
                       <td>{coupon?.added_by}</td>
                       <td>{coupon?.coupon_amount}</td>
+                      <td>{coupon?.date_added}</td>
 
-                      <td>Rs.{coupon?.coupon_expiry_days}</td>
+                      <td>{coupon?.expiry_date}</td>
                       <td>{coupon?.usage_limit}</td>
                       <td>{coupon?.used_count}</td>
 
