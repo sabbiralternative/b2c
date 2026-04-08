@@ -17,7 +17,7 @@ AxiosSecure.interceptors.request.use(
 
       let payload = {
         ...config.data,
-        // token: generatedToken,
+        token: generatedToken,
       };
 
       config.data = payload;
