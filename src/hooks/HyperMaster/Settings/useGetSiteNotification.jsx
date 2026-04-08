@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import useContextState from "../../useContextState";
 import { API } from "../../../api";
-import handleRandomToken from "../../../utils/handleRandomToken";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useGetSiteNotification = () => {
-  const { token, tokenLoading } = useContextState();
+  const { tokenLoading } = useContextState();
   const {
     data: siteNotification = [],
     refetch: refetchSiteNotification,
@@ -14,16 +13,10 @@ const useGetSiteNotification = () => {
     queryKey: ["siteNotify"],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
-        token: generatedToken,
         type: "getNotification",
       };
-      const res = await axios.post(API.notification, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.notification, payload);
 
       const data = res.data;
       if (data?.success) {

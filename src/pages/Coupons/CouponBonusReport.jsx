@@ -7,8 +7,8 @@ import { AdminRole } from "../../constant/constant";
 import { DatePicker, Pagination } from "rsuite";
 import DefaultDateButton from "../Report/DefaultDateButton";
 import Loader from "../../components/ui/Loader/Loader";
-import { useLossBackMutation } from "../../hooks/lossback";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { useBonusMutation } from "../../hooks/bonus";
 
 const CouponBonusReport = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
@@ -37,7 +37,7 @@ const CouponBonusReport = () => {
     payload.branch_id = branchId;
   }
 
-  const { mutate, isSuccess, data, isPending } = useLossBackMutation();
+  const { mutate, isSuccess, data, isPending } = useBonusMutation();
   const meta = data?.pagination;
 
   const handleExport = async () => {

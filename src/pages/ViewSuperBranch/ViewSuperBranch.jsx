@@ -71,7 +71,7 @@ const ViewSuperBranches = () => {
           role={role}
           setShowCreditRef={setShowCreditRef}
           downlineId={downLineId}
-          refetchAllBranch={refetchAllBranch}
+          refetch={refetchAllBranch}
         />
       )}
       {showChangeStatus && (
@@ -90,7 +90,7 @@ const ViewSuperBranches = () => {
           role={role}
           setShowChangePassword={setShowChangePassword}
           downlineId={downLineId}
-          refetchAllBranch={refetchAllBranch}
+          refetch={refetchAllBranch}
         />
       )}
       {showDeposit && (

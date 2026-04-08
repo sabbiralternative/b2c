@@ -1,13 +1,12 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { API } from "../../../../api";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMethod";
 import useUTR from "../../../../hooks/utr";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
   const amountRef = useRef("");
@@ -29,7 +28,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
     reset,
     formState: { errors },
   } = useForm();
-  const { token } = useContextState();
+
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
 
@@ -43,11 +42,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
           type: "utr",
         };
         formData.append("data", JSON.stringify(payload));
-        const res = await axios.post(API.uploadScreenshot, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await AxiosSecure.post(API.uploadScreenshot, formData);
         const data = res.data;
 
         if (data?.success) {
@@ -63,8 +58,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
       };
       handleSubmitImage();
     }
-  }, [image, token, getUTR, reset]);
-
+  }, [image, getUTR, reset]);
   const onSubmit = async ({ amount, utr, paymentId }) => {
     setDisabled(true);
     const generatedToken = handleRandomToken();
@@ -79,9 +73,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
       role,
     };
 
-    const res = await axios.post(API.depositClient, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.depositClient, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

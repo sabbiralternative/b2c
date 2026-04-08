@@ -1,4 +1,3 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { API } from "../../../../api";
 import handleRandomToken from "../../../../utils/handleRandomToken";
@@ -8,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetSingleViewBonus from "../../../../hooks/HyperMaster/Bonus/useGetSingleViewBonus";
 import { AdminRole } from "../../../../constant/constant";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   const [disabled, setDisabled] = useState(false);
@@ -18,7 +18,7 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+  const { adminRole } = useContextState();
 
   const handleUpdateBonus = async (value) => {
     setDisabled(true);
@@ -30,9 +30,7 @@ const UpdateBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
       token: generatedToken,
     };
 
-    const res = await axios.post(API.bonus, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.bonus, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

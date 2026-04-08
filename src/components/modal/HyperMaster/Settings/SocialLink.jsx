@@ -4,11 +4,12 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import useContextState from "../../../../hooks/useContextState";
-import axios from "axios";
+
 import { API } from "../../../../api";
 import useGetAllSocialLink from "../../../../hooks/HyperMaster/Settings/useGetAllSocialLink";
 import { useWhiteLabel } from "../../../../hooks/AdminMaster/whiteLabel";
 import { AdminRole } from "../../../../constant/constant";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const SocialLink = ({ setShowSocialLink }) => {
   const { data } = useWhiteLabel({
@@ -24,7 +25,7 @@ const SocialLink = ({ setShowSocialLink }) => {
   });
 
   const { register, handleSubmit, reset, watch } = useForm({});
-  const { token, adminRole } = useContextState();
+  const { adminRole } = useContextState();
   const site = watch("site");
   const { socialLinks, refetchAllSocialLinks } = useGetAllSocialLink({ site });
 
@@ -59,9 +60,7 @@ const SocialLink = ({ setShowSocialLink }) => {
       };
     }
 
-    const res = await axios.post(API.socialLinks, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.socialLinks, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

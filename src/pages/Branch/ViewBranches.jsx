@@ -76,7 +76,7 @@ const ViewBranches = () => {
           role={role}
           setShowCreditRef={setShowCreditRef}
           downlineId={downLineId}
-          refetchAllBranch={refetchAllBranch}
+          refetch={refetchAllBranch}
         />
       )}
       {showWhatsApp && (
@@ -104,7 +104,7 @@ const ViewBranches = () => {
           role={role}
           setShowChangePassword={setShowChangePassword}
           downlineId={downLineId}
-          refetchAllBranch={refetchAllBranch}
+          refetch={refetchAllBranch}
         />
       )}
       {showDeposit && (

@@ -3,10 +3,10 @@ import useContextState from "./useContextState";
 import handleRandomToken from "../utils/handleRandomToken";
 import handleEncryptData from "../utils/handleEncryptData";
 import { API } from "../api";
-import axios from "axios";
+import { AxiosSecure } from "../lib/AxiosSecure";
 
 const useCurrentBets = (payload) => {
-  const { token, tokenLoading } = useContextState();
+  const { tokenLoading } = useContextState();
   const { data: currentBets } = useQuery({
     queryKey: ["currentBets", payload],
     enabled: !tokenLoading,
@@ -17,11 +17,7 @@ const useCurrentBets = (payload) => {
         type: "sports",
         token: generatedToken,
       });
-      const res = await axios.post(API.currentBets, encryptedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.currentBets, encryptedData);
       const data = res.data;
 
       if (data?.success) {

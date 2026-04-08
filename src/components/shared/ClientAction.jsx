@@ -74,6 +74,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           role={payloadRole}
           downlineId={downLineId}
           setDirectWithdraw={setDirectWithdraw}
+          refetchClients={refetchClient}
         />
       )}
 
@@ -83,7 +84,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
-          refetchAllBranch={refetchClient}
+          refetch={refetchClient}
         />
       )}
       {showChangeStatus && (
@@ -102,6 +103,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           id={id}
           role={payloadRole}
           setShowCreditRef={setShowCreditRef}
+          refetch={refetchClient}
         />
       )}
       {directDeposit && (
@@ -110,6 +112,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           id={id}
           role={payloadRole}
           setDirectDeposit={setDirectDeposit}
+          refetch={refetchClient}
         />
       )}
       {showColor && (
@@ -127,7 +130,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           id={id}
           role={payloadRole}
           setShowChangeBranch={setShowChangeBranch}
-          refetchClient={refetchClient}
+          refetch={refetchClient}
         />
       )}
       {showChangeLevelModal && (
@@ -136,6 +139,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           id={id}
           role={payloadRole}
           setShowChangeLevelModal={setShowChangeLevelModal}
+          refetch={refetchClient}
         />
       )}
       {adminRole !== "hyper_master" &&

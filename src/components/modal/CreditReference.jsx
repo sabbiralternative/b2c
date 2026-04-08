@@ -1,22 +1,18 @@
 import { useForm } from "react-hook-form";
-import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useRef, useState } from "react";
 import useGetCurrentRef from "../../hooks/useGetCurrentRef";
-
-import useGetClient from "../../hooks/Master/Client/useGetClient";
-import { AdminRole } from "../../constant/constant";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const CreditReference = ({
   downlineId,
   setShowCreditRef,
   role,
   id,
-  refetchAllBranch,
+  refetch,
 }) => {
   const [disabled, setDisabled] = useState(false);
   /* close modal click outside */
@@ -25,7 +21,7 @@ const CreditReference = ({
     setShowCreditRef(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+
   let payload = {
     downlineId,
     id,
@@ -33,8 +29,6 @@ const CreditReference = ({
   };
 
   const { currentRef, isSuccess } = useGetCurrentRef(payload);
-
-  const { refetchClients } = useGetClient(downlineId);
 
   /* handle update credit reference */
   const onSubmit = async ({ amount }) => {
@@ -48,17 +42,12 @@ const CreditReference = ({
       token: generatedToken,
       role,
     };
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
 
-      if (adminRole !== AdminRole.admin_master) {
-        refetchAllBranch();
-        refetchClients();
-      }
+      refetch();
       toast.success(data?.result?.message);
       reset();
       setShowCreditRef(false);

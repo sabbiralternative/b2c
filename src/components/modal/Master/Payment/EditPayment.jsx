@@ -3,17 +3,17 @@ import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutsi
 import { useForm } from "react-hook-form";
 import useContextState from "../../../../hooks/useContextState";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import useGetCurrentPaymentStatus from "../../../../hooks/Master/Payment/useGetCurrentPaymentStatus";
 import useGetPaymentMethod from "../../../../hooks/Master/Client/useGetPaymentMethod";
 import { FaSpinner } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const EditPayment = ({ setShowEditPayment }) => {
   const [disabled, setDisabled] = useState(false);
-  const { token, downLineId } = useContextState();
+  const { downLineId } = useContextState();
   const { currentPaymentStatus: currentPayment } =
     useGetCurrentPaymentStatus(downLineId);
   /* type upi  start*/
@@ -52,9 +52,7 @@ const EditPayment = ({ setShowEditPayment }) => {
       payload.qr_code = qr_code;
     }
 
-    const res = await axios.post(API.payments, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
@@ -74,11 +72,7 @@ const EditPayment = ({ setShowEditPayment }) => {
       const handleSubmitImage = async () => {
         const formData = new FormData();
         formData.append("image", image);
-        const res = await axios.post(API.uploadScreenshot, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await AxiosSecure.post(API.uploadScreenshot, formData);
         const data = res.data;
         setLoading(false);
         if (data?.success) {
@@ -87,7 +81,7 @@ const EditPayment = ({ setShowEditPayment }) => {
       };
       handleSubmitImage();
     }
-  }, [image, token]);
+  }, [image]);
   /* type upi end */
 
   /* default values */

@@ -2,18 +2,17 @@ import useContextState from "../../hooks/useContextState";
 import { handleSplitUserName } from "../../utils/handleSplitUserName";
 import useGetViewBonus from "../../hooks/HyperMaster/Bonus/useViewBonus";
 import { useState } from "react";
-import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import UpdateBonus from "../../components/modal/HyperMaster/Bonus/UpdateBonus";
 import Swal from "sweetalert2";
 import { AdminRole } from "../../constant/constant";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ViewBonus = () => {
   const [editBonusId, setEditBonusId] = useState("");
   const { bonus, refetchBonus } = useGetViewBonus();
-  const { token, adminRole } = useContextState();
+  const { adminRole } = useContextState();
 
   const handleDeleteBonus = async (bonus) => {
     Swal.fire({
@@ -26,15 +25,11 @@ const ViewBonus = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const generatedToken = handleRandomToken();
         const payload = {
           type: "deleteBonus",
           bonus_id: bonus?.bonus_id,
-          token: generatedToken,
         };
-        const res = await axios.post(API.bonus, payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await AxiosSecure.post(API.bonus, payload);
         const data = res.data;
         if (data?.success) {
           refetchBonus();

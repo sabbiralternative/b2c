@@ -1,21 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import useContextState from "../../../../hooks/useContextState";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../../../hooks/HyperMaster/Branch/useGetStatus";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { API } from "../../../../api";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const ChangeBranch = ({
   setShowChangeBranch,
   downlineId,
   role,
   id,
-  refetchClient,
+  refetch,
 }) => {
   const [disabled, setDisabled] = useState(false);
-  const { token } = useContextState();
   const [activeBranchId, setActiveBranchId] = useState(null);
 
   const statusRef = useRef();
@@ -53,17 +51,13 @@ const ChangeBranch = ({
       role,
     };
 
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
       toast.success(data?.result?.message);
       setShowChangeBranch(false);
-      refetchClient();
+      refetch();
     } else {
       setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);

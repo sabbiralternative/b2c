@@ -1,4 +1,3 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { API } from "../../../../api";
 import handleRandomToken from "../../../../utils/handleRandomToken";
@@ -8,15 +7,21 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetDownlineEditForm from "../../../../hooks/Master/Client/useGetDownlineEditForm";
 import useBalance from "../../../../hooks/useBalance";
-import useGetClient from "../../../../hooks/Master/Client/useGetClient";
 import { AdminRole } from "../../../../constant/constant";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
-const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
+const DirectWithdraw = ({
+  setDirectWithdraw,
+  downlineId,
+  role,
+  id,
+  refetchClients,
+}) => {
   const amountRef = useRef("");
   const directWithdraw = useRef();
   const [disabled, setDisabled] = useState(false);
-  const { clientId, adminRole } = useContextState();
-  const [fetchClients, setFetchClients] = useState(false);
+  const { adminRole } = useContextState();
+
   let payload = {
     type: "balance",
     downlineId,
@@ -29,14 +34,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
   const [amountTwo, setAmountTwo] = useState(null);
   const [amountOne, setAmountOne] = useState(null);
   const [amount, setAmount] = useState(null);
-
-  const { refetchClients } = useGetClient(
-    clientId,
-    setFetchClients,
-    fetchClients,
-  );
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
 
   useCloseModalClickOutside(directWithdraw, () => {
     setDirectWithdraw(false);
@@ -61,9 +59,7 @@ const DirectWithdraw = ({ setDirectWithdraw, downlineId, role, id }) => {
       token: generatedToken,
       role,
     };
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

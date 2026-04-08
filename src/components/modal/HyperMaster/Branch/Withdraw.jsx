@@ -1,11 +1,10 @@
-import axios from "axios";
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const Withdraw = ({
   downlineId,
@@ -22,7 +21,6 @@ const Withdraw = ({
     setShowWithdraw(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
 
   /* handle withdraw submit */
   const onSubmit = async ({ amount, remark }) => {
@@ -44,9 +42,7 @@ const Withdraw = ({
       id,
       role,
     };
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

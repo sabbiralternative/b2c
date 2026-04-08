@@ -1,22 +1,19 @@
-import axios from "axios";
 import { API } from "../../api";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
-import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
 import toast from "react-hot-toast";
-import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ChangePassword = ({
   setShowChangePassword,
   downlineId,
   role,
   id,
-  refetchAllBranch,
+  refetch,
 }) => {
   const [disabled, setDisabled] = useState(false);
-  const { refetchClient } = useRefetchClient(downlineId);
 
   /* close modal click outside */
   const changePasswordRef = useRef();
@@ -25,7 +22,7 @@ const ChangePassword = ({
   });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+
   /* handle change password */
   const onSubmit = async ({ password, confirmPassword, mpassword }) => {
     setDisabled(true);
@@ -51,9 +48,7 @@ const ChangePassword = ({
       token: generatedToken,
     };
 
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
 
     if (data?.success) {
@@ -61,11 +56,7 @@ const ChangePassword = ({
       toast.success(data?.result?.message);
       reset();
 
-      if (adminRole === "hyper_master" || adminRole === "admin_master") {
-        refetchAllBranch();
-      } else {
-        refetchClient();
-      }
+      refetch();
       setShowChangePassword(false);
     } else {
       setDisabled(false);

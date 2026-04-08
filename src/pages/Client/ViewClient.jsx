@@ -150,7 +150,7 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePassword}
-          refetchAllBranch={refetchClients}
+          refetch={refetchClients}
         />
       )}
       {showChangeStatus && (
@@ -168,6 +168,7 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowChangeLevelModal={setShowChangeLevelModal}
+          refetch={refetchClients}
         />
       )}
       {showCreditRef && (
@@ -176,6 +177,7 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowCreditRef={setShowCreditRef}
+          refetch={refetchClients}
         />
       )}
       {directDeposit && (
@@ -184,6 +186,7 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setDirectDeposit={setDirectDeposit}
+          refetch={refetchClients}
         />
       )}
       {showColor && (
@@ -201,7 +204,7 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowChangeBranch={setShowChangeBranch}
-          refetchClient={refetchClients}
+          refetch={refetchClients}
         />
       )}
       <div className="container-xxl flex-grow-1 container-p-y">

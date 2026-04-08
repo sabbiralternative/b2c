@@ -1,26 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../../api";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useGetAllBonus = (args, time) => {
-  const { token, tokenLoading } = useContextState();
-
+  const { tokenLoading } = useContextState();
   const { data: bonus = [], refetch: refetchBonus } = useQuery({
     queryKey: ["bonus", args?.is_claimed],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
-      const payload = {
-        ...args,
-        token: generatedToken,
-      };
-      const res = await axios.post(API.bonus, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.bonus, args);
 
       const data = res.data;
       if (data?.success) {

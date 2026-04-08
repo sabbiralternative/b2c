@@ -1,26 +1,19 @@
-import axios from "axios";
 import { API } from "../../../api";
-import handleRandomToken from "../../../utils/handleRandomToken";
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useRefetchClient = (searchId) => {
-  const { token, tokenLoading, setClientData } = useContextState();
+  const { tokenLoading, setClientData } = useContextState();
 
   const { data: clients = [], refetch: refetchClient } = useQuery({
     queryKey: ["refetchClients"],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
         searchId,
-        token: generatedToken,
       };
-      const res = await axios.post(API.viewClients, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.viewClients, payload);
 
       const data = res.data;
       if (data?.success) {

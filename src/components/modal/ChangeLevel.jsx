@@ -2,25 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
 import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../api";
-import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
-import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
-import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
-import useGetClient from "../../hooks/Master/Client/useGetClient";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
-const ChangeLevel = ({ setShowChangeLevelModal, downlineId, role, id }) => {
+const ChangeLevel = ({
+  setShowChangeLevelModal,
+  downlineId,
+  role,
+  id,
+  refetch,
+}) => {
   const [disabled, setDisabled] = useState(false);
-  const { token, adminRole, clientId } = useContextState();
-  const [fetchClients, setFetchClients] = useState(false);
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
-  const { refetchClient } = useRefetchClient(downlineId);
-  const { refetchClients } = useGetClient(
-    clientId,
-    setFetchClients,
-    fetchClients,
-  );
+
   const [clientStatus, setClientStatus] = useState(null);
 
   /* close modal ck=lick outside */
@@ -59,20 +53,11 @@ const ChangeLevel = ({ setShowChangeLevelModal, downlineId, role, id }) => {
       role,
     };
 
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
-      if (adminRole === "hyper_master") {
-        refetchAllBranch();
-      } else {
-        refetchClients();
-        refetchClient();
-      }
+      refetch();
 
       toast.success(data?.result?.message);
       setShowChangeLevelModal(false);

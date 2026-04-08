@@ -1,25 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { API } from "../../../api";
 import useContextState from "../../useContextState";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import axios from "axios";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useGetStatus = (payload) => {
-  const { token, tokenLoading } = useContextState();
+  const { tokenLoading } = useContextState();
   const { data: status, refetch: refetchStatus } = useQuery({
     queryKey: ["creditRef"],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
-      const postData = {
-        ...payload,
-        token: generatedToken,
-      };
-      const res = await axios.post(API.downLineEdit, postData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.downLineEdit, payload);
 
       const data = res.data;
       if (data?.success) {

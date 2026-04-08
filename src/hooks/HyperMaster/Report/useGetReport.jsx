@@ -1,11 +1,11 @@
-import axios from "axios";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useGetReport = (args, downloadData) => {
-  const { token, tokenLoading } = useContextState();
+  const { tokenLoading } = useContextState();
   const { data: reports = [], refetch: refetchReports } = useQuery({
     queryKey: ["exports"],
     enabled: !tokenLoading && downloadData,
@@ -15,11 +15,7 @@ const useGetReport = (args, downloadData) => {
         ...args,
         token: generatedToken,
       };
-      const res = await axios.post(API.export, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.export, payload);
       const data = res.data;
       if (data?.success) {
         return data?.result;

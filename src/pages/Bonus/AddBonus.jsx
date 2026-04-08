@@ -1,31 +1,26 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useContextState from "../../hooks/useContextState";
-import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import { AdminRole } from "../../constant/constant";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddBonus = () => {
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
-  const { token, adminRole } = useContextState();
+  const { adminRole } = useContextState();
 
   /* handle add client */
   const onSubmit = async (value) => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "addBonus",
       ...value,
-      token: generatedToken,
     };
     setDisabled(true);
-    const res = await axios.post(API.bonus, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.bonus, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

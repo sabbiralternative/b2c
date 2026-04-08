@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
-import useContextState from "../../../../hooks/useContextState";
+
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import axios from "axios";
+
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const Deposit = ({
   setShowDeposit,
@@ -22,7 +23,7 @@ const Deposit = ({
     setShowDeposit(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
+
   const onSubmit = async ({ amount, remark }) => {
     setDisabled(true);
     const generatedToken = handleRandomToken();
@@ -43,9 +44,7 @@ const Deposit = ({
       role,
       id,
     };
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

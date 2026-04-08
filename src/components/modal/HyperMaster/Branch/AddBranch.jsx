@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
-import axios from "axios";
+
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
-import useContextState from "../../../../hooks/useContextState";
+
 import useGetAllBranch from "../../../../hooks/HyperMaster/Branch/useGetAllBranch";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const AddBranch = ({ setShowAddBranch }) => {
   const [disabled, setDisabled] = useState(false);
@@ -18,7 +19,6 @@ const AddBranch = ({ setShowAddBranch }) => {
   const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
 
   /* add branch submit */
   const onSubmit = async ({ username, password, notes }) => {
@@ -38,9 +38,7 @@ const AddBranch = ({ setShowAddBranch }) => {
       token: generatedToken,
       branch_type: "branch",
     };
-    const res = await axios.post(API.addBranch, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.addBranch, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

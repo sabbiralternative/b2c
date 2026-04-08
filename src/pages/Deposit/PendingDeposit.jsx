@@ -234,7 +234,14 @@ const PendingDeposit = () => {
                     <td>{item?.amount}</td>
 
                     <td>
-                      {item?.utr}{" "}
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          navigate(`/utr-search?searchUTR=${item?.utr}`)
+                        }
+                      >
+                        {item?.utr}{" "}
+                      </span>
                       {location.pathname === "/pending-deposit" && (
                         <MdOutlineContentCopy
                           style={{ cursor: "pointer" }}

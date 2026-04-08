@@ -1,26 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../../api";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useGetCurrentPaymentStatus = (paymentId) => {
-  const { token, tokenLoading } = useContextState();
+  const { tokenLoading } = useContextState();
   const { data: currentPaymentStatus } = useQuery({
     queryKey: ["currentPaymentStatus"],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
         paymentId: paymentId,
         type: "ViewPaymentStatus",
-        token: generatedToken,
       };
-      const res = await axios.post(API.payments, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.payments, payload);
 
       const data = res.data;
 

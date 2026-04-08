@@ -3,10 +3,9 @@ import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import useContextState from "../../../../hooks/useContextState";
-import axios from "axios";
 import { API } from "../../../../api";
 import useGetSiteNotification from "../../../../hooks/HyperMaster/Settings/useGetSiteNotification";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const SiteNotification = ({ setSiteNotification }) => {
   const [disabled, setDisabled] = useState(false);
@@ -19,7 +18,6 @@ const SiteNotification = ({ setSiteNotification }) => {
   });
 
   const { register, handleSubmit, reset } = useForm({});
-  const { token } = useContextState();
 
   /* handle edit site notification */
   const onSubmit = async ({ message }) => {
@@ -30,9 +28,7 @@ const SiteNotification = ({ setSiteNotification }) => {
       message,
       token: generatedToken,
     };
-    const res = await axios.post(API.notification, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.notification, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

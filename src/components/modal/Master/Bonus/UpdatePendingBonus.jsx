@@ -1,11 +1,10 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { API } from "../../../../api";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const UpdatePendingBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   const [disabled, setDisabled] = useState(false);
@@ -15,7 +14,6 @@ const UpdatePendingBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
   });
 
   const { register, handleSubmit } = useForm();
-  const { token } = useContextState();
 
   const handleUpdateBonus = async ({ status }) => {
     setDisabled(true);
@@ -27,9 +25,7 @@ const UpdatePendingBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
       token: generatedToken,
     };
 
-    const res = await axios.post(API.bonus, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.bonus, payload);
     const data = res.data;
     if (data?.success) {
       refetchBonus();

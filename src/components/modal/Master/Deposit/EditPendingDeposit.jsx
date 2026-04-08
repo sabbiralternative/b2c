@@ -2,11 +2,11 @@ import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
 import useGetSingleDeposit from "../../../../hooks/Master/Deposit/useGetSingleDeposit";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
   const [disabled, setDisabled] = useState(false);
@@ -15,7 +15,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
     setEditPendingDeposit(false);
   });
   const { register, handleSubmit, reset } = useForm();
-  const { token, downLineId } = useContextState();
+  const { downLineId } = useContextState();
   const payload = {
     type: "viewSingleUTR",
     depositId: downLineId,
@@ -33,9 +33,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
       token: generatedToken,
     };
 
-    const res = await axios.post(API.utr, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.utr, payload);
     const data = res.data;
 
     if (data?.success) {

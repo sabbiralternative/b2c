@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
-import axios from "axios";
 import { API } from "../../../api";
 import handleRandomToken from "../../../utils/handleRandomToken";
 import handleEncryptData from "../../../utils/handleEncryptData";
 import useContextState from "../../../hooks/useContextState";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
   /* close modal click outside */
@@ -27,11 +27,7 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
         marketId: marketId,
         token: generatedToken,
       });
-      const res = await axios.post(API.settledBets, encryptedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.settledBets, encryptedData);
       const data = res.data;
       if (data?.success) {
         setData(data?.result);
@@ -127,9 +123,7 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
                               </td>
                               <td
                                 className={`${
-                                  betData?.win > 0
-                                    ? "text-green"
-                                    : "text-red"
+                                  betData?.win > 0 ? "text-green" : "text-red"
                                 }`}
                               >
                                 {betData?.win}

@@ -1,20 +1,17 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { API } from "../../../../api";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import useContextState from "../../../../hooks/useContextState";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import useGetDownlineEditForm from "../../../../hooks/Master/Client/useGetDownlineEditForm";
 import useBalance from "../../../../hooks/useBalance";
-import useGetClient from "../../../../hooks/Master/Client/useGetClient";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
-const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
+const DirectDeposit = ({ setDirectDeposit, downlineId, role, id, refetch }) => {
   const amountRef = useRef("");
   const [disabled, setDisabled] = useState(false);
-  const { clientId } = useContextState();
-  const [fetchClients, setFetchClients] = useState(false);
+
   const payload = {
     type: "balance",
     downlineId,
@@ -31,13 +28,8 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
   useCloseModalClickOutside(directDepositRef, () => {
     setDirectDeposit(false);
   });
-  const { refetchClients } = useGetClient(
-    clientId,
-    setFetchClients,
-    fetchClients,
-  );
+
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
 
   const handleAmount = (e) => {
     const userOne = (data?.amount - parseFloat(e)).toFixed(2);
@@ -58,15 +50,15 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id }) => {
       token: generatedToken,
       role,
     };
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
       refetchBalance();
       toast.success(data?.result?.message);
-      refetchClients();
+      if (refetch) {
+        refetch();
+      }
       reset();
       setDirectDeposit(false);
     } else {

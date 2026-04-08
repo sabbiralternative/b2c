@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
-import useContextState from "../../../../hooks/useContextState";
 import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 import useUTR from "../../../../hooks/utr";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
   const { mutate: getUTR } = useUTR();
@@ -23,7 +22,6 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
     setAddSlipId(null);
   });
   const { handleSubmit, reset } = useForm();
-  const { token } = useContextState();
 
   const onSubmit = async () => {
     const generatedToken = handleRandomToken();
@@ -34,9 +32,7 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
       token: generatedToken,
       fileName: filename,
     };
-    const res = await axios.post(API.withdraw, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.withdraw, payload);
     const data = res.data;
     if (data?.success) {
       refetchAllWithdraw();
@@ -63,11 +59,7 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
           type: "utr",
         };
         formData.append("data", JSON.stringify(payload));
-        const res = await axios.post(API.uploadScreenshot, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await AxiosSecure.post(API.uploadScreenshot, formData);
         const data = res.data;
 
         if (data?.success) {
@@ -94,7 +86,7 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
       };
       handleSubmitImage();
     }
-  }, [image, token]);
+  }, [image]);
   return (
     <>
       <div className="content-backdrop fade show"></div>

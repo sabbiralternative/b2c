@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
-import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useRef, useState } from "react";
 import { useDownLineEdit } from "../../hooks/downLineEdit";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const UpdateWhatsAppNumber = ({
   downlineId,
@@ -23,7 +22,6 @@ const UpdateWhatsAppNumber = ({
   });
 
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
 
   let payload = {
     downlineId,
@@ -46,9 +44,7 @@ const UpdateWhatsAppNumber = ({
       token: generatedToken,
       role,
     };
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

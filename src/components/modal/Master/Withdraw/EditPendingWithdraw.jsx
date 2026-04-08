@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import handleRandomToken from "../../../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import useContextState from "../../../../hooks/useContextState";
@@ -10,6 +9,7 @@ import useGetSingleWithdraw from "../../../../hooks/Master/Withdraw/useSingleWit
 import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 import useUTR from "../../../../hooks/utr";
+import { AxiosSecure } from "../../../../lib/AxiosSecure";
 
 const EditPendingWithdraw = ({
   setEditPendingWithdraw,
@@ -27,7 +27,7 @@ const EditPendingWithdraw = ({
     setEditPendingWithdraw(false);
   });
   const { register, handleSubmit, reset, watch } = useForm();
-  const { token, downLineId } = useContextState();
+  const { downLineId } = useContextState();
   const statusField = watch("status");
 
   const SingleWithdrawPayload = {
@@ -48,9 +48,7 @@ const EditPendingWithdraw = ({
       token: generatedToken,
       fileName: filename,
     };
-    const res = await axios.post(API.withdraw, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.withdraw, payload);
     const data = res.data;
     if (data?.success) {
       refetchAllWithdraw();
@@ -77,11 +75,7 @@ const EditPendingWithdraw = ({
           type: "utr",
         };
         formData.append("data", JSON.stringify(payload));
-        const res = await axios.post(API.uploadScreenshot, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await AxiosSecure.post(API.uploadScreenshot, formData);
         const data = res.data;
 
         if (data?.success) {
@@ -107,7 +101,7 @@ const EditPendingWithdraw = ({
       };
       handleSubmitImage();
     }
-  }, [image, token]);
+  }, [image]);
   return (
     <>
       <div className="content-backdrop fade show"></div>

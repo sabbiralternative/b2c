@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
 import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../api";
 import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
 import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
 import { useLocation } from "react-router-dom";
 import useGetClient from "../../hooks/Master/Client/useGetClient";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ChangeBranchStatus = ({
   setShowChangeStatus,
@@ -19,7 +19,7 @@ const ChangeBranchStatus = ({
   refetchAllBranch,
 }) => {
   const [disabled, setDisabled] = useState(false);
-  const { token, adminRole, clientId } = useContextState();
+  const { adminRole, clientId } = useContextState();
   const [fetchClients, setFetchClients] = useState(false);
   const { refetchClient } = useRefetchClient(downlineId);
   const { refetchClients } = useGetClient(
@@ -87,11 +87,7 @@ const ChangeBranchStatus = ({
     if (!location.pathname.includes("client")) {
       payload.registrationStatus = registrationStatus ? 1 : 0;
     }
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

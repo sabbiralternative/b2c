@@ -88,7 +88,7 @@ const ViewWhiteLabel = () => {
           id={id}
           role={payloadRole}
           setShowChangePassword={setShowChangePasswordModal}
-          refetchAllBranch={refetch}
+          refetch={refetch}
         />
       )}
 
@@ -98,6 +98,7 @@ const ViewWhiteLabel = () => {
           id={id}
           role={payloadRole}
           setShowCreditRef={setShowCreditRefModal}
+          refetch={refetch}
         />
       )}
       {modal.name === "addLogo" && (

@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import useContextState from "./useContextState";
 import handleRandomToken from "../utils/handleRandomToken";
 import { API } from "../api";
-import axios from "axios";
+import { AxiosSecure } from "../lib/AxiosSecure";
 
 const useGetCurrentRef = (payload) => {
-  const { token, tokenLoading } = useContextState();
+  const { tokenLoading } = useContextState();
   const {
     data: currentRef = {},
     refetch: refetchRef,
@@ -20,11 +20,7 @@ const useGetCurrentRef = (payload) => {
         type: "viewCreditReference",
         token: generatedToken,
       };
-      const res = await axios.post(API.downLineEdit, postData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.downLineEdit, postData);
       const data = res.data;
       if (data.success) {
         return data.result;

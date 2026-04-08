@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "../../useContextState";
-import handleRandomToken from "../../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../../api";
+import { AxiosSecure } from "../../../lib/AxiosSecure";
 
 const useGetALLWithdraw = (args, time) => {
-  const { token, tokenLoading } = useContextState();
+  const { tokenLoading } = useContextState();
   const {
     data: allWithdraw = [],
     refetch: refetchAllWithdraw,
@@ -15,16 +14,7 @@ const useGetALLWithdraw = (args, time) => {
     queryKey: ["withdrawPAR", args],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
-      const payload = {
-        ...args,
-        token: generatedToken,
-      };
-      const res = await axios.post(API.withdraw, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await AxiosSecure.post(API.withdraw, args);
 
       const data = res.data;
       if (data?.success) {
