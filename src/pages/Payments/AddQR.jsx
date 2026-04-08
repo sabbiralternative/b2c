@@ -1,19 +1,17 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
-import useContextState from "../../hooks/useContextState";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
 import { API } from "../../api";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { classifications } from "../../static/classification";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddQR = () => {
   const [disabled, setDisabled] = useState(false);
-  const { token } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
   };
@@ -40,11 +38,7 @@ const AddQR = () => {
           type: "payment",
         };
         formData.append("data", JSON.stringify(payload));
-        const res = await axios.post(API.uploadScreenshot, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await AxiosSecure.post(API.uploadScreenshot, formData);
         const data = res.data;
         setLoading(false);
         if (data?.success) {
@@ -53,7 +47,7 @@ const AddQR = () => {
       };
       handleSubmitImage();
     }
-  }, [image, token]);
+  }, [image]);
 
   const onSubmit = async (values) => {
     setDisabled(true);
@@ -66,9 +60,7 @@ const AddQR = () => {
       token: generatedToken,
     };
 
-    const res = await axios.post(API.payments, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

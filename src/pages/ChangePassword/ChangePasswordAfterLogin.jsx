@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
-import useContextState from "../../hooks/useContextState";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import axios from "axios";
 import { API } from "../../api";
 import { handleLogOut } from "../../utils/handleLogOut";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { useState } from "react";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ChangePasswordAfterLogin = () => {
   const [disabled, setDisabled] = useState(false);
@@ -14,7 +13,6 @@ const ChangePasswordAfterLogin = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const { register, handleSubmit } = useForm();
-  const { token } = useContextState();
   const navigate = useNavigate();
 
   /* handle change password  */
@@ -35,9 +33,7 @@ const ChangePasswordAfterLogin = () => {
       token: generatedToken,
       changePasswordType: "after_login",
     };
-    const res = await axios.post(API.changePassword, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.changePassword, payload);
     const data = res.data;
 
     if (data?.success) {

@@ -48,7 +48,7 @@ const ChangePassword = () => {
       setDisabled(false);
       toast.success(data?.result?.message);
       navigate(
-        `/change-password-success?transactionCode=${data?.result?.transaction_code}`
+        `/change-password-success?transactionCode=${data?.result?.transaction_code}`,
       );
     } else {
       setDisabled(false);

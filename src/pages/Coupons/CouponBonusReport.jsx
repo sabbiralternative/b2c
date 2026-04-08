@@ -23,7 +23,7 @@ const CouponBonusReport = () => {
   const [activePage, setActivePage] = useState(1);
 
   const payload = {
-    type: "view_lossback_report",
+    type: "view_coupon_report",
     pagination: true,
     page: activePage,
     fromDate: moment(startDate).format("YYYY-MM-DD"),

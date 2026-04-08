@@ -3,13 +3,12 @@ import { FaRegCopy } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import useContextState from "../../hooks/useContextState";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
+import { SiAxios } from "react-icons/si";
 
 const AddUPIPaymentGateway = ({ setAddPaymentGateway }) => {
   const [disabled, setDisabled] = useState(false);
@@ -24,7 +23,7 @@ const AddUPIPaymentGateway = ({ setAddPaymentGateway }) => {
     reset,
     formState: { errors },
   } = useForm();
-  const { token } = useContextState();
+
   const addPaymentGateway = useRef();
   useCloseModalClickOutside(addPaymentGateway, () => {
     setAddPaymentGateway(false);
@@ -40,9 +39,7 @@ const AddUPIPaymentGateway = ({ setAddPaymentGateway }) => {
       method: "upigateway",
       token: generatedToken,
     };
-    const res = await axios.post(API.payments, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await SiAxios.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

@@ -1,17 +1,15 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useContextState from "../../hooks/useContextState";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddWhatsappDeposit = () => {
   const [disabled, setDisabled] = useState(false);
-  const { token } = useContextState();
   const payload = {
     type: "viewPaymentMethods",
   };
@@ -34,9 +32,7 @@ const AddWhatsappDeposit = () => {
       method: "whatsapp",
       token: generatedToken,
     };
-    const res = await axios.post(API.payments, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

@@ -2,13 +2,12 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import useContextState from "../../hooks/useContextState";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
   const [disabled, setDisabled] = useState(false);
@@ -23,7 +22,6 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
     reset,
     formState: { errors },
   } = useForm();
-  const { token } = useContextState();
   const addPaymentGateway = useRef();
   useCloseModalClickOutside(addPaymentGateway, () => {
     setAddPaymentGateway(false);
@@ -40,9 +38,7 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
       token: generatedToken,
     };
 
-    const res = await axios.post(API.payments, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

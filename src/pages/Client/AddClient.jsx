@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import { useWhiteLabel } from "../../hooks/AdminMaster/whiteLabel";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddClient = () => {
   const [disabled, setDisabled] = useState(false);
@@ -21,7 +20,6 @@ const AddClient = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { token } = useContextState();
 
   /* handle add client */
   const onSubmit = async (values) => {
@@ -32,9 +30,7 @@ const AddClient = () => {
       token: generatedToken,
     };
 
-    const res = await axios.post(API.registerPanel, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.registerPanel, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

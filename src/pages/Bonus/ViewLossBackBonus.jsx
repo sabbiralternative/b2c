@@ -1,19 +1,17 @@
-import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import UpdateBonus from "../../components/modal/HyperMaster/Bonus/UpdateBonus";
 import Swal from "sweetalert2";
 import { useLossBackQuery } from "../../hooks/lossback";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ViewLossBackBonus = () => {
   const [editBonusId, setEditBonusId] = useState("");
   const { data, refetch } = useLossBackQuery({
     type: "view_lossback_bonus",
   });
-  const { token } = useContextState();
 
   const handleDeleteBonus = async (bonus) => {
     Swal.fire({
@@ -32,9 +30,7 @@ const ViewLossBackBonus = () => {
           lossback_bonus_id: bonus?.lossback_bonus_id,
           token: generatedToken,
         };
-        const res = await axios.post(API.lossback, payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await AxiosSecure.post(API.lossback, payload);
         const data = res.data;
         if (data?.success) {
           refetch();

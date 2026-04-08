@@ -1,13 +1,12 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddUPIClickGateway = () => {
   const [disabled, setDisabled] = useState(false);
@@ -17,7 +16,6 @@ const AddUPIClickGateway = () => {
   const navigate = useNavigate();
   const { refetchPaymentMethods } = useGetPaymentMethod(payload);
   const { register, handleSubmit, reset } = useForm();
-  const { token } = useContextState();
 
   /* add new payment gateway */
   const onSubmit = async (values) => {
@@ -30,9 +28,7 @@ const AddUPIClickGateway = () => {
       method: "upiclick",
     };
 
-    const res = await axios.post(API.payments, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.payments, payload);
 
     const data = res.data;
     if (data?.success) {

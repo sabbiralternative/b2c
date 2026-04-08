@@ -1,13 +1,12 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import useContextState from "../../hooks/useContextState";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddUPI = () => {
   const [disabled, setDisabled] = useState(false);
@@ -22,7 +21,6 @@ const AddUPI = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { token } = useContextState();
 
   /* add upi */
   const onSubmit = async (values) => {
@@ -34,9 +32,7 @@ const AddUPI = () => {
       method: "upi",
       token: generatedToken,
     };
-    const res = await axios.post(API.payments, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

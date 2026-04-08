@@ -1,5 +1,4 @@
 import Swal from "sweetalert2";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,6 +9,7 @@ import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
 import handleRandomToken from "../../utils/handleRandomToken";
 import { API } from "../../api";
 import ShowImage from "../../components/modal/ShowImage";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const InactiveAccounts = () => {
   const [branchId, setBranchId] = useState(0);
@@ -18,7 +18,7 @@ const InactiveAccounts = () => {
   });
   const [showPaymentImage, setShowPaymentImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setShowEditPayment, setDownLineId, readOnly, adminRole } =
+  const { setShowEditPayment, setDownLineId, readOnly, adminRole } =
     useContextState();
   const payload = {
     type: "viewPaymentMethods",
@@ -50,9 +50,7 @@ const InactiveAccounts = () => {
           paymentId,
           token: generatedToken,
         };
-        const res = await axios.post(API.payments, payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await AxiosSecure.post(API.payments, payload);
         const data = res.data;
         if (data?.success) {
           refetchPaymentMethods();
