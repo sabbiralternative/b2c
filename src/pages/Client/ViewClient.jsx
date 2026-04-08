@@ -192,6 +192,7 @@ const ViewClient = () => {
           id={id}
           role={payloadRole}
           setShowColor={setShowColor}
+          refetchClient={refetchClients}
         />
       )}
       {showChangeBranch && (

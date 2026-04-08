@@ -2,25 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
 import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
-import { API } from "../../api";
-import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
-import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
-import useRefetchClient from "../../hooks/Master/Client/useRefetchClient";
-import useGetClient from "../../hooks/Master/Client/useGetClient";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import { API } from "../../api";
 
-const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
+const ChangeColor = ({ setShowColor, downlineId, role, id, refetchClient }) => {
   const [disabled, setDisabled] = useState(false);
-  const { token, adminRole, clientId } = useContextState();
-  const [fetchClients, setFetchClients] = useState(false);
-  const { refetchAllBranch } = useGetAllBranch({ branch_type: "branch" });
-  const { refetchClient } = useRefetchClient(downlineId);
-  const { refetchClients } = useGetClient(
-    clientId,
-    setFetchClients,
-    fetchClients
-  );
   const [color, setColor] = useState(null);
 
   /* close modal ck=lick outside */
@@ -29,14 +16,12 @@ const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
     setShowColor(false);
   });
 
-  let payload = {
+  const { status } = useGetStatus({
     downlineId,
     type: "getColor",
     id,
     role,
-  };
-
-  const { status, refetchStatus } = useGetStatus(payload);
+  });
 
   /* set check box default value */
   useEffect(() => {
@@ -50,7 +35,7 @@ const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
     setDisabled(true);
     e.preventDefault();
     const generatedToken = handleRandomToken();
-    let payload = {
+    const payload = {
       id,
       downlineId,
       type: "changeColor",
@@ -59,24 +44,13 @@ const ChangeColor = ({ setShowColor, downlineId, role, id }) => {
       role,
     };
 
-    const res = await axios.post(API.downLineEdit, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
-      if (adminRole === "hyper_master") {
-        refetchAllBranch();
-      } else {
-        refetchClients();
-        refetchClient();
-      }
-
+      refetchClient();
       toast.success(data?.result?.message);
       setShowColor(false);
-      refetchStatus();
     } else {
       setDisabled(false);
       toast.error(data?.error?.status?.[0]?.description);

@@ -118,6 +118,7 @@ const ClientAction = ({ refetchClient, client, index }) => {
           id={id}
           role={payloadRole}
           setShowColor={setShowColor}
+          refetchClient={refetchClient}
         />
       )}
       {showChangeBranch && (
