@@ -26,20 +26,19 @@ const Deposit = ({
 
   const onSubmit = async ({ amount, remark }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
     //     confirmPassword: newPasswordConfirm,
     //     mpassword: transactionCode,
     //     type: "panel",
-    //     token: generatedToken,
+    //
     //   });
     const payload = {
       downlineId,
       type: "deposit",
       amount,
       remark,
-      token: generatedToken,
 
       role,
       id,

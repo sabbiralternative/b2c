@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useWhiteLabel } from "../../hooks/AdminMaster/whiteLabel";
 import useContextState from "../../hooks/useContextState";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import { API } from "../../api";
 import { AdminRole } from "../../constant/constant";
@@ -21,11 +21,10 @@ const AddNotification = () => {
 
   const onSubmit = async (fieldValues) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       ...fieldValues,
       type: "addNotification",
-      token: generatedToken,
     };
     const res = await AxiosSecure.post(API.index, payload);
     const data = res.data;

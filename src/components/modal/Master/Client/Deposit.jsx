@@ -61,7 +61,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
   }, [image, getUTR, reset]);
   const onSubmit = async ({ amount, utr, paymentId }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       id,
       downlineId,
@@ -69,7 +69,7 @@ const Deposit = ({ setClientDeposit, downlineId, role, id }) => {
       amount,
       slip: filePath,
       utr,
-      token: generatedToken,
+
       role,
     };
 

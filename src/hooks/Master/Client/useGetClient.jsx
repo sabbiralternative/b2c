@@ -15,10 +15,9 @@ const useGetClient = (searchId, setFetchClients, fetchClients) => {
     queryKey: ["viewClient"],
     enabled: searchId?.length === 2 && fetchClients,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
         searchId,
-        token: generatedToken,
+
         pagination: true,
       };
       const res = await AxiosSecure.post(API.viewClients, payload);

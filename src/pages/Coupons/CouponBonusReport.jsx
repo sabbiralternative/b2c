@@ -165,28 +165,20 @@ const CouponBonusReport = () => {
             <table className="table table-hover table-sm">
               <thead className="table-dark">
                 <tr>
-                  <th>Punter Id</th>
-                  <th>Bonus Amount</th>
-                  <th>Bonus Percent</th>
-                  <th>Branch Name</th>
+                  <th>Client Id</th>
+                  <th>Amount</th>
+                  <th>Coupon Code</th>
                   <th>Date Added</th>
-                  <th>Loginname</th>
-                  <th>Minimum Loss Amount</th>
-                  <th>Total Loss Amount</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td>{item?.punter_id}</td>
-                      <td>{item?.bonus_amount}</td>
-                      <td>{item?.bonus_percent} </td>
-                      <td>{item?.branch_name}</td>
+                      <td>{item?.client_id}</td>
+                      <td>{item?.amount}</td>
+                      <td>{item?.coupon_code} </td>
                       <td>{item?.date_added}</td>
-                      <td>{item?.loginname}</td>
-                      <td>{item?.minimum_loss_amount}</td>
-                      <td>{item?.total_loss_amount}</td>
                     </tr>
                   );
                 })}

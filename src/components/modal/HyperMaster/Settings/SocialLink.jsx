@@ -32,13 +32,13 @@ const SocialLink = ({ setShowSocialLink }) => {
   /* handle edit social link */
   const onSubmit = async ({ whatsapp, instagram, telegram, site, pixel }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
     //     confirmPassword: newPasswordConfirm,
     //     mpassword: transactionCode,
     //     type: "panel",
-    //     token: generatedToken,
+    //
     //   });
     let payload = {};
 
@@ -46,7 +46,6 @@ const SocialLink = ({ setShowSocialLink }) => {
       payload = {
         type: "updateSocial",
         whatsapp,
-        token: generatedToken,
       };
     } else {
       payload = {
@@ -56,7 +55,6 @@ const SocialLink = ({ setShowSocialLink }) => {
         telegram,
         site,
         pixel,
-        token: generatedToken,
       };
     }
 

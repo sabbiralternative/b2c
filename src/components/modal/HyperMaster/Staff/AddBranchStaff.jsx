@@ -29,12 +29,11 @@ const AddBranchStaff = ({ setShowAddBranchStaff }) => {
 
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       ...values,
       type: "addStaff",
       role: "branch_staff",
-      token: generatedToken,
     };
 
     addChecker(payload, {

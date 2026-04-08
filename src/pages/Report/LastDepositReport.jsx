@@ -1,7 +1,6 @@
 // import { writeFile, utils } from "xlsx";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
-import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,11 +11,11 @@ import DefaultDateButton from "./DefaultDateButton";
 import moment from "moment";
 import Loader from "../../components/ui/Loader/Loader";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const LastDepositReport = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
-  const { token, setClientId, adminRole, setRefetchViewClient } =
-    useContextState();
+  const { setClientId, adminRole, setRefetchViewClient } = useContextState();
   const navigate = useNavigate();
   const [showViewReport, setShowViewReport] = useState(false);
   const [reportData, setReportData] = useState([]);
@@ -26,20 +25,15 @@ const LastDepositReport = () => {
   const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const getFTDReport = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "getLDT",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
-      token: generatedToken,
+
       pagination: true,
     };
 
-    const res = await axios.post(API.export, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.export, payload);
 
     return res.data;
   };

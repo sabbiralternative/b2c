@@ -1,5 +1,5 @@
 import { useState } from "react";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import UpdateBonus from "../../components/modal/HyperMaster/Bonus/UpdateBonus";
@@ -24,11 +24,9 @@ const ViewLossBackBonus = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const generatedToken = handleRandomToken();
         const payload = {
           type: "delete_lossback_bonus",
           lossback_bonus_id: bonus?.lossback_bonus_id,
-          token: generatedToken,
         };
         const res = await AxiosSecure.post(API.lossback, payload);
         const data = res.data;

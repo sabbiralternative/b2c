@@ -1,16 +1,14 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import { API } from "../../api";
-import handleRandomToken from "../../utils/handleRandomToken";
 
 export const useWhiteLabel = (args) => {
   return useQuery({
     queryKey: ["whiteLabel", args],
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
         ...args,
-        token: generatedToken,
+
         pagination: true,
       };
       const { data } = await AxiosSecure.post(API.whitelabel, payload);

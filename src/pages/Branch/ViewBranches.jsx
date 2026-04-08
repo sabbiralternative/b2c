@@ -40,10 +40,10 @@ const ViewBranches = () => {
 
   /* Handle login read only without password */
   // const handleLoginReadOnly = async (username) => {
-  //   const generatedToken = handleRandomToken();
+  //
   //   const payload = {
   //     username,
-  //     token: generatedToken,
+  //
   //   };
   //   const res = await axios.post(API.loginReadOnly, payload, {
   //     headers: {

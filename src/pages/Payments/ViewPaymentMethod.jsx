@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import handleRandomToken from "../../utils/handleRandomToken";
-import axios from "axios";
+
 import { API } from "../../api";
 import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
@@ -10,6 +9,7 @@ import ShowImage from "../../components/modal/ShowImage";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
 import { Link } from "react-router-dom";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ViewPaymentMethod = () => {
   const [branchId, setBranchId] = useState(0);
@@ -18,7 +18,7 @@ const ViewPaymentMethod = () => {
   });
   const [showPaymentImage, setShowPaymentImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setShowEditPayment, setDownLineId, readOnly, adminRole } =
+  const { setShowEditPayment, setDownLineId, readOnly, adminRole } =
     useContextState();
   const payload = {
     type: "viewPaymentMethods",
@@ -41,15 +41,11 @@ const ViewPaymentMethod = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const generatedToken = handleRandomToken();
         const payload = {
           type: "deletePayment",
           paymentId,
-          token: generatedToken,
         };
-        const res = await axios.post(API.payments, payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await AxiosSecure.post(API.payments, payload);
         const data = res.data;
         if (data?.success) {
           refetchPaymentMethods();

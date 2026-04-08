@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
@@ -33,13 +33,13 @@ const CreditReference = ({
   /* handle update credit reference */
   const onSubmit = async ({ amount }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       id,
       downlineId,
       amount,
       type: "updateCreditReference",
-      token: generatedToken,
+
       role,
     };
     const res = await AxiosSecure.post(API.downLineEdit, payload);

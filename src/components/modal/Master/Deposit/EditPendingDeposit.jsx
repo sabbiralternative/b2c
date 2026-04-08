@@ -24,13 +24,12 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
   const { singleDeposit } = useGetSingleDeposit(payload);
   const onSubmit = async (values) => {
     // setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       ...values,
       lock_withdraw: values.lock_withdraw ? 1 : 0,
       depositId: downLineId,
       type: "editUTR",
-      token: generatedToken,
     };
 
     const res = await AxiosSecure.post(API.utr, payload);

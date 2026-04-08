@@ -23,19 +23,19 @@ const AddBranch = ({ setShowAddBranch }) => {
   /* add branch submit */
   const onSubmit = async ({ username, password, notes }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
     //     confirmPassword: newPasswordConfirm,
     //     mpassword: transactionCode,
     //     type: "panel",
-    //     token: generatedToken,
+    //
     //   });
     const payload = {
       username,
       password,
       notes,
-      token: generatedToken,
+
       branch_type: "branch",
     };
     const res = await AxiosSecure.post(API.addBranch, payload);

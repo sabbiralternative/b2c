@@ -1,14 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios";
 import toast from "react-hot-toast";
-import useContextState from "../../hooks/useContextState";
 import useGetViewAllBanner from "../../hooks/HyperMaster/Settings/useGetViewAllBanner";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ViewBanner = () => {
-  const { token } = useContextState();
   const { banners, refetchAllBanners } = useGetViewAllBanner();
   const navigate = useNavigate();
   const handleNavigate = (banner, link) => {
@@ -28,15 +26,11 @@ const ViewBanner = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const generatedToken = handleRandomToken();
         const payload = {
           type: "deleteBanner",
           bannerId: banner?.banner_id,
-          token: generatedToken,
         };
-        const res = await axios.post(API.banner, payload, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await AxiosSecure.post(API.banner, payload);
         const data = res.data;
         if (data?.success) {
           refetchAllBanners();

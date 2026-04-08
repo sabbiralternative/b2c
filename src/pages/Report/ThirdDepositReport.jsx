@@ -1,7 +1,6 @@
 // import { writeFile, utils } from "xlsx";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
-import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,31 +8,25 @@ import ShowImage from "../../components/modal/ShowImage";
 
 import { AdminRole } from "../../constant/constant";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ThirdDepositReport = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
   const [showFTDImage, setShowFTDImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setClientId, adminRole, setRefetchViewClient } =
-    useContextState();
+  const { setClientId, adminRole, setRefetchViewClient } = useContextState();
   const navigate = useNavigate();
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
   // const [totalFTD, setTotalFTD] = useState(null);
 
   const getFTDReport = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "get3FTD",
 
-      token: generatedToken,
       pagination: true,
     };
-    const res = await axios.post(API.export, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.export, payload);
 
     return res.data;
   };

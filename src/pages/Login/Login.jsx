@@ -3,7 +3,7 @@ import { API } from "../../api";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 // import handleEncryptData from "../../utils/handleEncryptData";
-// import handleRandomToken from "../../utils/handleRandomToken";
+//
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 
@@ -28,12 +28,10 @@ const Login = () => {
   const onSubmit = async ({ username, password }) => {
     setDisabled(true);
     /* Random token generator */
-    // const generatedToken = handleRandomToken();
+    //
     const loginData = {
       username: username,
       password: password,
-
-      // token: generatedToken,
     };
 
     const secret = "USER_SESSION_SECRET"; // must come from server, not hardcoded
@@ -48,12 +46,12 @@ const Login = () => {
         enc.encode(key),
         { name: "HMAC", hash: "SHA-256" },
         false,
-        ["sign"]
+        ["sign"],
       );
       const signature = await crypto.subtle.sign(
         "HMAC",
         keyData,
-        enc.encode(message)
+        enc.encode(message),
       );
       return btoa(String.fromCharCode(...new Uint8Array(signature)));
     }

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import toast from "react-hot-toast";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import { API } from "../../api";
@@ -34,13 +34,13 @@ const ChangeColor = ({ setShowColor, downlineId, role, id, refetchClient }) => {
   const handleChangeUserColor = async (e) => {
     setDisabled(true);
     e.preventDefault();
-    const generatedToken = handleRandomToken();
+
     const payload = {
       id,
       downlineId,
       type: "changeColor",
       color: color,
-      token: generatedToken,
+
       role,
     };
 

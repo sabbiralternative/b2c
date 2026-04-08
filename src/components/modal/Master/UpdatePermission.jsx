@@ -30,11 +30,11 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
 
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       ...values,
       type: "updateStaffRole",
-      token: generatedToken,
+
       staff_id: showPermission,
     };
 

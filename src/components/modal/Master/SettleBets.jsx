@@ -21,11 +21,9 @@ const SettleBets = ({ searchUser, marketId, setShowBetsModal }) => {
 
   useEffect(() => {
     const getSettledBetsData = async () => {
-      const generatedToken = handleRandomToken();
       const encryptedData = handleEncryptData({
         searchId: searchUser,
         marketId: marketId,
-        token: generatedToken,
       });
       const res = await AxiosSecure.post(API.settledBets, encryptedData);
       const data = res.data;

@@ -2,7 +2,7 @@ import { API } from "../../api";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import toast from "react-hot-toast";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 
@@ -26,7 +26,7 @@ const ChangePassword = ({
   /* handle change password */
   const onSubmit = async ({ password, confirmPassword, mpassword }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     // if (password !== confirmPassword) {
     //   return toast.error("Password did not matched");
     // }
@@ -45,7 +45,6 @@ const ChangePassword = ({
       password,
       confirmPassword,
       mpassword,
-      token: generatedToken,
     };
 
     const res = await AxiosSecure.post(API.downLineEdit, payload);

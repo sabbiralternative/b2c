@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
 import { SiAxios } from "react-icons/si";
@@ -32,12 +32,11 @@ const AddUPIPaymentGateway = ({ setAddPaymentGateway }) => {
   /* add upi */
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "addPayment",
       ...values,
       method: "upigateway",
-      token: generatedToken,
     };
     const res = await SiAxios.post(API.payments, payload);
     const data = res.data;

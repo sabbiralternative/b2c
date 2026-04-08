@@ -1,18 +1,16 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useContextState from "../../hooks/useContextState";
 import useGetSingleBanner from "../../hooks/HyperMaster/Settings/useGetSingleBanner";
 import useGetViewAllBanner from "../../hooks/HyperMaster/Settings/useGetViewAllBanner";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const EditBanner = () => {
   const [disabled, setDisabled] = useState(false);
   const navigate = useNavigate();
-  const { token } = useContextState();
   const { register, handleSubmit, reset } = useForm();
   const bannerId = localStorage.getItem("bannerId");
   const { singleBanner, isLoading, isFetching } = useGetSingleBanner(bannerId);
@@ -21,17 +19,14 @@ const EditBanner = () => {
   /* handle edit banner */
   const onSubmit = async ({ status, priority }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "updateBanner",
       bannerId,
       status,
       priority,
-      token: generatedToken,
     };
-    const res = await axios.post(API.banner, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.banner, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

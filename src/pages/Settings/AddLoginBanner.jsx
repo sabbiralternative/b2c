@@ -1,8 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import useContextState from "../../hooks/useContextState";
 import { API } from "../../api";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useGetViewAllBanner from "../../hooks/HyperMaster/Settings/useGetViewAllBanner";
@@ -11,6 +10,7 @@ import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 import { useWhiteLabel } from "../../hooks/AdminMaster/whiteLabel";
 import { AdminRole } from "../../constant/constant";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const AddLoginBanner = () => {
   const { data } = useWhiteLabel({
@@ -21,7 +21,7 @@ const AddLoginBanner = () => {
   const navigate = useNavigate();
   const { refetchAllBanners } = useGetViewAllBanner();
   const { register, handleSubmit, reset, watch } = useForm();
-  const { token, adminRole } = useContextState();
+  const { adminRole } = useContextState();
   const [filePath, setFilePath] = useState("");
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -39,11 +39,7 @@ const AddLoginBanner = () => {
           type: "banner",
         };
         formData.append("data", JSON.stringify(payload));
-        const res = await axios.post(API.uploadScreenshot, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await AxiosSecure.post(API.uploadScreenshot, formData);
         const data = res.data;
         setLoading(false);
         if (data?.success) {
@@ -52,20 +48,17 @@ const AddLoginBanner = () => {
       };
       handleSubmitImage();
     }
-  }, [image, token]);
+  }, [image]);
 
   const onSubmit = async (fieldValues) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       ...fieldValues,
       type: "addLoginBanner",
       banner_link: filePath,
-      token: generatedToken,
     };
-    const res = await axios.post(API.banner, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.banner, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);
@@ -81,15 +74,13 @@ const AddLoginBanner = () => {
 
   const handleDeleteCurrentImage = async () => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "deleteLoginBanner",
-      token: generatedToken,
+
       site: site || null,
     };
-    const res = await axios.post(API.banner, payload, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await AxiosSecure.post(API.banner, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

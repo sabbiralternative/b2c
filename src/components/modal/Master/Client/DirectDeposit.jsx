@@ -40,14 +40,14 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id, refetch }) => {
 
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       id,
       downlineId,
       type: "deposit",
       ...values,
       amount,
-      token: generatedToken,
+
       role,
     };
     const res = await AxiosSecure.post(API.downLineEdit, payload);

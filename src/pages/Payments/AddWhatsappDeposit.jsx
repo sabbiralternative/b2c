@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -25,12 +25,11 @@ const AddWhatsappDeposit = () => {
   /* handle add bank */
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "addPayment",
       ...values,
       method: "whatsapp",
-      token: generatedToken,
     };
     const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;

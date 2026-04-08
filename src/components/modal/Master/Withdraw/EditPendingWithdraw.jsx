@@ -38,14 +38,13 @@ const EditPendingWithdraw = ({
   const { singleWithdraw } = useGetSingleWithdraw(SingleWithdrawPayload);
 
   const onSubmit = async ({ remark, status }) => {
-    const generatedToken = handleRandomToken();
     const payload = {
       withdrawId: downLineId,
       status,
       remark,
       utr,
       type: "editWithdraw",
-      token: generatedToken,
+
       fileName: filename,
     };
     const res = await AxiosSecure.post(API.withdraw, payload);

@@ -10,10 +10,8 @@ const useGetReport = (args, downloadData) => {
     queryKey: ["exports"],
     enabled: !tokenLoading && downloadData,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
         ...args,
-        token: generatedToken,
       };
       const res = await AxiosSecure.post(API.export, payload);
       const data = res.data;

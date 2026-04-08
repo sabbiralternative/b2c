@@ -25,20 +25,20 @@ const Withdraw = ({
   /* handle withdraw submit */
   const onSubmit = async ({ amount, remark }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
     //     confirmPassword: newPasswordConfirm,
     //     mpassword: transactionCode,
     //     type: "panel",
-    //     token: generatedToken,
+    //
     //   });
     const payload = {
       downlineId,
       type: "withdraw",
       amount,
       remark,
-      token: generatedToken,
+
       id,
       role,
     };

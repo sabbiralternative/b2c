@@ -7,10 +7,9 @@ export const useClient = (args) => {
   return useQuery({
     queryKey: ["clients", args],
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
         ...args,
-        token: generatedToken,
+
         pagination: true,
       };
       const { data } = await AxiosSecure.post(API.viewClients, payload);

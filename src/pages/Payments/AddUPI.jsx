@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -25,12 +25,11 @@ const AddUPI = () => {
   /* add upi */
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "addPayment",
       ...values,
       method: "upi",
-      token: generatedToken,
     };
     const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;

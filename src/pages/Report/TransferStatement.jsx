@@ -1,19 +1,17 @@
 import { DatePicker, Pagination } from "rsuite";
 // import { writeFile, utils } from "xlsx";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
-import axios from "axios";
-import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { defaultDate } from "../../utils/defaultDate";
 import DefaultDateButton from "./DefaultDateButton";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const TransferStatement = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
   const [activePage, setActivePage] = useState(1);
-  const { token } = useContextState();
   const [viewTransferStatementData, setViewTransferStatementData] =
     useState(false);
   const [transferStatement, setTransferStatement] = useState([]);
@@ -23,22 +21,17 @@ const TransferStatement = () => {
   const [table, setTable] = useState("new");
 
   const onSubmit = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "viewTransfer",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
-      token: generatedToken,
+
       pagination: true,
       page: activePage,
       table,
     };
 
-    const res = await axios.post(API.transferStatement, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.transferStatement, payload);
     return res.data;
   };
 

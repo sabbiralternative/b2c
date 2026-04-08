@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import {
   useAddWhiteLabel,
   useWhiteLabel,
@@ -24,7 +24,7 @@ const AddWhiteLabel = () => {
     if (values?.password !== values?.confirm_password) {
       return toast.error("Password did not matched!");
     }
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "addWhitelabel",
       ...values,
@@ -42,7 +42,6 @@ const AddWhiteLabel = () => {
       language: Number(values?.language),
       otp: Number(values?.otp),
       complaint: Number(values?.complaint),
-      token: generatedToken,
     };
 
     mutate(payload, {

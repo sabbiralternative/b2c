@@ -24,12 +24,11 @@ const AddSlip = ({ setAddSlipId, addSlipId, refetchAllWithdraw }) => {
   const { handleSubmit, reset } = useForm();
 
   const onSubmit = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       withdrawId: addSlipId,
       utr,
       type: "uploadSlip",
-      token: generatedToken,
+
       fileName: filename,
     };
     const res = await AxiosSecure.post(API.withdraw, payload);

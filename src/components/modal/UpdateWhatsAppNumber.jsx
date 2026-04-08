@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
@@ -35,13 +35,13 @@ const UpdateWhatsAppNumber = ({
   /* handle update credit reference */
   const onSubmit = async ({ mobile }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       id,
       downlineId,
       mobile,
       type: "updateWhatsapp",
-      token: generatedToken,
+
       role,
     };
     const res = await AxiosSecure.post(API.downLineEdit, payload);

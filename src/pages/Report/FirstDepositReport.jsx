@@ -1,7 +1,6 @@
 // import { writeFile, utils } from "xlsx";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
-import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +13,7 @@ import { useGetIndex } from "../../hooks";
 import moment from "moment";
 import Loader from "../../components/ui/Loader/Loader";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const FirstDepositReport = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
@@ -23,8 +23,7 @@ const FirstDepositReport = () => {
   });
   const [showFTDImage, setShowFTDImage] = useState(false);
   const [image, setImage] = useState("");
-  const { token, setClientId, adminRole, setRefetchViewClient } =
-    useContextState();
+  const { setClientId, adminRole, setRefetchViewClient } = useContextState();
   const navigate = useNavigate();
   const [viewFRDData, setViewFTDData] = useState(false);
   const [FTDData, setFTDData] = useState([]);
@@ -37,12 +36,11 @@ const FirstDepositReport = () => {
   const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const getFTDReport = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "getFTD",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
-      token: generatedToken,
+
       pagination: true,
       amountFrom: amountFrom ? Number(amountFrom) : null,
       amountTo: amountTo ? Number(amountTo) : null,
@@ -51,11 +49,7 @@ const FirstDepositReport = () => {
     if (adminRole === AdminRole.admin_staff) {
       payload.branch_id = branchId;
     }
-    const res = await axios.post(API.export, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.export, payload);
 
     return res.data;
   };

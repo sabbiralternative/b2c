@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import useGetStatus from "../../hooks/HyperMaster/Branch/useGetStatus";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import useContextState from "../../hooks/useContextState";
 import toast from "react-hot-toast";
@@ -72,7 +72,7 @@ const ChangeBranchStatus = ({
   const handleChangeUserLock = async (e) => {
     setDisabled(true);
     e.preventDefault();
-    const generatedToken = handleRandomToken();
+
     let payload = {
       id,
       downlineId,
@@ -80,7 +80,7 @@ const ChangeBranchStatus = ({
       type: "changeStatus",
       userStatus: userStatus ? 1 : 0,
       bettingStatus: betStatus ? 1 : 0,
-      token: generatedToken,
+
       role,
     };
 

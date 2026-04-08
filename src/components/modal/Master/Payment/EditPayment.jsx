@@ -40,13 +40,12 @@ const EditPayment = ({ setShowEditPayment }) => {
 
   const onSubmit = async (fieldValues) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     let payload = {
       type: "updatePayment",
       paymentId: downLineId,
       ...fieldValues,
       status: parseFloat(fieldValues?.status),
-      token: generatedToken,
     };
     if (currentPayment?.type === "qr") {
       payload.qr_code = qr_code;

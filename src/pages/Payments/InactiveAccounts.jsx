@@ -6,7 +6,7 @@ import { useGetIndex } from "../../hooks";
 import useContextState from "../../hooks/useContextState";
 import { AdminRole } from "../../constant/constant";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import ShowImage from "../../components/modal/ShowImage";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -44,11 +44,9 @@ const InactiveAccounts = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const generatedToken = handleRandomToken();
         const payload = {
           type: "deletePayment",
           paymentId,
-          token: generatedToken,
         };
         const res = await AxiosSecure.post(API.payments, payload);
         const data = res.data;

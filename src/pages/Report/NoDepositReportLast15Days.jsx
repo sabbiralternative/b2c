@@ -1,8 +1,7 @@
 import { DatePicker } from "rsuite";
 // import { writeFile, utils } from "xlsx";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
-import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,11 +10,11 @@ import { defaultDate } from "../../utils/defaultDate";
 // import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const NoDepositReportLast15Days = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
-  const { token, setClientId, adminRole, setRefetchViewClient } =
-    useContextState();
+  const { setClientId, adminRole, setRefetchViewClient } = useContextState();
   const [viewNoDepositReportData, setViewNoDepositReportData] = useState(false);
   const [noDepositReport, setNoDepositReportData] = useState([]);
   const navigate = useNavigate();
@@ -24,19 +23,14 @@ const NoDepositReportLast15Days = () => {
   const [endDate, setEndDate] = useState(new Date());
 
   const getNoDepositReportReport = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "getND15",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
-      token: generatedToken,
+
       pagination: true,
     };
-    const res = await axios.post(API.export, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.export, payload);
     return res.data;
   };
 

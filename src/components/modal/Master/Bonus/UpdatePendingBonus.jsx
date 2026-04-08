@@ -17,12 +17,11 @@ const UpdatePendingBonus = ({ setEditBonusId, editBonusId, refetchBonus }) => {
 
   const handleUpdateBonus = async ({ status }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "editBonusStatement",
       bonus_statement_id: editBonusId,
       status,
-      token: generatedToken,
     };
 
     const res = await AxiosSecure.post(API.bonus, payload);

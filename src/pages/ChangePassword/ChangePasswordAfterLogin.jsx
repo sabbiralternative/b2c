@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { API } from "../../api";
 import { handleLogOut } from "../../utils/handleLogOut";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { useState } from "react";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 
@@ -18,19 +18,19 @@ const ChangePasswordAfterLogin = () => {
   /* handle change password  */
   const onSubmit = async ({ oldPassword, newPassword, confirmPassword }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     //   const encryptedData = handleEncryptData({
     //     newPassword: newPassword,
     //     confirmPassword: newPasswordConfirm,
     //     mpassword: transactionCode,
     //     type: "panel",
-    //     token: generatedToken,
+    //
     //   });
     const payload = {
       newPassword,
       oldPassword,
       confirmPassword,
-      token: generatedToken,
+
       changePasswordType: "after_login",
     };
     const res = await AxiosSecure.post(API.changePassword, payload);

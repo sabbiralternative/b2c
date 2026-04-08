@@ -6,7 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
 import { API } from "../../api";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { classifications } from "../../static/classification";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 
@@ -51,13 +51,12 @@ const AddQR = () => {
 
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "addPayment",
       qr_code,
       ...values,
       method: "qr",
-      token: generatedToken,
     };
 
     const res = await AxiosSecure.post(API.payments, payload);

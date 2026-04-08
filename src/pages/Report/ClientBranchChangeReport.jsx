@@ -1,9 +1,8 @@
 import moment from "moment/moment";
 import { DatePicker, Pagination } from "rsuite";
 // import { writeFile, utils } from "xlsx";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
-import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +11,14 @@ import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ClientBranchChangeReport = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
   const [branchId, setBranchId] = useState(0);
   const [refetch, setRefetch] = useState(false);
   const [activePage, setActivePage] = useState(1);
-  const { token, setClientId, adminRole, setRefetchViewClient } =
-    useContextState();
+  const { setClientId, adminRole, setRefetchViewClient } = useContextState();
   const [viewClientData, setViewClientData] = useState(false);
   const [clientData, setClientData] = useState([]);
   const navigate = useNavigate();
@@ -30,12 +29,11 @@ const ClientBranchChangeReport = () => {
   const [endDate, setEndDate] = useState(new Date());
 
   const getClientBranchTargetReport = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "getClientTransfer",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
-      token: generatedToken,
+
       pagination: true,
       page: activePage,
     };
@@ -46,11 +44,7 @@ const ClientBranchChangeReport = () => {
     ) {
       payload.branch_id = branchId;
     }
-    const res = await axios.post(API.export, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.export, payload);
     return res.data;
   };
 

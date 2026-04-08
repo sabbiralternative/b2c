@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import { useWhiteLabel } from "../../hooks/AdminMaster/whiteLabel";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -24,10 +24,9 @@ const AddClient = () => {
   /* handle add client */
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       ...values,
-      token: generatedToken,
     };
 
     const res = await AxiosSecure.post(API.registerPanel, payload);

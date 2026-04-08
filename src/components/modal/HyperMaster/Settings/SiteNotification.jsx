@@ -22,11 +22,10 @@ const SiteNotification = ({ setSiteNotification }) => {
   /* handle edit site notification */
   const onSubmit = async ({ message }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "setNotification",
       message,
-      token: generatedToken,
     };
     const res = await AxiosSecure.post(API.notification, payload);
     const data = res.data;

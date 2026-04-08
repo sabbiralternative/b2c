@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useContextState from "./useContextState";
 import { API } from "../api";
-import handleRandomToken from "../utils/handleRandomToken";
+
 import handleEncryptData from "../utils/handleEncryptData";
 import { AxiosSecure } from "../lib/AxiosSecure";
 
@@ -12,10 +12,7 @@ const useExposer = (eventId) => {
     queryKey: ["exposure"],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
-      const encryptedData = handleEncryptData({
-        token: generatedToken,
-      });
+      const encryptedData = handleEncryptData({});
       const res = await AxiosSecure.post(
         `${API.adminExposure}/${eventId}`,
         encryptedData,

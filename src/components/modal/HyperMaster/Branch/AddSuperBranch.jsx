@@ -20,13 +20,12 @@ const AddSuperBranch = ({ setShowAddSuperBranch }) => {
   /* add branch submit */
   const onSubmit = async ({ username, password, notes }) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
 
     const payload = {
       username,
       password,
       notes,
-      token: generatedToken,
+
       branch_type: "super_branch",
     };
     const res = await AxiosSecure.post(API.addBranch, payload);

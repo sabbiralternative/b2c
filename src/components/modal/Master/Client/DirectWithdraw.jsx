@@ -49,14 +49,14 @@ const DirectWithdraw = ({
 
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       id,
       downlineId,
       type: "withdraw",
       ...values,
       amount,
-      token: generatedToken,
+
       role,
     };
     const res = await AxiosSecure.post(API.downLineEdit, payload);

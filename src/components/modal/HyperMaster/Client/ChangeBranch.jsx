@@ -41,13 +41,13 @@ const ChangeBranch = ({
   const handleChangeUserColor = async (e) => {
     setDisabled(true);
     e.preventDefault();
-    const generatedToken = handleRandomToken();
+
     let payload = {
       id,
       downlineId,
       type: "changeBranch",
       branch_id: activeBranchId,
-      token: generatedToken,
+
       role,
     };
 

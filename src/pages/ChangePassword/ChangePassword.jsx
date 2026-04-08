@@ -26,7 +26,7 @@ const ChangePassword = () => {
     //     confirmPassword: newPasswordConfirm,
     //     mpassword: transactionCode,
     //     type: "panel",
-    //     token: generatedToken,
+    //
     //   });
 
     const payload = {

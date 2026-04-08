@@ -10,9 +10,7 @@ const useGetSingleViewBonus = (bonus_id) => {
     queryKey: ["singleBonus", bonus_id],
     enabled: !tokenLoading,
     queryFn: async () => {
-      const generatedToken = handleRandomToken();
       const payload = {
-        token: generatedToken,
         type: "viewSingleBonus",
         bonus_id,
       };

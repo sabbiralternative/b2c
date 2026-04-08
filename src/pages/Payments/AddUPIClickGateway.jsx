@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
 import { AxiosSecure } from "../../lib/AxiosSecure";
@@ -20,11 +20,11 @@ const AddUPIClickGateway = () => {
   /* add new payment gateway */
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     const payload = {
       type: "addPayment",
       ...values,
-      token: generatedToken,
+
       method: "upiclick",
     };
 

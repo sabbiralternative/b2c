@@ -1,8 +1,7 @@
 import { DatePicker } from "rsuite";
 // import { writeFile, utils } from "xlsx";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import { API } from "../../api";
-import axios from "axios";
 import useContextState from "../../hooks/useContextState";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,7 @@ import DefaultDateButton from "./DefaultDateButton";
 import { AdminRole } from "../../constant/constant";
 import { useGetIndex } from "../../hooks";
 import { useExportCSVMutation } from "../../hooks/exportCSV";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const DirectWithdrawReport = () => {
   const { mutate: exportMutation } = useExportCSVMutation();
@@ -22,8 +22,7 @@ const DirectWithdrawReport = () => {
   // const [amountFrom, setAmountFrom] = useState(null);
   // const [amountTo, setAmountTo] = useState(null);
 
-  const { token, setClientId, adminRole, setRefetchViewClient } =
-    useContextState();
+  const { setClientId, adminRole, setRefetchViewClient } = useContextState();
   const navigate = useNavigate();
   const [viewWithdrawData, setViewWithdrawData] = useState(false);
   const [withdrawData, setWithdrawData] = useState([]);
@@ -33,12 +32,11 @@ const DirectWithdrawReport = () => {
   const [endDate, setEndDate] = useState(new Date());
 
   const getWithdrawReport = async () => {
-    const generatedToken = handleRandomToken();
     const payload = {
       type: "getDirectWithdraw",
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       toDate: moment(endDate).format("YYYY-MM-DD"),
-      token: generatedToken,
+
       pagination: true,
       // amountFrom: amountFrom ? Number(amountFrom) : null,
       // amountTo: amountTo ? Number(amountTo) : null,
@@ -47,11 +45,7 @@ const DirectWithdrawReport = () => {
       payload.branch_id = branchId;
     }
 
-    const res = await axios.post(API.export, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.export, payload);
     return res.data;
   };
 

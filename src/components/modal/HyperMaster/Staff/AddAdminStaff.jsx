@@ -28,20 +28,18 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
 
   const onSubmit = async (values) => {
     setDisabled(true);
-    const generatedToken = handleRandomToken();
+
     let payload;
     if (adminRole === "master") {
       payload = {
         ...values,
         type: "addStaff",
-        token: generatedToken,
       };
     } else {
       payload = {
         ...values,
         type: "addStaff",
         role: "admin_staff",
-        token: generatedToken,
       };
     }
 

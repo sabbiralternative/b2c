@@ -2,15 +2,15 @@ import useContextState from "../../hooks/useContextState";
 import useGetAllBranch from "../../hooks/HyperMaster/Branch/useGetAllBranch";
 import { handleSplitUserName } from "../../utils/handleSplitUserName";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { API } from "../../api";
-import handleRandomToken from "../../utils/handleRandomToken";
+
 import Deposit from "../../components/modal/HyperMaster/Branch/Deposit";
 import Withdraw from "../../components/modal/HyperMaster/Branch/Withdraw";
 import ChangePassword from "../../components/modal/ChangePassword";
 import CreditReference from "../../components/modal/CreditReference";
 import { useState } from "react";
 import ChangeBranchStatus from "../../components/modal/ChangeBranchStatus";
+import { AxiosSecure } from "../../lib/AxiosSecure";
 
 const ViewSuperBranches = () => {
   const [id, setId] = useState("");
@@ -25,7 +25,7 @@ const ViewSuperBranches = () => {
   const { branches, refetchAllBranch } = useGetAllBranch({
     branch_type: "super_branch",
   });
-  const { token, adminRole } = useContextState();
+  const { adminRole } = useContextState();
   const navigate = useNavigate();
 
   const handleNavigate = (username, link) => {
@@ -35,16 +35,10 @@ const ViewSuperBranches = () => {
 
   /* Handle login read only without password */
   const handleLoginReadOnly = async (username) => {
-    const generatedToken = handleRandomToken();
     const payload = {
       username,
-      token: generatedToken,
     };
-    const res = await axios.post(API.loginReadOnly, payload, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await AxiosSecure.post(API.loginReadOnly, payload);
     const data = res.data;
     if (data?.success) {
       const baseUrl = window.location.origin;
