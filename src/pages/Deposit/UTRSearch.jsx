@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import { API } from "../../api";
 import Slip from "../../components/modal/Master/Deposit/Slip";
-import { useLocation } from "react-router-dom";
 
 const UTRSearch = () => {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const searchUTRParam = params.get("searchUTR") || "";
   const [utr, setUtr] = useState("");
   const [showImage, setShowImage] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -28,23 +24,6 @@ const UTRSearch = () => {
     }
   };
 
-  useEffect(() => {
-    if (searchUTRParam) {
-      const handleLoadUTR = async () => {
-        setUtr(searchUTRParam);
-        const { data } = await AxiosSecure.post(API.utr, {
-          type: "searchUTR",
-          utr: searchUTRParam,
-          pagination: true,
-        });
-        if (data?.success) {
-          setUtrData(data?.result);
-          setLoading(false);
-        }
-      };
-      handleLoadUTR();
-    }
-  }, [searchUTRParam]);
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <div className="col-12">
