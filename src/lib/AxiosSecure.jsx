@@ -13,14 +13,15 @@ AxiosSecure.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     if (config?.method === "post") {
-      const generatedToken = handleRandomToken();
+      if (!(config.data instanceof FormData)) {
+        const generatedToken = handleRandomToken();
+        let payload = {
+          ...config.data,
+          token: generatedToken,
+        };
 
-      let payload = {
-        ...config.data,
-        token: generatedToken,
-      };
-
-      config.data = payload;
+        config.data = payload;
+      }
     }
     return config;
   },
