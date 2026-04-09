@@ -90,7 +90,7 @@ const UTRSearch = () => {
                 <thead>
                   <tr>
                     <th>User Id</th>
-                    <th>Login Name</th>
+                    <th>Branch Name</th>
                     <th>Amount</th>
                     <th>Date Added</th>
                     <th>Date Modified</th>
@@ -106,7 +106,7 @@ const UTRSearch = () => {
                         <td>
                           <strong>{client?.user_id}</strong>
                         </td>
-                        <td>{client?.loginnameVisible && client?.loginname}</td>
+                        <td>{client?.branch_name}</td>
                         <td>
                           <strong>{client?.amount}</strong>
                         </td>
