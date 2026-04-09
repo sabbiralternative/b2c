@@ -3,7 +3,7 @@ import useContextState from "./useContextState";
 import { API } from "../api";
 import { useEffect } from "react";
 import { handleLogOut } from "../utils/handleLogOut";
-import { AxiosSecure } from "../lib/AxiosSecure";
+import axios from "axios";
 //
 // import handleEncryptData from "../utils/handleEncryptData";
 /* Balance api */
@@ -25,7 +25,11 @@ const useBalance = (payload) => {
         return;
       }
 
-      const res = await AxiosSecure.post(API.balance, payload);
+      const res = await axios.post(API.balance, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (res?.data?.success === false && token) {
         /* Logout if success false  */
