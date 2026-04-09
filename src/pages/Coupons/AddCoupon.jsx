@@ -91,6 +91,7 @@ const AddCoupon = () => {
                         Generate Coupon
                       </button>
                       <button
+                        type="button"
                         onClick={() =>
                           handleCopyToClipBoard(getValues("coupon_code"))
                         }
