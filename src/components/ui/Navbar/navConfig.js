@@ -172,14 +172,34 @@ export const getNavItems = (permissions, adminRole, setters) => {
       ],
     },
     {
+      tab: "Exposure",
+      key: "exposure",
+      show:
+        permissions.includes("exposure") &&
+        adminRole === AdminRole.admin_master,
+      children: [
+        {
+          label: "Market Analysis",
+          href: "/market-analysis",
+          show: true,
+        },
+        {
+          label: "Current Bets",
+          href: "/current-bets",
+          show: true,
+        },
+      ],
+    },
+    {
       tab: "Miscellaneous",
       key: "miscellaneous",
       show:
-        permissions?.includes("payment") ||
-        permissions?.includes("exposure") ||
-        permissions?.includes("affiliate") ||
-        permissions?.includes("setting") ||
-        permissions?.includes("complaint"),
+        (permissions?.includes("payment") ||
+          permissions?.includes("exposure") ||
+          permissions?.includes("affiliate") ||
+          permissions?.includes("setting") ||
+          permissions?.includes("complaint")) &&
+        adminRole !== AdminRole.admin_master,
       willSubTab: true,
       children: [
         {

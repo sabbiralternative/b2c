@@ -50,17 +50,20 @@ const Home = () => {
 
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
-      <div style={{ marginBottom: "10px" }}>
-        <DatePicker
-          style={{ width: "100%", maxWidth: "300px" }}
-          format="dd-MM-yyyy"
-          editable={false}
-          value={date}
-          onChange={setDate}
-          disabledDate={disableOutsideLast14Days}
-          block
-        />
-      </div>
+      {permissions.includes(Permission.dashboard) && (
+        <div style={{ marginBottom: "10px" }}>
+          <DatePicker
+            style={{ width: "100%", maxWidth: "300px" }}
+            format="dd-MM-yyyy"
+            editable={false}
+            value={date}
+            onChange={setDate}
+            disabledDate={disableOutsideLast14Days}
+            block
+          />
+        </div>
+      )}
+
       {permissions.includes(Permission.dashboard) && (
         <div className="row">
           <div className="col-lg-6 col-md-12">

@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import UpdateChecker from "../../components/modal/HyperMaster/Staff/UpdateChecker";
 import UpdatePassword from "../../components/modal/HyperMaster/Staff/UpdatePassword";
 import { useWhiteLabel } from "../../hooks/AdminMaster/whiteLabel";
-import Deposit from "../../components/modal/Master/Client/Deposit";
-import DirectWithdraw from "../../components/modal/Master/Client/DirectWithdraw";
-import ChangePassword from "../../components/modal/ChangePassword";
-import CreditReference from "../../components/modal/CreditReference";
+// import Deposit from "../../components/modal/Master/Client/Deposit";
+// import DirectWithdraw from "../../components/modal/Master/Client/DirectWithdraw";
+// import ChangePassword from "../../components/modal/ChangePassword";
+// import CreditReference from "../../components/modal/CreditReference";
 import { useNavigate } from "react-router-dom";
 import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import AddLogo from "../../components/modal/WhiteLable/AddLogo";
@@ -20,22 +20,22 @@ const ViewWhiteLabel = () => {
   const [showMore, setShowMore] = useState(null);
   const showMoreRef = useRef();
   const navigate = useNavigate();
-  const [showDepositModal, setShowDepositModal] = useState(false);
-  const [showWithdrawModal, setShowWithdrawModal] = useState(false);
-  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
-  const [showCreditRefModal, setShowCreditRefModal] = useState(false);
-  const [downLineId, setDownLineId] = useState("");
-  const [payloadRole, setPayloadRole] = useState("");
-  const [id, setId] = useState("");
+  // const [showDepositModal, setShowDepositModal] = useState(false);
+  // const [showWithdrawModal, setShowWithdrawModal] = useState(false);
+  // const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+  // const [showCreditRefModal, setShowCreditRefModal] = useState(false);
+  // const [downLineId, setDownLineId] = useState("");
+  // const [payloadRole, setPayloadRole] = useState("");
+  // const [id, setId] = useState("");
   const [updateStatusId, setUpdateStatusId] = useState(null);
   const [updatePasswordId, setUpdatePasswordId] = useState(null);
   const { data, refetch } = useWhiteLabel({
     type: "viewWhitelabel",
   });
 
-  const handleOpenModal = (setModal, username, role, id) => {
-    (setModal(true), setDownLineId(username), setPayloadRole(role), setId(id));
-  };
+  // const handleOpenModal = (setModal, username, role, id) => {
+  //   (setModal(true), setDownLineId(username), setPayloadRole(role), setId(id));
+  // };
 
   const handleShowMore = (i) => {
     if (i === showMore) {
@@ -64,7 +64,7 @@ const ViewWhiteLabel = () => {
         />
       )}
 
-      {showDepositModal && (
+      {/* {showDepositModal && (
         <Deposit
           downlineId={downLineId}
           id={id}
@@ -90,9 +90,9 @@ const ViewWhiteLabel = () => {
           setShowChangePassword={setShowChangePasswordModal}
           refetch={refetch}
         />
-      )}
+      )} */}
 
-      {showCreditRefModal && (
+      {/* {showCreditRefModal && (
         <CreditReference
           downlineId={downLineId}
           id={id}
@@ -100,7 +100,7 @@ const ViewWhiteLabel = () => {
           setShowCreditRef={setShowCreditRefModal}
           refetch={refetch}
         />
-      )}
+      )} */}
       {modal.name === "addLogo" && (
         <AddLogo modal={modal} refetch={refetch} setModal={setModal} />
       )}
@@ -186,7 +186,7 @@ const ViewWhiteLabel = () => {
                       <td>{whiteLabel?.currency}</td>
 
                       <td style={{ display: "flex", color: "white" }}>
-                        <a
+                        {/* <a
                           onClick={() =>
                             handleOpenModal(
                               setShowDepositModal,
@@ -242,7 +242,7 @@ const ViewWhiteLabel = () => {
                         >
                           CR
                         </a>
-                        &nbsp;
+                        &nbsp; */}
                         <a
                           style={{ color: "white" }}
                           onClick={() =>
