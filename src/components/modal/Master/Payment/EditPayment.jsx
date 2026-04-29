@@ -2,7 +2,6 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import useContextState from "../../../../hooks/useContextState";
-import handleRandomToken from "../../../../utils/handleRandomToken";
 import { API } from "../../../../api";
 import toast from "react-hot-toast";
 import useGetCurrentPaymentStatus from "../../../../hooks/Master/Payment/useGetCurrentPaymentStatus";

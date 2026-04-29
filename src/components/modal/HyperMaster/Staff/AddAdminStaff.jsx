@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
-import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
 
 import {
@@ -64,7 +63,14 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
       label: "Dashboard",
       value: "dashboard",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
+    },
+    {
+      label: "Whitelable",
+      value: "whitelable",
+      show: adminRole === AdminRole.admin_master,
     },
     {
       label: "Deposit",
@@ -99,7 +105,9 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
       label: "Report",
       value: "report",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
     {
       label: "Settings",
@@ -115,7 +123,9 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
       label: "Exposure",
       value: "exposure",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
 
     {
@@ -159,6 +169,11 @@ const AddAdminStaff = ({ setShowAddStaff }) => {
       label: "Client Level",
       value: "client_level",
       show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Admin",
+      value: "admin",
+      show: adminRole === AdminRole.admin_master,
     },
   ];
 

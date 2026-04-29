@@ -7,7 +7,6 @@ import {
   useUpdateSingleChecker,
 } from "../../../hooks/HyperMaster/Staff";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
-import handleRandomToken from "../../../utils/handleRandomToken";
 import useContextState from "../../../hooks/useContextState";
 import { AdminRole } from "../../../constant/constant";
 
@@ -64,7 +63,14 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
       label: "Dashboard",
       value: "dashboard",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
+    },
+    {
+      label: "Whitelable",
+      value: "whitelable",
+      show: adminRole === AdminRole.admin_master,
     },
     {
       label: "Deposit",
@@ -115,7 +121,9 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
       label: "Report",
       value: "report",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
     {
       label: "Settings",
@@ -131,7 +139,9 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
       label: "Exposure",
       value: "exposure",
       show:
-        adminRole === AdminRole.hyper_master || adminRole === AdminRole.master,
+        adminRole === AdminRole.hyper_master ||
+        adminRole === AdminRole.master ||
+        adminRole === AdminRole.admin_master,
     },
 
     {
@@ -175,6 +185,11 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
       label: "Client Level",
       value: "client_level",
       show: adminRole === AdminRole.hyper_master,
+    },
+    {
+      label: "Admin",
+      value: "admin",
+      show: adminRole === AdminRole.admin_master,
     },
   ];
 

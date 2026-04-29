@@ -2,7 +2,6 @@ import toast from "react-hot-toast";
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
-import handleRandomToken from "../../../../utils/handleRandomToken";
 import { API } from "../../../../api";
 import useGetSiteNotification from "../../../../hooks/HyperMaster/Settings/useGetSiteNotification";
 import { AxiosSecure } from "../../../../lib/AxiosSecure";

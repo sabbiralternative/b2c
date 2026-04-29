@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import useCloseModalClickOutside from "../../../../hooks/useCloseModalClickOutside";
-import handleRandomToken from "../../../../utils/handleRandomToken";
 import { useForm } from "react-hook-form";
 
 import {
