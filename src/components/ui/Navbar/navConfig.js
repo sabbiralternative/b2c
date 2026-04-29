@@ -191,6 +191,18 @@ export const getNavItems = (permissions, adminRole, setters) => {
       ],
     },
     {
+      tab: "Admin",
+      key: "admin",
+      show: permissions.includes("admin"),
+      children: [
+        {
+          label: "View Admin",
+          href: "/view-admin",
+          show: true,
+        },
+      ],
+    },
+    {
       tab: "Miscellaneous",
       key: "miscellaneous",
       show:

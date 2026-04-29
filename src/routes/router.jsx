@@ -96,6 +96,7 @@ import WithdrawLockClients from "../pages/Client/WithdrawLockClient";
 import AddCoupon from "../pages/Coupons/AddCoupon";
 import ViewCoupons from "../pages/Coupons/ViewCoupons";
 import CouponBonusReport from "../pages/Coupons/CouponBonusReport";
+import ViewAdmin from "../pages/Admin/ViewAdmin";
 
 export const router = createBrowserRouter(
   [
@@ -480,6 +481,10 @@ export const router = createBrowserRouter(
         {
           path: "/coupon-bonus-report",
           element: <CouponBonusReport />,
+        },
+        {
+          path: "/view-admin",
+          element: <ViewAdmin />,
         },
       ],
     },
