@@ -7,6 +7,7 @@ import {
   useUpdateSingleChecker,
 } from "../../../hooks/HyperMaster/Staff";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
+
 import useContextState from "../../../hooks/useContextState";
 import { AdminRole } from "../../../constant/constant";
 
@@ -99,17 +100,17 @@ const UpdatePermission = ({ setShowPermission, showPermission }) => {
     {
       label: "Direct Deposit",
       value: "directDeposit",
-      show: true,
+      show: adminRole !== AdminRole.admin_master,
     },
     {
       label: "Deposit With Slip",
       value: "depositWithSlip",
-      show: true,
+      show: adminRole !== AdminRole.admin_master,
     },
     {
       label: "Direct Withdraw",
       value: "directWithdraw",
-      show: true,
+      show: adminRole !== AdminRole.admin_master,
     },
     {
       label: "Payment",
