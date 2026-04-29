@@ -23,7 +23,6 @@ const ViewAdmin = () => {
     setId(id);
   };
 
-  console.log(data);
   return (
     <>
       {clientDeposit && (
@@ -69,13 +68,12 @@ const ViewAdmin = () => {
             <table className="table table-hover table-sm">
               <thead className="table-dark">
                 <tr>
-                  <th>Id</th>
                   <th>Username </th>
+                  <th>Credit Reference </th>
                   <th>Balance</th>
+                  <th>PNL</th>
                   <th>User Status </th>
                   <th>Betting Status</th>
-                  <th>Credit Reference </th>
-                  <th>PNL</th>
                   <th>Reg. Date</th>
                   <th>Actions</th>
                 </tr>
@@ -84,11 +82,14 @@ const ViewAdmin = () => {
                 {data?.result?.map((admin, i) => {
                   return (
                     <tr key={i}>
-                      <td>
-                        <strong>{admin?.id}</strong>
-                      </td>
                       <td>{admin?.username}</td>
+                      <td>{admin?.creditReferance}</td>
                       <td>{admin?.balance}</td>
+                      <td
+                        className={`${admin?.pnl?.startsWith("-") || admin?.pnl?.startsWith("0") ? "text-danger" : "text-success"}`}
+                      >
+                        {admin?.pnl}
+                      </td>
                       <td>
                         <span
                           className={`badge  me-1 ${
@@ -111,8 +112,7 @@ const ViewAdmin = () => {
                           {admin?.bettingStatus === 1 ? "active" : "inactive"}
                         </span>
                       </td>
-                      <td>{admin?.creditReferance}</td>
-                      <td>{admin?.pnl}</td>
+
                       <td>{admin?.registrationDate}</td>
                       <td
                         style={{ display: "flex", color: "white", gap: "4px" }}
