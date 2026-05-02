@@ -356,12 +356,13 @@ const Withdraw = ({
               <tr>
                 <th>Level</th>
                 <th>User Id</th>
-                <th>Login Name</th>
+                {status !== Status.PENDING && <th>Login Name</th>}
+
                 {adminRole === AdminRole.admin_staff ||
                 adminRole === AdminRole.hyper_master ||
                 adminRole === AdminRole.super_master ||
                 adminRole === AdminRole.branch_staff ? (
-                  <th>Branch Name</th>
+                  <th>Branch</th>
                 ) : null}
                 {/* <th>Username</th> */}
                 <th>Amount</th>
@@ -422,7 +423,10 @@ const Withdraw = ({
                         />
                         <strong> {item?.userId}</strong>
                       </td>
-                      <td>{item?.loginnameVisible && item?.loginname}</td>
+                      {status !== Status.PENDING && (
+                        <td>{item?.loginnameVisible && item?.loginname}</td>
+                      )}
+
                       {adminRole === AdminRole.admin_staff ||
                       adminRole === AdminRole.hyper_master ||
                       adminRole === AdminRole.super_master ||
@@ -545,7 +549,7 @@ const Withdraw = ({
 
                       <td>
                         {item?.reject_request == "1"
-                          ? "Withdraw Reject requested by client"
+                          ? "Withdraw Reject"
                           : item?.date_added}
                       </td>
                       {time && <td>{item?.date_modified}</td>}
