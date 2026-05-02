@@ -376,8 +376,10 @@ const Withdraw = ({
                 <th>Account Number</th>
                 <th>Bank Name</th>
                 <th>IFSC</th>
-                <th>UPI ID</th>
-                <th>Status</th>
+                {status !== Status.PENDING && <th>UPI ID</th>}
+
+                {status !== Status.PENDING && <th>Status</th>}
+
                 <th>Request Time</th>
 
                 {time && <th>{time}</th>}
@@ -485,6 +487,10 @@ const Withdraw = ({
                             }
                           />
                         )}
+                        <br />
+                        {status === Status.PENDING &&
+                          item?.upi_id &&
+                          item?.upi_id}
                       </td>
                       <td>
                         {item?.account_number}{" "}
@@ -522,10 +528,12 @@ const Withdraw = ({
                           />
                         )}{" "}
                       </td>
-                      <td>{item?.upi_id}</td>
-                      <td>
-                        <span
-                          className={`badge me-1
+                      {status !== Status.PENDING && <td>{item?.upi_id}</td>}
+
+                      {status !== Status.PENDING && (
+                        <td>
+                          <span
+                            className={`badge me-1
                       ${
                         item?.status === Status.PENDING
                           ? "bg-label-warning"
@@ -542,15 +550,25 @@ const Withdraw = ({
                           : ""
                       }
                       `}
-                        >
-                          {item?.status}
-                        </span>
-                      </td>
+                          >
+                            {item?.status}
+                          </span>
+                        </td>
+                      )}
 
                       <td>
-                        {item?.reject_request == "1"
-                          ? "Withdraw Reject"
-                          : item?.date_added}
+                        {status === Status.PENDING ? (
+                          <span className="badge bg-label-warning">
+                            {" "}
+                            {item?.reject_request == "1"
+                              ? "Withdraw Reject"
+                              : item?.date_added}
+                          </span>
+                        ) : item?.reject_request == "1" ? (
+                          "Withdraw Reject"
+                        ) : (
+                          item?.date_added
+                        )}
                       </td>
                       {time && <td>{item?.date_modified}</td>}
                       {(item?.status === Status.APPROVED ||
