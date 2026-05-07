@@ -558,7 +558,7 @@ const Withdraw = ({
 
                       <td>
                         {status === Status.PENDING ? (
-                          <span className="badge bg-label-warning">
+                          <span>
                             {" "}
                             {item?.reject_request == "1"
                               ? "Withdraw Reject"
@@ -576,7 +576,12 @@ const Withdraw = ({
                         <td>{item?.modify_by}</td>
                       )}
                       {item?.status === Status.PENDING && (
-                        <td>{item?.bank_added}</td>
+                        <td>
+                          {" "}
+                          <span className="badge bg-label-warning">
+                            {item?.bank_added}
+                          </span>
+                        </td>
                       )}
                       {item?.status === Status.PENDING &&
                       (adminRole === "master" ||
