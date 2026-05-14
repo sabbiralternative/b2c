@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useGetIndex } from "../../hooks";
 import useContextState from "../../hooks/useContextState";
 import { AdminRole } from "../../constant/constant";
 import useGetPaymentMethod from "../../hooks/Master/Client/useGetPaymentMethod";
 import ShowImage from "../../components/modal/ShowImage";
+import Swal from "sweetalert2";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import { API } from "../../api";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const DisabledAccounts = () => {
   const [branchId, setBranchId] = useState(0);
@@ -12,7 +17,8 @@ const DisabledAccounts = () => {
   });
   const [showPaymentImage, setShowPaymentImage] = useState(false);
   const [image, setImage] = useState("");
-  const { adminRole } = useContextState();
+  const { setShowEditPayment, setDownLineId, readOnly, adminRole } =
+    useContextState();
   const payload = {
     type: "viewPaymentMethods",
     payment_status: "disabled",
@@ -20,9 +26,35 @@ const DisabledAccounts = () => {
   if (adminRole === AdminRole.admin_staff) {
     payload.branch_id = branchId;
   }
-  const { paymentsMethods } = useGetPaymentMethod(payload);
+  const { paymentsMethods, refetchPaymentMethods } =
+    useGetPaymentMethod(payload);
 
-  console.log(paymentsMethods);
+  const handleDeletePaymentMethod = async (paymentId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this account!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const payload = {
+          type: "deletePayment",
+          paymentId,
+        };
+        const res = await AxiosSecure.post(API.payments, payload);
+        const data = res.data;
+        if (data?.success) {
+          refetchPaymentMethods();
+          toast.success(data?.result?.message);
+        } else {
+          toast.error(data?.error?.status?.[0]?.description);
+        }
+      }
+    });
+  };
 
   return (
     <>
@@ -68,8 +100,7 @@ const DisabledAccounts = () => {
                   <th>Level</th>
                   <th>Image</th>
                   <th>Limits</th>
-
-                  <th>status</th>
+                  <th>status</th> <th>Action</th>
                 </tr>
               </thead>
               <tbody className="table-border-bottom-0">
@@ -111,6 +142,60 @@ const DisabledAccounts = () => {
                         <span className={`badge bg-label-danger me-1`}>
                           deleted
                         </span>
+                      </td>
+                      <td>
+                        {(adminRole === AdminRole.admin_staff ||
+                          adminRole === AdminRole.hyper_master) && (
+                          <Link
+                            to={`/view-payment-logs/${method?.id}`}
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                              marginRight: "4px",
+                            }}
+                            className="btn btn-icon btn-sm btn-success"
+                          >
+                            L
+                          </Link>
+                        )}
+                        {adminRole !== AdminRole.admin_staff && (
+                          <Fragment>
+                            <a
+                              style={{
+                                color: "white",
+                                cursor: `${
+                                  !readOnly ? "pointer" : "not-allowed"
+                                }`,
+                                marginRight: "4px",
+                              }}
+                              onClick={() => {
+                                !readOnly && setDownLineId(method?.id);
+                                !readOnly && setShowEditPayment(true);
+                              }}
+                              className="btn btn-icon btn-sm btn-success"
+                            >
+                              <i className="bx bxs-edit"></i>
+                            </a>
+                            <a
+                              onClick={() => {
+                                !readOnly &&
+                                  handleDeletePaymentMethod(method?.id);
+                              }}
+                              style={{
+                                color: "white",
+                                cursor: `${
+                                  !readOnly ? "pointer" : "not-allowed"
+                                }`,
+                                marginRight: "4px",
+                              }}
+                              className="btn btn-icon btn-sm btn-danger"
+                            >
+                              <i className="bx bxs-checkbox-minus"></i>
+                            </a>
+                          </Fragment>
+                        )}
                       </td>
                     </tr>
                   );
