@@ -169,6 +169,11 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/rejected-withdraw",
           show: true,
         },
+        {
+          label: "Pending Withdraw - Gateway",
+          href: "/pending-withdraw-gateway",
+          show: true,
+        },
       ],
     },
     {
