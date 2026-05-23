@@ -354,9 +354,10 @@ const Withdraw = ({
           <table className="table table-hover table-sm">
             <thead className="table-dark">
               <tr>
+                {status === Status.APPROVED && <th>Withdraw Id</th>}
                 <th>Level</th>
                 <th>User Id</th>
-                {status !== Status.PENDING && <th>Login Name</th>}
+                {status === Status.REJECTED && <th>Login Name</th>}
 
                 {adminRole === AdminRole.admin_staff ||
                 adminRole === AdminRole.hyper_master ||
@@ -400,6 +401,11 @@ const Withdraw = ({
                 data?.map((item, i) => {
                   return (
                     <tr style={{ background: item?.bgcolor || "none" }} key={i}>
+                      {item?.status === Status.APPROVED && (
+                        <td>
+                          <strong>{item?.withdraw_id}</strong>
+                        </td>
+                      )}
                       <td>
                         <strong>{item?.level}</strong>
                       </td>
@@ -425,7 +431,7 @@ const Withdraw = ({
                         />
                         <strong> {item?.userId}</strong>
                       </td>
-                      {status !== Status.PENDING && (
+                      {status === Status.REJECTED && (
                         <td>{item?.loginnameVisible && item?.loginname}</td>
                       )}
 
