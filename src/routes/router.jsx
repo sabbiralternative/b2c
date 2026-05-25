@@ -98,6 +98,7 @@ import ViewCoupons from "../pages/Coupons/ViewCoupons";
 import CouponBonusReport from "../pages/Coupons/CouponBonusReport";
 import ViewAdmin from "../pages/Admin/ViewAdmin";
 import PendingWithdrawGateway from "../pages/Withdraw/PendingWithdrawGateway";
+import SearchWithdraw from "../pages/Withdraw/SearchWithdraw";
 
 export const router = createBrowserRouter(
   [
@@ -337,6 +338,10 @@ export const router = createBrowserRouter(
         {
           path: "/pending-withdraw-gateway",
           element: <PendingWithdrawGateway />,
+        },
+        {
+          path: "/search-withdraw",
+          element: <SearchWithdraw />,
         },
         {
           path: "/pending-bonus",
