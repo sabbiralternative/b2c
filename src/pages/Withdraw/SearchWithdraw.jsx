@@ -1,9 +1,20 @@
-import { clientColor } from "../../constant/constant";
+import { AdminRole, clientColor, Status } from "../../constant/constant";
 import Loader from "../../components/ui/Loader/Loader";
 import { useWithdrawMutation } from "../../hooks/withdraw";
-import { useState } from "react";
+import { Fragment, useState } from "react";
+import useContextState from "../../hooks/useContextState";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
+import { useNavigate } from "react-router-dom";
+import Slip from "../../components/modal/Master/Deposit/Slip";
+import AddSlip from "../../components/modal/Master/Withdraw/AddSlip";
 
 const SearchWithdraw = () => {
+  const [addSlipId, setAddSlipId] = useState(null);
+  const [showImage, setShowImage] = useState(false);
+  const [image, setImage] = useState("");
+  const { adminRole, setClientId, setRefetchViewClient } = useContextState();
+  const navigate = useNavigate();
   const [search, setSearch] = useState();
   const { mutateAsync, data, isSuccess, isPending } = useWithdrawMutation();
 
@@ -16,10 +27,16 @@ const SearchWithdraw = () => {
     await mutateAsync(payload);
   };
 
-  console.log(data);
-
   return (
-    <>
+    <Fragment>
+      {addSlipId && (
+        <AddSlip
+          addSlipId={addSlipId}
+          setAddSlipId={setAddSlipId}
+          refetchAllWithdraw={handleSubmit}
+        />
+      )}
+      {showImage && <Slip setShowImage={setShowImage} image={image} />}
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="col-12">
           <div className="card">
@@ -42,7 +59,6 @@ const SearchWithdraw = () => {
 
                 <div className="col-12">
                   <input
-                    disabled={data?.result?.length < 2}
                     type="submit"
                     name="submit"
                     className="btn btn-primary"
@@ -54,7 +70,7 @@ const SearchWithdraw = () => {
           </div>
         </div>
         {data?.result?.length > 0 && (
-          <>
+          <Fragment>
             <hr className="my-3" />
             <div className="card">
               <h5 className="card-header">Clients</h5>
@@ -62,81 +78,170 @@ const SearchWithdraw = () => {
                 <table className="table table-hover table-sm">
                   <thead>
                     <tr>
+                      <th>Withdraw Id</th>
                       <th>Level</th>
                       <th>User Id</th>
-
-                      <th>Balance</th>
-                      <th>Total Deposit</th>
-                      <th>Total Withdraw</th>
-                      <th>Exposure</th>
-                      <th>Betting Status</th>
+                      {adminRole === AdminRole.admin_staff ||
+                      adminRole === AdminRole.hyper_master ||
+                      adminRole === AdminRole.super_master ||
+                      adminRole === AdminRole.branch_staff ? (
+                        <th>Branch</th>
+                      ) : null}
+                      <th>Amount</th>
+                      <th>Remark</th> <th>Slip</th>
+                      <th>Bank Account Name</th>
+                      <th>Account Number</th>
+                      <th>Bank Name</th>
+                      <th>IFSC</th>
+                      <th>UPI ID</th>
                       <th>Status</th>
-                      <th>Site</th>
-                      <th>Reg. Date</th>
-                      <th>Actions</th>
+                      <th>Request Time</th>
+                      <th>Approved By</th>
                     </tr>
                   </thead>
                   <tbody className="table-border-bottom-0">
-                    {data?.result?.map((client, i) => {
+                    {data?.result?.map((item, i) => {
                       return (
-                        <tr key={i}>
+                        <tr
+                          style={{ background: item?.bgcolor || "none" }}
+                          key={i}
+                        >
+                          {item?.status === Status.APPROVED && (
+                            <td>
+                              <strong>{item?.withdraw_id}</strong>
+                            </td>
+                          )}
                           <td>
-                            <strong>{client?.level}</strong>
+                            <strong>{item?.level}</strong>
                           </td>
-                          <td>
+                          <td
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setClientId(item?.userId);
+                              setRefetchViewClient(true);
+                              navigate(
+                                `/view-client?role=${adminRole}&history=withdraw`,
+                              );
+                            }}
+                          >
                             <span
                               style={{
-                                backgroundColor: clientColor?.[client?.color],
+                                backgroundColor: clientColor?.[item?.color],
                                 width: "8px",
                                 height: "8px",
                                 borderRadius: "50%",
                                 display: "inline-block",
                                 marginRight: "5px",
                               }}
-                            ></span>
-                            <strong>{client?.userId}</strong>
+                            />
+                            <strong> {item?.userId}</strong>
                           </td>
-                          {client?.username2Visible && (
-                            <td>{client?.username2}</td>
-                          )}
+
+                          {adminRole === AdminRole.admin_staff ||
+                          adminRole === AdminRole.hyper_master ||
+                          adminRole === AdminRole.super_master ||
+                          adminRole === AdminRole.branch_staff ? (
+                            <td>{item?.branch_name}</td>
+                          ) : null}
+
+                          <td>{item?.amount}</td>
+
+                          <td>{item.remark}</td>
+                          <td>
+                            {item?.withdraw_slip ? (
+                              <span
+                                onClick={() => {
+                                  setShowImage(true);
+                                  setImage(item?.withdraw_slip);
+                                }}
+                                style={{ color: "#346cee", cursor: "pointer" }}
+                              >
+                                View
+                              </span>
+                            ) : (
+                              <div
+                                onClick={() => setAddSlipId(item?.withdraw_id)}
+                                style={{ cursor: "pointer" }}
+                                className="text-danger"
+                              >
+                                Add
+                              </div>
+                            )}
+                          </td>
 
                           <td>
-                            <strong>{client?.balance}</strong>
+                            {item?.bank_account_name}{" "}
+                            {location.pathname === "/pending-withdraw" && (
+                              <MdOutlineContentCopy
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  handleCopyToClipBoard(item?.bank_account_name)
+                                }
+                              />
+                            )}
                           </td>
-                          <td>{client?.totalDeposit}</td>
-                          <td>{client?.totalWithdraw}</td>
                           <td>
-                            {" "}
-                            {client?.exposure || client?.exposure == 0
-                              ? Number(client.exposure).toFixed(0)
-                              : client?.exposure}
+                            {item?.account_number}{" "}
+                            {location.pathname === "/pending-withdraw" && (
+                              <MdOutlineContentCopy
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  handleCopyToClipBoard(item?.account_number)
+                                }
+                              />
+                            )}
                           </td>
+                          <td>
+                            {item?.bank_name}{" "}
+                            {location.pathname === "/pending-withdraw" && (
+                              <MdOutlineContentCopy
+                                onClick={() =>
+                                  handleCopyToClipBoard(item?.bank_name)
+                                }
+                                style={{ cursor: "pointer" }}
+                              />
+                            )}
+                          </td>
+                          <td>
+                            {item?.ifsc}{" "}
+                            {location.pathname === "/pending-withdraw" && (
+                              <MdOutlineContentCopy
+                                onClick={() =>
+                                  handleCopyToClipBoard(item?.ifsc)
+                                }
+                                style={{ cursor: "pointer" }}
+                              />
+                            )}{" "}
+                          </td>
+                          <td>{item?.upi_id}</td>
+
                           <td>
                             <span
-                              className={`badge  me-1 ${
-                                client?.bettingStatus === 1
-                                  ? "bg-label-primary"
-                                  : "bg-label-danger"
-                              }`}
+                              className={`badge me-1
+                                           ${
+                                             item?.status === Status.PENDING
+                                               ? "bg-label-warning"
+                                               : ""
+                                           }
+                                           ${
+                                             item?.status === Status.APPROVED
+                                               ? "bg-label-success"
+                                               : ""
+                                           }
+                                           ${
+                                             item?.status === Status.REJECTED
+                                               ? "bg-label-danger"
+                                               : ""
+                                           }
+                                           `}
                             >
-                              {client?.bettingStatus === 1
-                                ? "Active"
-                                : "InActive"}
+                              {item?.status}
                             </span>
                           </td>
-                          <td>
-                            <span
-                              className={`badge  me-1 ${
-                                client?.userStatus === 1
-                                  ? "bg-label-primary"
-                                  : "bg-label-danger"
-                              }`}
-                            >
-                              {client?.userStatus === 1 ? "Active" : "InActive"}
-                            </span>
-                          </td>
-                          <td>{client?.site}</td>
-                          <td>{client?.registrationDate}</td>
+
+                          <td>{item?.date_added}</td>
+
+                          <td>{item?.modify_by}</td>
                         </tr>
                       );
                     })}
@@ -144,7 +249,7 @@ const SearchWithdraw = () => {
                 </table>
               </div>
             </div>
-          </>
+          </Fragment>
         )}
 
         {isPending && !isSuccess && (
@@ -166,7 +271,7 @@ const SearchWithdraw = () => {
           </div>
         )}
       </div>
-    </>
+    </Fragment>
   );
 };
 
