@@ -5,6 +5,7 @@ export const AdminRole = {
   admin_staff: "admin_staff",
   branch_staff: "branch_staff",
   super_master: "super_master",
+  admin_master_staff: "admin_master_staff",
 };
 export const Status = {
   PENDING: "PENDING",

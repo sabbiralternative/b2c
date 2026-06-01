@@ -99,6 +99,7 @@ import CouponBonusReport from "../pages/Coupons/CouponBonusReport";
 import ViewAdmin from "../pages/Admin/ViewAdmin";
 import PendingWithdrawGateway from "../pages/Withdraw/PendingWithdrawGateway";
 import SearchWithdraw from "../pages/Withdraw/SearchWithdraw";
+import DreamReport from "../pages/Report/DreamReport";
 
 export const router = createBrowserRouter(
   [
@@ -170,6 +171,10 @@ export const router = createBrowserRouter(
         {
           path: "/client-branch-change-report",
           element: <ClientBranchChangeReport />,
+        },
+        {
+          path: "/dream-report",
+          element: <DreamReport />,
         },
         {
           path: "/change-password-after-login",

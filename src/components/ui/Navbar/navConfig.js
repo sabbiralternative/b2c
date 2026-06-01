@@ -599,6 +599,13 @@ export const getNavItems = (permissions, adminRole, setters) => {
           href: "/lossback-bonus-report",
           show: true,
         },
+        {
+          label: "Dream Report",
+          href: "/dream-report",
+          show:
+            adminRole === AdminRole.admin_master ||
+            adminRole === AdminRole.admin_master_staff,
+        },
       ],
     },
     {

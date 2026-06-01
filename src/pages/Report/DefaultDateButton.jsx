@@ -3,6 +3,7 @@ import { defaultDate } from "../../utils/defaultDate";
 const DefaultDateButton = ({
   setStartDate,
   setEndDate,
+  lastMonth = false,
   lastThreeMonth = true,
   lastSixMonth = true,
   lastOneYear = true,
@@ -58,6 +59,19 @@ const DefaultDateButton = ({
       >
         This Month
       </button>
+      {lastMonth && (
+        <button
+          type="button"
+          onClick={() => {
+            setStartDate(defaultDate(60));
+            setEndDate(new Date());
+          }}
+          className="btn btn-primary btn-xs"
+        >
+          Last Month
+        </button>
+      )}
+
       {lastThreeMonth && (
         <button
           type="button"
