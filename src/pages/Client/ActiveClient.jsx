@@ -8,8 +8,13 @@ import handleNavigateToWhatsApp from "../../utils/handleNavigateToWhatsApp";
 import Loader from "../../components/ui/Loader/Loader";
 import ClientAction from "../../components/shared/ClientAction";
 import LevelTable from "../../components/shared/LevelTable/LevelTable";
+import { useGetIndex } from "../../hooks";
 
 const ActiveClient = () => {
+  const [branchId, setBranchId] = useState(0);
+  const { data: branches } = useGetIndex({
+    type: "getBranches",
+  });
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState(1);
   const { adminRole, setRefetchViewClient, setClientId } = useContextState();
@@ -22,6 +27,7 @@ const ActiveClient = () => {
   } = useClient({
     searchId: "activeUsers",
     page: activePage,
+    branch_id: branchId,
   });
 
   const meta = data?.pagination;
@@ -37,7 +43,39 @@ const ActiveClient = () => {
             justifyContent: "space-between",
           }}
         >
-          <h5>Active Clients</h5>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "15px",
+              flexWrap: "wrap",
+            }}
+          >
+            <h5 style={{ marginBottom: "0px" }}>Active Clients</h5>
+            <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+              <div>Branch:</div>
+              <select
+                style={{ width: "200px" }}
+                defaultValue="0"
+                onChange={(e) => {
+                  setBranchId(e.target.value);
+                  setActivePage(1);
+                }}
+                className="form-control"
+              >
+                <option disabled value="">
+                  Branch
+                </option>
+                <option value="0">All Branch</option>
+                {branches?.result?.map((site) => (
+                  <option key={site?.branch_id} value={site?.branch_id}>
+                    {site?.branch_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
           <Pagination
             prev
             next
