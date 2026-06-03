@@ -24,13 +24,14 @@ const ActiveAccounts = () => {
     type: "viewPaymentMethods",
     payment_status: "active",
   };
-  if (adminRole === AdminRole.admin_staff) {
+  if (
+    adminRole === AdminRole.admin_staff ||
+    adminRole === AdminRole.hyper_master
+  ) {
     payload.branch_id = branchId;
   }
   const { paymentsMethods, refetchPaymentMethods } =
     useGetPaymentMethod(payload);
-
-  console.log(paymentsMethods);
 
   /* delete payments method */
   const handleDeletePaymentMethod = async (paymentId) => {
@@ -69,7 +70,8 @@ const ActiveAccounts = () => {
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
             <h5 className="card-header">Active Accounts</h5>
-            {adminRole === AdminRole.admin_staff && (
+            {(adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master) && (
               <div
                 style={{ display: "flex", alignItems: "center", gap: "5px" }}
               >

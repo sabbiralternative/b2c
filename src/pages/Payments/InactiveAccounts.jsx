@@ -24,7 +24,10 @@ const InactiveAccounts = () => {
     type: "viewPaymentMethods",
     payment_status: "inactive",
   };
-  if (adminRole === AdminRole.admin_staff) {
+  if (
+    adminRole === AdminRole.admin_staff ||
+    adminRole === AdminRole.hyper_master
+  ) {
     payload.branch_id = branchId;
   }
   const { paymentsMethods, refetchPaymentMethods } =
@@ -69,7 +72,8 @@ const InactiveAccounts = () => {
         <div className="card">
           <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
             <h5 className="card-header">Inactive Accounts</h5>
-            {adminRole === AdminRole.admin_staff && (
+            {(adminRole === AdminRole.admin_staff ||
+              adminRole === AdminRole.hyper_master) && (
               <div
                 style={{ display: "flex", alignItems: "center", gap: "5px" }}
               >

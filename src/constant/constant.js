@@ -2,7 +2,7 @@ export const AdminRole = {
   master: "master",
   hyper_master: "hyper_master",
   admin_master: "admin_master",
-  admin_staokff: "admin_staff",
+  admin_staff: "admin_staff",
   branch_staff: "branch_staff",
   super_master: "super_master",
   admin_master_staff: "admin_master_staff",
