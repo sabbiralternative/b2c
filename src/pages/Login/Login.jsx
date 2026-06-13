@@ -81,6 +81,9 @@ const Login = () => {
             localStorage.setItem("adminName", data?.result?.loginname);
             localStorage.setItem("adminRole", data?.result?.role);
             localStorage.setItem("adminSite", data?.result?.site);
+            if (data?.result?.withdraw_gateway === 1) {
+              localStorage.setItem("withdraw_gateway", true);
+            }
             const modal = [
               { banner: data?.result?.banner },
               { bannerTitle: data?.result?.bannerTitle },

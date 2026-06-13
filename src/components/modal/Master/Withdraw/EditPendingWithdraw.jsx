@@ -9,11 +9,14 @@ import { RxCross2 } from "react-icons/rx";
 import { FaSpinner } from "react-icons/fa";
 import useUTR from "../../../../hooks/utr";
 import { AxiosSecure } from "../../../../lib/AxiosSecure";
+import { useWithdrawMutation } from "../../../../hooks/withdraw";
 
 const EditPendingWithdraw = ({
   setEditPendingWithdraw,
   refetchAllWithdraw,
 }) => {
+  const { mutate, data } = useWithdrawMutation();
+  const withdraw_gateway = localStorage.getItem("withdraw_gateway");
   const { mutate: getUTR } = useUTR();
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -36,25 +39,45 @@ const EditPendingWithdraw = ({
 
   const { singleWithdraw } = useGetSingleWithdraw(SingleWithdrawPayload);
 
-  const onSubmit = async ({ remark, status }) => {
-    const payload = {
-      withdrawId: downLineId,
-      status,
-      remark,
-      utr,
-      type: "editWithdraw",
+  const onSubmit = async ({ remark, status, gateway_id }) => {
+    if (statusField === "withdraw_gateway") {
+      const payload = {
+        withdrawId: downLineId,
+        type: "withdrawGatewaySubmit",
+        gateway_id,
+      };
 
-      fileName: filename,
-    };
-    const res = await AxiosSecure.post(API.withdraw, payload);
-    const data = res.data;
-    if (data?.success) {
-      refetchAllWithdraw();
-      toast.success(data?.result?.message);
-      reset();
-      setEditPendingWithdraw(false);
+      const res = await AxiosSecure.post(API.withdraw, payload);
+      const data = res.data;
+      if (data?.success) {
+        refetchAllWithdraw();
+        toast.success(data?.result?.message);
+        reset();
+        setEditPendingWithdraw(false);
+      } else {
+        toast.error(data?.error?.status?.[0]?.description);
+      }
     } else {
-      toast.error(data?.error?.status?.[0]?.description);
+      const payload = {
+        withdrawId: downLineId,
+        status,
+        remark,
+        utr,
+        type: "editWithdraw",
+
+        fileName: filename,
+      };
+
+      const res = await AxiosSecure.post(API.withdraw, payload);
+      const data = res.data;
+      if (data?.success) {
+        refetchAllWithdraw();
+        toast.success(data?.result?.message);
+        reset();
+        setEditPendingWithdraw(false);
+      } else {
+        toast.error(data?.error?.status?.[0]?.description);
+      }
     }
   };
 
@@ -100,6 +123,13 @@ const EditPendingWithdraw = ({
       handleSubmitImage();
     }
   }, [image]);
+
+  useEffect(() => {
+    if (statusField === "withdraw_gateway") {
+      mutate({ type: "viewWithdrawGateway" });
+    }
+  }, [mutate, statusField]);
+
   return (
     <>
       <div className="content-backdrop fade show"></div>
@@ -185,9 +215,48 @@ const EditPendingWithdraw = ({
                         >
                           REJECTED
                         </option>
+                        {withdraw_gateway && (
+                          <option value="withdraw_gateway">
+                            Send to Withdraw Gateway
+                          </option>
+                        )}
                       </select>
                     </div>
                   </div>
+                  {statusField === "withdraw_gateway" &&
+                    data?.result?.length > 0 && (
+                      <div className="row mb-3" id="bank_account_name_div">
+                        <label
+                          className="col-sm-2 col-form-label"
+                          htmlFor="basic-default-name"
+                        >
+                          Gateway
+                        </label>
+                        <div className="col-sm-10">
+                          <select
+                            {...register("gateway_id", {
+                              required: true,
+                            })}
+                            className="select2 form-select select2-hidden-accessible"
+                          >
+                            <option selected value="" disabled>
+                              Select Gateway
+                            </option>
+                            {data?.result?.map((item) => {
+                              return (
+                                <option
+                                  key={item?.gateway_id}
+                                  value={item?.gateway_id}
+                                >
+                                  {item?.title}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+                    )}
+
                   {!uploadedImage && statusField === "APPROVED" && (
                     <div className="row mb-3" id="bank_account_name_div">
                       <label
