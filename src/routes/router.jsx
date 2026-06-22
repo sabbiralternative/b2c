@@ -100,6 +100,9 @@ import ViewAdmin from "../pages/Admin/ViewAdmin";
 import PendingWithdrawGateway from "../pages/Withdraw/PendingWithdrawGateway";
 import SearchWithdraw from "../pages/Withdraw/SearchWithdraw";
 import DreamReport from "../pages/Report/DreamReport";
+import ViewBlogs from "../pages/Blog/ViewBlogs";
+import AddBlog from "../pages/Blog/AddBlog";
+import EditBlog from "../pages/Blog/EditBlog";
 
 export const router = createBrowserRouter(
   [
@@ -500,6 +503,18 @@ export const router = createBrowserRouter(
         {
           path: "/view-admin",
           element: <ViewAdmin />,
+        },
+        {
+          path: "/view-blogs",
+          element: <ViewBlogs />,
+        },
+        {
+          path: "/add-blog",
+          element: <AddBlog />,
+        },
+        {
+          path: "/edit-blog/:blog_id",
+          element: <EditBlog />,
         },
       ],
     },

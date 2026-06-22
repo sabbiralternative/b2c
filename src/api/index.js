@@ -76,6 +76,7 @@ export const API = {
   lossback: "",
   upload_assets: "",
   admin: "",
+  blog: "",
 };
 
 export const Settings = {

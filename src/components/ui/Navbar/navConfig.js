@@ -442,6 +442,23 @@ export const getNavItems = (permissions, adminRole, setters) => {
             },
           ],
         },
+        {
+          tab: "Blogs",
+          key: "blogs",
+          show: permissions?.includes("blog"),
+          children: [
+            {
+              label: "View Blogs",
+              href: "/view-blogs",
+              show: true,
+            },
+            {
+              label: "Add Blog",
+              href: "/add-blog",
+              show: true,
+            },
+          ],
+        },
       ],
     },
 
