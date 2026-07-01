@@ -37,6 +37,7 @@ const AddPaymentGateway2 = ({ setAddPaymentGateway }) => {
       type: "addPayment",
       ...values,
       method: "upigateway2",
+      gateway: 1,
     };
     const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;

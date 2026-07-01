@@ -35,6 +35,7 @@ const AddTOITPaymentGateway = ({ setAddPaymentGateway }) => {
       type: "addPayment",
       ...values,
       method: "toitgateway",
+      gateway: 1,
     };
     const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;

@@ -55,6 +55,7 @@ const AddUSDT = () => {
       qr_code,
       ...values,
       method: "usdt",
+      gateway: 0,
     };
 
     const res = await AxiosSecure.post(API.payments, payload);

@@ -103,6 +103,8 @@ import DreamReport from "../pages/Report/DreamReport";
 import ViewBlogs from "../pages/Blog/ViewBlogs";
 import AddBlog from "../pages/Blog/AddBlog";
 import EditBlog from "../pages/Blog/EditBlog";
+import AddGoldyPaymentGateway from "../pages/Payments/AddGoldyPaymentGateway";
+import AddFirstPayPaymentGateway from "../pages/Payments/AddFirstPayPaymentGateway";
 
 export const router = createBrowserRouter(
   [
@@ -394,6 +396,14 @@ export const router = createBrowserRouter(
         {
           path: "/add-toit-payment-gateway",
           element: <AddTOITPaymentGateway />,
+        },
+        {
+          path: "/add-goldy-payment-gateway",
+          element: <AddGoldyPaymentGateway />,
+        },
+        {
+          path: "/add-firstpay-payment-gateway",
+          element: <AddFirstPayPaymentGateway />,
         },
         {
           path: "/add-i100-payment-gateway",

@@ -9,7 +9,7 @@ import { API } from "../../api";
 import { classifications } from "../../static/classification";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 
-const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
+const AddGoldyPaymentGateway = ({ setAddPaymentGateway }) => {
   const [disabled, setDisabled] = useState(false);
   const payload = {
     type: "viewPaymentMethods",
@@ -34,10 +34,9 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
     const payload = {
       type: "addPayment",
       ...values,
-      method: "i100gateway",
+      method: "goldy",
       gateway: 1,
     };
-
     const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
@@ -55,7 +54,7 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
   return (
     <div className="container-xxl flex-grow-1 container-p-y">
       <h4 className="py-3 breadcrumb-wrapper mb-4">
-        <span className="text-muted fw-light">Home /</span> Add i100 Payment
+        <span className="text-muted fw-light">Home /</span> Add Goldy Payment
         Gateway
       </h4>
 
@@ -87,11 +86,11 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
                     className="col-sm-2 col-form-label"
                     htmlFor="basic-default-company"
                   >
-                    Secret Key
+                    API Key
                   </label>
                   <div className="col-sm-10">
                     <input
-                      {...register("secret_key", {
+                      {...register("api_key", {
                         required: true,
                       })}
                       type="text"
@@ -215,43 +214,6 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
                   </div>
                 </div>
 
-                <div className="row mb-3">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    htmlFor="basic-default-company"
-                  >
-                    Vendor
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      {...register("vendor", {
-                        required: true,
-                      })}
-                      type="text"
-                      className="form-control"
-                      id="basic-default-company"
-                    />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <label
-                    className="col-sm-2 col-form-label"
-                    htmlFor="basic-default-company"
-                  >
-                    X-key
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      {...register("x_key", {
-                        required: true,
-                      })}
-                      type="text"
-                      className="form-control"
-                      id="basic-default-company"
-                    />
-                  </div>
-                </div>
-
                 <div className="row justify-content-end">
                   <div className="col-sm-10">
                     <input
@@ -272,4 +234,4 @@ const AddI100PaymentGateway = ({ setAddPaymentGateway }) => {
   );
 };
 
-export default AddI100PaymentGateway;
+export default AddGoldyPaymentGateway;

@@ -37,6 +37,7 @@ const AddUPIPaymentGateway = ({ setAddPaymentGateway }) => {
       type: "addPayment",
       ...values,
       method: "upigateway",
+      gateway: 1,
     };
     const res = await SiAxios.post(API.payments, payload);
     const data = res.data;

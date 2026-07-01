@@ -54,6 +54,7 @@ const AddUSDTBEP20 = () => {
       qr_code,
       ...values,
       method: "usdt_bep20",
+      gateway: 0,
     };
 
     const res = await AxiosSecure.post(API.payments, payload);

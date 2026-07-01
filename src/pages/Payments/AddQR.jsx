@@ -57,6 +57,7 @@ const AddQR = () => {
       qr_code,
       ...values,
       method: "qr",
+      gateway: 0,
     };
 
     const res = await AxiosSecure.post(API.payments, payload);

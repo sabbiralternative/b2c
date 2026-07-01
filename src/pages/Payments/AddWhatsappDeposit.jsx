@@ -30,6 +30,7 @@ const AddWhatsappDeposit = () => {
       type: "addPayment",
       ...values,
       method: "whatsapp",
+      gateway: 0,
     };
     const res = await AxiosSecure.post(API.payments, payload);
     const data = res.data;

@@ -26,6 +26,7 @@ const AddUPIClickGateway = () => {
       ...values,
 
       method: "upiclick",
+      gateway: 1,
     };
 
     const res = await AxiosSecure.post(API.payments, payload);

@@ -30,6 +30,7 @@ const AddBankAccount = () => {
       type: "addPayment",
       ...values,
       method: "bank",
+      gateway: 0,
     };
 
     const res = await AxiosSecure.post(API.payments, payload);
