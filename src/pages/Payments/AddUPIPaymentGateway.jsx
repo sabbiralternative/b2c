@@ -8,7 +8,7 @@ import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 
 import { API } from "../../api";
 import { classifications } from "../../static/classification";
-import { SiAxios } from "react-icons/si";
+import axios from "axios";
 
 const AddUPIPaymentGateway = ({ setAddPaymentGateway }) => {
   const [disabled, setDisabled] = useState(false);
@@ -39,7 +39,7 @@ const AddUPIPaymentGateway = ({ setAddPaymentGateway }) => {
       method: "upigateway",
       gateway: 1,
     };
-    const res = await SiAxios.post(API.payments, payload);
+    const res = await axios.post(API.payments, payload);
     const data = res.data;
     if (data?.success) {
       setDisabled(false);

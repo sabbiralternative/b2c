@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 //
 import useContextState from "../../hooks/useContextState";
 import { useEffect, useState } from "react";
+import { AxiosSecure } from "../../lib/AxiosSecure";
+import handleEncryptData from "../../utils/handleEncryptData";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(false);
@@ -58,55 +60,101 @@ const Login = () => {
 
     const hmac = await hmacSHA256(json, secret);
 
-    fetch(API.login, {
-      method: "POST",
-
+    const encryptedData = handleEncryptData(loginData);
+    const res = await AxiosSecure.post(API.login, encryptedData, {
       headers: {
         "content-type": "application/json",
         secret: hmac,
       },
-      body: JSON.stringify(loginData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setGetToken((prev) => !prev);
-        if (data?.success) {
-          setDisabled(false);
-          if (data?.result?.changePassword) {
-            navigate(`/change-password?token=${data?.result?.token}`);
-          }
-          if (data?.result?.changePassword === false) {
-            localStorage.setItem("readOnly", data?.result?.readOnly);
-            localStorage.setItem("adminToken", data?.result?.token);
-            localStorage.setItem("adminName", data?.result?.loginname);
-            localStorage.setItem("adminRole", data?.result?.role);
-            localStorage.setItem("adminSite", data?.result?.site);
-            if (data?.result?.withdraw_gateway === 1) {
-              localStorage.setItem("withdraw_gateway", true);
-            }
-            const modal = [
-              { banner: data?.result?.banner },
-              { bannerTitle: data?.result?.bannerTitle },
-            ];
-            localStorage.setItem("adminModal", JSON.stringify(modal));
-            if (
-              localStorage.getItem("adminToken") &&
-              localStorage.getItem("adminName")
-            ) {
-              // if (data?.result?.authCode) {
-              //   localStorage.setItem("authCode", data?.result?.authCode);
-              //   navigate("/verification-login");
-              // } else {
-              toast.success("Login Success");
-              navigate("/");
-              // }
-            }
-          }
-        } else {
-          setDisabled(false);
-          setErrorMessage(data?.error?.status?.[0]?.description);
+    });
+    const data = res.data;
+    if (data?.success) {
+      setGetToken((prev) => !prev);
+      setDisabled(false);
+      if (data?.result?.changePassword) {
+        navigate(`/change-password?token=${data?.result?.token}`);
+      }
+      if (data?.result?.changePassword === false) {
+        localStorage.setItem("readOnly", data?.result?.readOnly);
+        localStorage.setItem("adminToken", data?.result?.token);
+        localStorage.setItem("adminName", data?.result?.loginname);
+        localStorage.setItem("adminRole", data?.result?.role);
+        localStorage.setItem("adminSite", data?.result?.site);
+        if (data?.result?.withdraw_gateway === 1) {
+          localStorage.setItem("withdraw_gateway", true);
         }
-      });
+        const modal = [
+          { banner: data?.result?.banner },
+          { bannerTitle: data?.result?.bannerTitle },
+        ];
+        localStorage.setItem("adminModal", JSON.stringify(modal));
+        if (
+          localStorage.getItem("adminToken") &&
+          localStorage.getItem("adminName")
+        ) {
+          // if (data?.result?.authCode) {
+          //   localStorage.setItem("authCode", data?.result?.authCode);
+          //   navigate("/verification-login");
+          // } else {
+          toast.success("Login Success");
+          navigate("/");
+          // }
+        }
+      }
+    } else {
+      setDisabled(false);
+      setErrorMessage(data?.error?.status?.[0]?.description);
+    }
+
+    // fetch(API.login, {
+    //   method: "POST",
+
+    //   headers: {
+    //     "content-type": "application/json",
+    //     secret: hmac,
+    //   },
+    //   body: JSON.stringify(loginData),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setGetToken((prev) => !prev);
+    //     if (data?.success) {
+    //       setDisabled(false);
+    //       if (data?.result?.changePassword) {
+    //         navigate(`/change-password?token=${data?.result?.token}`);
+    //       }
+    //       if (data?.result?.changePassword === false) {
+    //         localStorage.setItem("readOnly", data?.result?.readOnly);
+    //         localStorage.setItem("adminToken", data?.result?.token);
+    //         localStorage.setItem("adminName", data?.result?.loginname);
+    //         localStorage.setItem("adminRole", data?.result?.role);
+    //         localStorage.setItem("adminSite", data?.result?.site);
+    //         if (data?.result?.withdraw_gateway === 1) {
+    //           localStorage.setItem("withdraw_gateway", true);
+    //         }
+    //         const modal = [
+    //           { banner: data?.result?.banner },
+    //           { bannerTitle: data?.result?.bannerTitle },
+    //         ];
+    //         localStorage.setItem("adminModal", JSON.stringify(modal));
+    //         if (
+    //           localStorage.getItem("adminToken") &&
+    //           localStorage.getItem("adminName")
+    //         ) {
+    //           // if (data?.result?.authCode) {
+    //           //   localStorage.setItem("authCode", data?.result?.authCode);
+    //           //   navigate("/verification-login");
+    //           // } else {
+    //           toast.success("Login Success");
+    //           navigate("/");
+    //           // }
+    //         }
+    //       }
+    //     } else {
+    //       setDisabled(false);
+    //       setErrorMessage(data?.error?.status?.[0]?.description);
+    //     }
+    //   });
   };
 
   useEffect(() => {
