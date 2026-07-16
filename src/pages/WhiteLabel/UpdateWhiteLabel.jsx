@@ -506,6 +506,18 @@ const UpdateWhiteLabel = () => {
                     </div>
                     <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
+                        APK Target Link
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("apk_target_link")}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
                         Logo Height
                       </label>
                       <div className="col-sm-10">

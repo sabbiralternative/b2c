@@ -11,6 +11,7 @@ import useCloseModalClickOutside from "../../hooks/useCloseModalClickOutside";
 import AddLogo from "../../components/modal/WhiteLable/AddLogo";
 import AddTheme from "../../components/modal/WhiteLable/AddTheme";
 import AddFavicon from "../../components/modal/WhiteLable/AddFavicon";
+import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
 
 const ViewWhiteLabel = () => {
   const [modal, setModal] = useState({
@@ -132,6 +133,8 @@ const ViewWhiteLabel = () => {
               </thead>
               <tbody className="table-border-bottom-0">
                 {data?.result?.map((whiteLabel, index) => {
+                  console.log(whiteLabel);
+
                   return (
                     <tr key={index}>
                       <td>{whiteLabel?.site_name}</td>
@@ -328,6 +331,18 @@ const ViewWhiteLabel = () => {
                                 }}
                               >
                                 <a className="dropdown-item">Add Favicon</a>
+                              </li>
+                              <li
+                                onClick={() => {
+                                  handleCopyToClipBoard(
+                                    whiteLabel?.redirect_link,
+                                  );
+                                  setShowMore(null);
+                                }}
+                              >
+                                <a className="dropdown-item">
+                                  Copy APK Redirect Link
+                                </a>
                               </li>
                             </ul>
                           )}

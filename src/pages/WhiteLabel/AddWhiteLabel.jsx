@@ -395,6 +395,7 @@ const AddWhiteLabel = () => {
                         />
                       </div>
                     </div>
+
                     <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
                         Live URL
@@ -403,6 +404,20 @@ const AddWhiteLabel = () => {
                         <input
                           type="text"
                           {...register("live_url", {
+                            required: true,
+                          })}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
+                        APK Target Link
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("apk_target_link", {
                             required: true,
                           })}
                           className="form-control"
