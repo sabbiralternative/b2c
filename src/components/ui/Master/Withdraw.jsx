@@ -135,6 +135,7 @@ const Withdraw = ({
             refetchAllWithdraw={refetchAllWithdraw}
             editPendingWithdraw={showPendingWithdraw}
             setEditPendingWithdraw={setShowPendingWithdraw}
+            removePendingSelect={true}
           />
         )}
         <div

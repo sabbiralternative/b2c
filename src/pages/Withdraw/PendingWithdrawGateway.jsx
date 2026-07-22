@@ -126,6 +126,7 @@ const PendingWithdrawGateway = () => {
             refetchAllWithdraw={refetchAllWithdraw}
             editPendingWithdraw={showPendingWithdraw}
             setEditPendingWithdraw={setShowPendingWithdraw}
+            // removePendingSelect={true}
           />
         )}
         <div
@@ -288,10 +289,10 @@ const PendingWithdrawGateway = () => {
                   </th>
                 )}
                 {status === Status.PENDING && <th>Bank Added</th>}
-                {status === Status.PENDING &&
-                (adminRole === "master" || adminRole === "branch_staff") ? (
-                  <th>Actions</th>
-                ) : null}
+                {/* {status === Status.PENDING &&
+                (adminRole === "master" || adminRole === "branch_staff") ? ( */}
+                <th>Actions</th>
+                {/* ) : null} */}
               </tr>
             </thead>
             <tbody className="table-border-bottom-0">
@@ -482,77 +483,75 @@ const PendingWithdrawGateway = () => {
                           </span>
                         </td>
                       )}
-                      {item?.status === Status.PENDING &&
+                      {/* {item?.status === Status.PENDING &&
                       (adminRole === "master" ||
-                        adminRole === "branch_staff") ? (
-                        <>
-                          <td>
+                        adminRole === "branch_staff") ? ( */}
+                      <>
+                        <td>
+                          <a
+                            title="Text Edit"
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly && setDownLineId(item?.withdraw_id);
+                              !readOnly && setShowPendingWithdraw(true);
+                            }}
+                            className="btn btn-icon btn-sm btn-success"
+                          >
+                            <i className="bx bxs-edit"></i>
+                          </a>
+                          &nbsp;
+                          <a
+                            title="Copy All"
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => {
+                              !readOnly && handleCopy(item);
+                            }}
+                            className="btn btn-icon btn-sm btn-primary"
+                          >
+                            <FaRegCopy size={15} />
+                          </a>
+                          &nbsp;
+                          <a
+                            style={{
+                              color: "white",
+                              cursor: `${
+                                !readOnly ? "pointer" : "not-allowed"
+                              }`,
+                            }}
+                            onClick={() => handleNavigate(item)}
+                            className="btn btn-icon btn-sm btn-warning"
+                          >
+                            PL
+                          </a>
+                          &nbsp;
+                          {(adminRole === AdminRole.master ||
+                            adminRole === AdminRole.branch_staff) && (
                             <a
-                              title="Text Edit"
                               style={{
                                 color: "white",
                                 cursor: `${
                                   !readOnly ? "pointer" : "not-allowed"
                                 }`,
                               }}
-                              onClick={() => {
-                                !readOnly && setDownLineId(item?.withdraw_id);
-                                !readOnly && setShowPendingWithdraw(true);
-                              }}
-                              className="btn btn-icon btn-sm btn-success"
+                              onClick={() => setDepositReport(item?.downlineId)}
+                              className="btn btn-icon btn-sm btn-info"
                             >
-                              <i className="bx bxs-edit"></i>
+                              DR
                             </a>
-                            &nbsp;
-                            <a
-                              title="Copy All"
-                              style={{
-                                color: "white",
-                                cursor: `${
-                                  !readOnly ? "pointer" : "not-allowed"
-                                }`,
-                              }}
-                              onClick={() => {
-                                !readOnly && handleCopy(item);
-                              }}
-                              className="btn btn-icon btn-sm btn-primary"
-                            >
-                              <FaRegCopy size={15} />
-                            </a>
-                            &nbsp;
-                            <a
-                              style={{
-                                color: "white",
-                                cursor: `${
-                                  !readOnly ? "pointer" : "not-allowed"
-                                }`,
-                              }}
-                              onClick={() => handleNavigate(item)}
-                              className="btn btn-icon btn-sm btn-warning"
-                            >
-                              PL
-                            </a>
-                            &nbsp;
-                            {(adminRole === AdminRole.master ||
-                              adminRole === AdminRole.branch_staff) && (
-                              <a
-                                style={{
-                                  color: "white",
-                                  cursor: `${
-                                    !readOnly ? "pointer" : "not-allowed"
-                                  }`,
-                                }}
-                                onClick={() =>
-                                  setDepositReport(item?.downlineId)
-                                }
-                                className="btn btn-icon btn-sm btn-info"
-                              >
-                                DR
-                              </a>
-                            )}
-                          </td>
-                        </>
-                      ) : null}
+                          )}
+                        </td>
+                      </>
+                      {/* // ) : null} */}
                     </tr>
                   );
                 })}

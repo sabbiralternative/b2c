@@ -14,6 +14,7 @@ import { useWithdrawMutation } from "../../../../hooks/withdraw";
 const EditPendingWithdraw = ({
   setEditPendingWithdraw,
   refetchAllWithdraw,
+  removePendingSelect,
 }) => {
   const { mutate, data } = useWithdrawMutation();
   const withdraw_gateway = localStorage.getItem("withdraw_gateway");
@@ -197,12 +198,15 @@ const EditPendingWithdraw = ({
                         })}
                         className="select2 form-select select2-hidden-accessible"
                       >
-                        <option
-                          selected={singleWithdraw?.status === "PENDING"}
-                          value="PENDING"
-                        >
-                          PENDING
-                        </option>
+                        {!removePendingSelect && (
+                          <option
+                            selected={singleWithdraw?.status === "PENDING"}
+                            value="PENDING"
+                          >
+                            PENDING
+                          </option>
+                        )}
+
                         <option
                           selected={singleWithdraw?.status === "APPROVED"}
                           value="APPROVED"
