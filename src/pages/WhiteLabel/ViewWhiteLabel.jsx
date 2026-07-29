@@ -12,6 +12,7 @@ import AddLogo from "../../components/modal/WhiteLable/AddLogo";
 import AddTheme from "../../components/modal/WhiteLable/AddTheme";
 import AddFavicon from "../../components/modal/WhiteLable/AddFavicon";
 import { handleCopyToClipBoard } from "../../utils/handleCopyToClipBoard";
+import AddAPKBannerLink from "../../components/modal/WhiteLable/AddAPKBannerLink";
 
 const ViewWhiteLabel = () => {
   const [modal, setModal] = useState({
@@ -110,6 +111,9 @@ const ViewWhiteLabel = () => {
       )}
       {modal.name === "addFavicon" && (
         <AddFavicon modal={modal} refetch={refetch} setModal={setModal} />
+      )}
+      {modal.name === "addApkBannerLink" && (
+        <AddAPKBannerLink modal={modal} refetch={refetch} setModal={setModal} />
       )}
 
       <div className="container-xxl flex-grow-1 container-p-y">
@@ -331,6 +335,19 @@ const ViewWhiteLabel = () => {
                                 }}
                               >
                                 <a className="dropdown-item">Add Favicon</a>
+                              </li>
+                              <li
+                                onClick={() => {
+                                  setModal({
+                                    name: "addApkBannerLink",
+                                    site: whiteLabel?.site_url,
+                                  });
+                                  setShowMore(null);
+                                }}
+                              >
+                                <a className="dropdown-item">
+                                  Add APK banner Link
+                                </a>
                               </li>
                               <li
                                 onClick={() => {
