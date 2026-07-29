@@ -105,6 +105,7 @@ import AddBlog from "../pages/Blog/AddBlog";
 import EditBlog from "../pages/Blog/EditBlog";
 import AddGoldyPaymentGateway from "../pages/Payments/AddGoldyPaymentGateway";
 import AddFirstPayPaymentGateway from "../pages/Payments/AddFirstPayPaymentGateway";
+import AddAPKDownloadBanner from "../pages/Settings/AddAPKDownloadBanner";
 
 export const router = createBrowserRouter(
   [
@@ -220,6 +221,10 @@ export const router = createBrowserRouter(
         {
           path: "/add-login-banner",
           element: <AddLoginBanner />,
+        },
+        {
+          path: "/add-apk-download-banner",
+          element: <AddAPKDownloadBanner />,
         },
         {
           path: "/edit-banner",

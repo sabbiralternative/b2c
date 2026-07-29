@@ -394,6 +394,11 @@ export const getNavItems = (permissions, adminRole, setters) => {
               show: true,
             },
             {
+              label: "Add APK Download Banner",
+              href: "/add-apk-download-banner",
+              show: true,
+            },
+            {
               label: "Social Links",
               setState: setShowSocialLink,
               show: true,
