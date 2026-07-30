@@ -2,12 +2,12 @@ import { useState } from "react";
 import { usePanelQuery } from "../../hooks/panel";
 import { Pagination } from "rsuite";
 import Loader from "../../components/ui/Loader/Loader";
-import EditPendingNewAccount from "../../components/modal/Punt/EditPendingNewAccount";
+import EditPuntPendingDeposit from "../../components/modal/Punt/EditPuntPendingDeposit";
 
 const PuntPendingDeposit = () => {
   const [modal, setModal] = useState({ name: "", id: "" });
   const [activePage, setActivePage] = useState(1);
-  const { data, isLoading, isSuccess } = usePanelQuery({
+  const { data, isLoading, isSuccess, refetch } = usePanelQuery({
     status: 0,
     type: "deposit",
     page: activePage,
@@ -17,8 +17,12 @@ const PuntPendingDeposit = () => {
   return (
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
-        {modal?.name === "editPendingNewAccount" && (
-          <EditPendingNewAccount setEditPendingAccount={setModal} />
+        {modal?.name === "deposit" && (
+          <EditPuntPendingDeposit
+            setEditPendingAccount={setModal}
+            modal={modal}
+            refetch={refetch}
+          />
         )}
         <div className="card">
           <h5
@@ -84,7 +88,7 @@ const PuntPendingDeposit = () => {
                           onClick={() =>
                             setModal({
                               id: deposit?.punter_id,
-                              name: "editPendingNewAccount",
+                              name: "deposit",
                             })
                           }
                           className="btn btn-icon btn-sm btn-success"

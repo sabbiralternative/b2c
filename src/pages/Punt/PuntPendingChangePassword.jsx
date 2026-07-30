@@ -2,12 +2,12 @@ import { useState } from "react";
 import { usePanelQuery } from "../../hooks/panel";
 import { Pagination } from "rsuite";
 import Loader from "../../components/ui/Loader/Loader";
-import EditPendingNewAccount from "../../components/modal/Punt/EditPendingNewAccount";
+import EditPuntPendingChangePassword from "../../components/modal/Punt/EditPuntPendingChangePassword";
 
 const PuntPendingChangePassword = () => {
   const [modal, setModal] = useState({ name: "", id: "" });
   const [activePage, setActivePage] = useState(1);
-  const { data, isLoading, isSuccess } = usePanelQuery({
+  const { data, isLoading, isSuccess, refetch } = usePanelQuery({
     status: 0,
     type: "change_password",
     page: activePage,
@@ -17,8 +17,12 @@ const PuntPendingChangePassword = () => {
   return (
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
-        {modal?.name === "editPendingNewAccount" && (
-          <EditPendingNewAccount setEditPendingAccount={setModal} />
+        {modal?.name === "change_password" && (
+          <EditPuntPendingChangePassword
+            setEditPendingAccount={setModal}
+            modal={modal}
+            refetch={refetch}
+          />
         )}
         <div className="card">
           <h5
@@ -81,7 +85,7 @@ const PuntPendingChangePassword = () => {
                           onClick={() =>
                             setModal({
                               id: account?.punter_id,
-                              name: "editPendingNewAccount",
+                              name: "change_password",
                             })
                           }
                           className="btn btn-icon btn-sm btn-success"

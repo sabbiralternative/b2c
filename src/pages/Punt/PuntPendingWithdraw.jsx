@@ -7,7 +7,7 @@ import EditPendingNewAccount from "../../components/modal/Punt/EditPendingNewAcc
 const PuntPendingWithdraw = () => {
   const [modal, setModal] = useState({ name: "", id: "" });
   const [activePage, setActivePage] = useState(1);
-  const { data, isLoading, isSuccess } = usePanelQuery({
+  const { data, isLoading, isSuccess, refetch } = usePanelQuery({
     status: 0,
     type: "withdraw",
     page: activePage,
@@ -17,8 +17,12 @@ const PuntPendingWithdraw = () => {
   return (
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
-        {modal?.name === "editPendingNewAccount" && (
-          <EditPendingNewAccount setEditPendingAccount={setModal} />
+        {modal?.name === "withdraw" && (
+          <EditPendingNewAccount
+            setEditPendingAccount={setModal}
+            modal={modal}
+            refetch={refetch}
+          />
         )}
         <div className="card">
           <h5
@@ -83,7 +87,7 @@ const PuntPendingWithdraw = () => {
                           onClick={() =>
                             setModal({
                               id: withdraw?.punter_id,
-                              name: "editPendingNewAccount",
+                              name: "withdraw",
                             })
                           }
                           className="btn btn-icon btn-sm btn-success"

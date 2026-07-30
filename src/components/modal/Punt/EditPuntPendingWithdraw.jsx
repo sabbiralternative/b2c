@@ -1,17 +1,16 @@
-import { Fragment, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import useCloseModalClickOutside from "../../../hooks/useCloseModalClickOutside";
 import { useForm } from "react-hook-form";
 import { usePanelMutation } from "../../../hooks/panel";
 
-const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
+const EditPuntPendingWithdraw = ({ modal, setEditPendingAccount, refetch }) => {
   const [disabled, setDisabled] = useState(false);
   const editDepositRef = useRef();
   useCloseModalClickOutside(editDepositRef, () => {
     setEditPendingAccount(false);
   });
-  const { register, handleSubmit, reset, watch } = useForm();
-  const status = watch("status");
+  const { register, handleSubmit, reset } = useForm();
 
   const { mutateAsync } = usePanelMutation();
   const onSubmit = async (values) => {
@@ -19,7 +18,7 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
     const payload = {
       ...values,
       id: modal?.id,
-      type: "update_new_account",
+      type: "update_withdraw",
     };
 
     const data = await mutateAsync(payload);
@@ -49,7 +48,7 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
           <div className="modal-content" ref={editDepositRef}>
             <div className="modal-header">
               <h5 className="modal-title" id="modalCenterTitle">
-                Edit Pending New Account
+                Edit Pending Withdraw
               </h5>
               <button
                 onClick={() => setEditPendingAccount(false)}
@@ -111,42 +110,6 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
                       </label>
                     </div>
                   </div>
-                  {status === "1" && (
-                    <Fragment>
-                      <div
-                        className="row mb-3"
-                        style={{ alignItems: "center" }}
-                      >
-                        <label className="col-sm-2 col-form-label">
-                          Username
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            placeholder="Enter Username"
-                            className="form-control"
-                            {...register("username")}
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        className="row mb-3"
-                        style={{ alignItems: "center" }}
-                      >
-                        <label className="col-sm-2 col-form-label">
-                          Password
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            placeholder="Enter Password"
-                            className="form-control"
-                            {...register("password")}
-                            type="password"
-                          />
-                        </div>
-                      </div>
-                    </Fragment>
-                  )}
                 </div>
               </div>
               <div className="modal-footer">
@@ -174,4 +137,4 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
   );
 };
 
-export default EditPendingNewAccount;
+export default EditPuntPendingWithdraw;

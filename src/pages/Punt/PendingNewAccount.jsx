@@ -7,7 +7,7 @@ import EditPendingNewAccount from "../../components/modal/Punt/EditPendingNewAcc
 const PendingNewAccount = () => {
   const [modal, setModal] = useState({ name: "", id: "" });
   const [activePage, setActivePage] = useState(1);
-  const { data, isLoading, isSuccess } = usePanelQuery({
+  const { data, isLoading, isSuccess, refetch } = usePanelQuery({
     status: 0,
     type: "new_account",
     page: activePage,
@@ -18,7 +18,11 @@ const PendingNewAccount = () => {
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
         {modal?.name === "editPendingNewAccount" && (
-          <EditPendingNewAccount setEditPendingAccount={setModal} />
+          <EditPendingNewAccount
+            setEditPendingAccount={setModal}
+            modal={modal}
+            refetch={refetch}
+          />
         )}
         <div className="card">
           <h5
