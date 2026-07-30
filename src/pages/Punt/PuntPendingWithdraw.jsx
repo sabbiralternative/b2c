@@ -2,7 +2,7 @@ import { useState } from "react";
 import { usePanelQuery } from "../../hooks/panel";
 import { Pagination } from "rsuite";
 import Loader from "../../components/ui/Loader/Loader";
-import EditPendingNewAccount from "../../components/modal/Punt/EditPendingNewAccount";
+import EditPuntPendingWithdraw from "../../components/modal/Punt/EditPuntPendingWithdraw";
 
 const PuntPendingWithdraw = () => {
   const [modal, setModal] = useState({ name: "", id: "" });
@@ -18,7 +18,7 @@ const PuntPendingWithdraw = () => {
     <>
       <div className="container-xxl flex-grow-1 container-p-y">
         {modal?.name === "withdraw" && (
-          <EditPendingNewAccount
+          <EditPuntPendingWithdraw
             setEditPendingAccount={setModal}
             modal={modal}
             refetch={refetch}
