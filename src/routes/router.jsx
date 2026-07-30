@@ -106,6 +106,7 @@ import EditBlog from "../pages/Blog/EditBlog";
 import AddGoldyPaymentGateway from "../pages/Payments/AddGoldyPaymentGateway";
 import AddFirstPayPaymentGateway from "../pages/Payments/AddFirstPayPaymentGateway";
 import AddAPKDownloadBanner from "../pages/Settings/AddAPKDownloadBanner";
+import PendingNewAccount from "../pages/Punt/PendingNewAccount";
 
 export const router = createBrowserRouter(
   [
@@ -530,6 +531,10 @@ export const router = createBrowserRouter(
         {
           path: "/edit-blog/:blog_id",
           element: <EditBlog />,
+        },
+        {
+          path: "/pending-new-account",
+          element: <PendingNewAccount />,
         },
       ],
     },

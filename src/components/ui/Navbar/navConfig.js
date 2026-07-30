@@ -671,6 +671,33 @@ export const getNavItems = (permissions, adminRole, setters) => {
       ],
     },
     {
+      tab: "Punt Panel ",
+      key: "punt-panel",
+      show: permissions.includes("punt"),
+      children: [
+        {
+          label: "Pending New Account",
+          href: "/pending-new-account",
+          show: true,
+        },
+        {
+          label: "Pending Deposit",
+          href: "/pending-deposit",
+          show: true,
+        },
+        {
+          label: "Pending Withdraw",
+          href: "/pending-withdraw",
+          show: true,
+        },
+        {
+          label: "Pending Change Password",
+          href: "/pending-change-password",
+          show: true,
+        },
+      ],
+    },
+    {
       tab: "Whitelable",
       key: "whitelable",
       show: permissions.includes("whitelable"),

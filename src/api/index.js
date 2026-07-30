@@ -77,6 +77,7 @@ export const API = {
   upload_assets: "",
   admin: "",
   blog: "",
+  panel: "",
 };
 
 export const Settings = {

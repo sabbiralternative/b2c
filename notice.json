@@ -111,7 +111,8 @@
       "lossback": "https://admin.api7.live/api/b2c/lossback",
       "upload_assets": "https://uploadslip.com/api/upload_assets",
       "admin": "https://admin.api7.live/api/b2c/admin",
-      "blog": "https://admin.api7.live/api/b2c/blog"
+      "blog": "https://admin.api7.live/api/b2c/blog",
+      "panel": "https://admin.api7.live/api/b2c/panel"
     }
   },
   "success": true

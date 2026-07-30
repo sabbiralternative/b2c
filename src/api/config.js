@@ -87,6 +87,7 @@ export const getSetApis = (setNoticeLoaded, baseUrl) => {
         API.upload_assets = data?.result?.endpoint?.upload_assets;
         API.admin = data?.result?.endpoint?.admin;
         API.blog = data?.result?.endpoint?.blog;
+        API.panel = data?.result?.endpoint?.panel;
         Settings.bonus = data?.result?.settings?.bonus;
         Settings.deposit = data?.result?.settings?.deposit;
         Settings.withdraw = data?.result?.settings?.withdraw;
