@@ -677,22 +677,22 @@ export const getNavItems = (permissions, adminRole, setters) => {
       children: [
         {
           label: "Pending New Account",
-          href: "/pending-new-account",
+          href: "/punt-pending-new-account",
           show: true,
         },
         {
           label: "Pending Deposit",
-          href: "/pending-deposit",
+          href: "/punt-pending-deposit",
           show: true,
         },
         {
           label: "Pending Withdraw",
-          href: "/pending-withdraw",
+          href: "/punt-pending-withdraw",
           show: true,
         },
         {
           label: "Pending Change Password",
-          href: "/pending-change-password",
+          href: "/punt-pending-change-password",
           show: true,
         },
       ],

@@ -107,6 +107,9 @@ import AddGoldyPaymentGateway from "../pages/Payments/AddGoldyPaymentGateway";
 import AddFirstPayPaymentGateway from "../pages/Payments/AddFirstPayPaymentGateway";
 import AddAPKDownloadBanner from "../pages/Settings/AddAPKDownloadBanner";
 import PendingNewAccount from "../pages/Punt/PendingNewAccount";
+import PuntPendingChangePassword from "../pages/Punt/PuntPendingChangePassword";
+import PuntPendingDeposit from "../pages/Punt/PuntPendingDeposit";
+import PuntPendingWithdraw from "../pages/Punt/PuntPendingWithdraw";
 
 export const router = createBrowserRouter(
   [
@@ -535,6 +538,22 @@ export const router = createBrowserRouter(
         {
           path: "/pending-new-account",
           element: <PendingNewAccount />,
+        },
+        {
+          path: "/punt-pending-new-account",
+          element: <PendingNewAccount />,
+        },
+        {
+          path: "/punt-pending-change-password",
+          element: <PuntPendingChangePassword />,
+        },
+        {
+          path: "/punt-pending-deposit",
+          element: <PuntPendingDeposit />,
+        },
+        {
+          path: "/punt-pending-withdraw",
+          element: <PuntPendingWithdraw />,
         },
       ],
     },
