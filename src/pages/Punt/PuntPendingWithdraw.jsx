@@ -3,8 +3,12 @@ import { usePanelQuery } from "../../hooks/panel";
 import { Pagination } from "rsuite";
 import Loader from "../../components/ui/Loader/Loader";
 import EditPuntPendingWithdraw from "../../components/modal/Punt/EditPuntPendingWithdraw";
+import useContextState from "../../hooks/useContextState";
+import { useNavigate } from "react-router-dom";
 
 const PuntPendingWithdraw = () => {
+  const navigate = useNavigate();
+  const { setRefetchViewClient, setClientId } = useContextState();
   const [modal, setModal] = useState({ name: "", id: "" });
   const [activePage, setActivePage] = useState(1);
   const { data, isLoading, isSuccess, refetch } = usePanelQuery({
@@ -65,7 +69,14 @@ const PuntPendingWithdraw = () => {
                 {data?.result?.map((withdraw, i) => {
                   return (
                     <tr key={i}>
-                      <td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setClientId(withdraw?.punter_id);
+                          setRefetchViewClient(true);
+                          navigate("/view-client");
+                        }}
+                      >
                         <strong>{withdraw?.punter_id}</strong>
                       </td>
                       <td>{withdraw?.username}</td>

@@ -3,8 +3,12 @@ import { usePanelQuery } from "../../hooks/panel";
 import { Pagination } from "rsuite";
 import Loader from "../../components/ui/Loader/Loader";
 import EditPuntPendingChangePassword from "../../components/modal/Punt/EditPuntPendingChangePassword";
+import useContextState from "../../hooks/useContextState";
+import { useNavigate } from "react-router-dom";
 
 const PuntPendingChangePassword = () => {
+  const navigate = useNavigate();
+  const { setRefetchViewClient, setClientId } = useContextState();
   const [modal, setModal] = useState({ name: "", id: "" });
   const [activePage, setActivePage] = useState(1);
   const { data, isLoading, isSuccess, refetch } = usePanelQuery({
@@ -64,7 +68,14 @@ const PuntPendingChangePassword = () => {
                 {data?.result?.map((account, i) => {
                   return (
                     <tr key={i}>
-                      <td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setClientId(account?.punter_id);
+                          setRefetchViewClient(true);
+                          navigate("/view-client");
+                        }}
+                      >
                         <strong>{account?.punter_id}</strong>
                       </td>
                       <td>{account?.username}</td>

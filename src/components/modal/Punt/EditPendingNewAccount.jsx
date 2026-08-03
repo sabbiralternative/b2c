@@ -141,7 +141,7 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
                             placeholder="Enter Password"
                             className="form-control"
                             {...register("password")}
-                            type="password"
+                            type="text"
                           />
                         </div>
                       </div>

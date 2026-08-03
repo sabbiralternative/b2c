@@ -3,8 +3,12 @@ import { usePanelQuery } from "../../hooks/panel";
 import { Pagination } from "rsuite";
 import Loader from "../../components/ui/Loader/Loader";
 import EditPuntPendingDeposit from "../../components/modal/Punt/EditPuntPendingDeposit";
+import useContextState from "../../hooks/useContextState";
+import { useNavigate } from "react-router-dom";
 
 const PuntPendingDeposit = () => {
+  const navigate = useNavigate();
+  const { setRefetchViewClient, setClientId } = useContextState();
   const [modal, setModal] = useState({ name: "", id: "" });
   const [activePage, setActivePage] = useState(1);
   const { data, isLoading, isSuccess, refetch } = usePanelQuery({
@@ -66,7 +70,14 @@ const PuntPendingDeposit = () => {
                 {data?.result?.map((deposit, i) => {
                   return (
                     <tr key={i}>
-                      <td>
+                      <td
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setClientId(deposit?.punter_id);
+                          setRefetchViewClient(true);
+                          navigate("/view-client");
+                        }}
+                      >
                         <strong>{deposit?.punter_id}</strong>
                       </td>
                       <td>{deposit?.username}</td>
