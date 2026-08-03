@@ -86,7 +86,7 @@ const PuntPendingWithdraw = () => {
                         <a
                           onClick={() =>
                             setModal({
-                              id: withdraw?.punter_id,
+                              id: withdraw?.id,
                               name: "withdraw",
                             })
                           }

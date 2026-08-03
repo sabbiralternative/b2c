@@ -84,7 +84,7 @@ const PendingNewAccount = () => {
                         <a
                           onClick={() =>
                             setModal({
-                              id: account?.punter_id,
+                              id: account?.id,
                               name: "editPendingNewAccount",
                             })
                           }

@@ -87,7 +87,7 @@ const PuntPendingDeposit = () => {
                         <a
                           onClick={() =>
                             setModal({
-                              id: deposit?.punter_id,
+                              id: deposit?.id,
                               name: "deposit",
                             })
                           }

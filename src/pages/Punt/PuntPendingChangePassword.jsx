@@ -84,7 +84,7 @@ const PuntPendingChangePassword = () => {
                         <a
                           onClick={() =>
                             setModal({
-                              id: account?.punter_id,
+                              id: account?.id,
                               name: "change_password",
                             })
                           }
