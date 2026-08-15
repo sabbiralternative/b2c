@@ -4,13 +4,18 @@ import { API } from "../api";
 import { useEffect } from "react";
 import { handleLogOut } from "../utils/handleLogOut";
 import axios from "axios";
+import { usePermission } from "./use-permission";
+import { Permission } from "../constant/constant";
 //
 // import handleEncryptData from "../utils/handleEncryptData";
 /* Balance api */
 const useBalance = (payload) => {
+  const { permissions } = usePermission();
   const token = localStorage.getItem("adminToken");
-  const adminRole = localStorage.getItem("adminRole");
+  // const adminRole = localStorage.getItem("adminRole");
   const { setGetToken } = useContextState();
+
+  // console.log(permissions);
   const {
     data: balanceData,
     refetch: refetchBalance,
@@ -19,11 +24,13 @@ const useBalance = (payload) => {
     isSuccess,
   } = useQuery({
     queryKey: ["balance", payload],
+    enabled: permissions.includes(Permission.dashboard),
 
     queryFn: async () => {
-      if (adminRole == "admin_staff" || adminRole === "branch_staff") {
-        return;
-      }
+      // console.log(permissions.includes(Permission.dashboard));
+      // if (adminRole == "admin_staff" || adminRole === "branch_staff") {
+      //   return;
+      // }
 
       const res = await axios.post(API.balance, payload, {
         headers: {
