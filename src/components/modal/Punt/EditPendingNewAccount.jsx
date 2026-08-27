@@ -124,7 +124,7 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
                           <input
                             placeholder="Enter Username"
                             className="form-control"
-                            {...register("username")}
+                            {...register("username", { required: true })}
                             type="text"
                           />
                         </div>
@@ -140,7 +140,7 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
                           <input
                             placeholder="Enter Password"
                             className="form-control"
-                            {...register("password")}
+                            {...register("password", { required: true })}
                             type="text"
                           />
                         </div>
@@ -159,7 +159,7 @@ const EditPendingNewAccount = ({ modal, setEditPendingAccount, refetch }) => {
                   Close
                 </button>
                 <button
-                  disabled={disabled}
+                  disabled={disabled || !status}
                   type="submit"
                   className="btn btn-primary"
                 >
