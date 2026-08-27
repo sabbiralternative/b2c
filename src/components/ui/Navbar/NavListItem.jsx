@@ -24,31 +24,79 @@ const NavListItem = () => {
   const navigate = useNavigate();
 
   /* Sound notification start */
-  const [depositCount, setDepositCount] = useState(null);
-  const [withdrawCount, setWithdrawCount] = useState(null);
-  const depositRefCount = useRef(depositCount);
-  const withdrawRefCount = useRef(withdrawCount);
-  const [playSound, setPlaySound] = useState(false);
+  // const [depositCount, setDepositCount] = useState(null);
+  // const [withdrawCount, setWithdrawCount] = useState(null);
+  // const depositRefCount = useRef();
+  // const withdrawRefCount = useRef();
+  // const [playSound, setPlaySound] = useState(false);
+
+  const [dw, setDw] = useState({});
+  const previousDwRef = useRef(null);
+  const totalPuntPanelCount =
+    dw?.newAccountCount +
+    dw?.panelDepositCount +
+    dw?.panelWithdrawCount +
+    dw?.changePasswordCount;
 
   useEffect(() => {
-    if (dwCount?.depositCount >= 0 || dwCount?.withdrawCount >= 0) {
-      if (
-        (playSound &&
-          depositCount !== null &&
-          depositCount > depositRefCount.current) ||
-        (playSound &&
-          withdrawCount !== null &&
-          withdrawCount > withdrawRefCount.current)
-      ) {
-        new Audio(notification).play();
+    if (!dwCount) return;
+
+    const currentValues = Object.values(dwCount);
+
+    // First API response
+    if (previousDwRef.current === null) {
+      const hasNotification = currentValues.some((value) => Number(value) > 0);
+
+      if (hasNotification) {
+        new Audio(notification).play().catch((err) => {
+          console.log("Notification sound failed:", err);
+        });
       }
-      depositRefCount.current = depositCount;
-      withdrawRefCount.current = withdrawCount;
-      setDepositCount(dwCount?.depositCount);
-      setWithdrawCount(dwCount?.withdrawCount);
-      setPlaySound(true);
+
+      // Store initial values
+      previousDwRef.current = { ...dwCount };
+      setDw({ ...dwCount });
+
+      return;
     }
-  }, [depositCount, withdrawCount, playSound, dwCount]);
+
+    // Check whether any value increased
+    const hasIncreased = Object.keys(dwCount).some((key) => {
+      const previousValue = Number(previousDwRef.current[key] ?? 0);
+      const currentValue = Number(dwCount[key] ?? 0);
+
+      return currentValue > previousValue;
+    });
+
+    if (hasIncreased) {
+      new Audio(notification).play().catch((err) => {
+        console.log("Notification sound failed:", err);
+      });
+    }
+
+    // Store latest values
+    previousDwRef.current = { ...dwCount };
+    setDw({ ...dwCount });
+  }, [dwCount]);
+  // useEffect(() => {
+  //   if (dwCount?.depositCount >= 0 || dwCount?.withdrawCount >= 0) {
+  //     if (
+  //       (playSound &&
+  //         depositCount !== null &&
+  //         depositCount > depositRefCount.current) ||
+  //       (playSound &&
+  //         withdrawCount !== null &&
+  //         withdrawCount > withdrawRefCount.current)
+  //     ) {
+  //       new Audio(notification).play();
+  //     }
+  //     depositRefCount.current = depositCount;
+  //     withdrawRefCount.current = withdrawCount;
+  //     setDepositCount(dwCount?.depositCount);
+  //     setWithdrawCount(dwCount?.withdrawCount);
+  //     setPlaySound(true);
+  //   }
+  // }, [depositCount, withdrawCount, playSound, dwCount]);
   /* Sound notification end */
 
   // Get navigation items from config file
@@ -85,7 +133,7 @@ const NavListItem = () => {
             className={`menu-item ${navList === navItem?.key ? "open" : ""}`}
           >
             <a className="menu-link menu-toggle">
-              {navItem?.key === "deposit" && depositCount > 0 && (
+              {navItem?.key === "deposit" && dw?.depositCount > 0 && (
                 <span
                   style={{
                     borderRadius: "5px",
@@ -96,10 +144,10 @@ const NavListItem = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {depositCount}
+                  {dw?.depositCount}
                 </span>
               )}
-              {navItem?.key === "withdraw" && withdrawCount > 0 && (
+              {navItem?.key === "withdraw" && dw?.withdrawCount > 0 && (
                 <span
                   style={{
                     borderRadius: "5px",
@@ -110,10 +158,10 @@ const NavListItem = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {withdrawCount}
+                  {dw?.withdrawCount}
                 </span>
               )}
-              {navItem?.key === "bonus" && dwCount > 0 && (
+              {navItem?.key === "bonus" && dw?.claimCount > 0 && (
                 <span
                   style={{
                     borderRadius: "5px",
@@ -124,12 +172,27 @@ const NavListItem = () => {
                     fontWeight: "500",
                   }}
                 >
-                  {dwCount?.claimCount}
+                  {dw?.claimCount}
+                </span>
+              )}
+              {navItem?.key === "punt-panel" && totalPuntPanelCount > 0 && (
+                <span
+                  style={{
+                    borderRadius: "5px",
+                    backgroundColor: "#39da8a",
+                    marginRight: "5px",
+                    padding: "0px 4px",
+                    color: "black",
+                    fontWeight: "500",
+                  }}
+                >
+                  {totalPuntPanelCount}
                 </span>
               )}
               {navItem?.key !== "deposit" &&
                 navItem?.key !== "withdraw" &&
-                navItem?.key !== "bonus" && (
+                navItem?.key !== "bonus" &&
+                navItem?.key !== "punt-panel" && (
                   <i className="menu-icon tf-icons bx bx-layout"></i>
                 )}
 
@@ -358,6 +421,66 @@ const NavListItem = () => {
                         >
                           <i className="menu-icon tf-icons bx bxs-user"></i>
                           <div data-i18n={child?.label}>{child?.label}</div>
+                          {child?.href === "/punt-pending-new-account" &&
+                            dw?.newAccountCount > 0 && (
+                              <span
+                                style={{
+                                  borderRadius: "5px",
+                                  backgroundColor: "#39da8a",
+                                  marginLeft: "5px",
+                                  padding: "0px 4px",
+                                  color: "black",
+                                  fontWeight: "500",
+                                }}
+                              >
+                                {dw?.newAccountCount}
+                              </span>
+                            )}
+                          {child?.href === "/punt-pending-deposit" &&
+                            dw?.panelDepositCount > 0 && (
+                              <span
+                                style={{
+                                  borderRadius: "5px",
+                                  backgroundColor: "#39da8a",
+                                  marginLeft: "5px",
+                                  padding: "0px 4px",
+                                  color: "black",
+                                  fontWeight: "500",
+                                }}
+                              >
+                                {dw?.panelDepositCount}
+                              </span>
+                            )}
+                          {child?.href === "/punt-pending-withdraw" &&
+                            dw?.panelWithdrawCount > 0 && (
+                              <span
+                                style={{
+                                  borderRadius: "5px",
+                                  backgroundColor: "#39da8a",
+                                  marginLeft: "5px",
+                                  padding: "0px 4px",
+                                  color: "black",
+                                  fontWeight: "500",
+                                }}
+                              >
+                                {dw?.panelWithdrawCount}
+                              </span>
+                            )}
+                          {child?.href === "/punt-pending-change-password" &&
+                            dw?.changePasswordCount > 0 && (
+                              <span
+                                style={{
+                                  borderRadius: "5px",
+                                  backgroundColor: "#39da8a",
+                                  marginLeft: "5px",
+                                  padding: "0px 4px",
+                                  color: "black",
+                                  fontWeight: "500",
+                                }}
+                              >
+                                {dw?.changePasswordCount}
+                              </span>
+                            )}
                         </a>
                       </li>
                     );
