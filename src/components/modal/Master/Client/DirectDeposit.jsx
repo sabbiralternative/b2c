@@ -45,10 +45,12 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id, refetch }) => {
       downlineId,
       type: "deposit",
       ...values,
+      bonus: values?.bonus ? 1 : 0,
       amount,
 
       role,
     };
+
     const res = await AxiosSecure.post(API.downLineEdit, payload);
     const data = res.data;
     if (data?.success) {
@@ -301,25 +303,53 @@ const DirectDeposit = ({ setDirectDeposit, downlineId, role, id, refetch }) => {
                   </div>
 
                   <div
-                    style={{ flexDirection: "column", width: "60%" }}
-                    className="row mb-3"
-                    id="bank_account_name_div"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
                   >
-                    <label
-                      className=" col-form-label"
-                      htmlFor="basic-default-name"
+                    <div
+                      style={{ flexDirection: "column", width: "100%" }}
+                      className="row mb-3"
+                      id="bank_account_name_div"
                     >
-                      Transaction Code
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        {...register("mpassword")}
-                        type="text"
-                        className="form-control"
-                        id="basic-default-name"
-                        placeholder="Transaction Code"
-                        required
-                      />
+                      <label className="switch">
+                        <input
+                          {...register("bonus")}
+                          // onChange={() => setUserStatus((prev) => !prev)}
+                          type="checkbox"
+                          className="switch-input is-valid"
+                          // checked={userStatus}
+                        />
+                        <span className="switch-toggle-slider">
+                          <span className="switch-on"></span>
+                          <span className="switch-off"></span>
+                        </span>
+                        <span className="switch-label">Bonus</span>
+                      </label>
+                    </div>{" "}
+                    <div
+                      style={{ flexDirection: "column", width: "100%" }}
+                      className="row mb-3"
+                      id="bank_account_name_div"
+                    >
+                      <label
+                        className=" col-form-label"
+                        htmlFor="basic-default-name"
+                      >
+                        Transaction Code
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          {...register("mpassword")}
+                          type="text"
+                          className="form-control"
+                          id="basic-default-name"
+                          placeholder="Transaction Code"
+                          required
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
