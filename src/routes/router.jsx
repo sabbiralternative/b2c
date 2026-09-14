@@ -110,12 +110,17 @@ import PendingNewAccount from "../pages/Punt/PendingNewAccount";
 import PuntPendingChangePassword from "../pages/Punt/PuntPendingChangePassword";
 import PuntPendingDeposit from "../pages/Punt/PuntPendingDeposit";
 import PuntPendingWithdraw from "../pages/Punt/PuntPendingWithdraw";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <App />,
+      element: (
+        <PrivateRoute>
+          <App />
+        </PrivateRoute>
+      ),
       children: [
         {
           index: true,

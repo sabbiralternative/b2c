@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../ui/Navbar/Navbar";
 import { handleLogOut } from "../../utils/handleLogOut";
 import { Settings } from "../../api";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import useContextState from "../../hooks/useContextState";
 import disableDevtool from "disable-devtool";
@@ -32,7 +32,7 @@ const MainLayout = () => {
     setGetToken,
     // siteNotification,
     // setSiteNotification,
-    tokenLoading,
+    // tokenLoading,
     showSidebar,
     showAddBranch,
     setShowAddBranch,
@@ -60,28 +60,28 @@ const MainLayout = () => {
   const location = useLocation();
 
   /* TODO */
-  const token = localStorage.getItem("adminToken");
+  // const token = localStorage.getItem("adminToken");
   const disabledDevtool = Settings.disabledDevtool;
   /*if Token expire logout user */
-  useEffect(() => {
-    let isTokenExpired;
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      const expirationTime = decodedToken.exp;
-      isTokenExpired = expirationTime < Date.now() / 1000;
-      if (isTokenExpired) {
-        handleLogOut();
-        navigate("/login");
-      }
-      /* if forceLogin true in notice.json and token not available then logout */
-    } else if (Settings.forceLogin) {
-      if (!token) {
-        handleLogOut();
+  // useEffect(() => {
+  //   let isTokenExpired;
+  //   if (token) {
+  //     const decodedToken = jwtDecode(token);
+  //     const expirationTime = decodedToken.exp;
+  //     isTokenExpired = expirationTime < Date.now() / 1000;
+  //     if (isTokenExpired) {
+  //       handleLogOut();
+  //       navigate("/login");
+  //     }
+  //     /* if forceLogin true in notice.json and token not available then logout */
+  //   } else if (Settings.forceLogin) {
+  //     if (!token) {
+  //       handleLogOut();
 
-        navigate("/login");
-      }
-    }
-  }, [navigate, token, tokenLoading]);
+  //       navigate("/login");
+  //     }
+  //   }
+  // }, [navigate, token, tokenLoading]);
 
   /* Disabled devtool based on settings */
   useEffect(() => {
