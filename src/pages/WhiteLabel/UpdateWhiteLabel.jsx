@@ -532,6 +532,46 @@ const UpdateWhiteLabel = () => {
                     </div>
                     <div className="row mb-3">
                       <label className="col-sm-2 col-form-label">
+                        Meta Title
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("meta_title", {
+                            required: true,
+                          })}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
+                        Meta Description
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("meta_description", {
+                            required: true,
+                          })}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">GSC Tag</label>
+                      <div className="col-sm-10">
+                        <input
+                          type="text"
+                          {...register("gsc_tag", {
+                            required: true,
+                          })}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
                         Logo Height
                       </label>
                       <div className="col-sm-10">
