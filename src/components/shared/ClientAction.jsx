@@ -487,20 +487,22 @@ const ClientAction = ({ refetchClient, client, index }) => {
                         <a className="dropdown-item">Change Password</a>
                       </li>
                     )}
-
-                    <li
-                      onClick={() => {
-                        setShowMore(false);
-                        handleOpenModal(
-                          setShowChangeStatus,
-                          client?.username,
-                          client?.role,
-                          client?.downlineId,
-                        );
-                      }}
-                    >
-                      <a className="dropdown-item">Change Status</a>
-                    </li>
+                    {adminRole !== AdminRole.master &&
+                      adminRole !== AdminRole.branch_staff && (
+                        <li
+                          onClick={() => {
+                            setShowMore(false);
+                            handleOpenModal(
+                              setShowChangeStatus,
+                              client?.username,
+                              client?.role,
+                              client?.downlineId,
+                            );
+                          }}
+                        >
+                          <a className="dropdown-item">Change Status</a>
+                        </li>
+                      )}
                   </>
                 )}
               {adminRole !== AdminRole.hyper_master &&

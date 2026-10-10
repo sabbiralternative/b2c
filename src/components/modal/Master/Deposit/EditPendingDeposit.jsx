@@ -26,7 +26,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
 
     const payload = {
       ...values,
-      lock_withdraw: values.lock_withdraw ? 1 : 0,
+      // lock_withdraw: values.lock_withdraw ? 1 : 0,
       depositId: downLineId,
       type: "editUTR",
     };
@@ -177,7 +177,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                       </select>
                     </div> */}
                   </div>
-                  <div className="row mb-3" style={{ alignItems: "center" }}>
+                  {/* <div className="row mb-3" style={{ alignItems: "center" }}>
                     <label className="col-sm-2 col-form-label">
                       Lock Withdraw
                     </label>
@@ -188,7 +188,7 @@ const EditPendingDeposit = ({ setEditPendingDeposit, refetchAllUTRs }) => {
                         type="checkbox"
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="row mb-3">
                     <label className="col-sm-2 col-form-label">Bank Name</label>
                     <div className="col-sm-10">

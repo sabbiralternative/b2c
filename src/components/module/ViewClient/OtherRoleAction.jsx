@@ -261,18 +261,21 @@ const OtherRoleAction = ({
                   >
                     <a className="dropdown-item">Change Password</a>
                   </li>
-                  <li
-                    onClick={() => {
-                      handleOpenModal(
-                        setShowChangeStatus,
-                        client?.username,
-                        client?.role,
-                        client?.downlineId,
-                      );
-                    }}
-                  >
-                    <a className="dropdown-item">Change Status</a>
-                  </li>
+                  {adminRole !== AdminRole.master &&
+                    adminRole !== AdminRole.branch_staff && (
+                      <li
+                        onClick={() => {
+                          handleOpenModal(
+                            setShowChangeStatus,
+                            client?.username,
+                            client?.role,
+                            client?.downlineId,
+                          );
+                        }}
+                      >
+                        <a className="dropdown-item">Change Status</a>
+                      </li>
+                    )}
                 </>
               )}
               {adminRole !== "hyper_master" &&
